@@ -35,7 +35,7 @@ public class DrinkOrderVO {
 	private Integer drinkOrderAmount;
 
 	@NotEmpty(message = "取貨時間:不可為空")
-	@Future(message = "取貨日期必須為今日(不含)以後")
+	@Future(message = "取貨日期:必須為今日(不含)以後")
 	@Column(name="drinkOrderPickTime",updatable = false)
 	private Timestamp drinkOrderPickTime;
 	
