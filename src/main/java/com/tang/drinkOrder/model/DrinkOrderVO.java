@@ -1,5 +1,6 @@
 package com.tang.drinkOrder.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -13,7 +14,8 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="drinkorderdetail")
-public class DrinkOrderVO {
+public class DrinkOrderVO implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id //@Id代表這個屬性是這個Entity的唯一識別屬性，並且對映到Table的主鍵 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//@GeneratedValue的generator屬性指定要用哪個generator //【strategy的GenerationType, 有四種值: AUTO, IDENTITY, SEQUENCE, TABLE】 
@@ -22,11 +24,17 @@ public class DrinkOrderVO {
 	
 //	@ManyToOne
 //	@JoinColumn(name="userID") // 指定用來join table的column
+//	private UserVO userID;
+	
+	@NotEmpty(message = "請進行登入")
 	@Column(name="userID", updatable = false)
 	private Integer userID;
 	
 //	@ManyToOne
 //	@JoinColumn(name="storeID")
+//	private StoreVO storeID;
+
+	@NotEmpty(message = "請選擇店家")
 	@Column(name="storeID", updatable = false)
 	private Integer storeID;
 	
@@ -60,6 +68,7 @@ public class DrinkOrderVO {
 	
 //	@ManyToOne
 //	@JoinColumn(name="deinkOrderMemberID" , referencedColumnName="member_id")
+//	private Member memberID;
 	
 	@NotEmpty(message = "最新修改(建立)之員工")
 	@Column(name="memberID", insertable = false)
