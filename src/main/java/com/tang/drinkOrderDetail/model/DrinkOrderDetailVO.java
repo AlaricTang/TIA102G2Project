@@ -1,5 +1,7 @@
 package com.tang.drinkOrderDetail.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.tang.drinkOrder.model.DrinkOrderVO;
+
 @Entity
 @Table(name="drinkorderdetail")
-public class DrinkOrderDetailVO {
-	
-	public DrinkOrderDetailVO() {
-	}
+public class DrinkOrderDetailVO implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id //@Id代表這個屬性是這個Entity的唯一識別屬性，並且對映到Table的主鍵 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//@GeneratedValue的generator屬性指定要用哪個generator //【strategy的GenerationType, 有四種值: AUTO, IDENTITY, SEQUENCE, TABLE】 
@@ -24,10 +26,12 @@ public class DrinkOrderDetailVO {
 	
 	@ManyToOne
 	@JoinColumn(name="drinkOrderID")
-	private Integer drinkOrderID;
+	private DrinkOrderVO drinkOrderVO;
 
 //	@ManyToOne
 //	@JoinColumn(name="drinkID")
+//	private DrinkVO drinkVO;
+
 	@Column(name="drinkID")
 	private Integer drinkID;
 	
@@ -52,71 +56,106 @@ public class DrinkOrderDetailVO {
 //	@Column(name="drinkOrderDetailIsJibei")
 //	private Byte drinkOrderDetailIsJibei;
 	
+	public DrinkOrderDetailVO() {
+	}
 	
 	
+
 	public Integer getDrinkOrderDetailID() {
 		return drinkOrderDetailID;
 	}
+
+
 
 	public void setDrinkOrderDetailID(Integer drinkOrderDetailID) {
 		this.drinkOrderDetailID = drinkOrderDetailID;
 	}
 
-	public Integer getDrinkOrderID() {
-		return drinkOrderID;
+
+
+	public DrinkOrderVO getDrinkOrderVO() {
+		return drinkOrderVO;
 	}
 
-	public void setDrinkOrderID(Integer drinkOrderID) {
-		this.drinkOrderID = drinkOrderID;
+
+
+	public void setDrinkOrderVO(DrinkOrderVO drinkOrderVO) {
+		this.drinkOrderVO = drinkOrderVO;
 	}
+
+
 
 	public Integer getDrinkID() {
 		return drinkID;
 	}
 
+
+
 	public void setDrinkID(Integer drinkID) {
 		this.drinkID = drinkID;
 	}
+
+
 
 	public Byte getDrinkOrderDetailIsHot() {
 		return drinkOrderDetailIsHot;
 	}
 
+
+
 	public void setDrinkOrderDetailIsHot(Byte drinkOrderDetailIsHot) {
 		this.drinkOrderDetailIsHot = drinkOrderDetailIsHot;
 	}
+
+
 
 	public Byte getDrinkOrderDetailUseCup() {
 		return drinkOrderDetailUseCup;
 	}
 
+
+
 	public void setDrinkOrderDetailUseCup(Byte drinkOrderDetailUseCup) {
 		this.drinkOrderDetailUseCup = drinkOrderDetailUseCup;
 	}
+
+
 
 	public Integer getDrinkOrderDetailPrice() {
 		return drinkOrderDetailPrice;
 	}
 
+
+
 	public void setDrinkOrderDetailPrice(Integer drinkOrderDetailPrice) {
 		this.drinkOrderDetailPrice = drinkOrderDetailPrice;
 	}
+
+
 
 	public Integer getDrinkOrderDetailAmount() {
 		return drinkOrderDetailAmount;
 	}
 
+
+
 	public void setDrinkOrderDetailAmount(Integer drinkOrderDetailAmount) {
 		this.drinkOrderDetailAmount = drinkOrderDetailAmount;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "DrinkOrderDetailVO [drinkOrderDetailID=" + drinkOrderDetailID + ", drinkOrderID=" + drinkOrderID
+		return "DrinkOrderDetailVO [drinkOrderDetailID=" + drinkOrderDetailID + ", drinkOrderVO=" + drinkOrderVO
 				+ ", drinkID=" + drinkID + ", drinkOrderDetailIsHot=" + drinkOrderDetailIsHot
 				+ ", drinkOrderDetailUseCup=" + drinkOrderDetailUseCup + ", drinkOrderDetailPrice="
 				+ drinkOrderDetailPrice + ", drinkOrderDetailAmount=" + drinkOrderDetailAmount + "]";
 	}
+
+
+
+	
 	
 	
 	
