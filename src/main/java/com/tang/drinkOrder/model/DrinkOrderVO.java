@@ -2,15 +2,23 @@ package com.tang.drinkOrder.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
+
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Entity
 @Table(name="drinkorderdetail")
@@ -24,7 +32,7 @@ public class DrinkOrderVO implements Serializable{
 	
 //	@ManyToOne
 //	@JoinColumn(name="userID") // 指定用來join table的column
-//	private UserVO userID;
+//	private UserVO userVO;
 	
 	@NotEmpty(message = "請進行登入")
 	@Column(name="userID", updatable = false)
@@ -32,7 +40,7 @@ public class DrinkOrderVO implements Serializable{
 	
 //	@ManyToOne
 //	@JoinColumn(name="storeID")
-//	private StoreVO storeID;
+//	private StoreVO storeVO;
 
 	@NotEmpty(message = "請選擇店家")
 	@Column(name="storeID", updatable = false)
@@ -66,10 +74,15 @@ public class DrinkOrderVO implements Serializable{
 	@Column(name="drinkOrderCreateTime" ,updatable = false, insertable = false)
 	private Timestamp drinkOrderCreateTime;
 	
-//	@ManyToOne
-//	@JoinColumn(name="deinkOrderMemberID" , referencedColumnName="member_id")
-//	private Member memberID;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "drinkOrderVO")
+	@OrderBy("drinkOrderDetailID asc")
+	private Set<DrinkOrderDetailVO> drinkOrderDetails = new HashSet<>();
 	
+//	@ManyToOne
+//	@JoinColumn(name="memberID")
+//	private MemberVO memberVO;
+	
+
 	@NotEmpty(message = "最新修改(建立)之員工")
 	@Column(name="memberID", insertable = false)
 	private Integer memberID;
@@ -167,6 +180,15 @@ public class DrinkOrderVO implements Serializable{
 		this.memberID = memberID;
 	}
 
+	
+	public Set<DrinkOrderDetailVO> getDrinkOrderDetails() {
+		return drinkOrderDetails;
+	}
+
+	public void setDrinkOrderDetails(Set<DrinkOrderDetailVO> drinkOrderDetails) {
+		this.drinkOrderDetails = drinkOrderDetails;
+	}
+	
 	@Override
 	public String toString() {
 		return "DrinkOrderVO [drinkorderdetailID=" + drinkorderdetailID + ", userID=" + userID + ", storeID=" + storeID
