@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Validated
 @RequestMapping("/drinkOrderDetail")
-public class DrinkOrderDetaiIDController {
+public class DrinkOrderDetaiINoController {
 	
 //	
 //	@ExceptionHandler(value = { ConstraintViolationException.class })
