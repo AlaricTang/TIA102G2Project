@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hibernate.util.compositeQuery.HibernateUtil_CompositeQuery_DrinkOrder;
+import hibernate.util.compositeQuery.CompositeQuery_DrinkOrder;
 
 @Service("drinkOrderService")
 public class DrinkOrderService {
@@ -42,6 +42,6 @@ public class DrinkOrderService {
 	}
 	
 	public List<DrinkOrderVO> getAll(Map<String, String[]> map){
-		return HibernateUtil_CompositeQuery_DrinkOrder.getAllC(map, sessionFactory.openSession());
+		return CompositeQuery_DrinkOrder.getAllC(map, sessionFactory.openSession());
 	}
 }
