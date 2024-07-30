@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "productOrder")
 public class ProductOrderVO {
 
-	@Id		//我是pk
+	@Id		
 	@GeneratedValue(strategy = GenerationType.IDENTITY)		//auto increment
 	@Column(name="productOrderID", updatable = false, insertable = false)
 	private Integer productOrderID;
