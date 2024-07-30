@@ -29,7 +29,7 @@ public class DrinkOrderVO implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//@GeneratedValue的generator屬性指定要用哪個generator //【strategy的GenerationType, 有四種值: AUTO, IDENTITY, SEQUENCE, TABLE】 
 	@Column(name="drinkorderdetailID", updatable = false, insertable = false)//@Column指這個屬性是對應到資料庫Table的哪一個欄位   //【非必要，但當欄位名稱與屬性名稱不同時則一定要用】
 	private Integer drinkorderdetailID;
-	
+//test
 //	@ManyToOne
 //	@JoinColumn(name="userID") // 指定用來join table的column
 //	private UserVO userVO;
