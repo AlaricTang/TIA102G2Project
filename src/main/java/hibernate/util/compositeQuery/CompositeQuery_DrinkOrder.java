@@ -53,6 +53,12 @@ public class CompositeQuery_DrinkOrder {
 		Root<DrinkOrderVO> root = criteriaQuery.from(DrinkOrderVO.class);
 		List<Predicate> predicateList = new ArrayList<>();
 		
+		//map
+		//{"key1" "value1"
+		//{"key2" "value2"
+		//{"key3" "value3"
+		//{"key4" "value4"
+		
 		Set<String> keys = map.keySet();
 		int count = 0;
 		for (String key : keys) {
