@@ -13,4 +13,3 @@ public interface DrinkOrderRepository extends JpaRepository<DrinkOrderVO, Intege
 	void deleteByDrinkOrderID(int drinkOrderID);
 }
 
-// where drinkOrderID =?1 , action=?2
