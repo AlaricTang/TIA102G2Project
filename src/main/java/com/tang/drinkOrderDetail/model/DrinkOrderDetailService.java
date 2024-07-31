@@ -20,6 +20,7 @@ public class DrinkOrderDetailService {
 		repository.save(drinkOrderDetailVO);
 	}
 	
+	//儘管可能用不到 也還是寫了
 	public void updateDrinkOrderDetail(DrinkOrderDetailVO drinkOrderDetailVO) {
 		repository.save(drinkOrderDetailVO);
 	}
@@ -30,6 +31,8 @@ public class DrinkOrderDetailService {
 	}
 	
 	//not need getOne
+	
+	//這個應該也用不到 只會用到給orderID 查 detail
 	public List<DrinkOrderDetailVO> getAll(){
 		return repository.findAll();
 	}

@@ -7,12 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-
-import com.tang.drinkOrder.model.DrinkOrderVO;
 
 @Entity
 @Table(name="drinkorderdetail")
@@ -24,9 +20,12 @@ public class DrinkOrderDetailVO implements Serializable{
 	@Column(name="drinkorderdetailID", updatable = false, insertable = false)//@Column指這個屬性是對應到資料庫Table的哪一個欄位   //【非必要，但當欄位名稱與屬性名稱不同時則一定要用】
 	private Integer drinkOrderDetailID;
 	
-	@ManyToOne
-	@JoinColumn(name="drinkOrderID")
-	private DrinkOrderVO drinkOrderVO;
+//	@ManyToOne
+//	@JoinColumn(name="drinkOrderID")
+//	private DrinkOrderVO drinkOrderVO;
+
+	@Column(name="drinkOrderID")
+	private Integer drinkOrderID;
 
 //	@ManyToOne
 //	@JoinColumn(name="drinkID")
@@ -47,14 +46,14 @@ public class DrinkOrderDetailVO implements Serializable{
 	@Column(name="drinkOrderDetailPrice")
 	private Integer drinkOrderDetailPrice;
 	
-	@NotEmpty(message="請選擇數量")
+	@NotEmpty(message="請確認數量")
 	@Column(name="drinkOrderDetailAmount")
 	private Integer drinkOrderDetailAmount;
 
 	
-//	@NotEmpty(message="是否為寄杯")
-//	@Column(name="drinkOrderDetailIsJibei")
-//	private Byte drinkOrderDetailIsJibei;
+	@NotEmpty(message="是否為寄杯")
+	@Column(name="drinkOrderDetailIsJibei")
+	private Byte drinkOrderDetailIsJibei;
 	
 	public DrinkOrderDetailVO() {
 	}
@@ -64,23 +63,17 @@ public class DrinkOrderDetailVO implements Serializable{
 	public Integer getDrinkOrderDetailID() {
 		return drinkOrderDetailID;
 	}
-
-
-
 	public void setDrinkOrderDetailID(Integer drinkOrderDetailID) {
 		this.drinkOrderDetailID = drinkOrderDetailID;
 	}
 
 
 
-	public DrinkOrderVO getDrinkOrderVO() {
-		return drinkOrderVO;
+	public Integer getDrinkOrderID() {
+		return drinkOrderID;
 	}
-
-
-
-	public void setDrinkOrderVO(DrinkOrderVO drinkOrderVO) {
-		this.drinkOrderVO = drinkOrderVO;
+	public void setDrinkOrderID(Integer drinkOrderID) {
+		this.drinkOrderID = drinkOrderID;
 	}
 
 
@@ -88,9 +81,6 @@ public class DrinkOrderDetailVO implements Serializable{
 	public Integer getDrinkID() {
 		return drinkID;
 	}
-
-
-
 	public void setDrinkID(Integer drinkID) {
 		this.drinkID = drinkID;
 	}
@@ -100,9 +90,6 @@ public class DrinkOrderDetailVO implements Serializable{
 	public Byte getDrinkOrderDetailIsHot() {
 		return drinkOrderDetailIsHot;
 	}
-
-
-
 	public void setDrinkOrderDetailIsHot(Byte drinkOrderDetailIsHot) {
 		this.drinkOrderDetailIsHot = drinkOrderDetailIsHot;
 	}
@@ -112,9 +99,6 @@ public class DrinkOrderDetailVO implements Serializable{
 	public Byte getDrinkOrderDetailUseCup() {
 		return drinkOrderDetailUseCup;
 	}
-
-
-
 	public void setDrinkOrderDetailUseCup(Byte drinkOrderDetailUseCup) {
 		this.drinkOrderDetailUseCup = drinkOrderDetailUseCup;
 	}
@@ -124,9 +108,6 @@ public class DrinkOrderDetailVO implements Serializable{
 	public Integer getDrinkOrderDetailPrice() {
 		return drinkOrderDetailPrice;
 	}
-
-
-
 	public void setDrinkOrderDetailPrice(Integer drinkOrderDetailPrice) {
 		this.drinkOrderDetailPrice = drinkOrderDetailPrice;
 	}
@@ -136,18 +117,24 @@ public class DrinkOrderDetailVO implements Serializable{
 	public Integer getDrinkOrderDetailAmount() {
 		return drinkOrderDetailAmount;
 	}
-
-
-
 	public void setDrinkOrderDetailAmount(Integer drinkOrderDetailAmount) {
 		this.drinkOrderDetailAmount = drinkOrderDetailAmount;
 	}
 
 
 
+	public Byte getDrinkOrderDetailIsJibei() {
+		return drinkOrderDetailIsJibei;
+	}
+	public void setDrinkOrderDetailIsJibei(Byte drinkOrderDetailIsJibei) {
+		this.drinkOrderDetailIsJibei = drinkOrderDetailIsJibei;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "DrinkOrderDetailVO [drinkOrderDetailID=" + drinkOrderDetailID + ", drinkOrderVO=" + drinkOrderVO
+		return "DrinkOrderDetailVO [drinkOrderDetailID=" + drinkOrderDetailID + ", drinkOrderID=" + drinkOrderID
 				+ ", drinkID=" + drinkID + ", drinkOrderDetailIsHot=" + drinkOrderDetailIsHot
 				+ ", drinkOrderDetailUseCup=" + drinkOrderDetailUseCup + ", drinkOrderDetailPrice="
 				+ drinkOrderDetailPrice + ", drinkOrderDetailAmount=" + drinkOrderDetailAmount + "]";

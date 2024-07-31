@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +15,7 @@ public class DrinkOrderService {
 	@Autowired
 	DrinkOrderRepository repository;
 	
-	@Autowired
-	private SessionFactory sessionFactory;
+
 	
 	public void addDrinkOrder(DrinkOrderVO drinkOrderVO) {
 		repository.save(drinkOrderVO);
@@ -42,6 +40,6 @@ public class DrinkOrderService {
 	}
 	
 	public List<DrinkOrderVO> getAll(Map<String, String[]> map){
-		return CompositeQuery_DrinkOrder.getAllC(map, sessionFactory.openSession());
+		return CompositeQuery_DrinkOrder.getAllC(map);
 	}
 }

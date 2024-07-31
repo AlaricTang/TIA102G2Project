@@ -11,13 +11,25 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 
 import com.tang.drinkOrder.model.DrinkOrderVO;
 
-public class CompositeQuery_DrinkOrder {
+import hibernate.util.HibernateUtil;
 
+public class CompositeQuery_DrinkOrder {
 	
+	private static SessionFactory factory;
+	
+	private CompositeQuery_DrinkOrder() {
+		factory = HibernateUtil.getSessionFactory();
+	}
+	
+	private static Session getSession() {
+		return factory.getCurrentSession();
+	}
+	
+	//放複合查詢的判斷
 	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<DrinkOrderVO> root, String columnName, String value) {
 		
 		Predicate predicate = null;
@@ -33,41 +45,30 @@ public class CompositeQuery_DrinkOrder {
 		return predicate;
 	}
 	
-	public static List<DrinkOrderVO> getAllC(Map<String, String[]> map, Session session){
+	//根據判斷 寫複合查詢
+	public static List<DrinkOrderVO> getAllC(Map<String, String[]> map){
 		
-		Transaction tx = session.beginTransaction();
-		List<DrinkOrderVO> list = null;
-		try {
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<DrinkOrderVO> criteriaQuery = builder.createQuery(DrinkOrderVO.class);
-			Root<DrinkOrderVO> root = criteriaQuery.from(DrinkOrderVO.class);
-			List<Predicate> predicateList = new ArrayList<>();
-			
-			Set<String> keys = map.keySet();
-			int count = 0;
-			for (String key : keys) {
-				String value = map.get(key)[0];
-				if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
-					count++;
-					predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
-					System.out.println("有送出查詢資料的欄位數count = " + count);
-				}
+		CriteriaBuilder builder = getSession().getCriteriaBuilder();
+		CriteriaQuery<DrinkOrderVO> criteriaQuery = builder.createQuery(DrinkOrderVO.class);
+		Root<DrinkOrderVO> root = criteriaQuery.from(DrinkOrderVO.class);
+		List<Predicate> predicateList = new ArrayList<>();
+		
+		Set<String> keys = map.keySet();
+		int count = 0;
+		for (String key : keys) {
+			String value = map.get(key)[0];
+			if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
+				count++;
+				predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
+				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
-			System.out.println("predicateList.size()=" + count);
-			criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
-			criteriaQuery.orderBy(builder.asc(root.get("drinkOrderCreateTime")));
-			
-			TypedQuery<DrinkOrderVO> query = session.createQuery(criteriaQuery);
-			list = query.getResultList();
-			
-			tx.commit();
-		}catch(RuntimeException ex) {
-			if(tx != null)
-				tx.rollback();
-			throw ex;
-		}finally {
-			session.close();
 		}
-		return list;
+		System.out.println("predicateList.size()=" + count);
+		criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
+		criteriaQuery.orderBy(builder.asc(root.get("drinkOrderCreateTime")));
+			
+		TypedQuery<DrinkOrderVO> query = getSession().createQuery(criteriaQuery);
+		return query.getResultList();
+			
 	}
 }
