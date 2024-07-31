@@ -11,21 +11,24 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
+import hibernate.util.HibernateUtil;
+
 public class CompositeQuery_DrinkOrderDetail {
 
-	@Autowired
-	private static SessionFactory sessionFactory;
+	private static SessionFactory factory;
 	
-	
-	private static Session getSession() {
-		return sessionFactory.getCurrentSession(); 
+	private CompositeQuery_DrinkOrderDetail() {
+		factory = HibernateUtil.getSessionFactory();
 	}
 	
-	public static  Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<DrinkOrderDetailVO> root, String columnName, String value) {
+	private static Session getSession() {
+		return factory.getCurrentSession(); 
+	}
+	
+	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<DrinkOrderDetailVO> root, String columnName, String value) {
 		
 		Predicate predicate = null;
 		
