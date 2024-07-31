@@ -1,20 +1,23 @@
 package com.ken.drink.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Drink" )
-public class DrinkVO {
+public class DrinkVO  implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "drinkID", updatable = false ,insertable = false)
@@ -24,7 +27,7 @@ public class DrinkVO {
 	@Column(name = "drinkName")
 	private String drinkName;
 	
-	@NotEmpty(message = "請輸入飲品價格")
+	@NotNull(message = "請輸入飲品價格")
 	@Column(name = "drinkPrice")
     private Integer drinkPrice;
     
@@ -40,27 +43,26 @@ public class DrinkVO {
     @Column(name = "drinkTag")
     private String drinkTag;
     
-    @NotEmpty(message = "飲品狀態:不可為空")
+    @NotNull(message = "飲品狀態:不可為空")
     @Column(name = "drinkStatus")
     private Byte drinkStatus;  // Change Integer to Byte
     
-    
+    @Temporal(TemporalType.DATE)
     @Column(name = "drinkUpdateDate" ,insertable = false)
     private Date drinkUpdateDate;
     
     
-    @NotEmpty(message="飲品建立時間，請勿留空")
     @Column(name = "drinkCreateDate", updatable = false, insertable = false)
     private Date drinkCreateDate;
     
 //    @ManyToOne
-//    @JoinColumn(name = "editedByMemberID")
-    @Column(name = "editedByMemberID" , insertable = false)
+//    @JoinColumn(name = "MemberID" , referencedColumnName = "deptno")
+    @Column(name = "editedByMemberID")
     private Integer editedByMemberID;
     
 //    @ManyToOne
-//    @JoinColumn(name = "createdByMemberID")
-    @Column(name = "createdByMemberID" , insertable = false)
+//    @JoinColumn(name = "MemberID" , referencedColumnName = "deptno")
+    @Column(name = "createdByMemberID")
     private Integer createdByMemberID;
 
 	public Integer getDrinkID() {
