@@ -15,7 +15,6 @@ public class DrinkOrderService {
 	@Autowired
 	DrinkOrderRepository repository;
 	
-
 	
 	public void addDrinkOrder(DrinkOrderVO drinkOrderVO) {
 		repository.save(drinkOrderVO);
