@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import hibernate.util.compositeQuery.CompositeQuery_DrinkOrderDetail;
 
-
 @Service("drinkOrderDetailService")
 public class DrinkOrderDetailService {
 
