@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hibernate.util.compositeQuery.CompositeQuery_Drink;
+
 @Service("drinkService")
 public class DrinkService {
 
@@ -36,11 +38,11 @@ public class DrinkService {
 		return optional.orElse(null);
 	}
 	
-	public List<DrinkVO> getAlldrink(){
+	public List<DrinkVO> getAll(){
 		return repository.findAll();
 	}
 	
-//	public List<DrinkVO> getAlldrink(Map<String, String[]> map){
-//		return HibernateUtil_CompositeQuery_Drink.getAllC(map, sessionFactory.openSession());
-//	}
+	public List<DrinkVO> getAll(Map<String, String[]> map){
+		return CompositeQuery_Drink.getAllC(map, sessionFactory.openSession());
+	}
 }
