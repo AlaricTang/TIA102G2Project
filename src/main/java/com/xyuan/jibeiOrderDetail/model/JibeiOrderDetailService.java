@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tang.drinkOrder.model.DrinkOrderVO;
-
 @Service("jibeiOrderDetailService")
 public class JibeiOrderDetailService {
 
