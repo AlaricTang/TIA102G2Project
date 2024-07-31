@@ -1,5 +1,7 @@
 package com.xyuan.jibeiOrderDetail.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="jibeiOrderDetail")
-public class JibeiOrderDetailVO implements java.io.Serializable{
+public class JibeiOrderDetailVO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id		//PK
@@ -21,7 +23,7 @@ public class JibeiOrderDetailVO implements java.io.Serializable{
 //	@JoinColumn(name="productOrderID") // 指定用來join table的column
 //	private ProductOrderIDVO productOrderIDVO;
 	
-	@NotEmpty(message = "請進行登入")
+	@NotEmpty(message = "請選擇商品訂單")
 	@Column(name="productOrderID", updatable = false)
 	private Integer productOrderID;
 	
