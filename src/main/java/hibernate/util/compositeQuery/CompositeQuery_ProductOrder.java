@@ -32,7 +32,7 @@ public class CompositeQuery_ProductOrder {
 	}
 	
 	
-	//複合查詢的判斷
+	//做複合查詢的判斷
 	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<ProductOrderVO> root, String columnName, String value) {
 		
 		Predicate predicate = null;
