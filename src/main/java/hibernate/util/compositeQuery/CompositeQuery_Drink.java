@@ -25,8 +25,6 @@ public class CompositeQuery_Drink {
 		if( "drinkID".equals(columnName) || 
 		    "drinkPrice".equals(columnName) ||
 		    "editedByMemberID".equals(columnName) ||
-			"createdByMemberID".equals(columnName)||
-			"editedByMemberID".equals(columnName) ||
 			"createdByMemberID".equals(columnName))
 			predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
 		else if ("drinkStatus".equals(columnName))
@@ -37,7 +35,7 @@ public class CompositeQuery_Drink {
 		else if ( "drinkName".equals(columnName) ||
 				  "drinkDes".equals(columnName) ||
 				  "drinkTag".equals(columnName)) {
-			predicate = builder.equal(root.get(columnName), "%" + value + "%");
+			predicate = builder.like(root.get(columnName), "%" + value + "%");
 		}
 //		else if ("editedByMemberID".equals(columnName)|| 
 //		"createdByMemberID".equals(columnName)){
