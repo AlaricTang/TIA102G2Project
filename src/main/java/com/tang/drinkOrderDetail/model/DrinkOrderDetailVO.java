@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="drinkorderdetail")
@@ -34,24 +35,24 @@ public class DrinkOrderDetailVO implements Serializable{
 	@Column(name="drinkID")
 	private Integer drinkID;
 	
-	@NotEmpty(message="請選擇冷熱")
+	@NotNull(message="請選擇冷熱")
 	@Column(name="drinkOrderDetailIsHot")
 	private Byte drinkOrderDetailIsHot;
 	
-	@NotEmpty(message="請選擇是否使用環保杯")
+	@NotNull(message="請選擇是否使用環保杯")
 	@Column(name="drinkOrderDetailUseCup")
 	private Byte drinkOrderDetailUseCup;
 	
-	@NotEmpty(message = "請輸入此飲品價錢")
+	@NotNull(message = "請輸入此飲品價錢")
 	@Column(name="drinkOrderDetailPrice")
 	private Integer drinkOrderDetailPrice;
 	
-	@NotEmpty(message="請確認數量")
+	@NotNull(message="請確認數量")
 	@Column(name="drinkOrderDetailAmount")
 	private Integer drinkOrderDetailAmount;
 
 	
-	@NotEmpty(message="是否為寄杯")
+	@NotNull(message="是否為寄杯")
 	@Column(name="drinkOrderDetailIsJibei")
 	private Byte drinkOrderDetailIsJibei;
 	
