@@ -1,0 +1,53 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>飲品資料 - listOneDrink.html</title>
+
+<head th:insert="~{/back-end/drink/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>飲品資料 - listOneDrink.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/drink/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+	<div align="center" th:fragment="listOneDrink-div"> <!-- 此div被select_page.html第158行insert用 -->
+		<h3><span>查詢結果 :</span></h3>
+		<span>飲品編號:</span><span th:text="${drinkVO.drinkID}"></span><br/>
+		<span>飲品名稱:</span><span th:text="${drinkVO.drinkName}"></span><br/>
+		<span>飲品價格:</span><span th:text="${drinkVO.drinkPrice}"></span><br/>
+		<span>飲品描述:</span><span th:text="${drinkVO.drinkDes}"></span><br/>
+		<span>照片:</span><span><img th:src="@{/drink/DBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" width="100px"></span><br/>
+		<span>飲品標籤:</span><span th:text="${drinkVO.drinkTag}"></span><br/>
+		<span>飲品狀態:</span><span th:text="${drinkVO.drinkStatus == 1 ? '上架' : '下架'}"></span><br/>
+		<span>飲品更新時間:</span><span th:text="${drinkVO.drinkUpdateDate}"></span><br/>
+		<span>飲品創建時間:</span><span th:text="${drinkVO.drinkCreateDate}"></span><br/>
+		<span>最新更新者:</span><span th:text="${drinkVO.editedByMemberID}"></span><br/>
+		<span>創建者:</span><span th:text="${drinkVO.createdByMemberID}"></span><br/>
+<!-- 		<span>部門:</span><span th:text="${empVO.deptVO.deptno} + '-[' + ${empVO.deptVO.dname} + ']'"></span><br/> -->
+	</div>
+
+
+</body>
+</html>

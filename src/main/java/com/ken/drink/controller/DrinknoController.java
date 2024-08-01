@@ -28,10 +28,13 @@ import com.ken.drink.model.DrinkVO;
 @Controller
 @Validated
 @RequestMapping("/drink")
-public class DrinkNoController {
+public class DrinknoController {
 	
 	@Autowired
 	DrinkService drinkSvc;
+	
+//	@Autowired
+//	MemberService memberSvc;
 	
 	/*
 	 * This method will be called on select_page.html form submission, handling POST

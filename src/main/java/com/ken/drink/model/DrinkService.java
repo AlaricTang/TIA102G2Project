@@ -43,6 +43,6 @@ public class DrinkService {
 	}
 	
 	public List<DrinkVO> getAll(Map<String, String[]> map){
-		return CompositeQuery_Drink.getAllC(map, sessionFactory.openSession());
+		return CompositeQuery_Drink.getAllC(map, sessionFactory.openSession()); // Session可以刪掉
 	}
 }

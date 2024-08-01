@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ellie.member.model.MemberService;
 import com.ken.drink.model.DrinkService;
 import com.ken.drink.model.DrinkVO;
 
@@ -30,6 +31,9 @@ public class DrinkController {
 	
 	@Autowired
 	DrinkService drinkSvc;
+	
+//	@Autowired
+//	MemberService memberSvc;
 	
 	/*
 	 * This method will serve as addDrink.html handler.

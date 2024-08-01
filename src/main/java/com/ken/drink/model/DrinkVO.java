@@ -56,14 +56,18 @@ public class DrinkVO  implements java.io.Serializable{
     private Date drinkCreateDate;
     
 //    @ManyToOne
-//    @JoinColumn(name = "MemberID" , referencedColumnName = "deptno")
+//    @JoinColumn(name = "MemberID" )
     @Column(name = "editedByMemberID")
     private Integer editedByMemberID;
     
 //    @ManyToOne
-//    @JoinColumn(name = "MemberID" , referencedColumnName = "deptno")
+//    @JoinColumn(name = "MemberID")
     @Column(name = "createdByMemberID")
     private Integer createdByMemberID;
+    
+    public DrinkVO() {
+    	
+    }
 
 	public Integer getDrinkID() {
 		return drinkID;
