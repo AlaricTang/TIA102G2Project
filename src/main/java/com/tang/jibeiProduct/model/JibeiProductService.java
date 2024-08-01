@@ -34,6 +34,7 @@ public class JibeiProductService {
 		return repository.findAll();
 	}
 
+	//可能用不到
 //	public List<JibeiProductVO> getAll(Map<String, String[]> map) {
 //		return CompositeQuery_DrinkOrder.getAllC(map);
 //	}
