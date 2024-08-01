@@ -14,6 +14,6 @@ public interface CampaignProductRepository extends JpaRepository<CampaignProduct
 	@Query(value="delete from campaignProduct where campaignProductID = ?1", nativeQuery = true)
 	void deleteByCampaignProductID(int campaignProductID);
 	
-	@Query(value="from campaignProduct where campaignID")
+	@Query(value="select * from campaignProduct where campaignID =?1", nativeQuery = true)
 	List<CampaignProductVO> getAllByCampaignID(int campaignID);
 }

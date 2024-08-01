@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="drinkorder")
@@ -26,7 +27,7 @@ public class DrinkOrderVO implements Serializable{
 //	@JoinColumn(name="userID") // 指定用來join table的column
 //	private UserVO userVO;
 	
-	@NotEmpty(message = "請進行登入")
+	@NotNull(message = "請進行登入")
 	@Column(name="userID", updatable = false)
 	private Integer userID;
 	
@@ -34,39 +35,38 @@ public class DrinkOrderVO implements Serializable{
 //	@JoinColumn(name="storeID")
 //	private StoreVO storeVO;
 
-	@NotEmpty(message = "請選擇店家")
+	@NotNull(message = "請選擇店家")
 	@Column(name="storeID", updatable = false)
 	private Integer storeID;
 	
-	@NotEmpty(message = "訂單總數:不可為空")
+	@NotNull(message = "訂單總數:不可為空")
 	@Column(name="drinkOrderAmount",updatable = false)
 	private Integer drinkOrderAmount;
 
-	@NotEmpty(message = "取貨時間:不可為空")
+	@NotNull(message = "取貨時間:不可為空")
 	@Future(message = "取貨日期:須為今日(不含)以後")
 	@Column(name="drinkOrderPickTime",updatable = false)
 	private Timestamp drinkOrderPickTime;
 	
-	@NotEmpty(message = "付款方式:不可為空")
+	@NotNull(message = "付款方式:不可為空")
 	@Column(name="drinkOrderPayM",updatable = false)
 	private Byte drinkOrderPayM;
 	
-	@NotEmpty(message = "訂單總價:不可為空")
+	@NotNull(message = "訂單總價:不可為空")
 	@Column(name="drinkOrderTTPrice",updatable = false)
 	private Integer drinkOrderTTPrice;
 	
-	@NotEmpty(message = "訂單狀態:不可為空")
+	@NotNull(message = "訂單狀態:不可為空")
 	@Column(name="drinkOrderStatus")
 	private Byte drinkOrderStatus;
 	
-	@NotEmpty
+	@NotNull
 	@Column(name="drinkOrderPayStatus")
 	private Byte drinkOrderPayStatus;
 	
 	@Column(name="drinkOrderUpdateTime", insertable = false)
 	private Timestamp drinkOrderUpdateTime;
 	
-	@NotEmpty(message="訂單建立時間，請勿留空")
 	@Column(name="drinkOrderCreateTime" ,updatable = false, insertable = false)
 	private Timestamp drinkOrderCreateTime;
 		
@@ -74,7 +74,7 @@ public class DrinkOrderVO implements Serializable{
 //	@JoinColumn(name="memberID")
 //	private MemberVO memberVO;
 
-	@NotEmpty(message = "最新修改(建立)之員工")
+	@NotNull(message = "最新修改(建立)之員工")
 	@Column(name="memberID", insertable = false)
 	private Integer memberID;
 
