@@ -1,5 +1,6 @@
 package hibernate.util.compositeQuery;import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,6 +30,7 @@ public class CompositeQuery_DrinkOrder {
 		return factory.getCurrentSession();
 	}
 	
+	
 	//放複合查詢的判斷
 	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<DrinkOrderVO> root, String columnName, String value) {
 		
@@ -40,30 +42,49 @@ public class CompositeQuery_DrinkOrder {
 			predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
 		else if ("drinkOrderStatus".equals(columnName))
 			predicate = builder.equal(root.get(columnName), Byte.valueOf(value));
-		else if ("drinkOrderCreateTime".equals(columnName))
-			predicate = builder.equal(root.get(columnName), Timestamp.valueOf(value));
-		return predicate;
+		
+		return predicate; 
 	}
+	
 	
 	//根據判斷 寫複合查詢
 	public static List<DrinkOrderVO> getAllC(Map<String, String[]> map){
 		
+		Map<String, String> map2 = new HashMap<>();
+		Set<Map.Entry<String, String[]>> entry = map.entrySet() ;
+
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<DrinkOrderVO> criteriaQuery = builder.createQuery(DrinkOrderVO.class);
 		Root<DrinkOrderVO> root = criteriaQuery.from(DrinkOrderVO.class);
 		List<Predicate> predicateList = new ArrayList<>();
 		
+		for(Map.Entry<String, String[]> row : entry) {
+			String key = row.getKey();
+			if("action".equals(key)) {
+				continue;
+			}
+			
+			String value = row.getValue()[0];
+			if(value==null || value.isEmpty()) {
+				continue;
+			}
+			map2.put(key, value);
+		}
+		
 		Set<String> keys = map.keySet();
-		int count = 0;
+		
+		if(keys.contains("drinkOrderStartCreateTime") && keys.contains("drinkOrderEndCreateTime")) {
+			predicateList.add(builder.between(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map.get("drinkOrderStartCreateTime")[0]), Timestamp.valueOf(map.get("drinkOrderEndCreateTime")[0])));
+		}else if (keys.contains("drinkOrderStartCreateTime") && !(keys.contains("drinkOrderEndCreateTime"))) {
+			predicateList.add(builder.greaterThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map.get("drinkOrderStartCreateTime")[0])));
+		}else if ( !(keys.contains("drinkOrderStartCreateTime")) && keys.contains("drinkOrderEndCreateTime")) {
+			predicateList.add(builder.lessThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map.get("drinkOrderEndCreateTime")[0])));
+		}
+		
 		for (String key : keys) {
 			String value = map.get(key)[0];
-			if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
-				count++;
-				predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
-				System.out.println("有送出查詢資料的欄位數count = " + count);
-			}
+			predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
 		}
-		System.out.println("predicateList.size()=" + count);
 		criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
 		criteriaQuery.orderBy(builder.asc(root.get("drinkOrderCreateTime")));
 			

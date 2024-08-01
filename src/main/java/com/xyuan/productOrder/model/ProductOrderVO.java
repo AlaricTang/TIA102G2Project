@@ -1,5 +1,6 @@
 package com.xyuan.productOrder.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -8,39 +9,57 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "productOrder")
-public class ProductOrderVO {
+public class ProductOrderVO implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id		
 	@GeneratedValue(strategy = GenerationType.IDENTITY)		//auto increment
 	@Column(name="productOrderID", updatable = false, insertable = false)
 	private Integer productOrderID;
 	
-	@Column(name="userID", nullable = false, updatable = false)
+//	@ManyToOne
+//	@JoinColumn(name="userID") 
+//	private UserVO userVO;
+	
+	@NotEmpty(message="請登入")
+	@Column(name="userID", updatable = false)
 	private Integer userID;
 	
-	@Column(name="productOrderTTPrice", nullable = false, updatable = false)
+	@NotEmpty(message="總金額：不可為空")
+	@Column(name="productOrderTTPrice", updatable = false)
 	private Integer productOrderTTPrice;
 	
-	@Column(name="productOrderAmount", nullable = false, updatable = false)
+	@NotEmpty(message="商品總數：不可為空")
+	@Column(name="productOrderAmount", updatable = false)
 	private Integer productOrderAmount;
 	
+	@NotEmpty(message = "訂單狀態:不可為空")
 	@Column(name="productOrderStatus", nullable = false)
 	private Byte productOrderStatus;
 
-	@Column(name="productOrderAddr", nullable = false, updatable = false)
+	@NotEmpty(message = "訂單地址:不可為空")
+	@Column(name="productOrderAddr", updatable = false)
 	private String productOrderAddr;
 
 	@Column(name="productOrderUpdateTime", insertable = false)
 	private Timestamp productOrderUpdateTime;
 	
-	@Column(name="productOrderCreateTime", nullable = false, updatable = false, insertable = false)
+	@NotEmpty(message="訂單建立時間，請勿留空")
+	@Column(name="productOrderCreateTime", updatable = false, insertable = false)
 	private Timestamp productOrderCreateTime;
 	
-	@Column(name="productOrderPayM", nullable = false, updatable = false)
+	@NotEmpty(message = "付款方式:不可為空")
+	@Column(name="productOrderPayM", updatable = false)
 	private Byte productOrderPayM;
+	
+//	@ManyToOne
+//	@JoinColumn(name="memberID") 
+//	private MemberVO memberVO;
 	
 	@Column(name="memberID", nullable = false)
 	private Integer memberID;
