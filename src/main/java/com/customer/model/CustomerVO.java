@@ -1,4 +1,4 @@
-package LI;
+package com.customer.model;
 
 import java.sql.Timestamp;
 
