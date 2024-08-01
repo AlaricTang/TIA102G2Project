@@ -35,9 +35,11 @@ import java.util.Date;
 		@Temporal(TemporalType.DATE)
 		private Date userBirth;
 
+		@NotEmpty(message = "請填寫電話號碼")
 		@Column(name = "userPhone")
 		private String userPhone;
 
+		@NotEmpty(message = "請選擇性別")
 		@Column(name = "userGender")
 		private Integer userGender;
 
