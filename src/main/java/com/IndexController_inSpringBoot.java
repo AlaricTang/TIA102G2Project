@@ -17,7 +17,7 @@ public class IndexController_inSpringBoot {
 	
     @GetMapping("/")
     public String index(Model model) {
-        return "back-end/index"; //view
+        return "index"; //view
     }
     
     // http://......../hello?name=peter1

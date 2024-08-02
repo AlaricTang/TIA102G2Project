@@ -27,7 +27,7 @@ import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Controller
 @Validated
-@RequestMapping("/DrinkOrder")
+@RequestMapping("/drinkOrder")
 public class DrinkOrderNoController {
 
 	@Autowired
