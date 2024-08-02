@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 
 import com.ellie.member.model.MemberVO;
 
-import java.sql.Date;
+import java.util.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -20,47 +20,50 @@ public class StoreVO {
     private Integer storeID;
 
 	@NotEmpty(message = "店家帳號:不可為空")
-	@Column(name = "storeAcc", nullable = false)
+	@Column(name = "storeAcc")
 	private String storeAcc;
 
 	@NotEmpty(message = "店家密碼:不可為空")
-	@Column(name = "storePwd", nullable = false)
+	@Column(name = "storePwd")
 	private String storePwd;
 
 	@NotEmpty(message = "店家名稱:不可為空")
-	@Column(name = "storeName", nullable = false)
+	@Column(name = "storeName")
 	private String storeName;
 
 	@NotEmpty(message = "店家地址:不可為空")
-	@Column(name = "storeAddr", nullable = false)
+	@Column(name = "storeAddr")
 	private String storeAddr;
 
-	@Column(name = "storeMap", nullable = false)
+	@NotEmpty(message =  "店家地圖:不可為空")
+	@Column(name = "storeMap")
 	private String storeMap;
 
-	@NotEmpty(message = "請輸入電話")
-	@Column(name = "storePhone", nullable = false)
+	@Column(name = "storePhone")
 	private String storePhone;
 
 	@Column(name = "storeDes")
 	private String storeDes;
 
-	@NotEmpty(message = "請上傳圖片")
 	@Column(name = "storePic", columnDefinition="MEDIUMBLOB")
 	private byte[] storePic;
 
 	@Column(name = "storeCups")
 	private Integer storeCups;
 
-	@Column(name = "storeOpenTime", nullable = false)
+
+	@Column(name = "storeOpenTime")
 	private Time storeOpenTime;
 
-	@Column(name = "storeCloseTime", nullable = false)
+
+	@Column(name = "storeCloseTime")
 	private Time storeCloseTime;
 
-	@Column(name = "storeCreateDate", nullable = false)
+	@NotEmpty(message = "不可為空")
+	@Column(name = "storeCreateDate")
 	private Date storeCreateDate;
 
+	@NotEmpty(message = "不可為空")
 	@Column(name = "createdByMemberID")
 	private Integer createdByMemberID;
 
