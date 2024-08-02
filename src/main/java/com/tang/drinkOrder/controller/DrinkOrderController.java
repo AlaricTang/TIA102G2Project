@@ -1,6 +1,8 @@
 package com.tang.drinkOrder.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.tang.drinkOrder.model.DrinkOrderService;
 import com.tang.drinkOrder.model.DrinkOrderVO;
 import com.tang.drinkOrderDetail.model.DrinkOrderDetailService;
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Controller
 @RequestMapping("/drinkOrder")
@@ -27,18 +30,34 @@ public class DrinkOrderController {
 	DrinkOrderDetailService drinkOrderDetailSvc;
 
 	//跳轉到 要下單的頁面
+		//需要將購物車物品列出來
 	@GetMapping("drinkOrderPage")
 	public String drinkOrderPage(ModelMap model) {
 		DrinkOrderVO drinkOrderVO = new DrinkOrderVO();
-		model.addAttribute("drinkOrderVO",drinkOrderVO);
+		List<DrinkOrderDetailVO> drinkOrderDetailList = new ArrayList<>();
+		
+		
+		
+		
+		model.addAttribute(drinkOrderVO);
+		model.addAttribute(drinkOrderDetailList);
 		return "back-end/drinkOrder/drinkOrderPage";
 	}
 	
 	
-	@PostMapping("insert")
-	public String insert(@Valid DrinkOrderVO drinkOrderVO, BindingResult result ,ModelMap model)throws IOException{
+	@PostMapping("orderSuccess")
+	public String orderSuccess(@Valid DrinkOrderVO drinkOrderVO, BindingResult result
+			,ModelMap model)throws IOException{
 		
-		return null;
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		//綠界
+		/*************************** 2.開始新增資料 *****************************************/
+		
+		DrinkOrderVO saveDrinkOrder = drinkOrderSvc.addAndGetDrinkOrder(drinkOrderVO);
+//		drinkOrderDetailSvc.addDrinkOrderDetail();
+		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
+		model.addAttribute("saveDrinkOrder", saveDrinkOrder);
+		return "redirect:/drinkOrder/orderSuccess";
 	}
 	
 	
