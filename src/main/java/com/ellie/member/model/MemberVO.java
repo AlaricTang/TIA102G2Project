@@ -16,18 +16,17 @@ public class MemberVO {
 	private Integer memberID;
 
 	@NotEmpty(message = "員工帳號:不可為空")
-	@Column(name = "memberAcc", nullable = false)
+	@Column(name = "memberAcc")
 	private String memberAcc;
 	
 	@NotEmpty(message = "員工密碼:不可為空")
-	@Column(name = "memberPwd", nullable = false)
+	@Column(name = "memberPwd")
 	private String memberPwd;
 
 	@NotEmpty(message = "員工姓名:不可為空")
-	@Column(name = "memberName", nullable = false)
+	@Column(name = "memberName")
 	private String memberName;
 
-	@NotEmpty(message = "電子郵件:不可為空")
 	@Column(name = "memberEmail")
 	private String memberEmail;
 
@@ -38,10 +37,12 @@ public class MemberVO {
 	@Column(name = "memberPic", columnDefinition="MEDIUMBLOB")
 	private byte[] memberPic;
 
-	@Column(name = "memberCreateDate", nullable = false, updatable = false)
+	@NotEmpty(message = "不可為空")
+	@Column(name = "memberCreateDate", updatable = false)
 	private Timestamp memberCreateDate;
 
-	@Column(name = "createdByMemberID", nullable = false)
+	@NotEmpty(message = "不可為空")
+	@Column(name = "createdByMemberID")
 	private Integer createdByMemberID;
 
 	@Column(name = "editedByMemberID")
