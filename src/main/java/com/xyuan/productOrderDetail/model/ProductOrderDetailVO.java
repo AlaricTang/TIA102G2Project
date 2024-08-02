@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="productOrderDetail")
@@ -24,7 +25,7 @@ public class ProductOrderDetailVO implements Serializable{
 //	@JoinColumn(name="productOrderID") 
 //	private ProductOrderIDVO productOrderIDVO;
 	
-	@NotEmpty(message = "請選擇商品訂單")
+	@NotNull(message = "請選擇商品訂單")
 	@Column(name="productOrderID", updatable = false)
 	private Integer productOrderID;
 	
@@ -33,15 +34,15 @@ public class ProductOrderDetailVO implements Serializable{
 //	@JoinColumn(name="productID") 
 //	private ProductIDVO productIDVO;
 	
-	@NotEmpty(message = "請選擇商品")
+	@NotNull(message = "請選擇商品")
 	@Column(name="productID", updatable = false)
 	private Integer productID;
 	
-	@NotEmpty(message = "訂單總數:不可為空")
+	@NotNull(message = "訂單總數:不可為空")
 	@Column(name="productOrderDetailAmount",updatable = false)
 	private Integer productOrderDetailAmount;
 	
-	@NotEmpty(message = "訂單總價:不可為空")
+	@NotNull(message = "訂單總價:不可為空")
 	@Column(name="productOrderDetailPrice",updatable = false)
 	private Integer productOrderDetailPrice;
 
