@@ -35,20 +35,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		<!-- 用途說明5: Starter for using Spring Data JPA with Hibernate -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -186,19 +172,7 @@
 			<!-- <version>8.0.29</version> -->                <!-- spring-boot(2.7.0) 已內建依賴8.029，但預設未下載 -->
 		</dependency>
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		<!-- ========================================================================================== -->
 		<!-- ●以下為 thymeleaf 預備使用● -->
 
@@ -248,6 +222,13 @@
             <artifactId>gson</artifactId>
             <!-- <version>2.9.0</version> -->
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		</dependency>
+
 
 	</dependencies>
 

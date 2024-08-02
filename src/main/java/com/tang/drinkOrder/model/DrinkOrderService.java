@@ -16,8 +16,9 @@ public class DrinkOrderService {
 	DrinkOrderRepository repository;
 	
 	
-	public void addDrinkOrder(DrinkOrderVO drinkOrderVO) {
-		repository.save(drinkOrderVO);
+	public DrinkOrderVO addAndGetDrinkOrder(DrinkOrderVO drinkOrderVO) {
+		DrinkOrderVO saveDrinkOrderVO = repository.save(drinkOrderVO);
+		return saveDrinkOrderVO;
 	}
 	
 	public void updateDrinkOrder(DrinkOrderVO drinkOrderVO) {
