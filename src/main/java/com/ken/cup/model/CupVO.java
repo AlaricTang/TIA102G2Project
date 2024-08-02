@@ -48,7 +48,7 @@ public class CupVO implements java.io.Serializable{
 	private Date cupRentDate;
 	
 
-    @Column(name = "cupCreateDate" ,insertable = false)
+    @Column(name = "cupCreateDate",updatable = false ,insertable = false)
 	private Date cupCreateDate;
 
     public CupVO() {
