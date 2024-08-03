@@ -25,7 +25,7 @@ public class CustomerVO implements java.io.Serializable {
 	private String customerSubject;
 	private String customerMessage;
 	private Timestamp customerTime;
-	private Set<CustomerVO> customers = new HashSet<CustomerVO>();
+//	private Set<CustomerVO> customers = new HashSet<CustomerVO>();
 
 	public CustomerVO() {
 	}

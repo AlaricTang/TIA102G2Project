@@ -35,10 +35,10 @@ public class CustomerService {
 		return optional.orElse(null);  
 	}
 
-//  
-//	public List<CustomerVO> getAll() {
-//		return repository.findAll();
-//	}
+  
+	public List<CustomerVO> getAll() {
+		return repository.findAll();
+	}
 	
 //  客服表格應該不用複合查詢
 //	public Set<CustomerVO> getCustomersByCustomerID(Integer customerID) {
