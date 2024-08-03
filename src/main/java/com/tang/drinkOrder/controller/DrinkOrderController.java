@@ -37,11 +37,12 @@ public class DrinkOrderController {
 	public String drinkOrderPage(ModelMap model, HttpSession session) {
 		DrinkOrderVO drinkOrderVO = new DrinkOrderVO();
 		List<DrinkOrderDetailVO> drinkOrderDetailList = new ArrayList<>();
-		//session裡取得 會員名稱
+		
+		
+//session裡取得 會員名稱
 		String userName = ((UserVO)session.getAttribute("user")).getUserName();
 		model.addAttribute("userName",userName);
-		
-		
+
 		
 		model.addAttribute("drinkOrderVO",drinkOrderVO);
 		model.addAttribute("drinkOrderDetailList",drinkOrderDetailList);
