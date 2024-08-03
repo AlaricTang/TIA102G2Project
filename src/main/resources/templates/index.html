@@ -4,15 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--  
-    Document Title
-    =============================================
-    -->
+    
+    
+    <!--  ======== Document Title =====================================  -->
     <title>啡常渴以 | Home</title>
-    <!--  
-    Favicons
-    =============================================
-    -->
+    
+    
+    <!--  ======== Favicons =====================================  -->
     <link rel="apple-touch-icon" sizes="57x57" href="images/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="images/favicons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/favicons/apple-icon-72x72.png">
@@ -30,26 +28,26 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <!--  
-    Stylesheets
-    =============================================
     
-    -->
+    
+    <!--  ======== Stylesheets =====================================  -->
+    
     <!-- Default stylesheets-->
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" >
+    
     <!-- Template specific stylesheets-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" >
-    
     <link rel="stylesheet" href="lib/animate.css/animate.css" >
     <link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css" >
     <link rel="stylesheet" href="lib/et-line-font/et-line-font.css" >
     <link rel="stylesheet" href="lib/flexslider/flexslider.css" >
-    <link rel="stylesheet" href="lib/owl.carousel/dist/owl.carousel.min.css" >
-    <link rel="stylesheet" href="lib/owl.carousel/dist/owl.theme.default.min.css">
+    <link rel="stylesheet" href="lib/owl.carousel/dist/assets/owl.carousel.min.css" >
+    <link rel="stylesheet" href="lib/owl.carousel/dist/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="lib/magnific-popup/dist/magnific-popup.css" >
     <link rel="stylesheet" href="lib/simple-text-rotator/simpletextrotator.css">
+    
     <!-- Main stylesheet and color file-->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/colors/default.css"  id="color-scheme">
@@ -66,69 +64,12 @@
       </div>
 
 
-
-
-
       <!-- header -->
-      <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
-        <div class="container">
-
-
-          <div class="navbar-header">
-            <!-- 視窗過小 出現漢堡 -->
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <!-- header的首頁按鈕 -->
-            <a class="navbar-brand" th:href="@{/}">啡常渴以</a>
-          </div>
-
-          <!--以下是header標籤-->
-          <div class="collapse navbar-collapse" id="custom-collapse"> <!--id 給漢堡用-->
-            <!--以下都是header標籤內容-->
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown"><a  th:href="@{/}" >首頁</a></li>
-              <li class="dropdown"><a  href="#" >飲品菜單</a></li>
-              <li class="dropdown"><a  href="#" >線上預訂</a></li>
-              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">周邊商品</a>
-                <ul class="dropdown-menu" role="rpoduct">
-                  <li><a href="#" data-toggle="dropdown">所有商品</a></li>
-                  <li><a href="#" data-toggle="dropdown">咖啡豆</a></li>
-                  <li><a href="#" data-toggle="dropdown">掛耳包</a></li>
-                  <li><a href="#" data-toggle="dropdown">馬克杯</a></li>
-                  <li><a href="#" data-toggle="dropdown">帆布袋</a></li>
-                  <li><a href="#" data-toggle="dropdown">寄杯</a></li>
-                </ul>
-              </li>
-              <li class="dropdown"><a href="#" >門市資訊</a></li>
-              <li class="dropdown"><a href="#" >聯絡我們</a></li>
-              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">會員專區</a>
-                <ul class="dropdown-menu" role="user">
-                  <li><a href="#" >會員首頁</a></li>
-                  <li><a href="#" >會員基本資料</a></li>
-                  <li><a href="#" >飲品訂購紀錄</a></li>
-                  <li><a href="#" >商品訂單</a></li>
-                  <li><a href="#" >我的寄杯</a></li>
-                  <li><a href="#" >環保杯租借紀錄</a></li>
-                  <li><a href="#" >修改密碼</a></li>
-                  <li><a href="#" >最新消息</a></li>
-                  <li><a href="#" >登出</a></li>
-                </ul>
-              </li>
-            </ul>
-            <!--以上都是header標籤內容-->
-          </div>
-          <!--以上是header標籤-->
-        </div>
-      </nav>
+      <div id="header-content"></div>
       <!-- header -->
 
 
-
-<!--banner-->
+	  <!--banner-->
       <section class="home-section home-full-height" id="home">
         <div class="hero-slider">
           <ul class="slides">
@@ -169,9 +110,7 @@
           </ul>
         </div>
       </section>
-<!--banner-->
-
-
+	  <!--banner-->
 
 
       <div class="main">
@@ -369,81 +308,17 @@
           <div class="video-player" data-property="{videoURL:'https://www.youtube.com/watch?v=i_XV7YCRzKo', containment:'.module-video', startAt:3, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
         </section>
 
-
- 
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="module-small bg-dark">
-          <div class="container">
-            <div class="row">
-
-              <div class="col-sm-3">
-                <div class="widget">
-                  <h5 class="widget-title font-alt">About 啡常渴以</h5>
-                  <p>The languages only differ in their grammar, their pronunciation and their most common words.</p>
-                  <p>Phone: +1 234 567 89 10</p>Fax: +1 234 567 89 10
-                  <p>Email:<a href="#">somecompany@example.com</a></p>
-                </div>
-              </div>
-
-              <!-- <div class="col-sm-3">
-                <div class="widget">
-                  <h5 class="widget-title font-alt">Recent Comments</h5>
-                  <ul class="icon-list">
-                    <li>Maria on <a href="#">Designer Desk Essentials</a></li>
-                    <li>John on <a href="#">Realistic Business Card Mockup</a></li>
-                    <li>Andy on <a href="#">Eco bag Mockup</a></li>
-                    <li>Jack on <a href="#">Bottle Mockup</a></li>
-                    <li>Mark on <a href="#">Our trip to the Alps</a></li>
-                  </ul>
-                </div>
-              </div> -->
-              
-            </div>
-          </div>
-        </div>
-
-        <hr class="divider-d">
-
-        <footer class="footer bg-dark">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6">
-                <p class="copyright font-alt">&copy; 2017&nbsp;<a href="#">啡常渴以</a>, All Rights Reserved</p>
-              </div>
-              <div class="col-sm-6">
-                <div class="footer-social-links"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
+      
+      
+      <!-- footer -->
+      <div id="footer-content"></div>
+      <!-- footer -->
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
-    <!--  
-    JavaScripts
-    =============================================
-    -->
+    
+    
+    <!--  ======== JavaScripts =====================================  -->
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="lib/wow/dist/wow.js"></script>
