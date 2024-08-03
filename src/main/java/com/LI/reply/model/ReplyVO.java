@@ -19,11 +19,33 @@ import com.LI.customer.model.CustomerVO;
 public class ReplyVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@Column(name = "replyID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer replyID;
-	private CustomerVO customer;
+	
+//	@ManyToOne
+//	@JoinColumn(name = "customerID")
+//	private CustomerVO customerVO;
+	
+	@NotNull
+	@Column(name = "customerID",updatable = false)
+	private Integer customerID;
+	
+	@NotEmpty
+	@Column(name = "replySubject")
 	private String replySubject;
+	
+	@NotEmpty
+	@Column(name = "replyMessage")
 	private String replyMessage;
+	
+	@NotNull
+	@Column(name = "replyTime")
 	private Timestamp replyTime;
+	
+	@NotNull
+	@Column(name = "memberID")
 	private Integer memberID;
 //	private Set<ReplyVO> replys = new HashSet<ReplyVO>();
 
@@ -32,77 +54,134 @@ public class ReplyVO implements java.io.Serializable {
 	public ReplyVO() {
 	}
 
-	@Id
-	@Column(name = "replyID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+
+	
 	public Integer getReplyID() {
 		return replyID;
 	}
-
 	public void setReplyID(Integer replyID) {
 		this.replyID = replyID;
 	}
 
-//	@ManyToOne
-//	@JoinColumn(name = "customerID")
-//	public CustomerVO getCustomer() {
-//		return customer;
-//	}
 
-	public void setCustomerID(CustomerVO customer) {
-		this.customer = customer;
+
+	public Integer getCustomerID() {
+		return customerID;
 	}
-
-	@Column(name = "replySubject")
-	@NotEmpty
+	public void setCustomerID(Integer customerID) {
+		this.customerID = customerID;
+	}
+	
+	
+	
 	public String getReplySubject() {
 		return replySubject;
 	}
-
 	public void setReplySubject(String replySubject) {
 		this.replySubject = replySubject;
 	}
 
-	@Column(name = "replyMessage")
-	@NotEmpty
+
+
 	public String getReplyMessage() {
 		return replyMessage;
 	}
-
 	public void setReplyMessage(String replyMessage) {
 		this.replyMessage = replyMessage;
 	}
 
-	@Column(name = "replyTime")
-	@NotNull
+
+
 	public Timestamp getReplyTime() {
 		return replyTime;
 	}
-
 	public void setReplyTime(Timestamp replyTime) {
 		this.replyTime = replyTime;
 	}
 
-	@Column(name = "memberID")
-	@NotNull
+
+
 	public Integer getMemberID() {
 		return memberID;
 	}
-
 	public void setMemberID(Integer memberID) {
 		this.memberID = memberID;
 	}
 
-//	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="customerVO")
-//	@OrderBy("reply asc")
-//	public Set<ReplyVO> getReplys() {
-//		return replys;
+	
+	
+//
+//	@Id
+//	@Column(name = "replyID")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+//	public Integer getReplyID() {
+//		return replyID;
 //	}
 //
-//	public void setReplys(Set<ReplyVO> replys) {
-//		this.replys = replys;
+//	public void setReplyID(Integer replyID) {
+//		this.replyID = replyID;
 //	}
-
-	
+//
+////	@ManyToOne
+////	@JoinColumn(name = "customerID")
+////	public CustomerVO getCustomer() {
+////		return customer;
+////	}
+//
+//	public void setCustomerID(CustomerVO customer) {
+//		this.customer = customer;
+//	}
+//
+//	@Column(name = "replySubject")
+//	@NotEmpty
+//	public String getReplySubject() {
+//		return replySubject;
+//	}
+//
+//	public void setReplySubject(String replySubject) {
+//		this.replySubject = replySubject;
+//	}
+//
+//	@Column(name = "replyMessage")
+//	@NotEmpty
+//	public String getReplyMessage() {
+//		return replyMessage;
+//	}
+//
+//	public void setReplyMessage(String replyMessage) {
+//		this.replyMessage = replyMessage;
+//	}
+//
+//	@Column(name = "replyTime")
+//	@NotNull
+//	public Timestamp getReplyTime() {
+//		return replyTime;
+//	}
+//
+//	public void setReplyTime(Timestamp replyTime) {
+//		this.replyTime = replyTime;
+//	}
+//
+//	@Column(name = "memberID")
+//	@NotNull
+//	public Integer getMemberID() {
+//		return memberID;
+//	}
+//
+//	public void setMemberID(Integer memberID) {
+//		this.memberID = memberID;
+//	}
+//
+////	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="customerVO")
+////	@OrderBy("reply asc")
+////	public Set<ReplyVO> getReplys() {
+////		return replys;
+////	}
+////
+////	public void setReplys(Set<ReplyVO> replys) {
+////		this.replys = replys;
+////	}
+//
+//	
 	
 }
