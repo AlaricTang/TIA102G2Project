@@ -49,8 +49,9 @@ public class ProductVO implements Serializable{
 	@Column(name="productStatus")
 	private byte productStatus;		//tinyint
 	
+	@NotNull(message = "商品種類:不可為空")
 	@Column(name="productTag")
-	private String productTag;
+	private Byte productTag;
 	
 	@Column(name="productPic")
 	private byte[] productPic;	//MEDIUMBLOB
@@ -124,11 +125,11 @@ public class ProductVO implements Serializable{
 		this.productStatus = productStatus;
 	}
 
-	public String getProductTag() {
+	public Byte getProductTag() {
 		return productTag;
 	}
 
-	public void setProductTag(String productTag) {
+	public void setProductTag(Byte productTag) {
 		this.productTag = productTag;
 	}
 
@@ -167,7 +168,7 @@ public class ProductVO implements Serializable{
 	public ProductVO(Integer productID, @NotEmpty(message = "請輸入商品名稱") String productName,
 			@NotNull(message = "商品價格:不可為空") Integer productPrice, Integer productDprice, String productDes,
 			@NotNull(message = "商品庫存:不可為空") Integer productInv, @NotNull(message = "商品狀態:不可為空") byte productStatus,
-			String productTag, byte[] productPic, Timestamp productUpdateTime, Timestamp productCreateTime,
+			Byte productTag, byte[] productPic, Timestamp productUpdateTime, Timestamp productCreateTime,
 			Integer memberID) {
 		super();
 		this.productID = productID;
