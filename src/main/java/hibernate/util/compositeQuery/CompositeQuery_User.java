@@ -22,8 +22,6 @@ public class CompositeQuery_User {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
         } else if ("userGender".equals(columnName)) { // 用於 Integer
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
-        } else if ("userCreateTime".equals(columnName)) { // 用於 Timestamp
-            predicate = builder.equal(root.get(columnName), java.sql.Timestamp.valueOf(value));
         }
 
         return predicate;
@@ -67,7 +65,7 @@ public class CompositeQuery_User {
             if (tx != null) {
                 tx.rollback();
             }
-            throw ex; // log the exception if necessary
+            throw ex;
         } finally {
             session.close();
         }

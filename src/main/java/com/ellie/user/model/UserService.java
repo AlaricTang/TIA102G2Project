@@ -29,7 +29,7 @@ public class UserService {
 
 	public void deleteUser(Integer userId) {
 		if (repository.existsById(userId))
-			repository.deleteByUserId(userId);
+			repository.deleteByUserID(userId);
 	}
 
 	public UserVO getOneUser(Integer userId) {
