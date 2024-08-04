@@ -93,11 +93,11 @@ public class DrinkOrderVO implements Serializable{
 	public DrinkOrderVO() {
 	}
 
-	public Integer getDrinkorderdetailID() {
+	public Integer getDrinkOrderID() {
 		return drinkOrderID;
 	}
-	public void setDrinkorderdetailID(Integer drinkorderdetailID) {
-		this.drinkOrderID = drinkorderdetailID;
+	public void setDrinkOrderID(Integer drinkOrderID) {
+		this.drinkOrderID = drinkOrderID;
 	}
 
 //	public UserVO getUserVO() {

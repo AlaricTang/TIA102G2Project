@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
 import com.ellie.user.model.UserVO;
+import com.ken.drink.model.DrinkService;
+import com.ken.drink.model.DrinkVO;
 import com.redis.drinkCartTest.DrinkCartService;
 import com.tang.drinkOrder.model.DrinkOrderService;
 import com.tang.drinkOrder.model.DrinkOrderVO;
@@ -44,14 +46,19 @@ public class DrinkOrderController {
 	@Autowired
 	StoreService storeService;
 	
+	@Autowired
+	DrinkService drinkService;
+	
 	//購物車頁面進來
 	//跳轉到 要下單頁面
 		//需要將購物人資訊  購物車物品列出來 
 		//給user確認 放好VO存 session
 	@GetMapping("drinkOrderPage")
 	public String drinkOrderPage(ModelMap model, HttpSession session) throws IOException {
+		int totalPrice = 0;
 		DrinkOrderVO drinkOrderVO = new DrinkOrderVO();
 		List<DrinkOrderDetailVO> drinkCartList = new ArrayList<>();
+		
 		
 		
 
@@ -61,24 +68,28 @@ public class DrinkOrderController {
 		drinkOrderVO.setUserID(userID);
 		
 		//訂購門市
-		String str_drinkOrderStore = drinkCartService.getDrinkOrder(userID,"drinkOrderStore");	//從Jedis拿 先假定都從Jedis拿
+		String str_drinkOrderStore = drinkCartService.getDrinkOrder(userID,"drinkOrderStore");	//從Jedis拿 先假定都從Jedis拿 =======================================
 		StoreVO drinkOrderStore =  storeService.getOneStore(Integer.valueOf(str_drinkOrderStore));
 		drinkOrderVO.setStoreID(drinkOrderStore.getStoreID());
 		
 		//取貨時間
 //		String str_drinkOrderPickTime =(String) session.getAttribute("drinkOrderPickTime");   //範例 從session拿的話
-		String str_drinkOrderPickTime = drinkCartService.getDrinkOrder(userID,"drinkOrderPickTime"); 
+		String str_drinkOrderPickTime = drinkCartService.getDrinkOrder(userID,"drinkOrderPickTime");  //=======================================
 		str_drinkOrderPickTime = str_drinkOrderPickTime.replace("T", " ") + ":00";
 		Timestamp drinkOrderPickTime = Timestamp.valueOf(str_drinkOrderPickTime);
 		drinkOrderVO.setDrinkOrderPickTime(drinkOrderPickTime);
 		
-		//訂單金額
-		String str_drinkOrderAmount = drinkCartService.getDrinkOrder(userID,"drinkOrderAmount");
-		drinkOrderVO.setDrinkOrderAmount(Integer.valueOf(str_drinkOrderAmount));
-		
 		//使用環保杯數
-		String str_cupNumber = drinkCartService.getDrinkOrder(userID,"cupNumber");
+		String str_cupNumber = drinkCartService.getDrinkOrder(userID,"cupNumber"); //=======================================
 		drinkOrderVO.setCupNumber(Integer.valueOf(str_cupNumber));
+		
+		//購物車列表 + 確認訂單金額價錢
+		drinkCartList = drinkCartService.getDrinkCart(userID); 
+		for(DrinkOrderDetailVO drinkCartItem : drinkCartList) {
+			DrinkVO drink = drinkService.getOneDrink(drinkCartItem.getDrinkID());
+			totalPrice += drink.getDrinkPrice();
+		}
+		drinkOrderVO.setDrinkOrderAmount(totalPrice);
 		
 		//把訂單資訊存session
 		session.setAttribute("drinkOrderVO",drinkOrderVO);
@@ -88,14 +99,8 @@ public class DrinkOrderController {
 		model.addAttribute("userName",user.getUserName());
 		model.addAttribute("drinkOrderStore",drinkOrderStore.getStoreName());
 		model.addAttribute("drinkOrderPickTime",str_drinkOrderPickTime);
-		model.addAttribute("drinkOrderAmount",str_drinkOrderAmount);
-		
-		
-		//購物車列表
-		drinkCartList = drinkCartService.getDrinkCart(userID);
-		if(drinkCartList == null) {
-			return "購物車頁面";
-		}
+		model.addAttribute("drinkOrderAmount",totalPrice);
+
 		model.addAttribute("drinkCartList",drinkCartList);
 		return "back-end/drinkOrder/drinkOrderPage";
 	}
@@ -104,15 +109,15 @@ public class DrinkOrderController {
 //	後端去下單,跳轉到成功頁面
 //  這裡含 存訂單明細的動作
 	@PostMapping("order")
-	public String order(ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
+	synchronized public String order(ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
 //		if(result.hasErrors()) {
 //			return "back-end/drinkOrder/drinkOrderPage";
 //		}
 
 		//判斷訂單正確與否 & 存訂單
-		DrinkOrderVO drinkOrderVO = (DrinkOrderVO)session.getAttribute("drinkOrder"); //取得訂單
+		DrinkOrderVO drinkOrderVO = (DrinkOrderVO)session.getAttribute("drinkOrder"); //取得訂單 =======================================
 		
-		//判斷環保杯數 滿足
+		//判斷目前 店家環保杯數 是否滿足
 		StoreVO store = storeService.getOneStore(drinkOrderVO.getStoreID()); 
 		if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
 			return "失敗頁面";
@@ -122,15 +127,18 @@ public class DrinkOrderController {
 		drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("0"));//訂單 狀態預設為 未付款
 		if(drinkOrderVO.getDrinkOrderPayM() == 1) { //如果為線上付款 去綠界
 			//綠界實行
+			
 			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
 		}
 		DrinkOrderVO saveDrinkOrder = drinkOrderSvc.addAndGetDrinkOrder(drinkOrderVO); //存訂單
+		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID();
 		
-		//去Redis 取得user的購物車明細
+		
 		Integer userID = drinkOrderVO.getUserID(); //獲取訂購人 ID
 		List<DrinkOrderDetailVO> cartDrinks =  drinkCartService.getDrinkCart(userID); //取出他的購物車明細
 		
 		for(DrinkOrderDetailVO drinkDetails : cartDrinks ) { //根據購物車 訂單明細
+			drinkDetails.setDrinkOrderID(drinkOrderID); //訂單明細 綁 訂單ID 
 			drinkOrderDetailSvc.addDrinkOrderDetail(drinkDetails);//存訂單明細
 		}
 		
