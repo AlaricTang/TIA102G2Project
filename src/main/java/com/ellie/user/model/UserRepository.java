@@ -9,7 +9,7 @@ public interface UserRepository extends JpaRepository<UserVO, Integer> {
 
     @Transactional // 定義此方法為transaction 若發生錯誤 幫你RollBack
     @Modifying // 告知此方法為修改操作，沒寫JPA不會給你修改
-    @Query(value = "delete from user where userId = ?1", nativeQuery = true)
-    void deleteByUserId(int userId);
+    @Query(value = "delete from user where userID = ?1", nativeQuery = true)
+    void deleteByUserID(int userID);
 }
 

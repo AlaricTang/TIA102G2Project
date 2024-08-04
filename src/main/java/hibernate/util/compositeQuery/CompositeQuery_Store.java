@@ -22,8 +22,8 @@ public class CompositeQuery_Store {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
         } else if ("storeCups".equals(columnName)) { // 用於 Integer
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
-        } else if ("storeCreateDate".equals(columnName)) { // 用於 Date
-            predicate = builder.equal(root.get(columnName), java.sql.Date.valueOf(value));
+//        } else if ("storeCreateDate".equals(columnName)) { // 用於 Date
+//            predicate = builder.equal(root.get(columnName), java.sql.Date.valueOf(value));
         }
 
         return predicate;

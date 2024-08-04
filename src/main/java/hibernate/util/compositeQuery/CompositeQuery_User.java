@@ -16,14 +16,12 @@ public class CompositeQuery_User {
     public static Predicate get_aPredicate_For_User(CriteriaBuilder builder, Root<UserVO> root, String columnName, String value) {
         Predicate predicate = null;
 
-        if ("userId".equals(columnName)) { // 用於 Integer
+        if ("userID".equals(columnName)) { // 用於 Integer
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         } else if ("userEmail".equals(columnName) || "userName".equals(columnName)) { // 用於 String
             predicate = builder.like(root.get(columnName), "%" + value + "%");
         } else if ("userGender".equals(columnName)) { // 用於 Integer
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
-        } else if ("userCreateTime".equals(columnName)) { // 用於 Timestamp
-            predicate = builder.equal(root.get(columnName), java.sql.Timestamp.valueOf(value));
         }
 
         return predicate;
@@ -57,7 +55,7 @@ public class CompositeQuery_User {
             }
             System.out.println("predicateList.size() = " + predicateList.size());
             criteriaQuery.where(predicateList.toArray(new Predicate[0]));
-            criteriaQuery.orderBy(builder.asc(root.get("userId")));
+            criteriaQuery.orderBy(builder.asc(root.get("userID")));
             // 創建 javax.persistence.Query
             Query query = session.createQuery(criteriaQuery);
             list = query.getResultList();
@@ -67,7 +65,7 @@ public class CompositeQuery_User {
             if (tx != null) {
                 tx.rollback();
             }
-            throw ex; // log the exception if necessary
+            throw ex;
         } finally {
             session.close();
         }

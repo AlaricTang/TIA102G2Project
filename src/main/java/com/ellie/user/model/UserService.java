@@ -27,13 +27,13 @@ public class UserService {
 		repository.save(userVO);
 	}
 
-	public void deleteUser(Integer userId) {
-		if (repository.existsById(userId))
-			repository.deleteByUserId(userId);
+	public void deleteUser(Integer userID) {
+		if (repository.existsById(userID))
+			repository.deleteByUserID(userID);
 	}
 
-	public UserVO getOneUser(Integer userId) {
-		Optional<UserVO> optional = repository.findById(userId);
+	public UserVO getOneUser(Integer userID) {
+		Optional<UserVO> optional = repository.findById(userID);
 		return optional.orElse(null);
 	}
 

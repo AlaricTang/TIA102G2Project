@@ -27,14 +27,14 @@ public class MemberService {
         repository.save(memberVO);
     }
 
-    public void deleteMember(Integer memberId) {
-        if (repository.existsById(memberId)) {
-            repository.deleteByMemberId(memberId);
+    public void deleteMember(Integer memberID) {
+        if (repository.existsById(memberID)) {
+            repository.deleteByMemberID(memberID);
         }
     }
 
-    public MemberVO getOneMember(Integer memberId) {
-        Optional<MemberVO> optional = repository.findById(memberId);
+    public MemberVO getOneMember(Integer memberID) {
+        Optional<MemberVO> optional = repository.findById(memberID);
         return optional.orElse(null);
     }
 

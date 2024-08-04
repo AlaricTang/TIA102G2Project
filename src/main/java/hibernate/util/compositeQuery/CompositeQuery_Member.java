@@ -22,8 +22,8 @@ public class CompositeQuery_Member {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
         } else if ("memberGender".equals(columnName)) { // 用於 Integer
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
-        } else if ("memberCreateDate".equals(columnName)) { // 用於 Timestamp
-            predicate = builder.equal(root.get(columnName), java.sql.Timestamp.valueOf(value));
+//        } else if ("memberCreateDate".equals(columnName)) { // 用於 Timestamp
+//            predicate = builder.equal(root.get(columnName), java.sql.Timestamp.valueOf(value));
         }
 
         return predicate;
