@@ -8,9 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+
+import com.ellie.user.model.UserVO;
 
 @Entity
 @Table(name="drinkorder")
@@ -77,6 +81,9 @@ public class DrinkOrderVO implements Serializable{
 	@Column(name="memberID", insertable = false)
 	private Integer memberID;
 
+	@Column(name = "cupNumber",updatable = false)
+	private Integer cupNumber;
+	
 	//其他地方的fk
 //	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "drinkOrderVO")
 //	@OrderBy("drinkOrderDetailID asc")
@@ -93,7 +100,13 @@ public class DrinkOrderVO implements Serializable{
 		this.drinkOrderID = drinkorderdetailID;
 	}
 
-	
+//	public UserVO getUserVO() {
+//		return userVO;
+//	}
+//
+//	public void setUserVO(UserVO userVO) {
+//		this.userVO = userVO;
+//	}
 	
 	public Integer getUserID() {
 		return userID;
@@ -104,6 +117,8 @@ public class DrinkOrderVO implements Serializable{
 
 	
 	
+	
+
 	public Integer getStoreID() {
 		return storeID;
 	}
@@ -191,6 +206,15 @@ public class DrinkOrderVO implements Serializable{
 	public void setMemberID(Integer memberID) {
 		this.memberID = memberID;
 	}
+	
+	public Integer getCupNumber() {
+		return cupNumber;
+	}
+	public void setCupNumber(Integer cupNumber) {
+		this.cupNumber = cupNumber;
+	}
+
+
 
 //	public Set<DrinkOrderDetailVO> getDrinkOrderDetails() {
 //		return drinkOrderDetails;
@@ -202,12 +226,12 @@ public class DrinkOrderVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "DrinkOrderVO [drinkorderID=" + drinkOrderID + ", userID=" + userID + ", storeID=" + storeID
+		return "DrinkOrderVO [drinkOrderID=" + drinkOrderID + ", userID=" + userID + ", storeID=" + storeID
 				+ ", drinkOrderAmount=" + drinkOrderAmount + ", drinkOrderPickTime=" + drinkOrderPickTime
 				+ ", drinkOrderPayM=" + drinkOrderPayM + ", drinkOrderTTPrice=" + drinkOrderTTPrice
 				+ ", drinkOrderStatus=" + drinkOrderStatus + ", drinkOrderPayStatus=" + drinkOrderPayStatus
 				+ ", drinkOrderUpdateTime=" + drinkOrderUpdateTime + ", drinkOrderCreateTime=" + drinkOrderCreateTime
-				+ ", memberID=" + memberID + "]";
+				+ ", memberID=" + memberID + ", cupNumber=" + cupNumber + "]";
 	}
 	
 	
