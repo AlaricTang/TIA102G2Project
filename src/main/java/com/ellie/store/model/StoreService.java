@@ -27,14 +27,14 @@ public class StoreService {
         repository.save(storeVO);
     }
 
-    public void deleteStore(Integer storeId) {
-        if (repository.existsById(storeId)) {
-            repository.deleteByStoreId(storeId);
+    public void deleteStore(Integer storeID) {
+        if (repository.existsById(storeID)) {
+            repository.deleteByStoreID(storeID);
         }
     }
 
-    public StoreVO getOneStore(Integer storeId) {
-        Optional<StoreVO> optional = repository.findById(storeId);
+    public StoreVO getOneStore(Integer storeID) {
+        Optional<StoreVO> optional = repository.findById(storeID);
         return optional.orElse(null);
     }
 
