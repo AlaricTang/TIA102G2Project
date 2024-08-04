@@ -11,13 +11,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-@Service("redisService")
+@Service("jedisService")
 public class JedisService {
 
-	private static JedisPool jedisPool = JedisPoolUtil.getJedisPool();
+	private final JedisPool jedisPool;
 	
 	public JedisService(JedisPool jedisPool) {
-		JedisService.jedisPool = jedisPool;
+		this.jedisPool = jedisPool;
 	}
 	
 	// =============== for OneOne ===============
