@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
@@ -100,8 +102,9 @@ public class DrinkOrderController {
 	
 	
 //	後端去下單,跳轉到成功頁面
-	@PostMapping("orderSuccess")
-	public String orderSuccess(ModelMap model,HttpSession session)throws IOException{
+//  這裡含 存訂單明細的動作
+	@PostMapping("order")
+	public String order(ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
 //		if(result.hasErrors()) {
 //			return "back-end/drinkOrder/drinkOrderPage";
 //		}
@@ -131,13 +134,17 @@ public class DrinkOrderController {
 			drinkOrderDetailSvc.addDrinkOrderDetail(drinkDetails);//存訂單明細
 		}
 		
-		drinkCartService.deleteDrinkDetail(userID); //下訂完 刪購物車
+		drinkCartService.deleteDrinkDetail(userID); //下訂完 刪購物車明細
 				
-		model.addAttribute("saveDrinkOrder", saveDrinkOrder);//成功頁面要呈現訂單資訊(含訂單編號 ㄏㄏㄚ訂單時間等)
-		return "redirect:/drinkOrder/orderSuccess";
+		redirectAttributes.addAttribute("saveDrinkOrder", saveDrinkOrder);//成功頁面要呈現訂單資訊(含訂單編號 訂單時間等)
+		return "redirect:/drinkOrder/orderSuccess"; //這會跑下面這個
 	}
 	
-	
+	@GetMapping("orderSuccess")
+	public String orderSuccess(@ModelAttribute("saveDrinkOrder") DrinkOrderVO saveDrinkOrder, ModelMap model) {
+		model.addAttribute("saveDrinkOrder",saveDrinkOrder);
+		return "drinkOrder/orderSuccess";
+	}
 	
 }
 //.

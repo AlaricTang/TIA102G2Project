@@ -21,6 +21,28 @@ public class DrinkOrderService {
 		return saveDrinkOrderVO;
 	}
 	
+
+	public DrinkOrderVO getOneDrinkOrder (Integer drinkOrderID) {
+		Optional<DrinkOrderVO> optional = repository.findById(drinkOrderID);
+		return optional.orElse(null);
+	}
+	
+	public List<DrinkOrderVO> getAll(){
+		return repository.findAll();
+	}
+	
+	public List<DrinkOrderVO> getAllUndone(){
+		return repository.getAllUndoneDrinkOrder();
+	}
+	
+	public List<DrinkOrderVO> getAllUserDrinkOrder(Integer userID){
+		return repository.getAllUserDrinkOrder(userID);
+	}
+	
+	public List<DrinkOrderVO> getAll(Map<String, String> map){
+		return CompositeQuery_DrinkOrder.getAllC(map);
+	}
+	
 	public void updateDrinkOrder(DrinkOrderVO drinkOrderVO) {
 		repository.save(drinkOrderVO);
 	}
@@ -35,22 +57,5 @@ public class DrinkOrderService {
 	public DrinkOrderVO getOneUndoneDrinkOrder (Integer drinkOrderID) {
 		Optional<DrinkOrderVO> optional = Optional.ofNullable(repository.getOneUndoneDrinkOrder(drinkOrderID));
 		return optional.orElse(null);
-	}
-	
-	public DrinkOrderVO getOneDrinkOrder (Integer drinkOrderID) {
-		Optional<DrinkOrderVO> optional = repository.findById(drinkOrderID);
-		return optional.orElse(null);
-	}
-	
-	public List<DrinkOrderVO> getAll(){
-		return repository.findAll();
-	}
-	
-	public List<DrinkOrderVO> getAll(Map<String, String> map){
-		return CompositeQuery_DrinkOrder.getAllC(map);
-	}
-	
-	public List<DrinkOrderVO> getAllUndone(){
-		return repository.getAllUndoneDrinkOrder();
 	}
 }

@@ -36,7 +36,10 @@ public class DrinkOrderDetailService {
 		return repository.findAll();
 	}
 	
-	//此為複合查詢??
+	public List<DrinkOrderDetailVO> getByDrinkOrderID(Integer drinkOrderID){
+		return repository.getByDrinkOrderID(drinkOrderID);
+	}
+	
 	public List<DrinkOrderDetailVO> getAll(Map<String, String[]> map){
 		return CompositeQuery_DrinkOrderDetail.getAllC(map);
 	}
