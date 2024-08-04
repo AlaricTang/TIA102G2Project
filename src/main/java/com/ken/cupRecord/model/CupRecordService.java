@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import hibernate.util.compositeQuery.CompositeQuery_CupRecord;
 
-@Service("cupService")
+@Service("cupRecordService")
 public class CupRecordService {
 
 	@Autowired

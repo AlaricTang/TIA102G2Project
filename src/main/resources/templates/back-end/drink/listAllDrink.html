@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>所有員工資料 - listAllEmp.html</title>
+<title>所有飲品資料 - listAllDrink.html</title>
 
 <head th:insert="~{/back-end/drink/included-fragment}"></head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
@@ -106,7 +106,7 @@ body {
 			  <form method="post" th:action="@{/drink/delete}" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="drinkID" th:value="${drinkVO.drinkID}"></form>
-			
+
 			</td>
 			</tr>
 		</th:block>
