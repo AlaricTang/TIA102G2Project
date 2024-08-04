@@ -35,35 +35,40 @@ public class DrinkOrderNoController {
 	
 	@Autowired
 	DrinkOrderDetailService drinkOrderDetailService;
-	
+
+	//從訂單管理 或訂單紀錄來 原頁面存在location
 	@PostMapping("getOne_For_Display")
 	public String getOne_For_Display(
 			@NotEmpty(message = "訂單編號:請勿空白")
 			@Min(value= 0 , message = "訂單編號: 不可小於 {value}")
-			@RequestParam("drinkOrderID") 
-			String drinkOrderID,
+			@RequestParam("drinkOrderID") String drinkOrderID,
+			@RequestParam("location") String location,
 			ModelMap model) {
+		
+		//查訂單
 		DrinkOrderVO drinkOrderVO = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
-		
-		List<DrinkOrderVO> list = drinkOrderService.getAll();
-		model.addAttribute("drinkOrderListData", list);
-		
-		model.addAttribute("drinkOrderVO", new DrinkOrderVO());
-		List<DrinkOrderDetailVO> list2 = drinkOrderDetailService.getAll();
-		model.addAttribute("drinkOrderDetailListData", list2);
-		
-		if(drinkOrderVO == null) {
+	
+		//沒查到,回原頁面 
+		if(drinkOrderVO == null) {	
+			List<DrinkOrderVO> list = drinkOrderService.getAll();
+			model.addAttribute("drinkOrderListData", list);
+			model.addAttribute("drinkOrderVO", new DrinkOrderVO());
 			model.addAttribute("errorMessage", "查無此訂單");
-			//後面要分別回到 訂單紀錄 或訂單管理 
-			return "back-end/drinkOrder/select_page";
+			return location;
 		}
 		
+		//查到,回原頁面
 		model.addAttribute("drinkOrderVO", drinkOrderVO);
 		model.addAttribute("getOne_For_Display", "true");
 		
-		
-		return "back-end/drinkOrder/select_page";
+		return location;
 	}
+	
+	//更改 訂單狀態 邏輯我要再想一下
+	
+	
+	
+	
 	
 	@ExceptionHandler(value = { ConstraintViolationException.class })
 	public ModelAndView handleError(HttpServletRequest req, ConstraintViolationException e,Model model) {
