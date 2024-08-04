@@ -32,16 +32,16 @@ public class DrinkCartService {
 	}
 	
 	public void deleteDrinkDetail (Integer userID) throws IOException{
-		jedisSvc.deleteList(userID.toString());
+		jedisSvc.delete(userID.toString());
 	}
 	
 //	購物車 訂購人資訊用
-	public void setDrinkOrder(String key, String String) throws IOException {
-		jedisSvc.saveOneOne(key, String);
+	public void setDrinkOrder(Integer userID , String key, String String) throws IOException {
+		jedisSvc.saveUserOneOne(userID.toString(),key, String);
 	}
 	
-	public String getDrinkOrder(String key) throws IOException{
-		return jedisSvc.getOneOne(key);
+	public String getDrinkOrder(Integer userID , String key) throws IOException{
+		return jedisSvc.getUserOneOne(userID.toString(),key);
 	}
 	
 }

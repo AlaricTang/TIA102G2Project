@@ -59,23 +59,23 @@ public class DrinkOrderController {
 		drinkOrderVO.setUserID(userID);
 		
 		//訂購門市
-		String str_drinkOrderStore = drinkCartService.getDrinkOrder("drinkOrderStore");	//從Jedis拿 先假定都從Jedis拿
+		String str_drinkOrderStore = drinkCartService.getDrinkOrder(userID,"drinkOrderStore");	//從Jedis拿 先假定都從Jedis拿
 		StoreVO drinkOrderStore =  storeService.getOneStore(Integer.valueOf(str_drinkOrderStore));
 		drinkOrderVO.setStoreID(drinkOrderStore.getStoreID());
 		
 		//取貨時間
 //		String str_drinkOrderPickTime =(String) session.getAttribute("drinkOrderPickTime");   //範例 從session拿的話
-		String str_drinkOrderPickTime = drinkCartService.getDrinkOrder("drinkOrderPickTime"); 
+		String str_drinkOrderPickTime = drinkCartService.getDrinkOrder(userID,"drinkOrderPickTime"); 
 		str_drinkOrderPickTime = str_drinkOrderPickTime.replace("T", " ") + ":00";
 		Timestamp drinkOrderPickTime = Timestamp.valueOf(str_drinkOrderPickTime);
 		drinkOrderVO.setDrinkOrderPickTime(drinkOrderPickTime);
 		
 		//訂單金額
-		String str_drinkOrderAmount = drinkCartService.getDrinkOrder("drinkOrderAmount");
+		String str_drinkOrderAmount = drinkCartService.getDrinkOrder(userID,"drinkOrderAmount");
 		drinkOrderVO.setDrinkOrderAmount(Integer.valueOf(str_drinkOrderAmount));
 		
 		//使用環保杯數
-		String str_cupNumber = drinkCartService.getDrinkOrder("cupNumber");
+		String str_cupNumber = drinkCartService.getDrinkOrder(userID,"cupNumber");
 		drinkOrderVO.setCupNumber(Integer.valueOf(str_cupNumber));
 		
 		//把訂單資訊存session
