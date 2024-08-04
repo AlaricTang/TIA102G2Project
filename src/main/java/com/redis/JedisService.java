@@ -20,7 +20,7 @@ public class JedisService {
 		JedisService.jedisPool = jedisPool;
 	}
 	
-	// =============== for String ===============
+	// =============== for OneOne ===============
 	public void saveOneOne(String key,String value)throws IOException{
 		try(Jedis jedis = jedisPool.getResource()){
 			 jedis.set(key, value);
@@ -29,6 +29,20 @@ public class JedisService {
 	public String getOneOne(String key)throws IOException{
 		try(Jedis jedis = jedisPool.getResource()){
 			return jedis.get(key);
+		}
+	}
+	
+	// =============== for UserOneOne ===============
+	public void saveUserOneOne(String key, String filed, String value )throws IOException{
+		try(Jedis jedis = jedisPool.getResource()){
+			jedis.hset(key, filed, value);
+		}
+	}
+	
+	public String getUserOneOne(String key, String filed )throws IOException{
+		try(Jedis jedis = jedisPool.getResource()){
+			return jedis.hget(key, filed);
+			
 		}
 	}
 	
@@ -64,7 +78,7 @@ public class JedisService {
 		return null;
 	}
 	
-	public void deleteList(String key)throws IOException{
+	public void delete(String key)throws IOException{
 		try(Jedis jedis = jedisPool.getResource()){
 			jedis.del(key);
 		}

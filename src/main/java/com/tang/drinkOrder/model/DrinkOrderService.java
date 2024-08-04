@@ -25,9 +25,16 @@ public class DrinkOrderService {
 		repository.save(drinkOrderVO);
 	}
 	
+	//沒用到
 	public void deleteDrinkOrder(Integer drinkOrderID) {
 		if(repository.existsById(drinkOrderID))
 			repository.deleteByDrinkOrderID(drinkOrderID);
+	}
+	
+	//沒用到
+	public DrinkOrderVO getOneUndoneDrinkOrder (Integer drinkOrderID) {
+		Optional<DrinkOrderVO> optional = Optional.ofNullable(repository.getOneUndoneDrinkOrder(drinkOrderID));
+		return optional.orElse(null);
 	}
 	
 	public DrinkOrderVO getOneDrinkOrder (Integer drinkOrderID) {
@@ -39,7 +46,11 @@ public class DrinkOrderService {
 		return repository.findAll();
 	}
 	
-	public List<DrinkOrderVO> getAll(Map<String, String[]> map){
+	public List<DrinkOrderVO> getAll(Map<String, String> map){
 		return CompositeQuery_DrinkOrder.getAllC(map);
+	}
+	
+	public List<DrinkOrderVO> getAllUndone(){
+		return repository.getAllUndoneDrinkOrder();
 	}
 }

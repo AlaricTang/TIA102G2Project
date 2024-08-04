@@ -10,13 +10,7 @@ public class JedisPoolUtil {
 	private JedisPoolUtil() {
 	}
 
-//	public static JedisPool jedisPool() {
-//		JedisPoolConfig poolConfig = new JedisPoolConfig();
-//		poolConfig.setMaxTotal(8);
-//		poolConfig.setMaxIdle(8);
-//		poolConfig.setMaxWaitMillis(10000);
-//		return new JedisPool(poolConfig, host, port);
-//	}
+
 	public static JedisPool getJedisPool() {
 		if (pool == null) {
 			synchronized (JedisPoolUtil.class) {
@@ -32,7 +26,7 @@ public class JedisPoolUtil {
 		return pool;
 	}
 
-	// 可在ServletContextListener的contextDestroyed裡呼叫此方法註銷Redis連線池
+
 	public static void shutdownJedisPool() {
 		if (pool != null)
 			pool.destroy();

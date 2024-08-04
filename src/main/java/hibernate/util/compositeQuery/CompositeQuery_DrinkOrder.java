@@ -48,43 +48,42 @@ public class CompositeQuery_DrinkOrder {
 	
 	
 	//根據判斷 寫複合查詢
-	public static List<DrinkOrderVO> getAllC(Map<String, String[]> map){
+	public static List<DrinkOrderVO> getAllC(Map<String, String> map){
 		
 		Map<String, String> map2 = new HashMap<>();
-		Set<Map.Entry<String, String[]>> entry = map.entrySet() ;
+		Set<Map.Entry<String, String>> entry = map.entrySet() ;
 
 		CriteriaBuilder builder = getSession().getCriteriaBuilder();
 		CriteriaQuery<DrinkOrderVO> criteriaQuery = builder.createQuery(DrinkOrderVO.class);
 		Root<DrinkOrderVO> root = criteriaQuery.from(DrinkOrderVO.class);
 		List<Predicate> predicateList = new ArrayList<>();
 		
-		for(Map.Entry<String, String[]> row : entry) {
+		for(Map.Entry<String, String> row : entry) {
 			String key = row.getKey();
-			if("action".equals(key)) {
+			if("action".equals(key)) { //雖然應該不會有action
 				continue;
 			}
-			
-			String value = row.getValue()[0];
+			String value = row.getValue();
 			if(value==null || value.isEmpty()) {
 				continue;
 			}
 			map2.put(key, value);
 		}
 		
-		Set<String> keys = map.keySet();
-		
-		if(keys.contains("drinkOrderStartCreateTime") && keys.contains("drinkOrderEndCreateTime")) {
-			predicateList.add(builder.between(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map.get("drinkOrderStartCreateTime")[0]), Timestamp.valueOf(map.get("drinkOrderEndCreateTime")[0])));
-		}else if (keys.contains("drinkOrderStartCreateTime") && !(keys.contains("drinkOrderEndCreateTime"))) {
-			predicateList.add(builder.greaterThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map.get("drinkOrderStartCreateTime")[0])));
-		}else if ( !(keys.contains("drinkOrderStartCreateTime")) && keys.contains("drinkOrderEndCreateTime")) {
-			predicateList.add(builder.lessThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map.get("drinkOrderEndCreateTime")[0])));
-		}
-		
+		Set<String> keys = map2.keySet();
 		for (String key : keys) {
-			String value = map.get(key)[0];
+			String value = map2.get(key);
 			predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
 		}
+		
+		if(keys.contains("drinkOrderStartCreateTime") && keys.contains("drinkOrderEndCreateTime")) {
+			predicateList.add(builder.between(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderStartCreateTime")), Timestamp.valueOf(map.get("drinkOrderEndCreateTime"))));
+		}else if (keys.contains("drinkOrderStartCreateTime") && !(keys.contains("drinkOrderEndCreateTime"))) {
+			predicateList.add(builder.greaterThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderStartCreateTime"))));
+		}else if ( !(keys.contains("drinkOrderStartCreateTime")) && keys.contains("drinkOrderEndCreateTime")) {
+			predicateList.add(builder.lessThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderEndCreateTime"))));
+		}
+		
 		criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
 		criteriaQuery.orderBy(builder.asc(root.get("drinkOrderCreateTime")));
 			
