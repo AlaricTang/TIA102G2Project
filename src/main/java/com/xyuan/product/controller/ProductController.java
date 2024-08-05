@@ -2,7 +2,10 @@ package com.xyuan.product.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,7 +28,7 @@ public class ProductController {
 	
 	//取得所有商品列表
 	@GetMapping("listAllProduct")
-	public String listAllProduct(Model model) {
+	public String listAllProduct(ModelMap model) {
 		List<ProductVO> list = productSvc.getAll();
 		model.addAttribute("productListAll", list);
 		return "back-end/product/listAllProduct";
@@ -65,8 +68,8 @@ public class ProductController {
 		
 	
 	//點icon加入購物車
-	
-	
+
+	//收藏
 	
 	
 	

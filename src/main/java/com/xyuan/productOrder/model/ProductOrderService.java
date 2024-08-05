@@ -39,7 +39,7 @@ public class ProductOrderService {
 		return repository.findAll();
 	}
 	
-	public List<ProductOrderVO> getAll(Map<String, String[]> map){
+	public List<ProductOrderVO> getAll(Map<String, String> map){
 		return CompositeQuery_ProductOrder.getAllC(map);
 	}
 	
