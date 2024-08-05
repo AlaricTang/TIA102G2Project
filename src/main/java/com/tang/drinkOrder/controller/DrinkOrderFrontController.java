@@ -28,11 +28,9 @@ import com.tang.drinkOrderDetail.model.DrinkOrderDetailService;
 import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 
-//我用前後台去分controller
-//這裡是前台
 @Controller
 @RequestMapping("/drinkOrder")
-public class DrinkOrderController {
+public class DrinkOrderFrontController {
 
 	@Autowired
 	DrinkOrderService drinkOrderSvc;
@@ -49,8 +47,7 @@ public class DrinkOrderController {
 	@Autowired
 	DrinkService drinkService;
 	
-	//購物車頁面進來
-	//跳轉到 要下單頁面
+	//購物車頁面進來 跳轉到 要下單頁面
 		//需要將購物人資訊  購物車物品列出來 
 		//給user確認 放好VO存 session
 	@GetMapping("drinkOrderPage")
@@ -58,9 +55,6 @@ public class DrinkOrderController {
 		int totalPrice = 0;
 		DrinkOrderVO drinkOrderVO = new DrinkOrderVO();
 		List<DrinkOrderDetailVO> drinkCartList = new ArrayList<>();
-		
-		
-		
 
 		//訂購人
 		UserVO user = (UserVO)session.getAttribute("user");
@@ -87,7 +81,11 @@ public class DrinkOrderController {
 		drinkCartList = drinkCartService.getDrinkCart(userID); 
 		for(DrinkOrderDetailVO drinkCartItem : drinkCartList) {
 			DrinkVO drink = drinkService.getOneDrink(drinkCartItem.getDrinkID());
-			totalPrice += drink.getDrinkPrice();
+//			if(drink.getDrinkDPrice()>0) {
+//				totalPrice += drink.getDrinkDPrice();				
+//			}else {
+//				totalPrice += drink.getDrinkPrice();
+//			}
 		}
 		drinkOrderVO.setDrinkOrderAmount(totalPrice);
 		
@@ -106,13 +104,10 @@ public class DrinkOrderController {
 	}
 	
 	
-//	後端去下單,跳轉到成功頁面
+//	下單,跳轉到成功頁面
 //  這裡含 存訂單明細的動作
 	@PostMapping("order")
 	synchronized public String order(ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
-//		if(result.hasErrors()) {
-//			return "back-end/drinkOrder/drinkOrderPage";
-//		}
 
 		//判斷訂單正確與否 & 存訂單
 		DrinkOrderVO drinkOrderVO = (DrinkOrderVO)session.getAttribute("drinkOrder"); //取得訂單 =======================================
@@ -120,26 +115,25 @@ public class DrinkOrderController {
 		//判斷目前 店家環保杯數 是否滿足
 		StoreVO store = storeService.getOneStore(drinkOrderVO.getStoreID()); 
 		if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
-			return "失敗頁面";
+			return "redirect:/drinkOrder/orderFail";
 		}
 		
 		drinkOrderVO.setDrinkOrderStatus(Byte.valueOf("0")); //訂單 狀態預設為 未完成
 		drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("0"));//訂單 狀態預設為 未付款
-		if(drinkOrderVO.getDrinkOrderPayM() == 1) { //如果為線上付款 去綠界
-			//綠界實行
-			
-			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
-		}
 		DrinkOrderVO saveDrinkOrder = drinkOrderSvc.addAndGetDrinkOrder(drinkOrderVO); //存訂單
-		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID();
-		
-		
+
 		Integer userID = drinkOrderVO.getUserID(); //獲取訂購人 ID
 		List<DrinkOrderDetailVO> cartDrinks =  drinkCartService.getDrinkCart(userID); //取出他的購物車明細
+		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID(); //取訂單ID 給綁明細用
 		
-		for(DrinkOrderDetailVO drinkDetails : cartDrinks ) { //根據購物車 訂單明細
+		for(DrinkOrderDetailVO drinkDetails : cartDrinks ) { //根據購物車 取訂單明細
 			drinkDetails.setDrinkOrderID(drinkOrderID); //訂單明細 綁 訂單ID 
 			drinkOrderDetailSvc.addDrinkOrderDetail(drinkDetails);//存訂單明細
+		}
+		
+		if(drinkOrderVO.getDrinkOrderPayM() == 1) { //如果為線上付款 去綠界
+			//綠界實行
+			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
 		}
 		
 		drinkCartService.deleteDrinkDetail(userID); //下訂完 刪購物車明細
@@ -151,8 +145,26 @@ public class DrinkOrderController {
 	@GetMapping("orderSuccess")
 	public String orderSuccess(@ModelAttribute("saveDrinkOrder") DrinkOrderVO saveDrinkOrder, ModelMap model) {
 		model.addAttribute("saveDrinkOrder",saveDrinkOrder);
-		return "drinkOrder/orderSuccess";
+		return "back-end/drinkOrder/orderSuccess";
 	}
+
+	@GetMapping("orderFail")
+	public String orderFail(DrinkOrderVO saveDrinkOrder, ModelMap model) {
+		return "back-end/drinkOrder/orderFail";
+	}
+	
+	@GetMapping("userDrinkOrder")
+	public String userDrinkOrder(ModelMap model,HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		List<DrinkOrderVO> userDrinkOrderList = drinkOrderSvc.getAllUserDrinkOrder(user.getUserId());
+		model.addAttribute("userDrinkOrderList",userDrinkOrderList);
+		return "back-end/drinkOrder/userDrinkOrder";
+	}
+	
+	
+	
+	
+	
 	
 }
 //.

@@ -29,10 +29,16 @@ public class DrinkOrderService {
 	
 	public List<DrinkOrderVO> getAll(){
 		return repository.findAll();
-	}
-	
+	}	
 	public List<DrinkOrderVO> getAllUndone(){
 		return repository.getAllUndoneDrinkOrder();
+	}
+	
+	public List<DrinkOrderVO> getAllByStoreID(Integer storeID){
+		return repository.getAllStoreDrinkOrder(storeID);
+	}
+	public List<DrinkOrderVO> getAllUndoneByStoreID(Integer storeID){
+		return repository.getAllStoreUndoneDrinkOrder(storeID);
 	}
 	
 	public List<DrinkOrderVO> getAllUserDrinkOrder(Integer userID){

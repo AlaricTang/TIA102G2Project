@@ -4,14 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ellie.store.model.StoreVO;
 import com.tang.drinkOrder.model.DrinkOrderService;
 import com.tang.drinkOrder.model.DrinkOrderVO;
 import com.tang.drinkOrderDetail.model.DrinkOrderDetailService;
@@ -19,7 +23,7 @@ import com.tang.drinkOrderDetail.model.DrinkOrderDetailService;
 @Controller
 @Validated
 @RequestMapping("/drinkOrder")
-public class DrinkOrderNoController {
+public class DrinkOrderBackController {
 
 	@Autowired
 	DrinkOrderService drinkOrderService;
@@ -27,6 +31,22 @@ public class DrinkOrderNoController {
 	@Autowired
 	DrinkOrderDetailService drinkOrderDetailService;
 
+	//===============總公司端==================
+	@GetMapping("orderHistory")
+	public String orderHistory(ModelMap model) {
+		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAll();
+		model.addAttribute("drinkOrderList",drinkOrderList);
+		return "back-end/drinkOrder/orderHistory";
+	}
+
+	@GetMapping("orderManage")
+	public String orderManage(ModelMap model) {
+		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAllUndone();
+		model.addAttribute("drinkOrderList",drinkOrderList);
+		return "back-end/drinkOrder/orderManage";
+	}
+
+	
 	//從訂單紀錄來
 	@PostMapping("getDrinkOrder")
 	public String getOneDrinkOrder(
@@ -63,7 +83,7 @@ public class DrinkOrderNoController {
 	
 	//從訂單管理來
 	@PostMapping("getUndoneDrinkOrder")
-	public String getOneUndoneDrinkOrder(
+	public String getUndoneDrinkOrder(
 			@RequestParam("drinkOrderID") String drinkOrderID,
 			@RequestParam("userID") String userID,
 			@RequestParam("storeID") String storeID,
@@ -94,11 +114,99 @@ public class DrinkOrderNoController {
 	}
 	
 	
+	
+	
+	
+	
+	//===============店家端==================
+	@GetMapping("storeOrderHistory")
+	public String storeOrderHistory(ModelMap model,HttpSession session) {
+		StoreVO store = (StoreVO)session.getAttribute("Store");
+		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAllByStoreID(store.getStoreID());
+		model.addAttribute("drinkOrderList",drinkOrderList);
+		return "back-end/drinkOrder/storeOrderHistory";
+	}
+	
+	@GetMapping("storeOrderManage")
+	public String storeOrderManage(ModelMap model,HttpSession session) {
+		StoreVO store = (StoreVO)session.getAttribute("Store");
+		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAllUndoneByStoreID(store.getStoreID());
+		model.addAttribute("drinkOrderList",drinkOrderList);
+		return "back-end/drinkOrder/storeOrderManage";
+	}
+	
+	//從訂單紀錄來
+	@PostMapping("getStoreDrinkOrder")
+	public String getStoreDrinkOrder(
+			@RequestParam("drinkOrderID") String drinkOrderID,
+			@RequestParam("userID") String userID,
+			@RequestParam("drinkOrderStartCreateTime") String drinkOrderStartCreateTime,
+			@RequestParam("drinkOrderEndCreateTime") String drinkOrderEndCreateTime,
+			@RequestParam("drinkOrderStatus") String drinkOrderStatus,			
+			ModelMap model,
+			HttpSession session) {
+		
+		StoreVO store = (StoreVO)session.getAttribute("store");
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("drinkOrderID", drinkOrderID);
+		map.put("userID", userID);
+		map.put("storeID", store.getStoreID().toString());
+		map.put("drinkOrderStartCreateTime", drinkOrderStartCreateTime);
+		map.put("drinkOrderEndCreateTime", drinkOrderEndCreateTime);
+		map.put("drinkOrderStatus", drinkOrderStatus);
+		
+		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAll(map);
+		
+		//沒查到,error準備
+		if(drinkOrderList.isEmpty()) {	
+			List<DrinkOrderVO> list = drinkOrderService.getAllByStoreID(store.getStoreID());
+			model.addAttribute("drinkOrderList", list);
+			model.addAttribute("errorMessage", "查無此訂單");
+		}
+		
+		//東西給前端
+		model.addAttribute("drinkOrderList", drinkOrderList);
+		return "back-end/drinkOrder/storeOrderHistory";
+	}
 
+	//從訂單管理來
+	@PostMapping("getStoreUndoneDrinkOrder")
+	public String getStoreUndoneDrinkOrder(
+			@RequestParam("drinkOrderID") String drinkOrderID,
+			@RequestParam("userID") String userID,
+			@RequestParam("drinkOrderStartCreateTime") String drinkOrderStartCreateTime,
+			@RequestParam("drinkOrderEndCreateTime") String drinkOrderEndCreateTime,
+			ModelMap model,
+			HttpSession session) {
+		
+		StoreVO store = (StoreVO) session.getAttribute("store");
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("drinkOrderID", drinkOrderID);
+		map.put("userID", userID);
+		map.put("storeID", store.getStoreID().toString());
+		map.put("drinkOrderStartCreateTime", drinkOrderStartCreateTime);
+		map.put("drinkOrderEndCreateTime", drinkOrderEndCreateTime);
+		map.put("drinkOrderStatus", "0");//查的東西皆為 未完成
+		
+		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAll(map);
+		
+		//沒查到,error準備
+		if(drinkOrderList == null) {	
+			List<DrinkOrderVO> list = drinkOrderService.getAllUndoneByStoreID(store.getStoreID());
+			model.addAttribute("drinkOrderList", list);
+			model.addAttribute("errorMessage", "查無此訂單");
+		}
+		
+		//東西給前端
+		model.addAttribute("drinkOrderList", drinkOrderList);
+		return "back-end/drinkOrder/storeOrderManage";
+	}
 	
-	
-	
+	//*******************************
 	//更改 訂單狀態 邏輯我要再想一下
+	//*******************************
 	
 	
 	
