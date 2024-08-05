@@ -32,7 +32,17 @@ public class CampaignProductVO implements Serializable{
 	
 	@Column(name="productID")
 	private Integer productID;
+
 	
+//	@ManyToOne
+//	@JoinColumn(name="drinkID")
+//	private DrinkVO drinkVO;
+	
+	@Column(name="drinkID")
+	private Integer drinkID;
+	
+
+
 	public CampaignProductVO() {
 	}
 
@@ -58,6 +68,14 @@ public class CampaignProductVO implements Serializable{
 
 	public void setProductID(Integer productID) {
 		this.productID = productID;
+	}
+	
+	public Integer getDrinkID() {
+		return drinkID;
+	}
+
+	public void setDrinkID(Integer drinkID) {
+		this.drinkID = drinkID;
 	}
 	
 }

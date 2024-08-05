@@ -77,7 +77,7 @@ public class CompositeQuery_DrinkOrder {
 		}
 		
 		if(keys.contains("drinkOrderStartCreateTime") && keys.contains("drinkOrderEndCreateTime")) {
-			predicateList.add(builder.between(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderStartCreateTime")), Timestamp.valueOf(map.get("drinkOrderEndCreateTime"))));
+			predicateList.add(builder.between(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderStartCreateTime")), Timestamp.valueOf(map2.get("drinkOrderEndCreateTime"))));
 		}else if (keys.contains("drinkOrderStartCreateTime") && !(keys.contains("drinkOrderEndCreateTime"))) {
 			predicateList.add(builder.greaterThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderStartCreateTime"))));
 		}else if ( !(keys.contains("drinkOrderStartCreateTime")) && keys.contains("drinkOrderEndCreateTime")) {
