@@ -1,10 +1,14 @@
 package com.xyuan.productOrderDetail.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import hibernate.util.compositeQuery.CompositeQuery_DrinkOrderDetail;
+import hibernate.util.compositeQuery.CompositeQuery_ProductOrderDetail;
 
 @Service("productOrderDetailService")
 public class ProductOrderDetailService {
@@ -32,6 +36,15 @@ public class ProductOrderDetailService {
 	
 	public List<ProductOrderDetailVO> getAll(){
 		return repository.findAll();
+	}
+
+	//複合查詢堂安說用不到
+//	public List<ProductOrderDetailVO> getAll(Map<String, String[]> map){
+//		return CompositeQuery_ProductOrderDetail.getAllC(map);
+//	}
+
+	public List<ProductOrderDetailVO> getByProductOrderID(Integer productOrderID) {
+		return repository.getByProductOrderID(productOrderID);
 	}
 	
 	
