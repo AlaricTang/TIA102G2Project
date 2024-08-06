@@ -13,12 +13,12 @@ public class CampaignService {
 	CampaignRepository repository;
 	
 	
-	public void addCampaign(CampaignVO campaignVO) {
-		repository.save(campaignVO);
+	public CampaignVO addCampaign(CampaignVO campaignVO) {
+		return repository.save(campaignVO);
 	}
 	
-	public void updateCampaign (CampaignVO campaignVO) {
-		repository.save(campaignVO);
+	public CampaignVO updateCampaign (CampaignVO campaignVO) {
+		return repository.save(campaignVO);
 	}
 	
 	public void deleteCampaign(Integer campaignID) {
