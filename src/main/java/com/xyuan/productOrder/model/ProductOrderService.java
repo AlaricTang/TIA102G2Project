@@ -42,5 +42,13 @@ public class ProductOrderService {
 	public List<ProductOrderVO> getAll(Map<String, String> map){
 		return CompositeQuery_ProductOrder.getAllC(map);
 	}
+
+	public List<ProductOrderVO> getAllUserProductOrder(Integer userID) {
+		return repository.getAllUserProductOrder(userID);
+	}
+
+	public List<ProductOrderVO> getAllUndone() {
+		return repository.getAllUndoneProductOrder();
+	}
 	
 }
