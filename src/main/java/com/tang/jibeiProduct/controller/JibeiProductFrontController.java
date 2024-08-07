@@ -42,7 +42,7 @@ public class JibeiProductFrontController {
 	public String jibeiPdDetail(
 			@RequestParam("jibeiProductID") String jibeiProductID,
 			ModelMap model) {
-	
+		
 		JibeiProductVO jibeiProduct = jibeiProductSvc.getOneJibeiProduct(Integer.valueOf(jibeiProductID));
 		model.addAttribute("jibeiProduct",jibeiProduct);
 		return "back-end/jibeiProduct/singleJibeiProduct";
