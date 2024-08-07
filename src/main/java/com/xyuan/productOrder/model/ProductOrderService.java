@@ -50,5 +50,10 @@ public class ProductOrderService {
 	public List<ProductOrderVO> getAllUndone() {
 		return repository.getAllUndoneProductOrder();
 	}
+
+	public ProductOrderVO addandGetProductOrder(ProductOrderVO productOrderVO) {
+		ProductOrderVO saveDrinkOrderVO = repository.save(productOrderVO);
+		return saveDrinkOrderVO;
+	}
 	
 }

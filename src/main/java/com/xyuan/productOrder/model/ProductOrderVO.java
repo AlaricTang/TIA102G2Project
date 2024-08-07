@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotNull;
 public class ProductOrderVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	
 	@Id		
 	@GeneratedValue(strategy = GenerationType.IDENTITY)		//auto increment
@@ -67,6 +69,7 @@ public class ProductOrderVO implements Serializable {
 	private Integer memberID;
 
 	@NotEmpty(message = "訂單Email：請填寫")
+	@Email(message="Please provide a valid email address")
 	@Column(name="receiverMail", updatable = false)
 	private String receiverMail;
 	
@@ -80,6 +83,10 @@ public class ProductOrderVO implements Serializable {
 	
 	@Column(name="productOrderNote")
 	private String productOrderNote;
+
+	@NotNull
+	@Column(name="productOrderPayStatus")
+	private Byte productOrderPayStatus;
 
 	public Integer getProductOrderID() {
 		return productOrderID;
@@ -222,6 +229,13 @@ public class ProductOrderVO implements Serializable {
 
 	public ProductOrderVO() {
 		super();
+	}
+
+	public Byte getProductOrderPayStatus() {
+		return productOrderPayStatus;
+	}
+	public void setProductOrderPayStatus(Byte productOrderPayStatus) {
+		this.productOrderPayStatus= productOrderPayStatus;
 	}
 	
 

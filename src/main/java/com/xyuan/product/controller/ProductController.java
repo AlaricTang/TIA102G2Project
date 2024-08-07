@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tang.jibeiProduct.model.JibeiProductService;
+import com.tang.jibeiProduct.model.JibeiProductVO;
 import com.xyuan.product.model.ProductService;
 import com.xyuan.product.model.ProductVO;
 
@@ -25,12 +27,21 @@ public class ProductController {
 	@Autowired
 	ProductService productSvc;
 	
+	@Autowired
+	JibeiProductService jibeiProductSvc;
 	
 	//取得所有商品列表
+	/////要加上條件篩選"上架中"的商品
+	
+	/////到時候前端還要抓寄杯商品 ${productListAll}、${jibeiProductList}
 	@GetMapping("listAllProduct")
 	public String listAllProduct(ModelMap model) {
 		List<ProductVO> list = productSvc.getAll();
 		model.addAttribute("productListAll", list);
+		
+//		List<JibeiProductVO> onList = jibeiProductSvc.getOnJibeiProduct();	//還沒pull service
+//		model.addAttribute("jibeiProductList", onList);
+		
 		return "back-end/product/listAllProduct";
 	}
 	
