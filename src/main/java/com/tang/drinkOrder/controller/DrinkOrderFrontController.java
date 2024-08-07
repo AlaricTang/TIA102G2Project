@@ -136,6 +136,7 @@ public class DrinkOrderFrontController {
 			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
 		}
 		
+		drinkCartService.delete(userID);//下訂完 刪購物人資訊
 		drinkCartService.deleteDrinkDetail(userID); //下訂完 刪購物車明細
 				
 		redirectAttributes.addAttribute("saveDrinkOrder", saveDrinkOrder);//成功頁面要呈現訂單資訊(含訂單編號 訂單時間等)
