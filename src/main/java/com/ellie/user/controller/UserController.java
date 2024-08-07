@@ -24,15 +24,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    
     @GetMapping("addUser")
     public String addUser(ModelMap model) {
         UserVO userVO = new UserVO();
         model.addAttribute("userVO", userVO);
         return "back-end/user/addUser";
     }
+    
+    @GetMapping("select_page")
+    public String selectPage() {
+        return "back-end/user/select_page";
+    }
 
-    @PostMapping("insert")
-    public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model) {
+    
+
+    @PostMapping("add")
+    public String add(@Valid UserVO userVO, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             return "back-end/user/addUser";
         }
