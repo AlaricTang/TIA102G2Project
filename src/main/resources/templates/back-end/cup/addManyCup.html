@@ -111,20 +111,6 @@
 				<div></div>
 			</div>		
 		</form>
-		
-		
-		<form th:action="@{/cup/insertManyCup}" method="post">
-  		  <div th:each="cupVO, iterStat : ${cupList}">
-       		 <h4>新增杯子[[${iterStat.index + 1}]]</h4>
-        		<input type="hidden" th:field="*{[${iterStat.index}].cupID}" />
-       	 	<div>
-            	<label>杯子狀態:</label>
-            	<input type="text" th:field="*{[${iterStat.index}].cupStatus}" />
-       		 </div>
-        	<!-- 可以根據需求加入其他屬性的輸入框 -->
-    		</div>
-   			 <button type="submit">新增杯子</button>
-		</form>
 	
 	</div>
 

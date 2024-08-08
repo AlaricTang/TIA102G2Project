@@ -99,16 +99,16 @@
 		
 	<!-- 新增租借表單 -->
 <li>
-    <h4><span>租借環保杯:</span></h4>
-    <form th:action="@{/cup/userRentCup}" method="post">
+    <h4><span>歸還環保杯:</span></h4>
+    <form th:action="@{/cup/userReturnCup}" method="post">
         <div>
             <label for="cupID">杯子編號:</label>
             <input type="number" id="cupID" name="cupID" required>
             <span class="error" th:text="${errorMessage1}" ></span>
         </div>
         <div>
-            <label for="userID">會員編號:</label>
-            <input type="number" id="userID" name="userID" required>
+            <label for="storeID">店家編號:</label>
+            <input type="number" id="storeID" name="storeID" required>
             <span class="error" th:text="${errorMessage2}" ></span>
         </div>
         <div>

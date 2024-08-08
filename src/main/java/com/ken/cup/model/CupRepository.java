@@ -3,6 +3,7 @@ package com.ken.cup.model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface CupRepository extends JpaRepository<CupVO, Integer>{
@@ -12,4 +13,6 @@ public interface CupRepository extends JpaRepository<CupVO, Integer>{
 	@Query(value = "delete from cup where cupID =?1", nativeQuery = true)
 	void deleteByCupID(int cupID);
 
+	@Query(value = "SELECT COUNT(*) FROM cup WHERE storeID = :storeID AND cupStatus = 0", nativeQuery = true)
+	Long countByStoreIDAndCupStatus(@Param("storeID") Integer storeID);
 }

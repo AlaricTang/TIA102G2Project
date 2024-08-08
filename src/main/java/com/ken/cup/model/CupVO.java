@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="Cup" )
@@ -40,7 +41,6 @@ public class CupVO implements java.io.Serializable{
 	@Column(name = "memberID")
 	private Integer memberID;
 	
-	@NotNull(message = "請輸入環保杯狀態")
 	@Column(name = "cupStatus")
 	private Integer cupStatus; // 0(歸還), 1(出租), 2(報廢)
 	
