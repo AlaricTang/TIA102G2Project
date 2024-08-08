@@ -74,11 +74,11 @@ public class DrinkVO  implements java.io.Serializable{
 //    @JoinColumn(name = "createdByMemberID")
 //    private MemberVO membervo;
     
-    @Column(name = "createdByMemberID")
+    @Column(name = "createdByMemberID", updatable = false)
     private Integer createdByMemberID;
     
-    
-//    private Integer drinkDPrice;
+    @Column(name = "drinkDPrice")
+    private Integer drinkDPrice;
     // ================== FK區 =========================
     
 //    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="drinkOrderVO")
@@ -178,6 +178,15 @@ public class DrinkVO  implements java.io.Serializable{
 
 	public void setCreatedByMemberID(Integer createdByMemberID) {
 		this.createdByMemberID = createdByMemberID;
+	}
+	
+
+	public Integer getDrinkDPrice() {
+		return drinkDPrice;
+	}
+
+	public void setDrinkDPrice(Integer drinkDPrice) {
+		this.drinkDPrice = drinkDPrice;
 	}
 
 	@Override
