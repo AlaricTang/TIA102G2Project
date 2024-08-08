@@ -6,9 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tang.jibeiProduct.model.JibeiProductVO;
+
 @Service("productService")
 public class ProductService {
-
+	
 	@Autowired
 	ProductRepository repository;
 	
@@ -34,6 +36,13 @@ public class ProductService {
 		return productTagList;
 	}
 	
+	public List<ProductVO> getOnProduct(){
+		return repository.getProductByStatus(1);
+	}
+
+	public List<ProductVO> getOffProduct(){
+		return repository.getProductByStatus(0);
+	}
 	
 	
 }

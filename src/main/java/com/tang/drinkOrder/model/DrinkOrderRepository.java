@@ -20,7 +20,13 @@ public interface DrinkOrderRepository extends JpaRepository<DrinkOrderVO, Intege
 	@Query(value = "select * from drinkorder where drinkOrderStatus = 0", nativeQuery = true)
 	List<DrinkOrderVO> getAllUndoneDrinkOrder();
 	
-	@Query(value = "select * from drinkorder where userID =1 ", nativeQuery = true)
+	@Query(value = "select * from drinkorder where userID =?1 ", nativeQuery = true)
 	List<DrinkOrderVO> getAllUserDrinkOrder(Integer userID);
+
+	@Query(value = "select * from drinkorder where storeID =?1 ", nativeQuery = true)
+	List<DrinkOrderVO> getAllStoreDrinkOrder(Integer storeID);
+	
+	@Query(value = "select * from drinkorder where storeID =?1 and drinkOrderStatus = 0", nativeQuery = true)
+	List<DrinkOrderVO> getAllStoreUndoneDrinkOrder(Integer userID);
 }
 

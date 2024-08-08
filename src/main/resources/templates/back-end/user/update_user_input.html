@@ -1,0 +1,122 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>會員資料修改</title>
+
+    <head th:insert="~{/back-end/user/included-fragment}"></head>
+    <style type="text/css">
+        button {
+            padding: 5px;
+        }
+        form {
+            display: table;
+        }
+        form div {
+            display: table-row;
+        }
+        label, input, span, select {
+            display: table-cell;
+            margin: 5px;
+            text-align: left;
+        }
+        input[type=text], input[type=password], select, textarea {
+            width: 200px;
+            margin: 5px;
+        }
+        form div div {
+            display: table-cell;
+        }
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center">
+        <h2>會員資料修改</h2>
+        <h3><a class="navbar-brand" th:href="@{/user/select_page}">回查詢頁</a></h3>
+    </div>
+</nav>
+
+<div align="center">
+    <h3><b>所有欄位皆為必填欄位</b></h3>
+    <form th:action="@{/user/update_user_input}" method="post" th:object="${userVO}">
+        <div>
+            <label>會員ID:</label>
+            <input type="text" th:field="*{userID}" style="border:0px ; font-weight: bold;" readonly /><br/>
+        </div>
+
+        <div>
+            <label>電子郵件:</label>
+            <input type="text" th:field="*{userEmail}" onclick="hideContent('userEmail.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}" class="error" id="userEmail.errors"></span>
+        </div>
+
+        <div>
+            <label>姓名:</label>
+            <input type="text" th:field="*{userName}" onclick="hideContent('userName.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error" id="userName.errors"></span>
+        </div>
+
+        <div>
+            <label>出生日期:</label>
+            <input type="date" th:field="*{userBirth}" onclick="hideContent('userBirth.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('userBirth')}" th:errors="*{userBirth}" class="error" id="userBirth.errors"></span>
+        </div>
+
+        <div>
+            <label>電話:</label>
+            <input type="text" th:field="*{userPhone}" onclick="hideContent('userPhone.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('userPhone')}" th:errors="*{userPhone}" class="error" id="userPhone.errors"></span>
+        </div>
+
+        <div>
+            <label>性別:</label>
+            <select th:field="*{userGender}">
+                <option value="1" th:text="'男'" th:selected="${userVO.userGender == 1}"></option>
+                <option value="2" th:text="'女'" th:selected="${userVO.userGender == 2}"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('userGender')}" th:errors="*{userGender}" class="error" id="userGender.errors"></span>
+        </div>
+
+        <div>
+            <label>地址:</label>
+            <textarea th:field="*{userAddr}" rows="4" cols="50" onclick="hideContent('userAddr.errors');"></textarea><br/>
+            <span th:if="${#fields.hasErrors('userAddr')}" th:errors="*{userAddr}" class="error" id="userAddr.errors"></span>
+        </div>
+
+        <div>
+            <label>創建時間:</label>
+            <input type="text" th:field="*{userCreateTime}" readonly /><br/>
+        </div>
+
+        <div>
+            <div></div>
+            <div><button type="submit" id="submit"> 送出修改 </button></div>
+            <div></div>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript 部分 -->
+<script type="text/javascript">
+    // 清除錯誤提示信息
+    function hideContent(id) {
+        document.getElementById(id).style.display = "none";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>會員資料新增</title>
+    <th:block th:insert="~{/back-end/user/included-fragment}"></th:block>
+    <style type="text/css">
+        button {
+            padding: 10px;
+        }
+        form {
+            display: table;
+        }
+        form div {
+            display: table-row;
+        }
+        label, input, span, select {
+            display: table-cell;
+            margin: 10px;
+            text-align: left;        
+        }
+        input[type=text], input[type=email], input[type=password], select, textarea {
+            width: 200px;
+            margin: 30px;
+        }
+        form div div {
+            display: table-cell;
+        }
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center">
+        <h2>會員資料新增</h2>
+        <h3><a class="navbar-brand" th:href="@{/user/select_page}">回查詢頁</a></h3>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+
+<div align="center">
+
+    <h3><b>所有欄位皆為必填欄位</b></h3>
+    <form th:action="@{/user/add}" method="post" th:object="${userVO}">
+    
+     <div>
+            <label>電子郵件:</label>
+            <input type="email" th:field="*{userEmail}" onclick="hideContent('userEmail.errors');"  /><br/>
+            <span th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}" class="error" id="userEmail.errors"></span>
+        </div>
+   
+        <div>
+            <label>電子郵件:</label>
+            <input type="email" th:field="*{userEmail}" onclick="hideContent('userEmail.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}" class="error" id="userEmail.errors"></span>
+        </div>
+        
+        <div>
+            <label>密碼:</label>
+            <input type="password" th:field="*{userPwd}" onclick="hideContent('userPwd.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('userPwd')}" th:errors="*{userPwd}" class="error" id="userPwd.errors"></span>
+        </div>
+        
+        <div>
+            <label>姓名:</label>
+            <input type="text" th:field="*{userName}" onclick="hideContent('userName.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error" id="userName.errors"></span>
+        </div>
+        
+        <div>
+            <label>生日:</label>
+            <input type="date" th:field="*{userBirth}" onclick="hideContent('userBirth.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('userBirth')}" th:errors="*{userBirth}" class="error" id="userBirth.errors"></span>
+        </div>
+
+        <div>
+            <label>電話:</label>
+            <input type="text" th:field="*{userPhone}" onclick="hideContent('userPhone.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('userPhone')}" th:errors="*{userPhone}" class="error" id="userPhone.errors"></span>
+        </div>
+        
+        <div>
+            <label>性別:</label>
+            <select th:field="*{userGender}" onclick="hideContent('userGender.errors');" required>
+                <option value="1" th:selected="${userVO.userGender == 1}">男</option>
+                <option value="2" th:selected="${userVO.userGender == 2}">女</option>
+            </select><br/>
+            <span th:if="${#fields.hasErrors('userGender')}" th:errors="*{userGender}" class="error" id="userGender.errors"></span>
+        </div>
+
+        <div>
+            <label>地址:</label>
+            <input type="text" th:field="*{userAddr}" onclick="hideContent('userAddr.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('userAddr')}" th:errors="*{userAddr}" class="error" id="userAddr.errors"></span>
+        </div>
+
+        <div>
+            <div></div>
+            <div><button type="submit" id="submit">送出新增</button></div>
+            <div></div>
+        </div>
+    </form>
+</div>
+
+
+
+</body>
+</html>

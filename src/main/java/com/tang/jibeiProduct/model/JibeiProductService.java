@@ -12,26 +12,34 @@ public class JibeiProductService {
 	@Autowired
 	JibeiProductRepository repository;
 
-	public void addDrinkOrder(JibeiProductVO jibeiProductVO) {
+	public void addJibeiProduct(JibeiProductVO jibeiProductVO) {
 		repository.save(jibeiProductVO);
 	}
 
-	public void updateDrinkOrder(JibeiProductVO jibeiProductVO) {
+	public void updateJibeiProduct(JibeiProductVO jibeiProductVO) {
 		repository.save(jibeiProductVO);
 	}
 
-	public void deleteDrinkOrder(Integer jibeiProductID) {
+	public void deleteJibeiProduct(Integer jibeiProductID) {
 		if (repository.existsById(jibeiProductID))
 			repository.deleteByJibeiProductID(jibeiProductID);
 	}
 
-	public JibeiProductVO getOneDrinkOrder(Integer jibeiProductID) {
+	public JibeiProductVO getOneJibeiProduct(Integer jibeiProductID) {
 		Optional<JibeiProductVO> optional = repository.findById(jibeiProductID);
 		return optional.orElse(null);
 	}
 
 	public List<JibeiProductVO> getAll() {
 		return repository.findAll();
+	}
+	
+	public List<JibeiProductVO> getOnJibeiProduct(){
+		return repository.getJibeiProductByStatus(1);
+	}
+
+	public List<JibeiProductVO> getOffJibeiProduct(){
+		return repository.getJibeiProductByStatus(0);
 	}
 
 	//可能用不到

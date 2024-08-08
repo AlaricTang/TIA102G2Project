@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>會員資料查詢結果</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center">
+        <h2>會員資料查詢結果</h2>
+        <h3><a class="navbar-brand" th:href="@{/user/select_page}">回查詢頁</a></h3>
+    </div>
+</nav>
+
+<div>
+    <ul>
+        <li><a href="#" th:href="@{/user/listAllUser}">List all Users</a></li>
+    </ul>
+    <div>
+        <form th:action="@{/user/delete}" method="post" th:object="${userVO}">
+            <div th:if="${not #lists.isEmpty(userListData)}">
+                <div th:each="user : ${userListData}">
+                    <div>
+                        <input type="hidden" th:field="*{userID}" th:value="${user.userID}">
+                        <label>會員ID:</label>
+                        <span th:text="${user.userID}"></span><br>
+
+                        <label>電子郵件:</label>
+                        <span th:text="${user.userEmail}"></span><br>
+
+                        <label>姓名:</label>
+                        <span th:text="${user.userName}"></span><br>
+
+                        <label>性別:</label>
+                        <span th:text="${user.userGender == 1 ? '男' : '女'}"></span><br>
+
+                        <label>生日:</label>
+                        <span th:text="${#dates.format(user.userBirth, 'yyyy-MM-dd')}"></span><br>
+
+                        <label>電話:</label>
+                        <span th:text="${user.userPhone}"></span><br>
+
+                        <label>地址:</label>
+                        <span th:text="${user.userAddr}"></span><br>
+
+                        <div>
+                            <input type="submit" value="刪除">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(userListData)}">
+                <p>沒有找到任何會員資料。</p>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
