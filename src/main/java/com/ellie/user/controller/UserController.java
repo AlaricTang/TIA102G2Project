@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @PostMapping("listUser_ByCompositeQuery")
-    public String listUsersByCompositeQuery(HttpServletRequest req, Model model) {
+    public String listUsersByCompositeQuery(HttpServletRequest req, ModelMap model) {
         Map<String, String[]> map = req.getParameterMap();
         List<UserVO> list = userService.getAll(map);
         model.addAttribute("userListData", list);
