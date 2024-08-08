@@ -1,9 +1,13 @@
 package com.xyuan.jibeiOrderDetail.model;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
 public interface JibeiOrderDetailRepository extends JpaRepository<JibeiOrderDetailVO, Integer>{
 
@@ -11,5 +15,8 @@ public interface JibeiOrderDetailRepository extends JpaRepository<JibeiOrderDeta
 	@Modifying //告知此方法為修改操作，沒寫JPA不會給你修改
 	@Query(value = "delete from jibeiOrderDetail where jibeiOrderDetailID =?1", nativeQuery = true) //就是給SQL，nativeQuery預設為false 表示使用JQL
 	void deleteByJibeiOrderDetailID(int jibeiOrderDetailID);
+
+	@Query(value="select * from productorderdetail where productOrderID =?1", nativeQuery = true)
+	List<ProductOrderDetailVO> getByProductOrderID(Integer productOrderID);
 	
 }
