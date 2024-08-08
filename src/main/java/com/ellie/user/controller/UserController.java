@@ -1,19 +1,17 @@
 package com.ellie.user.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-
 
 import com.ellie.user.model.UserVO;
 import com.ellie.user.model.UserService;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,20 +22,17 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    
     @GetMapping("addUser")
     public String addUser(ModelMap model) {
         UserVO userVO = new UserVO();
         model.addAttribute("userVO", userVO);
         return "back-end/user/addUser";
     }
-    
+
     @GetMapping("select_page")
     public String selectPage() {
         return "back-end/user/select_page";
     }
-
-    
 
     @PostMapping("add")
     public String add(@Valid UserVO userVO, BindingResult result, ModelMap model) {
@@ -84,4 +79,122 @@ public class UserController {
         model.addAttribute("userListData", list);
         return "back-end/user/listAllUser";
     }
-}
+    
+    
+        // 註冊新用戶
+        @GetMapping("register")
+        public String register(ModelMap model) {
+            UserVO userVO = new UserVO();
+            model.addAttribute("userVO", userVO);
+            return "back-end/user/register"; // 返回註冊頁面
+        }
+
+        @PostMapping("register")
+        public String register(@Valid UserVO userVO, BindingResult result, ModelMap model) {
+            if (result.hasErrors()) {
+                return "back-end/user/register"; // 如果驗證有錯誤，返回註冊頁面
+            }
+            userService.addUser(userVO); // 儲存會員資料到資料庫
+            model.addAttribute("success", "註冊成功！");
+            return "redirect:/user/login"; // 註冊成功後轉向登入頁面
+        }
+
+        // 登入頁面
+        @GetMapping("login")
+        public String login() {
+            return "back-end/user/login"; // 返回登入頁面
+        }
+
+        @PostMapping("login")
+        public String login(@RequestParam("userEmail") String userEmail,
+                            @RequestParam("userPwd") String userPwd,
+                            HttpSession session, ModelMap model) {
+            UserVO userVO = userService.findByEmail(userEmail);
+            if (userVO == null || !userVO.getUserPwd().equals(userPwd)) {
+                model.addAttribute("error", "電子郵件或密碼錯誤！");
+                return "back-end/user/login"; // 登入失敗，返回登入頁面
+            }
+            session.setAttribute("user", userVO); 
+            return "redirect:/user/index"; // 登入成功後轉向用戶主頁
+        }
+
+        // 登出
+        @GetMapping("logout")
+        public String logout(HttpSession session) {
+            session.invalidate(); 
+            return "redirect:/user/login"; // 登出後返回登入頁面
+        }
+
+        // 忘記密碼頁面
+        @GetMapping("forgotPassword")
+        public String forgotPassword(ModelMap model) {
+            return "back-end/user/forgotPassword"; // 返回忘記密碼頁面
+        }
+
+        @PostMapping("forgotPassword")
+        public String forgotPassword(@RequestParam("userEmail") String userEmail, ModelMap model) {
+            UserVO userVO = userService.findByEmail(userEmail);
+            if (userVO == null) {
+                model.addAttribute("error", "該電子郵件地址不存在！");
+                return "back-end/user/forgotPassword"; // 如果Email不存在，返回忘記密碼頁面
+            }
+            // 模擬發送重設密碼的連結到用戶的Email
+            model.addAttribute("success", "重設密碼的連結已發送到您的電子郵件地址。");
+            return "back-end/user/forgotPassword"; // 提示用戶重設密碼連結已發送
+        }
+
+        // 重設密碼頁面
+        @GetMapping("resetPassword")
+        public String resetPassword(@RequestParam("userEmail") String userEmail, ModelMap model) {
+            UserVO userVO = userService.findByEmail(userEmail);
+            if (userVO == null) {
+                model.addAttribute("error", "無效的連結！");
+                return "back-end/user/resetPassword"; // 如果Email無效，返回重設密碼頁面
+            }
+            model.addAttribute("userVO", userVO);
+            return "back-end/user/resetPassword";
+        }
+
+        @PostMapping("resetPassword")
+        public String resetPassword(@RequestParam("userEmail") String userEmail,
+                                    @RequestParam("newPassword") String newPassword,
+                                    ModelMap model) {
+            UserVO userVO = userService.findByEmail(userEmail);
+            if (userVO == null) {
+                model.addAttribute("error", "無效的連結！");
+                return "back-end/user/resetPassword"; // 如果Email無效，返回重設密碼頁面
+            }
+            userVO.setUserPwd(newPassword); // 更新會員的密碼
+            userService.updateUser(userVO); // 儲存更新後的會員資料
+            model.addAttribute("success", "密碼重設成功，請使用新密碼登入。");
+            return "redirect:/user/login"; // 密碼重設成功後返回登入頁面
+        }
+    }
+
+    
+    
+
+//    @GetMapping("login")
+//    public String loginPage(ModelMap model) {
+//        model.addAttribute("userVO", new UserVO());
+//        return "back-end/user/login";
+//    }
+//
+//    @PostMapping("login")
+//    public String login(@ModelAttribute("userVO") UserVO userVO, ModelMap model, HttpSession session) {
+//        UserVO user = userService.authenticate(userVO.getUserEmail(), userVO.getUserPwd());
+//        if (user != null) {
+//            session.setAttribute("loggedInUser", user);
+//            return "redirect:/user/select_page";
+//        } else {
+//            model.addAttribute("errorMessage", "無效的用戶名或密碼");
+//            return "back-end/user/login";
+//        }
+//    }
+//
+//    @GetMapping("logout")
+//    public String logout(HttpSession session) {
+//        session.invalidate();
+//        return "redirect:/user/login";
+//    }
+
