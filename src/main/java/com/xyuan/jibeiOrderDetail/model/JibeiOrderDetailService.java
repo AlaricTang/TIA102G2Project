@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
+
 @Service("jibeiOrderDetailService")
 public class JibeiOrderDetailService {
 
@@ -35,5 +37,8 @@ public class JibeiOrderDetailService {
 		return repository.findAll();
 	}
 	
+	public List<ProductOrderDetailVO> getByProducOrderID(Integer productOrderID){
+		return repository.getByProductOrderID(productOrderID);
+	}
 	
 }

@@ -36,11 +36,12 @@ public class ProductController {
 	/////到時候前端還要抓寄杯商品 ${productListAll}、${jibeiProductList}
 	@GetMapping("listAllProduct")
 	public String listAllProduct(ModelMap model) {
-		List<ProductVO> list = productSvc.getAll();
-		model.addAttribute("productListAll", list);
 		
-//		List<JibeiProductVO> onList = jibeiProductSvc.getOnJibeiProduct();	//還沒pull service
-//		model.addAttribute("jibeiProductList", onList);
+		List<ProductVO> onNormalProductList = productSvc.getOnProduct();
+		model.addAttribute("productList", onNormalProductList);
+		
+		List<JibeiProductVO> onList = jibeiProductSvc.getOnJibeiProduct();	
+		model.addAttribute("jibeiProductList", onList);
 		
 		return "back-end/product/listAllProduct";
 	}

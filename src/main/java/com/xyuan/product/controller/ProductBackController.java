@@ -68,7 +68,7 @@ public class ProductBackController {
 	public String getOne_For_Update(@RequestParam("productID") String productID, ModelMap model) {
 	    ProductVO productVO = ProductSvc.getOneProduct(Integer.valueOf(productID));
 	    model.addAttribute("productVO", productVO);
-	    return "back-end/product/update_product_input";
+	    return "back-end/product/updateProductInput";
 	}
 
 	@PostMapping("update")
@@ -87,7 +87,7 @@ public class ProductBackController {
 	        }
 	    }
 	    if (result.hasErrors()) {
-	        return "back-end/product/update_product_input";
+	        return "back-end/product/updateProductInput";
 	    }
 
 	    ProductSvc.updateProduct(productVO);
