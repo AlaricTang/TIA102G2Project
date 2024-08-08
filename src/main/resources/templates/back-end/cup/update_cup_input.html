@@ -86,7 +86,7 @@
 			
 			<div>
 			<label>租借時間:</label>
-			<input type="text" th:field="*{cupRentDate}" onclick="hideContent('cupRentDate.errors');" /><br/>
+			<input type="Date" th:field="*{cupRentDate}" onclick="hideContent('cupRentDate.errors');" /><br/>
 			<span  th:if="${#fields.hasErrors('cupRentDate')}" th:errors="*{cupRentDate}" class="error" id="cupRentDate.errors"></span>
 			</div>
 

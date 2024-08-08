@@ -109,6 +109,16 @@ public class IndexController_inSpringBoot {
     	return "back-end/cup/userReturnCup";
     }
     
+    @GetMapping("/cup/discardCup")
+    public String discardCup(Model model) {
+    	return "back-end/cup/discardCup";
+    }
+    
+    @GetMapping("/cup/countCup")
+    public String countCups(Model model) {
+    	return "back-end/cup/select_page";
+    }
+    
     @ModelAttribute("cupListData") // for select_page.html
     protected List<CupVO> referenceListDataCup(Model model) {
 		

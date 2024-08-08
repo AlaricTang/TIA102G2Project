@@ -46,7 +46,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-button justify-content-center">
 		 <div align="center"> <h2>飲品資料新增 - addDrink.html</h2>
 		 <h3><a class="navbar-brand" th:href="@{/drink/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
@@ -111,11 +111,11 @@
 			<span th:if="${#fields.hasErrors('drinkStatus')}" th:errors="*{drinkStatus}" class="error" id="drinkStatus.errors"></span>
 			</div>
 			
-			<div>
-			<label>創建日期:</label>
-			<input type="date" th:field="*{drinkCreateDate}" readonly="readonly" /><br/>
-			<span th:if="${#fields.hasErrors('drinkCreateDate')}" th:errors="*{drinkCreateDate}" class="error" id="drinkCreateDate.errors"></span>
-			</div>
+<!-- 			<div> -->
+<!-- 			<label>創建日期:</label> -->
+<!-- 			<input type="date" th:field="*{drinkCreateDate}" readonly="readonly" /><br/> -->
+<!-- 			<span th:if="${#fields.hasErrors('drinkCreateDate')}" th:errors="*{drinkCreateDate}" class="error" id="drinkCreateDate.errors"></span> -->
+<!-- 			</div> -->
 			
 			<div>
 			<label>創建者:</label>

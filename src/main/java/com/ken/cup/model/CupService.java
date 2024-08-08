@@ -46,4 +46,12 @@ public class CupService {
 	public List<CupVO> getAll(Map<String, String[]> map){
 		return CompositeQuery_Cup.getAllC(map,sessionFactory.openSession());
 	}
+	
+	// 自訂查詢 1 查詢該店家有多少可以出租的杯子
+	public Long countCupsByStoreAndStatus(Integer storeID) {
+        return repository.countByStoreIDAndCupStatus(storeID);
+    }
+	
+	// 自訂查詢 2 查詢該店家有多少杯子已經被出租
+	
 }
