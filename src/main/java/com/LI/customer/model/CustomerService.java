@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.LI.customer.model.CustomerVO;
+import com.LI.customer.*;
 
 @Service("customerService")
 public class CustomerService {
