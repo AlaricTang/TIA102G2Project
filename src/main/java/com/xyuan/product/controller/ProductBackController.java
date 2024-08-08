@@ -61,7 +61,7 @@ public class ProductBackController {
 		model.addAttribute("productListData", list);
 		model.addAttribute("success", "新增成功");
 		
-		return "redirect:/product/listAllProduct";			
+		return "redirect:/product/listAllProductBack";			
 	}
 	
 	@PostMapping("getOne_For_Update")
@@ -98,7 +98,16 @@ public class ProductBackController {
 	    return "back-end/product/listOneProduct";
 	}
 
-
+	@PostMapping("listAllProductBack")
+	public String listAllProductBack(ModelMap model) {
+		
+		List<ProductVO> onNormalProductList = ProductSvc.getOnProduct();
+		model.addAttribute("productList", onNormalProductList);
+	
+		return "back-end/product/listAllProductBack";
+	}
+		
+	
 	public BindingResult removeFieldError(@Valid ProductVO productVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
 				.filter(fieldname -> !fieldname.getField().equals(removedFieldname))
