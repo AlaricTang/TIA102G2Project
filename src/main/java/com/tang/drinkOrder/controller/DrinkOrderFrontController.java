@@ -62,30 +62,30 @@ public class DrinkOrderFrontController {
 		drinkOrderVO.setUserID(userID);
 		
 		//訂購門市
-		String str_drinkOrderStore = drinkCartService.getDrinkOrder(userID,"drinkOrderStore");	//從Jedis拿 先假定都從Jedis拿 =======================================
+		String str_drinkOrderStore = drinkCartService.getOneDrinkOrder(userID,"drinkOrderStore");	//從Jedis拿 先假定都從Jedis拿 =======================================
 		StoreVO drinkOrderStore =  storeService.getOneStore(Integer.valueOf(str_drinkOrderStore));
 		drinkOrderVO.setStoreID(drinkOrderStore.getStoreID());
 		
 		//取貨時間
-//		String str_drinkOrderPickTime =(String) session.getAttribute("drinkOrderPickTime");   //範例 從session拿的話
-		String str_drinkOrderPickTime = drinkCartService.getDrinkOrder(userID,"drinkOrderPickTime");  //=======================================
+		String str_drinkOrderPickTime = drinkCartService.getOneDrinkOrder(userID,"drinkOrderPickTime");  //=======================================
 		str_drinkOrderPickTime = str_drinkOrderPickTime.replace("T", " ") + ":00";
 		Timestamp drinkOrderPickTime = Timestamp.valueOf(str_drinkOrderPickTime);
 		drinkOrderVO.setDrinkOrderPickTime(drinkOrderPickTime);
 		
 		//使用環保杯數
-		String str_cupNumber = drinkCartService.getDrinkOrder(userID,"cupNumber"); //=======================================
+		String str_cupNumber = drinkCartService.getOneDrinkOrder(userID,"cupNumber"); //=======================================
 		drinkOrderVO.setCupNumber(Integer.valueOf(str_cupNumber));
 		
 		//購物車列表 + 確認訂單金額價錢
 		drinkCartList = drinkCartService.getDrinkCart(userID); 
+		
 		for(DrinkOrderDetailVO drinkCartItem : drinkCartList) {
 			DrinkVO drink = drinkService.getOneDrink(drinkCartItem.getDrinkID());
-//			if(drink.getDrinkDPrice()>0) {
-//				totalPrice += drink.getDrinkDPrice();				
-//			}else {
-//				totalPrice += drink.getDrinkPrice();
-//			}
+			if(drink.getDrinkDPrice()>0) {
+				totalPrice += drink.getDrinkDPrice();				
+			}else {
+				totalPrice += drink.getDrinkPrice();
+			}
 		}
 		drinkOrderVO.setDrinkOrderAmount(totalPrice);
 		
@@ -120,24 +120,26 @@ public class DrinkOrderFrontController {
 		
 		drinkOrderVO.setDrinkOrderStatus(Byte.valueOf("0")); //訂單 狀態預設為 未完成
 		drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("0"));//訂單 狀態預設為 未付款
+		if(drinkOrderVO.getDrinkOrderPayM() == 1) { //如果為線上付款 去綠界
+			//綠界實行
+			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
+		}
+		
 		DrinkOrderVO saveDrinkOrder = drinkOrderSvc.addAndGetDrinkOrder(drinkOrderVO); //存訂單
+		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID(); //取訂單ID 給綁明細用
 
 		Integer userID = drinkOrderVO.getUserID(); //獲取訂購人 ID
 		List<DrinkOrderDetailVO> cartDrinks =  drinkCartService.getDrinkCart(userID); //取出他的購物車明細
-		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID(); //取訂單ID 給綁明細用
 		
 		for(DrinkOrderDetailVO drinkDetails : cartDrinks ) { //根據購物車 取訂單明細
 			drinkDetails.setDrinkOrderID(drinkOrderID); //訂單明細 綁 訂單ID 
 			drinkOrderDetailSvc.addDrinkOrderDetail(drinkDetails);//存訂單明細
 		}
 		
-		if(drinkOrderVO.getDrinkOrderPayM() == 1) { //如果為線上付款 去綠界
-			//綠界實行
-			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
-		}
+
 		
-		drinkCartService.delete(userID);//下訂完 刪購物人資訊
-		drinkCartService.deleteDrinkDetail(userID); //下訂完 刪購物車明細
+		drinkCartService.deleteDrinkOrder(userID);//下訂完 刪購物人資訊
+		drinkCartService.deleteDrinkCart(userID); //下訂完 刪購物車明細
 				
 		redirectAttributes.addAttribute("saveDrinkOrder", saveDrinkOrder);//成功頁面要呈現訂單資訊(含訂單編號 訂單時間等)
 		return "redirect:/drinkOrder/orderSuccess"; //這會跑下面這個

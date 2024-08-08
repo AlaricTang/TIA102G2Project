@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redis.JedisService;
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
 @Service
@@ -17,31 +19,63 @@ public class ProductCartService {
 	@Autowired
 	JedisService jedisSvc;
 	
-	public void saveProductDetail(Integer userID, ProductOrderDetailVO productOrderDetail) throws IOException {
-		jedisSvc.saveToList(userID.toString(), productOrderDetail);
+	private static final String PRODUCTCART_PREFIX="productCart:";
+	private static final String PRODUCTORDER_PREFIX="productOrder:";
+
+	
+	
+	
+	
+	public void saveProductDetail(Integer userID, ProductOrderDetailVO cartItem) throws IOException {
+		String cartkey=PRODUCTCART_PREFIX + userID.toString();
+		jedisSvc.saveItemToList(cartkey, cartItem);
 	}
+	
+	
 	
 	public List<ProductOrderDetailVO> getProductCart (Integer userID) throws IOException{
-		List<ProductOrderDetailVO> beProductOrderDetailList = new ArrayList<>();
-		List<Object> obProductCart = jedisSvc.getList(userID.toString());
-		for(Object obProductDetail : obProductCart) {
-			ProductOrderDetailVO productOrderDetail = (ProductOrderDetailVO)obProductDetail;
-			beProductOrderDetailList.add(productOrderDetail);
+		String cartkey=PRODUCTCART_PREFIX + userID.toString();
+		List<ProductOrderDetailVO> productCartItems = new ArrayList<>();
+		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartkey);
+		for(Object cartJson : cartJsonList) {
+			productCartItems .add(new ObjectMapper().readValue(cartJson.toString(), ProductOrderDetailVO.class));
 		}
-		return beProductOrderDetailList;
+		return productCartItems;
 	}
 	
-	public void deleteProductDetail (Integer userID) throws IOException{
-		jedisSvc.delete(userID.toString());
-//		jedisSvc.deleteList(userID.toString());
+	public void removeDrinkCartItem (Integer userID,Integer drinkID) throws IOException{
+		String cartKey = PRODUCTCART_PREFIX + userID.toString();
+		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
+        for (Object cartJson : cartJsonList) {
+        	DrinkOrderDetailVO drinkOrderDetail = new ObjectMapper().readValue(cartJson.toString(), DrinkOrderDetailVO.class);
+            if (drinkOrderDetail.getDrinkID().equals(drinkID)) {
+            	jedisSvc.removeItemFromList(cartKey, cartJson);
+                break;
+            }
+        }
 	}
 	
-	public void setProductOrder(String key, String string) throws IOException{
-		jedisSvc.saveOneOne(key, string);
+	public void deleteDrinkCart(Integer userID)throws IOException{
+		String cartKey = PRODUCTCART_PREFIX + userID.toString();
+		jedisSvc.delete(cartKey);
 	}
 	
-	public String getProductOrder(String key) throws IOException{
-		return jedisSvc.getOneOne(key);
+	
+	
+//	購物車 訂購人資訊用
+	public void setOneDrinkOrder(Integer userID , String key, String value) throws IOException {
+		String drinkOrderKey = PRODUCTORDER_PREFIX + userID.toString();
+		jedisSvc.saveOneOneOne(drinkOrderKey,key, value);
+	}
+	
+	public String getOneDrinkOrder(Integer userID , String key) throws IOException{
+		String drinkOrderKey = PRODUCTORDER_PREFIX + userID.toString();
+		return jedisSvc.getOneOneOne(drinkOrderKey,key);
+	}
+	
+	public void deleteDrinkOrder(Integer userID)throws IOException{
+		String drinkOrderKey = PRODUCTORDER_PREFIX + userID.toString();
+		jedisSvc.delete(drinkOrderKey);
 	}
 	
 }

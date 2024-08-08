@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
+import com.google.gson.Gson;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -15,7 +16,12 @@ import redis.clients.jedis.JedisPool;
 @Service("jedisService")
 public class JedisService {
 
+	@Autowired
+	private RedisTemplate<String, Object> redisTemplate;
 	private final JedisPool jedisPool;
+	
+	@Autowired
+	private Gson gson;
 	
 	public JedisService(JedisPool jedisPool) {
 		this.jedisPool = jedisPool;
@@ -27,7 +33,7 @@ public class JedisService {
 		}
 	}
 	
-	// =============== for key Value ===============
+	// ===============  key Value ===============
 	public void saveOneOne(String key,String value)throws IOException{
 		try(Jedis jedis = jedisPool.getResource()){
 			 jedis.set(key, value);
@@ -39,20 +45,20 @@ public class JedisService {
 		}
 	}
 	
-	// =============== for key filed Value ===============
-	public void saveUserOneOne(String key, String filed, String value )throws IOException{
+	// ===============  key filed Value ===============
+	public void saveOneOneOne(String key, String filed, String value )throws IOException{
 		try(Jedis jedis = jedisPool.getResource()){
 			jedis.hset(key, filed, value);
 		}
 	}
 	
-	public String getUserOneOne(String key, String filed )throws IOException{
+	public String getOneOneOne(String key, String filed )throws IOException{
 		try(Jedis jedis = jedisPool.getResource()){
 			return jedis.hget(key, filed);
 		}
 	}
 	
-	public void deleteUserOneOne(String key, String filed)throws IOException{
+	public void deleteOneOneOne(String key, String filed)throws IOException{
 		try (Jedis jedis = jedisPool.getResource()){
 			jedis.hdel(key, filed);
 		}
@@ -61,70 +67,59 @@ public class JedisService {
 
 	
 	// =============== key List for allType  ===============
-	public void saveToList(String key, Object value)throws IOException{
-		 ObjectMapper objectMapper = new ObjectMapper();
-		 String valueJson = objectMapper.writeValueAsString(value);
+	public void saveItemToList(String key, Object item) {
 		 try(Jedis jedis = jedisPool.getResource()){
-			 jedis.rpush(key, valueJson);
+			 String jsonString = gson.toJson(item);
+			 redisTemplate.opsForList().rightPush(key, jsonString);
 		 }
 	}
 	
 	public void saveList(String key,  List<Object> List)throws IOException {
 		try(Jedis jedis = jedisPool.getResource()){
 			jedis.del(key);
-			ObjectMapper objectMapper = new ObjectMapper();
 			
             for (Object item : List) {
-                String itemJson = objectMapper.writeValueAsString(item); // 将每个对象序列化为JSON字符串
+            	String itemJson = gson.toJson(item); // 将每个对象序列化为JSON字符串
                 jedis.rpush(key, itemJson); // 使用rpush命令将JSON字符串添加到列表末尾
             }
 		}
 	}
 	
-	public List<Object> getList(String key)throws IOException {
+	public List<Object> getItemsFromList(String key)throws IOException {
 		try(Jedis jedis = jedisPool.getResource()){
-			ObjectMapper objectMapper = new ObjectMapper();
-			List<Object> valueList = new ArrayList<>();			
-			List<String> voListJson = jedis.lrange(key,0,-1);//取得 不移除
-
-			if( voListJson != null) {
-				for(String voJson : voListJson) {				
-					valueList.add(objectMapper.readValue(voJson,Object.class)); 
-				}
-				return valueList;
-			}
+			return redisTemplate.opsForList().range(key, 0, -1);
 		}
-		return null;
 	}
 	
-
+    public void removeItemFromList(String key, Object item) {
+        redisTemplate.opsForList().remove(key, 1, item);
+    }
 	
+	// =============== key field List for allType  ===============
+	@SuppressWarnings("unchecked")
+	public void saveItemToHash(String key, String field, Object value) {	
+		String json = (String) redisTemplate.opsForHash().get(key, value);
+		List<Object> items;
+		if(json != null) {
+			items = gson.fromJson(json, List.class);
+		}else {
+			items = new ArrayList<>();
+		}
+		items.add(value);
+		redisTemplate.opsForHash().put(key, field, gson.toJson(items));
+	}
 	
-	
-	// =============== for DrinkCart ===============
-//	public void saveDrinkCart(String userID, DrinkOrderDetailVO beDrinkOrderDetail)throws IOException{
-//		 ObjectMapper objectMapper = new ObjectMapper();
-//		 String valueJson = objectMapper.writeValueAsString(beDrinkOrderDetail);
-//		 try(Jedis jedis = jedisPool.getResource()){
-//			 jedis.rpush(userID, valueJson);
-//		 }
-//	}
-//	
-//	public List<DrinkOrderDetailVO> getDrinkCart(String userID)throws IOException {
-//		try(Jedis jedis = jedisPool.getResource()){
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			List<DrinkOrderDetailVO> beDrinkOrderDetailList = new ArrayList<>();			
-//			List<String> voListJson = jedis.lrange(userID,0,-1);
-//			
-//			if( voListJson != null) {
-//				for(String voJson : voListJson) {				
-//					beDrinkOrderDetailList.add(objectMapper.readValue(voJson,DrinkOrderDetailVO.class)); 
-//				}
-//				return beDrinkOrderDetailList;
-//			}
-//		}
-//		return null;
-//	}
+//cart:userID, drink, 
+	public void saveListToHash(String key, String field, List<Object> List)throws IOException {
+		try(Jedis jedis = jedisPool.getResource()){
+			jedis.hdel(key,field);
+			
+	        for (Object item : List) {
+	            String itemJson = gson.toJson(item); // 将每个对象序列化为JSON字符串
+	            jedis.rpush(key, itemJson); // 使用rpush命令将JSON字符串添加到列表末尾
+	        }
+		}
+	}
 	
 
 }

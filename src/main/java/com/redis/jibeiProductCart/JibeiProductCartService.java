@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
 import com.redis.JedisService;
 import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
 
@@ -16,27 +17,68 @@ public class JibeiProductCartService {
 	@Autowired
 	JedisService jedisSvc;
 	
-	//加入購物車 
-	public void saveToCart(Integer userID, List<JibeiOrderDetailVO> cartList) throws IOException {
-		jedisSvc.saveToList(userID.toString()+"JibeiProductDetail", cartList);
-	}
+	@Autowired
+	private Gson gson;
 	
-	//取出購物車 ob轉成VO
-	public List<JibeiOrderDetailVO> getJibeiProductCart(Integer userID) throws IOException{
-		List<JibeiOrderDetailVO> beJibeiOrderDetailList = new ArrayList<>();
+	private static final String JIBEIPRODUCTCART_PREFIX = "drinkCart:";
+
+	public void addCartItem(String userId, JibeiOrderDetailVO cartItem) throws IOException {
+		String cartKey = JIBEIPRODUCTCART_PREFIX + userId;
+		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
+		boolean itemExists = false;
+
+		List<JibeiOrderDetailVO> cartItems  = new ArrayList<>();
 		
-		List<Object> obJibeiProductCart = jedisSvc.getList(userID.toString()+"JibeiProductDetail");
-		for(Object obJibeiOrderDetail : obJibeiProductCart) {
-			JibeiOrderDetailVO drinkOrderDetail = (JibeiOrderDetailVO)obJibeiOrderDetail;
-			beJibeiOrderDetailList.add(drinkOrderDetail);
+		for (Object jsonString : cartJsonList) {
+			JibeiOrderDetailVO existingCartItem = gson.fromJson(jsonString.toString(), JibeiOrderDetailVO.class);
+
+			if (existingCartItem.getJibeiProductID().equals(cartItem.getJibeiProductID())) {
+				
+				existingCartItem.setJibeiOrderDetailAmount(
+						existingCartItem.getJibeiOrderDetailAmount() + cartItem.getJibeiOrderDetailAmount()); // 更新数量
+				cartItems.add(existingCartItem);
+				itemExists = true;
+			}else {
+				cartItems.add(existingCartItem);
+			}
 		}
-		return beJibeiOrderDetailList;
+
+		if (!itemExists) {
+			cartItems.add(cartItem);
+		} 
+		jedisSvc.delete(cartKey);
+		
+		for (JibeiOrderDetailVO item : cartItems) {
+            jedisSvc.saveItemToList(cartKey, gson.toJson(item));
+        }
 	}
-	
-	
-	public void deleteDrinkDetail(Integer userID)throws IOException{
-		jedisSvc.delete(userID.toString()+"JibeiProductDetail");
+
+	// 取出購物車 ob轉成VO
+	public List<JibeiOrderDetailVO> getJibeiProductCart(Integer userID) throws IOException {
+		String cartKey = JIBEIPRODUCTCART_PREFIX + userID.toString();
+		List<JibeiOrderDetailVO> jibeiProductCartItems = new ArrayList<>();
+		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
+		for (Object cartJson : cartJsonList) {
+			jibeiProductCartItems.add(gson.fromJson(cartJson.toString(), JibeiOrderDetailVO.class));
+		}
+		return jibeiProductCartItems;
 	}
-	
-	
+
+	public void removeJibeiProductCartItem(Integer userID, Integer drinkID) throws IOException {
+		String cartKey = JIBEIPRODUCTCART_PREFIX + userID.toString();
+		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
+		for (Object cartJson : cartJsonList) {
+			JibeiOrderDetailVO jibeiOrderDetail = gson.fromJson(cartJson.toString(), JibeiOrderDetailVO.class);
+			if (jibeiOrderDetail.getJibeiOrderDetailID().equals(drinkID)) {
+				jedisSvc.removeItemFromList(cartKey, cartJson);
+				break;
+			}
+		}
+	}
+
+	public void deleteJibeiProductCart(Integer userID) throws IOException {
+		String cartKey = JIBEIPRODUCTCART_PREFIX + userID.toString();
+		jedisSvc.delete(cartKey);
+	}
+
 }

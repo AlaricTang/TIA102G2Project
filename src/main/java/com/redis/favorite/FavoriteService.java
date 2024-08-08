@@ -20,15 +20,15 @@ public class FavoriteService {
 	    // 儲存收藏
 	    public void addFavorite(Integer userID, Integer productID) throws IOException {
 	        String key = FAVORITE_KEY_PREFIX + userID;
-	        jedisSvc.saveUserOneOne(key, productID.toString(), productID.toString());
+	        jedisSvc.saveOneOneOne(key, productID.toString(), productID.toString());
 	    }
 
 	    // 會員所有收藏的商品
 	    public List<Object> getFavorites(Integer userID) throws IOException {
 	        String key = FAVORITE_KEY_PREFIX + userID;
-	        return jedisSvc.getList(key);
+	        return jedisSvc.getItemsFromList(key);
 	    }
-
+	    
 	    // 刪除收藏
 	    public void removeFavorite(Integer userID, Integer productID) throws IOException {
 	        String key = FAVORITE_KEY_PREFIX + userID;

@@ -48,6 +48,8 @@ public class JibeiProductFrontController {
 		return "back-end/jibeiProduct/singleJibeiProduct";
 	}
 	
+	
+	
 	//加入購物車
 	@PostMapping("addToCart")
 	public String addToCart(
@@ -60,25 +62,26 @@ public class JibeiProductFrontController {
 		jibeiProductItem.setJibeiOrderDetailAmount(Integer.valueOf(orderAmount));
 		
 		UserVO user = (UserVO)session.getAttribute("user");
-		
-		
+	
 		List<JibeiOrderDetailVO> cartList = jibeiProductCartSvc.getJibeiProductCart(user.getUserId());
 		
-	    boolean itemExists = false;
-	    for (JibeiOrderDetailVO item : cartList) {
-	        if (item.getJibeiProductID() == jibeiProductItem.getJibeiProductID()) {
-	            item.setJibeiOrderDetailAmount(item.getJibeiOrderDetailAmount() + jibeiProductItem.getJibeiOrderDetailAmount());
-	            itemExists = true;
-	            break;
-	        }
-	    }
-
-	    if (!itemExists) {
-	        cartList.add(jibeiProductItem);
-	    }
 		
-		jibeiProductCartSvc.saveToCart(user.getUserId(),cartList);
 		
+//	    boolean itemExists = false;
+//	    for (JibeiOrderDetailVO item : cartList) {
+//	        if (item.getJibeiProductID() == jibeiProductItem.getJibeiProductID()) {
+//	            item.setJibeiOrderDetailAmount(item.getJibeiOrderDetailAmount() + jibeiProductItem.getJibeiOrderDetailAmount());
+//	            itemExists = true;
+//	            break;
+//	        }
+//	    }
+//
+//	    if (!itemExists) {
+//	        cartList.add(jibeiProductItem);
+//	    }
+//		
+//		jibeiProductCartSvc.saveToCart(user.getUserId(),cartList);
+//		
 		
 		return "back-end/jibeiProduct/singleJibeiProduct";
 	}

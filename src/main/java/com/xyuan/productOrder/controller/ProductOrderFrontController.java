@@ -59,24 +59,24 @@ public class ProductOrderFrontController {
 		productOrderVO.setUserID(userID);		//用setUserID()將userID的資料放進productOrderVO
 		
 	//收件者姓名
-		String str_receiverName = productCartService.getProductOrder("str_receiverName");
+		String str_receiverName = productCartService.getOneDrinkOrder(userID,"str_receiverName");
 		productOrderVO.setReceiverName(str_receiverName);
 		
 	//收件者電話
-		String str_receiverPhone = productCartService.getProductOrder("str_receiverPhone");
+		String str_receiverPhone = productCartService.getOneDrinkOrder(userID,"str_receiverPhone");
 		productOrderVO.setReceiverPhone(str_receiverPhone);
 		
 	//收件者信箱
-		String str_receiverMail = productCartService.getProductOrder("str_receiverMail");
+		String str_receiverMail = productCartService.getOneDrinkOrder(userID,"str_receiverMail");
 		productOrderVO.setReceiverMail(str_receiverMail);
 		
 		
 	//付款方式byte
-		String str_productOrderPayM = productCartService.getProductOrder("str_productOrderPayM");
+		String str_productOrderPayM = productCartService.getOneDrinkOrder(userID,"str_productOrderPayM");
 		productOrderVO.setProductOrderPayM(Byte.valueOf(str_productOrderPayM));
 		
 	//備註
-		String str_productOrderNote = productCartService.getProductOrder("str_productOrderNote");
+		String str_productOrderNote = productCartService.getOneDrinkOrder(userID,"str_productOrderNote");
 		productOrderVO.setProductOrderNote(str_productOrderNote);
 		
 		
@@ -85,6 +85,7 @@ public class ProductOrderFrontController {
 		//迴圈變數名稱為drinkCartItem，其型別為DrinkOrderDetailVO，遍歷drinkCartList列表
 		for(ProductOrderDetailVO productCartItem : productCartList) {
 			ProductVO product = productService.getOneProduct(productCartItem.getProductID());
+			totalPrice += product.getProductPrice();
 		}
 		productOrderVO.setProductOrderAmount(totalPrice);
 		
@@ -121,17 +122,19 @@ public class ProductOrderFrontController {
 		Integer userID = productOrderVO.getUserID();
 		List<ProductOrderDetailVO> cartProducts = productCartService.getProductCart(userID);
 		Integer productOrderID = saveProductOrder.getProductOrderID();
-		
+		if(productOrderVO.getProductOrderPayM() == 1) {	
+			//如果為線上付款 去綠界
+			productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));		//執行完 狀態設為 已付款
+		}
 		for(ProductOrderDetailVO productDetails : cartProducts) {
 			productDetails.setProductOrderID(productOrderID);
 			productOrderDetailSvc.addProductOrderDetail(productDetails);
 		}
 		
-		if(productOrderVO.getProductOrderPayM() == 1) {					//如果為線上付款 去綠界
-		productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));		//執行完 狀態設為 已付款
-		}
 		
-		productCartService.deleteProductDetail(userID);		//下訂完 刪購物車明細
+		
+		productCartService.deleteDrinkOrder(userID);	//下訂完 刪購物人資訊
+		productCartService.deleteDrinkCart(userID);		//下訂完 刪購物車明細
 		
 		redirectAttributes.addAttribute("saveProductOrder", saveProductOrder);
 			return "redirect:/productOrder/orderSuccess";
