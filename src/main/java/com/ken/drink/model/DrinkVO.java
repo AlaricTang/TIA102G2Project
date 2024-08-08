@@ -1,17 +1,24 @@
 package com.ken.drink.model;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.tang.drinkOrder.model.DrinkOrderVO;
 
 @Entity
 @Table(name="Drink" )
@@ -47,23 +54,39 @@ public class DrinkVO  implements java.io.Serializable{
     @Column(name = "drinkStatus")
     private Byte drinkStatus;  // Change Integer to Byte
     
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     @Column(name = "drinkUpdateDate" ,insertable = false)
     private Date drinkUpdateDate;
     
-    
+//    @Temporal(TemporalType.DATE)
     @Column(name = "drinkCreateDate", updatable = false, insertable = false)
     private Date drinkCreateDate;
     
 //    @ManyToOne
-//    @JoinColumn(name = "MemberID" )
+//    @JoinColumn(name = "editedByMemberID" )
+//    private MemberVO membervo;
+    
+    
     @Column(name = "editedByMemberID")
     private Integer editedByMemberID;
     
 //    @ManyToOne
-//    @JoinColumn(name = "MemberID")
+//    @JoinColumn(name = "createdByMemberID")
+//    private MemberVO membervo;
+    
     @Column(name = "createdByMemberID")
     private Integer createdByMemberID;
+    
+    
+//    private Integer drinkDPrice;
+    // ================== FK區 =========================
+    
+//    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="drinkOrderVO")
+//    private Set<DrinkOrderVO> drinkOrders = new HashSet<DrinkOrderVO>();
+    
+    
+    
+    // ==================     =========================
     
     public DrinkVO() {
     	

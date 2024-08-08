@@ -68,8 +68,8 @@
 			
 			<div>
 			<label>飲品價格:</label>
-			<input type="text" th:field="*{drinkPeice}" onclick="hideContent('drinkPeice.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('drinkPeice')}" th:errors="*{drinkPeice}" class="error" id="drinkPeice.errors"></span>
+			<input type="text" th:field="*{drinkPrice}" onclick="hideContent('drinkPrice.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('drinkPrice')}" th:errors="*{drinkPrice}" class="error" id="drinkPrice.errors"></span>
 			</div>
 			
 			<div>
@@ -119,8 +119,8 @@
 			
 			<div>
 			<label>創建者:</label>
-			<input type="text" th:field="*{createByMemberID}" onclick="hideContent('createByMemberID.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('createByMemberID')}" th:errors="*{createByMemberID}" class="error" id="createByMemberID.errors"></span>
+			<input type="text" th:field="*{createdByMemberID}" onclick="hideContent('createdByMemberID.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('createdByMemberID')}" th:errors="*{createdByMemberID}" class="error" id="createdByMemberID.errors"></span>
 			</div>
 			
 			
@@ -152,7 +152,7 @@ acceptedTypes = {
 		'image/gif' : true
 };
 function previewImage() {
-	var upfile1 = document.getElementById("upFiles");
+	var upfile1 = document.getElementById("drinkPic");
 	upfile1.addEventListener("change", function(event) {
 		var files = event.target.files || event.dataTransfer.files;
 		for (var i = 0; i < files.length; i++) {

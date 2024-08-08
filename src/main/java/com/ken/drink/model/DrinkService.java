@@ -45,4 +45,9 @@ public class DrinkService {
 	public List<DrinkVO> getAll(Map<String, String[]> map){
 		return CompositeQuery_Drink.getAllC(map, sessionFactory.openSession()); // Session可以刪掉
 	}
+	
+	// 根據標籤查詢飲品
+    public List<DrinkVO> getDrinksByTag(String drinkTag) {
+        return repository.findByDrinkTag(drinkTag);
+    }
 }

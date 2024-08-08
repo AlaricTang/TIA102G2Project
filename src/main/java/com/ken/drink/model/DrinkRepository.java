@@ -1,5 +1,7 @@
 package com.ken.drink.model;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +14,8 @@ public interface DrinkRepository extends JpaRepository<DrinkVO , Integer>{
 	@Query(value = "delete from drink where drinkID =?1", nativeQuery = true)
 	void deleteByDrinkID(int drinkID);
 	
+	// 根據標籤查詢飲品
 	
+    List<DrinkVO> findByDrinkTag(String drinkTag);
 
 }

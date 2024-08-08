@@ -87,6 +87,21 @@
 ////		System.out.print(DrinkVO3.getDrinkVO().getLoc());
 ////		System.out.println("\n---------------------");
 //      
+//    	List<DrinkVO> list = repository.findByDrinkTag("綠茶");
+//    	for (DrinkVO aDrink : list) {
+//    		System.out.print(aDrink.getDrinkID() + ",");
+//			System.out.print(aDrink.getDrinkName() + ",");
+//			System.out.print(aDrink.getDrinkPrice() + ",");
+//			System.out.print(aDrink.getDrinkDes() + ",");
+//			System.out.print(aDrink.getDrinkTag() + ",");
+//			System.out.print(aDrink.getDrinkStatus() + ",");
+//			System.out.print(aDrink.getDrinkUpdateDate() + ",");
+//			System.out.print(aDrink.getDrinkCreateDate() + ",");
+//			System.out.print(aDrink.getEditedByMemberID() + ",");
+//			System.out.print(aDrink.getCreatedByMemberID() + ",");
+//			System.out.println();
+//    	}
+//    	
 //    	
 //		//● 查詢-getAll (多方Drink2.hbm.xml必須設為lazy="false")(優!)
 ////    	List<DrinkVO> list = repository.findAll(); 
