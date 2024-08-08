@@ -11,5 +11,9 @@ public interface UserRepository extends JpaRepository<UserVO, Integer> {
     @Modifying // 告知此方法為修改操作，沒寫JPA不會給你修改
     @Query(value = "delete from user where userID = ?1", nativeQuery = true)
     void deleteByUserID(int userID);
+    
+    // 根據電子郵件地址查詢用戶
+    UserVO findByUserEmail(String email);
 }
+
 

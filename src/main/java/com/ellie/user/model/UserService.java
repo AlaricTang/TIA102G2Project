@@ -45,4 +45,12 @@ public class UserService {
 		return CompositeQuery_User.getAllC(map,sessionFactory.openSession());
 		
 	}
+
+	public UserVO findByEmail(String email) {
+        return repository.findByUserEmail(email);
+    }
 }
+
+
+	
+
