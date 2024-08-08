@@ -1,5 +1,7 @@
 package com.ken.cup.controller;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,11 +53,14 @@ public class CupController {
 	/*
 	 * This method will be called on addDrink.html form submission, handling POST request It also validates the user input
 	 */
-	
+	@PostMapping("insert")
 	public String insert(@Valid CupVO cupVO, BindingResult result,ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(cupVO, result);
+		if (result.hasErrors()) {
+			return "back-end/cup/addCup";
+		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
 		cupSvc.addCup(cupVO);
@@ -84,11 +89,14 @@ public class CupController {
 	/*
 	 * This method will be called on update_emp_input.html form submission, handling POST request It also validates the user input
 	 */
+	@PostMapping("update")
 	public String update(@Valid CupVO cupVO, BindingResult result, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(cupVO, result);
-		
+		if (result.hasErrors()) {
+			return "back-end/cup/update_cup_input";
+		}
 		// 跟notify一樣 因為沒有圖片 所以這邊對照0205範例 不對圖片部分進行除錯
 		/*************************** 2.開始修改資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -163,4 +171,48 @@ public class CupController {
 		model.addAttribute("cupListData", list); // for listAllEmp.html 第85行用
 		return "back-end/cup/listAllCup";
 	}
+	
+	
+	// ===================   方法 1 店家畫面按下"租借按鈕"   =============================
+	@PostMapping("userRentCup")
+	public String userRentCup(@RequestParam("cupID") Integer cupID, @RequestParam("userID") Integer userID, Model model) {
+	    // 查詢杯子是否存在
+	    CupVO cupVO = cupSvc.getOneCup(cupID);
+	    if (cupVO == null) {
+	        model.addAttribute("errorMessage", "杯子編號不存在");
+	        return "back-end/cup/update_cup_input"; // 導向回原頁面
+	    }
+
+	    // 更新杯子資料
+	    cupVO.setUserID(userID);
+	    cupVO.setCupStatus(1); // 假設1表示已租借
+	    LocalDateTime now = LocalDateTime.now();
+	    Date sqlDate = Date.valueOf(now.toLocalDate());
+	    cupVO.setCupRentDate(sqlDate);
+	    cupSvc.updateCup(cupVO);
+	    model.addAttribute("successMessage", "租借成功");
+	    return "redirect:/cup/listAllCup";
+	}
+	
+	// ===================   方法 2 店家畫面按下"(使用者)歸還按鈕"   =============================
+	
+	@PostMapping("userReturnCup")
+	public String userReturnCup(@RequestParam("cupID") Integer cupID, Model model) {
+	    // 查詢杯子是否存在
+	    CupVO cupVO = cupSvc.getOneCup(cupID);
+	    if (cupVO == null) {
+	        model.addAttribute("errorMessage", "杯子編號不存在");
+	        return "back-end/cup/userReturnCup"; // 導向回原頁面
+	    }
+
+	    // 更新杯子資料
+	    cupVO.setCupStatus(0); // 假設0表示已歸還
+	    cupVO.setUserID(null); // 清空userID
+	    cupVO.setStoreID(null); // 清空storeID（若需要設置為特定的ID，可以在此處進行設定）
+	    cupSvc.updateCup(cupVO);
+
+	    model.addAttribute("successMessage", "杯子已成功歸還");
+	    return "redirect:/cup/listAllCup"; // 成功後導向頁面
+	}
+	
 }

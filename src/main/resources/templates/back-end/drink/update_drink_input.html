@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料修改 - update_drink_input.html</title>
+<title>飲品資料修改 - update_drink_input.html</title>
 
 <head th:insert="~{/back-end/drink/included-fragment}"></head>
 <style type="text/css">
@@ -63,13 +63,13 @@
 			<div>
 			<label>飲品名稱:</label>
 			<input type="text" th:field="*{drinkName}" onclick="hideContent('drinkName.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('ename')}" th:errors="*{ename}" class="error" id="ename.errors"></span>
+			<span  th:if="${#fields.hasErrors('drinkName')}" th:errors="*{drinkName}" class="error" id="drinkName.errors"></span>
 			</div>
 			
 			<div>
 			<label>飲品價格:</label>
-			<input type="text" th:field="*{drinkPeice}" onclick="hideContent('drinkPeice.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('drinkPeice')}" th:errors="*{drinkPeice}" class="error" id="drinkPeice.errors"></span>
+			<input type="text" th:field="*{drinkPrice}" onclick="hideContent('drinkPrice.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('drinkPrice')}" th:errors="*{drinkPrice}" class="error" id="drinkPrice.errors"></span>
 			</div>
 			
 			<div>
@@ -114,9 +114,9 @@
 			
 			
 			<div>
-			<label>創建日期:</label>
-			<input type="date" th:field="*{drinkCreateDate}" readonly="readonly" /><br/>
-			<span th:if="${#fields.hasErrors('drinkCreateDate')}" th:errors="*{drinkCreateDate}" class="error" id="drinkCreateDate.errors"></span>
+			<label>更新日期:</label>
+			<input type="date" th:field="*{drinkUpdateDate}" /><br/>
+			<span th:if="${#fields.hasErrors('drinkUpdateDate')}" th:errors="*{drinkUpdateDate}" class="error" id="drinkUpdateDate.errors"></span>
 			</div>
 			
 			<div>

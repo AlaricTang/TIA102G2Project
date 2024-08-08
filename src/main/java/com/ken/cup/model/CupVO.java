@@ -1,6 +1,6 @@
 package com.ken.cup.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Cup" )
@@ -39,11 +40,11 @@ public class CupVO implements java.io.Serializable{
 	@Column(name = "memberID")
 	private Integer memberID;
 	
-	
+	@NotNull(message = "請輸入環保杯狀態")
 	@Column(name = "cupStatus")
-	private Integer cupStatus;
+	private Integer cupStatus; // 0(歸還), 1(出租), 2(報廢)
 	
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
     @Column(name = "cupRentDate" ,insertable = false)
 	private Date cupRentDate;
 	

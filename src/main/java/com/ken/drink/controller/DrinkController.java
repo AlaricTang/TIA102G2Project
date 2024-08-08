@@ -45,6 +45,14 @@ public class DrinkController {
 		return "back-end/drink/addDrink";
 	}
 	
+	// 自訂查詢 (用標籤分類 預計給Front畫面用 因測試關係 先用在back)
+	@GetMapping("listAllDrink")
+	public String listAllDrinks(ModelMap model) {
+		List<DrinkVO> list = drinkSvc.getAll();
+	    model.addAttribute("drinkListData", list);
+	    return "back-end/drink/listAllDrink";
+	}
+	
 	/*
 	 * This method will be called on addDrink.html form submission, handling POST request It also validates the user input
 	 */
@@ -141,32 +149,7 @@ public class DrinkController {
 		model.addAttribute("drinkListData", list);
 		model.addAttribute("success", "- (刪除成功)");
 		return "back-end/drink/listAllDrink"; // 刪除完成後轉交listAllEmp.html
-	}
-	
-	/*
-	 * 第一種作法 Method used to populate the List Data in view. 如 : 
-	 * <form:select path="deptno" id="deptno" items="${deptListData}" itemValue="deptno" itemLabel="dname" />
-	 */
-//	@ModelAttribute("deptListData")
-//	protected List<DeptVO> referenceListData() {
-//		// DeptService deptSvc = new DeptService();
-//		List<DeptVO> list = deptSvc.getAll();
-//		return list;
-//	}
-
-	/*
-	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : 
-	 * <form:select path="deptno" id="deptno" items="${depMapData}" />
-	 */
-//	@ModelAttribute("deptMapData")
-//	protected Map<Integer, String> referenceMapData() {
-//		Map<Integer, String> map = new LinkedHashMap<Integer, String>();
-//		map.put(10, "財務部");
-//		map.put(20, "研發部");
-//		map.put(30, "業務部");
-//		map.put(40, "生管部");
-//		return map;
-//	}
+	}		
 	
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(DrinkVO drinkVO, BindingResult result, String removedFieldname) {

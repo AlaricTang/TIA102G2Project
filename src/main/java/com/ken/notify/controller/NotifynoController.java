@@ -64,6 +64,8 @@ public class NotifynoController {
 		return "back-end/notify/select_page"; // 查詢完成後轉交select_page.html由其第158行insert listOneEmp.html內的th:fragment="listOneEmp-div
 	}
 	
+	
+	// 給User用的
 	 @GetMapping("findByUserID")
 	    public String findByUserID(@RequestParam("userID") String userID, ModelMap model) {
 	        List<NotifyVO> list = notifySvc.findByUserIDOrderByNotifyTimeDesc(Integer.valueOf(userID));
