@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
+import com.ellie.user.model.UserService;
 import com.ellie.user.model.UserVO;
 import com.ken.drink.model.DrinkService;
 import com.ken.drink.model.DrinkVO;
@@ -46,6 +48,9 @@ public class DrinkOrderFrontController {
 	
 	@Autowired
 	DrinkService drinkService;
+	
+	@Autowired
+	UserService userSvc;
 	
 	//購物車頁面進來 跳轉到 要下單頁面
 		//需要將購物人資訊  購物車物品列出來 
@@ -131,13 +136,13 @@ public class DrinkOrderFrontController {
 		}
 		
 		DrinkOrderVO saveDrinkOrder = drinkOrderSvc.addAndGetDrinkOrder(drinkOrderVO); //存訂單
-		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID(); //取訂單ID 給綁明細用
+//		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID(); //取訂單ID 給綁明細用
 
 		Integer userID = drinkOrderVO.getUserID(); //獲取訂購人 ID
 		List<DrinkOrderDetailVO> cartDrinks =  drinkCartService.getDrinkCart(userID); //取出他的購物車明細
 		
 		for(DrinkOrderDetailVO drinkDetails : cartDrinks ) { //根據購物車 取訂單明細
-			drinkDetails.setDrinkOrderID(drinkOrderID); //訂單明細 綁 訂單ID 
+			drinkDetails.setDrinkOrderVO(saveDrinkOrder); //訂單明細 綁 訂單ID 
 			drinkOrderDetailSvc.addDrinkOrderDetail(drinkDetails);//存訂單明細
 		}
 		
@@ -161,19 +166,30 @@ public class DrinkOrderFrontController {
 		return "back-end/drinkOrder/orderFail";
 	}
 	
+	//錯誤驗證 會原沒登入的跳轉
 	@GetMapping("userDrinkOrder")
 	public String userDrinkOrder(ModelMap model,HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("user");
+//		UserVO user = userSvc.getOneUser(1);
+		model.addAttribute("user",user);
 		List<DrinkOrderVO> userDrinkOrderList = drinkOrderSvc.getAllUserDrinkOrder(user.getUserId());
 		model.addAttribute("userDrinkOrderList",userDrinkOrderList);
 		return "back-end/drinkOrder/userDrinkOrder";
 	}
 	
+	@GetMapping("fakeLoggingPage")
+	public String fakeLoggingPage() {
+		return "back-end/drinkOrder/fakeLogging";
+	}
 	
-	
-	
-	
-	
+	@PostMapping("fakeLogging")
+	public String fakeLogging(@RequestParam("user") String user,HttpSession session) {
+		UserVO testUser = userSvc.getOneUser(Integer.valueOf(user));
+		session.setAttribute("user",testUser);
+		return "redirect:/";
+	}
+
+
 }
 //.
 //.					   _ooOoo

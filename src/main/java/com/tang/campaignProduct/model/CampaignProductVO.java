@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.tang.campaign.model.CampaignVO;
 
 @Entity
 @Table(name="CampaignProduct")
@@ -19,21 +23,13 @@ public class CampaignProductVO implements Serializable{
 	@Column(name="CampaignProductID", updatable = false, insertable = false)
 	private Integer campaignProductID;
 	
-//	@ManyToOne
-//	@JoinColumn(name="campaignID")
-//	private CampaignVO campaignVO;
+	@ManyToOne
+	@JoinColumn(name="campaignID")
+	private CampaignVO campaignVO;
 	
-	@Column(name="campaignID")
-	private Integer campaignID;
-	
-//	@ManyToOne
-//	@JoinColumn(name="productID")
-//	private ProductVO productVO;
-	
-	@Column(name="productID")
-	private Integer productID;
+//	@Column(name="campaignID")
+//	private Integer campaignID;
 
-	
 //	@ManyToOne
 //	@JoinColumn(name="drinkID")
 //	private DrinkVO drinkVO;
@@ -53,23 +49,24 @@ public class CampaignProductVO implements Serializable{
 	public void setCampaignProductID(Integer campaignProductID) {
 		this.campaignProductID = campaignProductID;
 	}
-
-	public Integer getCampaignID() {
-		return campaignID;
-	}
-
-	public void setCampaignID(Integer campaignID) {
-		this.campaignID = campaignID;
-	}
-
-	public Integer getProductID() {
-		return productID;
-	}
-
-	public void setProductID(Integer productID) {
-		this.productID = productID;
-	}
 	
+
+//	public Integer getCampaignID() {
+//		return campaignID;
+//	}
+//
+//	public void setCampaignID(Integer campaignID) {
+//		this.campaignID = campaignID;
+//	}
+	
+	public CampaignVO getCampaignVO() {
+		return campaignVO;
+	}
+
+	public void setCampaignVO(CampaignVO campaignVO) {
+		this.campaignVO = campaignVO;
+	}
+
 	public Integer getDrinkID() {
 		return drinkID;
 	}

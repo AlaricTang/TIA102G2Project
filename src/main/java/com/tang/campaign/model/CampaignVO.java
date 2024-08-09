@@ -2,13 +2,21 @@ package com.tang.campaign.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import com.tang.campaignProduct.model.CampaignProductVO;
 
 @Entity
 @Table(name="Campaign")
@@ -41,8 +49,18 @@ public class CampaignVO implements Serializable{
 	@Column(name="campaignPic")
 	private byte[] campaignPic;
 	
+	//註1:【現在是設定成 cascade="all" lazy="false" inverse="true"之意】
+	//註2:【mappedBy="多方的關聯屬性名"：用在雙向關聯中，把關係的控制權反轉】【deptVO是EmpVO的屬性】
+	//註3:【原預設為 @OneToMany(fetch=FetchType.LAZY, mappedBy="deptVO")之意】--> 【是指原為  lazy="true"  inverse="true"之意】
+	//FetchType.EAGER : Defines that data must be eagerly fetched
+	//FetchType.LAZY  : Defines that data can be lazily fetched
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="campaignVO")
+	@OrderBy("campaignProductID asc")
+	private Set<CampaignProductVO> campaignProducts = new HashSet<CampaignProductVO>();
+	
 	public CampaignVO() {
 	}
+
 
 	public Integer getCampaignID() {
 		return campaignID;
@@ -100,6 +118,13 @@ public class CampaignVO implements Serializable{
 		this.campaignPic = campaignPic;
 	}
 	
-	
+
+	public Set<CampaignProductVO> getCampaignProducts() {
+		return campaignProducts;
+	}
+
+	public void setCampaignProducts(Set<CampaignProductVO> campaignProducts) {
+		this.campaignProducts = campaignProducts;
+	}
 	
 }

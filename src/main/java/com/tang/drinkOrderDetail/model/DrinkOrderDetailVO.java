@@ -7,8 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.tang.drinkOrder.model.DrinkOrderVO;
 
 @Entity
 @Table(name="drinkorderdetail")
@@ -20,12 +24,12 @@ public class DrinkOrderDetailVO implements Serializable{
 	@Column(name="drinkorderdetailID", updatable = false, insertable = false)//@Column指這個屬性是對應到資料庫Table的哪一個欄位   //【非必要，但當欄位名稱與屬性名稱不同時則一定要用】
 	private Integer drinkOrderDetailID;
 	
-//	@ManyToOne
-//	@JoinColumn(name="drinkOrderID")
-//	private DrinkOrderVO drinkOrderVO;
+	@ManyToOne
+	@JoinColumn(name="drinkOrderID")
+	private DrinkOrderVO drinkOrderVO;
 
-	@Column(name="drinkOrderID")
-	private Integer drinkOrderID;
+//	@Column(name="drinkOrderID")
+//	private Integer drinkOrderID;
 
 //	@ManyToOne
 //	@JoinColumn(name="drinkID")
@@ -66,16 +70,24 @@ public class DrinkOrderDetailVO implements Serializable{
 	public void setDrinkOrderDetailID(Integer drinkOrderDetailID) {
 		this.drinkOrderDetailID = drinkOrderDetailID;
 	}
-
-
-
-	public Integer getDrinkOrderID() {
-		return drinkOrderID;
-	}
-	public void setDrinkOrderID(Integer drinkOrderID) {
-		this.drinkOrderID = drinkOrderID;
+	
+	
+	public DrinkOrderVO getDrinkOrderVO() {
+		return drinkOrderVO;
 	}
 
+
+	public void setDrinkOrderVO(DrinkOrderVO drinkOrderVO) {
+		this.drinkOrderVO = drinkOrderVO;
+	}
+
+
+//	public Integer getDrinkOrderID() {
+//		return drinkOrderID;
+//	}
+//	public void setDrinkOrderID(Integer drinkOrderID) {
+//		this.drinkOrderID = drinkOrderID;
+//	}
 
 
 	public Integer getDrinkID() {
@@ -134,7 +146,7 @@ public class DrinkOrderDetailVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "DrinkOrderDetailVO [drinkOrderDetailID=" + drinkOrderDetailID + ", drinkOrderID=" + drinkOrderID
+		return "DrinkOrderDetailVO [drinkOrderDetailID=" + drinkOrderDetailID + ", drinkOrderID=" + drinkOrderVO.getDrinkOrderID()
 				+ ", drinkID=" + drinkID + ", drinkOrderDetailIsHot=" + drinkOrderDetailIsHot
 				+ ", drinkOrderDetailUseCup=" + drinkOrderDetailUseCup + ", drinkOrderDetailPrice="
 				+ drinkOrderDetailPrice + ", drinkOrderDetailAmount=" + drinkOrderDetailAmount + "]";

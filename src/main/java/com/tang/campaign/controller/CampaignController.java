@@ -90,20 +90,20 @@ public class CampaignController {
 		}
 		//=========== 圖片 ===========
 
-		//存活動
-		CampaignVO campaign = campaignSvc.addCampaign(campaignVO);
-		
-		//準備綁活動飲品的活動ID
-		Integer campaignID = campaign.getCampaignID();
 		
 		//session 取出要加入的飲品
 		@SuppressWarnings("unchecked")
 		List<CampaignProductVO> beCampaignDrinkList = (List<CampaignProductVO>)session.getAttribute("campaignDrink"); 
 		
-		//綁活動ID & 存活動飲品
 		if(!beCampaignDrinkList.isEmpty()) {
+			//存活動
+			CampaignVO campaign = campaignSvc.addCampaign(campaignVO);
+//			//準備綁活動飲品的活動ID
+//			Integer campaignID = campaign.getCampaignID();
+			
+			//綁活動VO & 存活動飲品
 			for(CampaignProductVO beCampaignDrink:beCampaignDrinkList) {
-				beCampaignDrink.setCampaignID(campaignID);
+				beCampaignDrink.setCampaignVO(campaign);
 				campaignProductSvc.addCampaignProduct(beCampaignDrink);
 			}			
 		}else{

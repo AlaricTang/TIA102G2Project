@@ -1,56 +1,55 @@
- <!-- header -->
- <nav class="navbar navbar-custom navbar-fixed-top " role="navigation">
-    <div class="container">
+<th:block th:fragment="header" >
+	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation" >
+	<div class="container">
+		<div class="navbar-header">
+			<!-- 視窗過小 出現漢堡 -->
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
+				<span class="sr-only">Toggle navigation</span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span>
+			</button>
+			<!-- header的首頁按鈕 -->
+			<a class="navbar-brand" href="index_restaurant.html">啡常渴以</a>
+		</div>
 
-
-      <div class="navbar-header">
-        <!-- 視窗過小 出現漢堡 -->
-        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <!-- header的首頁按鈕 -->
-        <a class="navbar-brand" href="index_restaurant.html">啡常渴以</a>
-      </div>
-
-      <!--以下是header標籤-->
-      <div class="collapse navbar-collapse" id="custom-collapse"> <!--id 給漢堡用-->
-        <!--以下都是header標籤內容-->
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown"><a  href="index_restaurant.html" >首頁</a></li>
-          <li class="dropdown"><a  href="#" >飲品菜單</a></li>
-          <li class="dropdown"><a  href="#" >線上預訂</a></li>
-          <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">周邊商品</a>
-            <ul class="dropdown-menu" role="rpoduct">
-              <li><a href="#" data-toggle="dropdown">所有商品</a></li>
-              <li><a href="#" data-toggle="dropdown">咖啡豆</a></li>
-              <li><a href="#" data-toggle="dropdown">掛耳包</a></li>
-              <li><a href="#" data-toggle="dropdown">馬克杯</a></li>
-              <li><a href="#" data-toggle="dropdown">帆布袋</a></li>
-              <li><a href="#" data-toggle="dropdown">寄杯</a></li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#" >門市資訊</a></li>
-          <li class="dropdown"><a href="#" >聯絡我們</a></li>
-          <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">會員專區</a>
-            <ul class="dropdown-menu" role="user">
-              <li><a href="#" >會員首頁</a></li>
-              <li><a href="#" >會員基本資料</a></li>
-              <li><a href="#" >飲品訂購紀錄</a></li>
-              <li><a href="#" >商品訂單</a></li>
-              <li><a href="#" >我的寄杯</a></li>
-              <li><a href="#" >環保杯租借紀錄</a></li>
-              <li><a href="#" >修改密碼</a></li>
-              <li><a href="#" >最新消息</a></li>
-              <li><a href="#" >登出</a></li>
-            </ul>
-          </li>
-        </ul>
-        <!--以上都是header標籤內容-->
-      </div>
-      <!--以上是header標籤-->
-    </div>
-  </nav>
-  <!-- header -->
+		<!--以下是header標籤-->
+		<div class="collapse navbar-collapse" id="custom-collapse">
+			<!--以下都是header標籤內容-->
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a href="index_restaurant.html">首頁</a></li>
+				<li class="dropdown"><a href="#">飲品菜單</a></li>
+				<li class="dropdown"><a href="#">線上預訂</a></li>
+				<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">周邊商品</a>
+					<ul class="dropdown-menu" role="rpoduct">
+						<li><a href="#" data-toggle="dropdown">所有商品</a></li>
+						<li><a href="#" data-toggle="dropdown">咖啡豆</a></li>
+						<li><a href="#" data-toggle="dropdown">掛耳包</a></li>
+						<li><a href="#" data-toggle="dropdown">馬克杯</a></li>
+						<li><a href="#" data-toggle="dropdown">帆布袋</a></li>
+							<li><a href="#" data-toggle="dropdown">寄杯</a></li>
+					</ul>
+				</li>
+				<li class="dropdown"><a href="#">門市資訊</a></li>
+				<li class="dropdown"><a href="#">聯絡我們</a></li>
+				<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">會員專區</a>
+					<ul class="dropdown-menu" role="user">
+						<li><a href="#">會員首頁</a></li>
+						<li><a href="#">會員基本資料</a></li>
+						<li><a th:href="@{/drinkOrder/userDrinkOrder}">飲品訂購紀錄</a></li>
+						<li><a href="#">商品訂單</a></li>
+						<li><a href="#">我的寄杯</a></li>
+						<li><a href="#">環保杯租借紀錄</a></li>
+						<li><a href="#">修改密碼</a></li>
+						<li><a href="#">最新消息</a></li>
+						<li><a href="#">登出</a></li>
+					</ul>
+				</li>
+			</ul>
+			<!--以上都是header標籤內容-->
+		</div>
+		<!--以上是header標籤-->
+	</div>
+	</nav>
+<!-- 	123 -->
+</th:block>
