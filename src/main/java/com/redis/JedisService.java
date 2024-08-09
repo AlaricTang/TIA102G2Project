@@ -1,14 +1,15 @@
 package com.redis;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -17,7 +18,6 @@ import redis.clients.jedis.JedisPool;
 public class JedisService {
 
 	@Autowired
-	private RedisTemplate<String, Object> redisTemplate;
 	private final JedisPool jedisPool;
 	
 	@Autowired
@@ -70,7 +70,7 @@ public class JedisService {
 	public void saveItemToList(String key, Object item) {
 		 try(Jedis jedis = jedisPool.getResource()){
 			 String jsonString = gson.toJson(item);
-			 redisTemplate.opsForList().rightPush(key, jsonString);
+			 jedis.rpush(key, jsonString);//jedis.rpush(key, itemJson);同樣的意思
 		 }
 	}
 	
@@ -79,34 +79,42 @@ public class JedisService {
 			jedis.del(key);
 			
             for (Object item : List) {
-            	String itemJson = gson.toJson(item); // 将每个对象序列化为JSON字符串
-                jedis.rpush(key, itemJson); // 使用rpush命令将JSON字符串添加到列表末尾
+            	String itemJson = gson.toJson(item); 
+                jedis.rpush(key, itemJson); 
             }
 		}
 	}
 	
 	public List<Object> getItemsFromList(String key)throws IOException {
 		try(Jedis jedis = jedisPool.getResource()){
-			return redisTemplate.opsForList().range(key, 0, -1);
+			List<String> jsonList = jedis.lrange(key, 0, -1);
+			Type type = new TypeToken<List<Object>>() {}.getType();
+			return gson.fromJson(jsonList.toString(), type);
 		}
 	}
 	
     public void removeItemFromList(String key, Object item) {
-        redisTemplate.opsForList().remove(key, 1, item);
+		try(Jedis jedis = jedisPool.getResource()){
+			String itemStr = item.toString();
+			jedis.lrem(key, 0, itemStr);
+		}
     }
 	
 	// =============== key field List for allType  ===============
 	@SuppressWarnings("unchecked")
 	public void saveItemToHash(String key, String field, Object value) {	
-		String json = (String) redisTemplate.opsForHash().get(key, value);
-		List<Object> items;
-		if(json != null) {
-			items = gson.fromJson(json, List.class);
-		}else {
-			items = new ArrayList<>();
+		try(Jedis jedis = jedisPool.getResource()){
+			
+			String json = jedis.hget(key, value.toString());
+			List<Object> items= new ArrayList<>();
+			
+			if(json != null) {
+				items = gson.fromJson(json, List.class);
+			}
+			
+			items.add(value);
+			jedis.hset(key, field, gson.toJson(items));
 		}
-		items.add(value);
-		redisTemplate.opsForHash().put(key, field, gson.toJson(items));
 	}
 	
 //cart:userID, drink, 

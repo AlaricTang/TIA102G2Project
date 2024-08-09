@@ -22,13 +22,43 @@ public class DrinkCartService {
 	
 	private static final String DRINKCART_PREFIX="drinkCart:";
 	private static final String DRINKORDER_PREFIX="drinkOrder:";
+	
+	public void addDrinkCartItem(String userId, DrinkOrderDetailVO cartItem) throws IOException {
+		String cartKey = DRINKCART_PREFIX + userId;
+		List<DrinkOrderDetailVO> cartItems  = new ArrayList<>();
+		boolean itemExists = false;
 
-	
-	public void addDrinkCartItem (Integer userID, DrinkOrderDetailVO cartItem) throws IOException{
-		String cartKey = DRINKCART_PREFIX + userID.toString();
-		jedisSvc.saveItemToList(cartKey, cartItem);
+		//取出 購物車裡的所有飲品 <json, json, json, json...>
+		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
+
+		//針對每個json
+		for (Object jsonString : cartJsonList) {
+			//每個json 都轉成VO    
+			DrinkOrderDetailVO existingCartItem = gson.fromJson(jsonString.toString(), DrinkOrderDetailVO.class);
+			//針對每個VO的drinkID 比對要加入的VO的drinkID
+				//有找到: 原VO更新	加到List<VO>
+				//沒找到: 原VO不更新	加到List<VO>
+			if (existingCartItem.getDrinkID().equals(cartItem.getDrinkID())) {
+				
+				existingCartItem.setDrinkOrderDetailAmount(
+						existingCartItem.getDrinkOrderDetailAmount() + cartItem.getDrinkOrderDetailAmount());// 更新数量
+				cartItems.add(existingCartItem);
+				itemExists = true;
+			}else {
+				cartItems.add(existingCartItem);
+			}
+		}
+		//沒找到: 新VO 加到List<VO>
+		if (!itemExists) {
+			cartItems.add(cartItem);
+		} 
+		//刪 舊購物車
+		jedisSvc.delete(cartKey);
+		//List<VO> 存進購物車
+		for (DrinkOrderDetailVO item : cartItems) {
+            jedisSvc.saveItemToList(cartKey, gson.toJson(item));
+        }
 	}
-	
 
 	//取出購物車 ob轉成VO
 	public List<DrinkOrderDetailVO> getDrinkCart (Integer userID) throws IOException  {
