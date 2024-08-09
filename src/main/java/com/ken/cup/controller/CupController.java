@@ -2,7 +2,6 @@ package com.ken.cup.controller;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,7 +17,6 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +29,8 @@ import com.ellie.user.model.UserService;
 import com.ellie.user.model.UserVO;
 import com.ken.cup.model.CupService;
 import com.ken.cup.model.CupVO;
+import com.ken.cupRecord.model.CupRecordService;
+import com.ken.cupRecord.model.CupRecordVO;
 
 @Controller
 @RequestMapping("/cup")
@@ -47,6 +47,9 @@ public class CupController {
 //	
 	@Autowired
 	UserService userSvc;
+	
+	@Autowired
+	CupRecordService cupRecordSvc;
 	
 	/*
 	 * This method will serve as addDrink.html handler.
@@ -201,7 +204,13 @@ public class CupController {
 	        model.addAttribute("errorMessage1", "查無環保杯資料");
 	    }
 	    
-	    if(result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2")) {
+	    
+	    // 如果當前杯子狀態為1(已被出租)
+	    if (existingCupVO.getCupStatus() == 1) {
+	    	model.addAttribute("errorMessage3", "該杯子已被出租");
+	    }
+	    
+	    if(result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2") || model.containsAttribute("errorMessage3")) {
 			return "/back-end/cup/userRentCup";
 		}
 
@@ -211,6 +220,16 @@ public class CupController {
 	    LocalDateTime now = LocalDateTime.now();
 	    Date sqlDate = Date.valueOf(now.toLocalDate());
 	    existingCupVO.setCupRentDate(sqlDate);
+	    
+	    
+		 // 新增 CupRecord 記錄
+	    CupRecordVO cupRecordVO = new CupRecordVO();
+	    cupRecordVO.setUserID(Integer.valueOf(userID));
+	    cupRecordVO.setCupID(Integer.valueOf(cupID));
+	    cupRecordVO.setStoreRentID(existingCupVO.getStoreID());  // 假設 storeID 已設置在 cupVO 中
+	    cupRecordVO.setCupRecordRentDate(sqlDate);
+
+	    cupRecordSvc.addCupRecord(cupRecordVO);
 
 	    cupSvc.updateCup(existingCupVO);
 	    model.addAttribute("successMessage", "租借成功");
@@ -240,11 +259,16 @@ public class CupController {
 	 	if (storeVO == null) {
 	 		model.addAttribute("errorMessage2", "查無店家資料");
 	 	}
+	 	
+	 	// 如果當前杯子狀態為0(尚未出租)
+	    if (existingCupVO.getCupStatus() == 0) {
+	    	model.addAttribute("errorMessage3", "該杯子已經被歸還(尚未出租)");
+	    }
 	    
-	    if(result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2")) {
+	    if(result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2") ||  model.containsAttribute("errorMessage3")) {
 			return "/back-end/cup/userReturnCup";
 		}
-
+	    
 	    // 更新杯子資料
 	    existingCupVO.setStoreID(Integer.valueOf(storeID));
 	    existingCupVO.setUserID(null);
@@ -253,6 +277,16 @@ public class CupController {
 	    Date sqlDate = Date.valueOf(now.toLocalDate());
 	    existingCupVO.setCupRentDate(sqlDate);
 	    cupSvc.updateCup(existingCupVO);
+	    
+	    
+	    // 新增 CupRecord 記錄
+	    CupRecordVO cupRecordVO = new CupRecordVO();
+	    cupRecordVO.setUserID(null); // 代表已經歸還，使用者為null
+	    cupRecordVO.setCupID(Integer.valueOf(cupID)); // 杯子ID
+	    cupRecordVO.setStoreReturnID(existingCupVO.getStoreID());  // 這個會吃到上面的setStoreID
+	    cupRecordVO.setCupRecordReturnDate(sqlDate); // 歸還日期
+
+	    cupRecordSvc.addCupRecord(cupRecordVO);
 	    
 	    model.addAttribute("successMessage", "歸還成功");
 	    return "redirect:/cup/listAllCup";
@@ -271,12 +305,18 @@ public class CupController {
 	        model.addAttribute("errorMessage1", "查無環保杯資料");
 	    }
 	    
+	    // 如果當前杯子狀態為2(已經報廢)
+	    if (existingCupVO.getCupStatus() == 2) {
+	    	model.addAttribute("errorMessage3", "該杯子已經被報廢");
+	    }
+	    
+	    
 	    StoreVO storeVO = storeSvc.getOneStore(Integer.valueOf(storeID));
 	    if (storeVO == null) {
 	        model.addAttribute("errorMessage2", "查無店家資料");
 	    }
 	    
-	    if(result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2")) {
+	    if(result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2") || model.containsAttribute("errorMessage3")) {
 			return "/back-end/cup/discardCup";
 		}
 	    
@@ -310,7 +350,7 @@ public class CupController {
 	public String insertManyCup(
 			@RequestParam("storeID") String storeID, 
 	        @RequestParam("memberID") String memberID, 
-	        @RequestParam("number") Integer number, BindingResult result, ModelMap model) {
+	        @RequestParam("number") Integer number, ModelMap model) {
 
 	    // 假設所有杯子的 storeID 和 memberID 都相同
 
@@ -324,7 +364,7 @@ public class CupController {
 	        model.addAttribute("errorMessage2", "查無員工資料");
 	    }
 	    
-	    if (result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2")) {
+	    if (model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2")) {
 	        return "back-end/cup/addManyCupForm";
 	    }
 

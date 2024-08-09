@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ellie.store.model.StoreService;
+import com.ellie.user.model.UserService;
+import com.ken.cup.model.CupService;
 import com.ken.cupRecord.model.CupRecordService;
 import com.ken.cupRecord.model.CupRecordVO;
+import com.tang.drinkOrder.model.DrinkOrderService;
 
 @Controller
 @RequestMapping("/cupRecord")
@@ -29,17 +33,17 @@ public class CupRecordController {
 	@Autowired
 	CupRecordService cupRecordSvc;
 	
-//	@Autowired
-//	UserService userSvc;
-//	
-//	@Autowired
-//	CupService cupSvc;
-//	
-//	@Autowired
-//	DrinkOrderService drinkOrderSvc;
-//	
-//	@Autowired
-//	StoreService storeSvc;
+	@Autowired
+	UserService userSvc;
+	
+	@Autowired
+	CupService cupSvc;
+	
+	@Autowired
+	DrinkOrderService drinkOrderSvc;
+	
+	@Autowired
+	StoreService storeSvc;
 	
 	
 	/*
