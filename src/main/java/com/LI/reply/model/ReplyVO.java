@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.LI.customer.model.CustomerVO;
+//import com.LI.customer.model.CustomerVO;
 
 @Entity
 @Table(name = "reply")

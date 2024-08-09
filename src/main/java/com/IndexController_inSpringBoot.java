@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.ken.cup.model.CupService;
 import com.ken.cup.model.CupVO;
+import com.ken.cupRecord.model.CupRecordService;
+import com.ken.cupRecord.model.CupRecordVO;
 import com.ken.drink.model.DrinkService;
 import com.ken.drink.model.DrinkVO;
 
@@ -29,6 +31,9 @@ public class IndexController_inSpringBoot {
 	
 	@Autowired	
 	CupService cupSvc;
+	
+	@Autowired
+	CupRecordService cupRecordSvc;
 	
     @GetMapping("/")
     public String index(Model model) {
@@ -131,5 +136,23 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
     
-    // =================== 環保杯 ======================= //
+    // =================== 環保杯 ======================= // 
+    // =================== 環保杯紀錄 ======================= //
+    @GetMapping("/cupRecord/select_page")
+    public String select_page_cupRecord(Model model) {
+    	return "back-end/cupRecord/select_page";
+    }
+    
+    @GetMapping("/cupRecord/listAllCupRecord")
+	public String listAllCupRecord(Model model) {
+		return "back-end/cupRecord/listAllCupRecord";
+	}
+    
+    @ModelAttribute("cupRecordListData") // for select_page.html
+    protected List<CupRecordVO> referenceListDataCupRecord(Model model) {
+		
+    	List<CupRecordVO> list = cupRecordSvc.getAll();
+		return list;
+	}
+    // =================== 環保杯紀錄 ======================= //
 }
