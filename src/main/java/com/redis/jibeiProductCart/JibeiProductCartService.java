@@ -24,14 +24,19 @@ public class JibeiProductCartService {
 
 	public void addCartItem(String userId, JibeiOrderDetailVO cartItem) throws IOException {
 		String cartKey = JIBEIPRODUCTCART_PREFIX + userId;
-		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
+		List<JibeiOrderDetailVO> cartItems  = new ArrayList<>();
 		boolean itemExists = false;
 
-		List<JibeiOrderDetailVO> cartItems  = new ArrayList<>();
+		//取出 購物車裡的所有商品 <json, json, json, json...>
+		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
 		
+		//針對每個json
 		for (Object jsonString : cartJsonList) {
+			//每個json 都轉成VO 
 			JibeiOrderDetailVO existingCartItem = gson.fromJson(jsonString.toString(), JibeiOrderDetailVO.class);
-
+			//針對每個VO的drinkID 比對要加入的VO的drinkID
+				//有找到: 原VO更新	加到List<VO>
+				//沒找到: 原VO不更新	加到List<VO>
 			if (existingCartItem.getJibeiProductID().equals(cartItem.getJibeiProductID())) {
 				
 				existingCartItem.setJibeiOrderDetailAmount(
@@ -42,18 +47,19 @@ public class JibeiProductCartService {
 				cartItems.add(existingCartItem);
 			}
 		}
-
+		//沒找到: 新VO 加到List<VO>
 		if (!itemExists) {
 			cartItems.add(cartItem);
 		} 
+		//刪 舊購物車
 		jedisSvc.delete(cartKey);
-		
+		//List<VO> 存進購物車
 		for (JibeiOrderDetailVO item : cartItems) {
             jedisSvc.saveItemToList(cartKey, gson.toJson(item));
         }
 	}
 
-	// 取出購物車 ob轉成VO
+	// 取出購物車 object轉成VO
 	public List<JibeiOrderDetailVO> getJibeiProductCart(Integer userID) throws IOException {
 		String cartKey = JIBEIPRODUCTCART_PREFIX + userID.toString();
 		List<JibeiOrderDetailVO> jibeiProductCartItems = new ArrayList<>();
@@ -64,12 +70,12 @@ public class JibeiProductCartService {
 		return jibeiProductCartItems;
 	}
 
-	public void removeJibeiProductCartItem(Integer userID, Integer drinkID) throws IOException {
+	public void removeJibeiProductCartItem(Integer userID, Integer jibeiProductID) throws IOException {
 		String cartKey = JIBEIPRODUCTCART_PREFIX + userID.toString();
 		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
 		for (Object cartJson : cartJsonList) {
 			JibeiOrderDetailVO jibeiOrderDetail = gson.fromJson(cartJson.toString(), JibeiOrderDetailVO.class);
-			if (jibeiOrderDetail.getJibeiOrderDetailID().equals(drinkID)) {
+			if (jibeiOrderDetail.getJibeiProductID().equals(jibeiProductID)) {
 				jedisSvc.removeItemFromList(cartKey, cartJson);
 				break;
 			}
