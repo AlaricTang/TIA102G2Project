@@ -19,14 +19,14 @@ import com.ellie.member.model.MemberService;
 
 @Controller
 @RequestMapping("/member")
-public class MDBGifReaderController {
+public class MemberDBGifReaderController {
 
 
 	@Autowired
 	MemberService memberSvc;
 
-	@GetMapping("MDBGifReader")
-	public void mDBGifReader(@RequestParam("memberID") String memberID, HttpServletRequest req,
+	@GetMapping("MemberDBGifReader")
+	public void dBGifReader(@RequestParam("memberID") String memberID, HttpServletRequest req,
 			HttpServletResponse res) throws IOException {
 		
 		res.setContentType("image/gif");

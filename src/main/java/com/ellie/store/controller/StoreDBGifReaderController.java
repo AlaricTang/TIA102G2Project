@@ -17,14 +17,14 @@ import com.ellie.store.model.StoreService;
 
 @Controller
 @RequestMapping("/store")
-public class SDBGifReaderController {
+public class StoreDBGifReaderController {
 
 
 	@Autowired
 	StoreService storeSvc;
 
-	@GetMapping("SDBGifReader")
-	public void sDBGifReader(@RequestParam("storeID") String storeID, HttpServletRequest req,
+	@GetMapping("StoreDBGifReader")
+	public void dBGifReader(@RequestParam("storeID") String storeID, HttpServletRequest req,
 			HttpServletResponse res) throws IOException {
 		
 		res.setContentType("image/gif");
