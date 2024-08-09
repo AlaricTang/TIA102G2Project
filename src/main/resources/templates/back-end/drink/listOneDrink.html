@@ -38,7 +38,7 @@
 		<span>飲品名稱:</span><span th:text="${drinkVO.drinkName}"></span><br/>
 		<span>飲品價格:</span><span th:text="${drinkVO.drinkPrice}"></span><br/>
 		<span>飲品描述:</span><span th:text="${drinkVO.drinkDes}"></span><br/>
-		<span>照片:</span><span><img th:src="@{/drink/DBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" width="100px"></span><br/>
+		<span>照片:</span><span><img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" width="100px"></span><br/>
 		<span>飲品標籤:</span><span th:text="${drinkVO.drinkTag}"></span><br/>
 		<span>飲品狀態:</span><span th:text="${drinkVO.drinkStatus == 1 ? '上架' : '下架'}"></span><br/>
 		<span>飲品更新時間:</span><span th:text="${drinkVO.drinkUpdateDate}"></span><br/>

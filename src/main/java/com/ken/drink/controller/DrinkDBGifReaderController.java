@@ -16,7 +16,7 @@ import com.ken.drink.model.DrinkService;
 
 @Controller
 @RequestMapping("/drink")
-public class DBGifReaderController {
+public class DrinkDBGifReaderController {
 	
 	@Autowired
 	DrinkService drinkSvc;
@@ -24,7 +24,7 @@ public class DBGifReaderController {
 	/*
 	 * This method will serve as listOneEmp.html , listAllEmp.html handler.
 	 */
-	@GetMapping("DBGifReader")
+	@GetMapping("DrinkDBGifReader")
 	public void dBGifReader(@RequestParam("drinkID") String drinkID, HttpServletRequest req, HttpServletResponse res)
 			                                                                                          throws IOException {
 		res.setContentType("image/gif");
