@@ -60,7 +60,7 @@ public class DrinkCartService {
         }
 	}
 
-	//取出購物車 ob轉成VO
+	//取出購物車 object轉成VO
 	public List<DrinkOrderDetailVO> getDrinkCart (Integer userID) throws IOException  {
 		String cartKey = DRINKCART_PREFIX + userID.toString();
 		List<DrinkOrderDetailVO> drinkCartItems  = new ArrayList<>();
