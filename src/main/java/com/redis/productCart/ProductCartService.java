@@ -37,7 +37,7 @@ public class ProductCartService {
 			ProductOrderDetailVO existingCartItem = gson.fromJson(jsonString.toString(), ProductOrderDetailVO.class);
 			//針對每個VO的drinkID 比對要加入的VO的drinkID
 				//有找到: 原VO更新	加到List<VO>
-				//沒找到: 原VO不更新	加到List<VO>
+				//沒找到: 原VO不更新	加到List<VO> 
 			if (existingCartItem.getProductID().equals(cartItem.getProductID())) {
 				
 				existingCartItem.setProductOrderDetailAmount(
