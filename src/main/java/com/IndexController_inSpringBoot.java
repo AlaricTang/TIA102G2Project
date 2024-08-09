@@ -119,6 +119,11 @@ public class IndexController_inSpringBoot {
     	return "back-end/cup/select_page";
     }
     
+	@GetMapping("/cup/addManyCupForm")
+	public String showAddManyCupForm() {
+	    return "back-end/cup/addManyCupForm";
+	}
+    
     @ModelAttribute("cupListData") // for select_page.html
     protected List<CupVO> referenceListDataCup(Model model) {
 		

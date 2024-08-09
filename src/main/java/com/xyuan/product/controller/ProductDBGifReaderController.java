@@ -16,13 +16,13 @@ import com.xyuan.product.model.ProductService;
 
 @Controller
 @RequestMapping("/product")
-public class DBGifReaderController {
+public class ProductDBGifReaderController {
 
 	@Autowired
 	ProductService productSvc;
 
-	@GetMapping("DBGifReader")
-	public void dBGifReader(@RequestParam("productID") String productID, HttpServletRequest req,
+	@GetMapping("ProductDBGifReader")
+	public void productDBGifReader(@RequestParam("productID") String productID, HttpServletRequest req,
 			HttpServletResponse res) throws IOException {
 		
 		res.setContentType("image/gif");
