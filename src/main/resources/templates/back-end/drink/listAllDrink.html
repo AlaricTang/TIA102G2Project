@@ -294,7 +294,7 @@
 											<td th:text="${drinkVO.drinkPrice}"></td>
 											<td th:text="${drinkVO.drinkDes}"></td>
 											<td><img
-												th:src="@{/drink/DBGifReader} + '?drinkID=' + ${drinkVO.drinkID}"
+												th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}"
 												width="100px"></td>
 											<td th:text="${drinkVO.drinkTag}"></td>
 											<td th:text="${drinkVO.drinkStatus == 1 ? '上架' : '下架'}"></td>

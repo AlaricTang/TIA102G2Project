@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ellie.member.model.MemberService;
+import com.ellie.member.model.MemberVO;
 import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
 import com.ellie.user.model.UserService;
@@ -40,8 +42,8 @@ public class CupController {
 	@Autowired
 	StoreService storeSvc;
 //	
-//	@Autowired
-//	MemberService memberSvc;
+	@Autowired
+	MemberService memberSvc;
 //	
 	@Autowired
 	UserService userSvc;
@@ -250,8 +252,8 @@ public class CupController {
 	    LocalDateTime now = LocalDateTime.now();
 	    Date sqlDate = Date.valueOf(now.toLocalDate());
 	    existingCupVO.setCupRentDate(sqlDate);
-
 	    cupSvc.updateCup(existingCupVO);
+	    
 	    model.addAttribute("successMessage", "歸還成功");
 	    return "redirect:/cup/listAllCup";
 	}
@@ -303,33 +305,42 @@ public class CupController {
 	
 	// ===================   方法 5 一次新增很多杯子   =============================
 	
-	@GetMapping("addManyCup")
-	public String addManyCup(@RequestParam("number") Integer number, ModelMap model) {
-	    List<CupVO> cupList = new ArrayList<>();
-	    
-	    for (int i = 0; i < number; i++) {
-	        CupVO cupVO = new CupVO();
-	        cupList.add(cupVO);
+	// 開始新增
+	@PostMapping("insertManyCup")
+	public String insertManyCup(
+			@RequestParam("storeID") String storeID, 
+	        @RequestParam("memberID") String memberID, 
+	        @RequestParam("number") Integer number, BindingResult result, ModelMap model) {
+
+	    // 假設所有杯子的 storeID 和 memberID 都相同
+
+	    StoreVO storeVO = storeSvc.getOneStore(Integer.valueOf(storeID));
+	    if (storeVO == null) {
+	        model.addAttribute("errorMessage1", "查無門市資料");
 	    }
 	    
-	    model.addAttribute("cupList", cupList);
-	    return "back-end/cup/addManyCup";
-	}
-	
-	@PostMapping("insertManyCup")
-	public String insertManyCup(@Valid @ModelAttribute("cupList") List<CupVO> cupList, BindingResult result, ModelMap model) {
-	    if (result.hasErrors()) {
-	        return "back-end/cup/addManyCup";
+	    MemberVO memberVO = memberSvc.getOneMember(Integer.valueOf(memberID));
+	    if (memberVO == null) {
+	        model.addAttribute("errorMessage2", "查無員工資料");
+	    }
+	    
+	    if (result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2")) {
+	        return "back-end/cup/addManyCupForm";
 	    }
 
 	    // 新增多個杯子資料
-	    for (CupVO cupVO : cupList) {
+	    for (int i = 0; i < number ; i++) {
+	    	CupVO cupVO = new CupVO();
+	    	cupVO.setStoreID(Integer.valueOf(storeID));
+	    	cupVO.setMemberID(Integer.valueOf(memberID));
+	    	cupVO.setCupStatus(0);
 	        cupSvc.addCup(cupVO);
 	    }
 
-	    model.addAttribute("successMessage", "成功新增 " + cupList.size() + " 個杯子");
+	    model.addAttribute("successMessage", "成功新增 " + number + " 個杯子");
 	    return "redirect:/cup/listAllCup";
 	}
+
 	
 	// ===================   方法 6    =============================
 }
