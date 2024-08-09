@@ -23,8 +23,8 @@ public class SDBGifReaderController {
 	@Autowired
 	StoreService storeSvc;
 
-	@GetMapping("DBGifReader")
-	public void dBGifReader(@RequestParam("storeID") String storeID, HttpServletRequest req,
+	@GetMapping("SDBGifReader")
+	public void sDBGifReader(@RequestParam("storeID") String storeID, HttpServletRequest req,
 			HttpServletResponse res) throws IOException {
 		
 		res.setContentType("image/gif");
