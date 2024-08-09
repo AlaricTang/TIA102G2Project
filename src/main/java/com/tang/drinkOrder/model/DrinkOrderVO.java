@@ -2,19 +2,26 @@ package com.tang.drinkOrder.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import com.ellie.user.model.UserVO;
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Entity
 @Table(name="drinkorder")
@@ -85,9 +92,9 @@ public class DrinkOrderVO implements Serializable{
 	private Integer cupNumber;
 	
 	//其他地方的fk
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "drinkOrderVO")
-//	@OrderBy("drinkOrderDetailID asc")
-//	private Set<DrinkOrderDetailVO> drinkOrderDetails = new HashSet<>();
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "drinkOrderVO")
+	@OrderBy("drinkOrderDetailID asc")
+	private Set<DrinkOrderDetailVO> drinkOrderDetails = new HashSet<>();
 	
 	
 	public DrinkOrderVO() {
@@ -216,13 +223,13 @@ public class DrinkOrderVO implements Serializable{
 
 
 
-//	public Set<DrinkOrderDetailVO> getDrinkOrderDetails() {
-//		return drinkOrderDetails;
-//	}
-//
-//	public void setDrinkOrderDetails(Set<DrinkOrderDetailVO> drinkOrderDetails) {
-//		this.drinkOrderDetails = drinkOrderDetails;
-//	}
+	public Set<DrinkOrderDetailVO> getDrinkOrderDetails() {
+		return drinkOrderDetails;
+	}
+
+	public void setDrinkOrderDetails(Set<DrinkOrderDetailVO> drinkOrderDetails) {
+		this.drinkOrderDetails = drinkOrderDetails;
+	}
 
 	@Override
 	public String toString() {

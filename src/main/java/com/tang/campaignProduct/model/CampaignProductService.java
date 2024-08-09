@@ -18,23 +18,23 @@ public class CampaignProductService {
 		repository.save(campaignProductVO);
 	}
 	
-	public void updateCampaignProducts(Integer campaignID, List<CampaignProductVO> campaignDrinkList) {
+	public void updateCampaignProducts(Integer campaignID, List<CampaignProductVO> newCampaignProductList) {
 		
 		//原活動商品
-		List<CampaignProductVO> existingCampaignProducts = getAllByCampaignID(campaignID);
+		List<CampaignProductVO> oriCampaignProducts = getAllByCampaignID(campaignID);
 		
 		
 		//原活動商品 刪掉update沒有的
-		List<CampaignProductVO> productsToDelete = existingCampaignProducts.stream()
-				.filter(existingProduct -> !campaignDrinkList.contains(existingProduct))
+		List<CampaignProductVO> productsToDelete = oriCampaignProducts.stream()
+				.filter(oriProduct -> !newCampaignProductList.contains(oriProduct))
 				.collect(Collectors.toList());
-		productsToDelete.forEach(product -> deleteCampaignProduct(product.getCampaignID()));
+		productsToDelete.forEach(product -> deleteCampaignProduct(product.getCampaignProductID()));
 		
 		//放入 原活動商品沒有的
 		List<CampaignProductVO> productToAdd = new ArrayList<>();
 		
-		productToAdd.addAll(campaignDrinkList.stream()
-			    .filter(drink -> !existingCampaignProducts.contains(drink))
+		productToAdd.addAll(newCampaignProductList.stream()
+			    .filter(drink -> !oriCampaignProducts.contains(drink))
 			    .collect(Collectors.toList()));
 		
 		for(CampaignProductVO product : productToAdd) {

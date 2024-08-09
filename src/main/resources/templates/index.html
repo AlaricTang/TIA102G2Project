@@ -11,19 +11,20 @@
     
     
     <!--  ======== Favicons =====================================  -->
-    <link rel="apple-touch-icon" sizes="57x57" href="images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="images/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+   	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+
     
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
@@ -33,24 +34,25 @@
     <!--  ======== Stylesheets =====================================  -->
     
     <!-- Default stylesheets-->
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
     
     <!-- Template specific stylesheets-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" >
-    <link rel="stylesheet" href="lib/animate.css/animate.css" >
-    <link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css" >
-    <link rel="stylesheet" href="lib/et-line-font/et-line-font.css" >
-    <link rel="stylesheet" href="lib/flexslider/flexslider.css" >
-    <link rel="stylesheet" href="lib/owl.carousel/dist/assets/owl.carousel.min.css" >
-    <link rel="stylesheet" href="lib/owl.carousel/dist/assets/owl.theme.default.min.css">
-    <link rel="stylesheet" href="lib/magnific-popup/dist/magnific-popup.css" >
-    <link rel="stylesheet" href="lib/simple-text-rotator/simpletextrotator.css">
-    
-    <!-- Main stylesheet and color file-->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/colors/default.css"  id="color-scheme">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+	
+	<!-- Main stylesheet and color file -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+
   </head>
 
 
@@ -65,7 +67,7 @@
 
 
       <!-- header -->
-      <div id="header-content"></div>
+      <div th:include="header :: header"></div>
       <!-- header -->
 
 
@@ -321,26 +323,26 @@
       
       
       <!-- footer -->
-      <div id="footer-content"></div>
+      <div th:include="footer :: footer"></div>
       <!-- footer -->
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
     
     
     <!--  ======== JavaScripts =====================================  -->
-    <script src="lib/jquery/dist/jquery.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="lib/wow/dist/wow.js"></script>
-    <script src="lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
-    <script src="lib/isotope/dist/isotope.pkgd.js"></script>
-    <script src="lib/imagesloaded/imagesloaded.pkgd.js"></script>
-    <script src="lib/flexslider/jquery.flexslider.js"></script>
-    <script src="lib/owl.carousel/dist/owl.carousel.min.js"></script>
-    <script src="lib/smoothscroll.js"></script>
-    <script src="lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
-    <script src="lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+    <script th:src="@{lib/jquery/dist/jquery.js}"></script>
+    <script th:src="@{lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{lib/wow/dist/wow.js}"></script>
+    <script th:src="@{lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+    <script th:src="@{lib/isotope/dist/isotope.pkgd.js}"></script>
+    <script th:src="@{lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{lib/flexslider/jquery.flexslider.js}"></script>
+    <script th:src="@{lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{lib/smoothscroll.js}"></script>
+    <script th:src="@{lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+    <script th:src="@{lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+    <script th:src="@{js/plugins.js}"></script>
+    <script th:src="@{js/main.js}"></script>
   </body>
 </html>
