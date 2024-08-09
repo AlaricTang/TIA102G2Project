@@ -81,11 +81,16 @@ public class DrinkOrderFrontController {
 		
 		for(DrinkOrderDetailVO drinkCartItem : drinkCartList) {
 			DrinkVO drink = drinkService.getOneDrink(drinkCartItem.getDrinkID());
+			int current_pirce= 0;
+			
 			if(drink.getDrinkDPrice()>0) {
-				totalPrice += drink.getDrinkDPrice();				
+				current_pirce= drink.getDrinkDPrice() * drinkCartItem.getDrinkOrderDetailAmount();
 			}else {
-				totalPrice += drink.getDrinkPrice();
+				current_pirce= drink.getDrinkPrice()* drinkCartItem.getDrinkOrderDetailAmount();
 			}
+			
+			totalPrice += current_pirce;
+			drinkCartItem.setDrinkOrderDetailPrice(current_pirce);
 		}
 		drinkOrderVO.setDrinkOrderAmount(totalPrice);
 		

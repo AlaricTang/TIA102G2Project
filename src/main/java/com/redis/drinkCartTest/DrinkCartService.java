@@ -23,7 +23,7 @@ public class DrinkCartService {
 	private static final String DRINKCART_PREFIX="drinkCart:";
 	private static final String DRINKORDER_PREFIX="drinkOrder:";
 	
-	public void addDrinkCartItem(String userId, DrinkOrderDetailVO cartItem) throws IOException {
+	public void addDrinkCartItem(Integer userId, DrinkOrderDetailVO cartItem) throws IOException {
 		String cartKey = DRINKCART_PREFIX + userId;
 		List<DrinkOrderDetailVO> cartItems  = new ArrayList<>();
 		boolean itemExists = false;
@@ -31,7 +31,7 @@ public class DrinkCartService {
 		//取出 購物車裡的所有飲品 <json, json, json, json...>
 		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
 
-		//針對每個json
+		//針對每個 json
 		for (Object jsonString : cartJsonList) {
 			//每個json 都轉成VO    
 			DrinkOrderDetailVO existingCartItem = gson.fromJson(jsonString.toString(), DrinkOrderDetailVO.class);
