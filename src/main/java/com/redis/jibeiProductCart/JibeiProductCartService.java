@@ -22,7 +22,7 @@ public class JibeiProductCartService {
 	
 	private static final String JIBEIPRODUCTCART_PREFIX = "drinkCart:";
 
-	public void addCartItem(String userId, JibeiOrderDetailVO cartItem) throws IOException {
+	public void addCartItem(Integer userId, JibeiOrderDetailVO cartItem) throws IOException {
 		String cartKey = JIBEIPRODUCTCART_PREFIX + userId;
 		List<JibeiOrderDetailVO> cartItems  = new ArrayList<>();
 		boolean itemExists = false;

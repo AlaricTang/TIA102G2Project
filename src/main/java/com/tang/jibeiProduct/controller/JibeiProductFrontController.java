@@ -63,25 +63,8 @@ public class JibeiProductFrontController {
 		
 		UserVO user = (UserVO)session.getAttribute("user");
 	
-		List<JibeiOrderDetailVO> cartList = jibeiProductCartSvc.getJibeiProductCart(user.getUserId());
+		jibeiProductCartSvc.addCartItem(user.getUserId(),jibeiProductItem);
 		
-		
-		
-//	    boolean itemExists = false;
-//	    for (JibeiOrderDetailVO item : cartList) {
-//	        if (item.getJibeiProductID() == jibeiProductItem.getJibeiProductID()) {
-//	            item.setJibeiOrderDetailAmount(item.getJibeiOrderDetailAmount() + jibeiProductItem.getJibeiOrderDetailAmount());
-//	            itemExists = true;
-//	            break;
-//	        }
-//	    }
-//
-//	    if (!itemExists) {
-//	        cartList.add(jibeiProductItem);
-//	    }
-//		
-//		jibeiProductCartSvc.saveToCart(user.getUserId(),cartList);
-//		
 		
 		return "back-end/jibeiProduct/singleJibeiProduct";
 	}

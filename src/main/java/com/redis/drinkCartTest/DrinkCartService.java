@@ -23,7 +23,7 @@ public class DrinkCartService {
 	private static final String DRINKCART_PREFIX="drinkCart:";
 	private static final String DRINKORDER_PREFIX="drinkOrder:";
 	
-	public void addDrinkCartItem(String userId, DrinkOrderDetailVO cartItem) throws IOException {
+	public void addDrinkCartItem(Integer userId, DrinkOrderDetailVO cartItem) throws IOException {
 		String cartKey = DRINKCART_PREFIX + userId;
 		List<DrinkOrderDetailVO> cartItems  = new ArrayList<>();
 		boolean itemExists = false;
