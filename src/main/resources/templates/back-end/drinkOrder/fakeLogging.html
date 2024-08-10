@@ -67,26 +67,13 @@
 		
 
 		<div class="main">
-			<span th:text="${user.userName}"></span> <br>
-			內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
-      		內容打這
+			測試登入:
+			<form th:action="@{/drinkOrder/fakeLogging}" method="post">
+				<input type="text" name="user">
+				<input type="submit" value="登入">
+		    </form>
+      
+      
     	</div>
 
 	    <!-- footer -->

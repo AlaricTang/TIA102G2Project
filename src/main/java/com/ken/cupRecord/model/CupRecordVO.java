@@ -1,6 +1,6 @@
 package com.ken.cupRecord.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,11 +57,11 @@ public class CupRecordVO implements java.io.Serializable{
 	@Column(name = "storeReturnID")
 	private Integer storeReturnID;
 	
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 	@Column(name = "cupRecordRentDate")
 	private Date cupRecordRentDate;
 	
-	@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 	@Column(name = "cupRecordReturnDate")
 	private Date cupRecordReturnDate;
 	
