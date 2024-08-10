@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ellie.member.model.MemberService;
 
 
-
-
 @Controller
 @RequestMapping("/member")
 public class MemberDBGifReaderController {
