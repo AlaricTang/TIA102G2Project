@@ -70,7 +70,72 @@
 	
 	
 	<div>peter1</div>
+	<!-- 我要的 -->
+        <!-- 種類的btn  -->
+        <section class="module-small">
+          <div class="container">
+              <div class="col-sm-2">
+              <a th:href="@{/product/listAllProduct}" ><button class="btn btn-block btn-round btn-g" >所有商品</button></a>
+              </div>
+              <div class="col-sm-2">
+                <a th:href="@{/product/getOneType_For_Display} + '?productTag=1' " ><button class="btn btn-block btn-round btn-g" >種類一</button></a>
+              </div>
+              <div class="col-sm-2">
+                <a th:href="@{/product/getOneType_For_Display?productTag=2}" ><button class="btn btn-block btn-round btn-g" >種類二</button></a>
+              </div>
+              <div class="col-sm-2">
+                <a th:href="@{/product/getOneType_For_Display?productTag=3}" ><button class="btn btn-block btn-round btn-g" >種類三</button></a>
+              </div>
+              <div class="col-sm-2">
+                <a th:href="@{/jibeiProduct/jibeiProductList}"><button class="btn btn-block btn-round btn-g" >寄杯商品</button></a>
+              </div>
+          </div>
+        </section>
+        <!-- 種類btn到這邊 -->
 
+        <hr class="divider-w">
+
+        <!-- 所有商品的區域  -->
+        <section class="module-small">
+          <div class="container">
+            <div class="row multi-columns-row">
+              <!-- 單個商品，所以動態新增要改這裡(頂) -->
+              <!-- thymeleaf改這邊 -->
+              <div th:if="${productList != null}">
+              123
+              	<div th:each="productVO : ${productList}">
+	              <div class="col-sm-6 col-md-3 col-lg-3">
+	                <div class="shop-item">
+	                  <div class="shop-item-image"><img th:src="@{/product/ProductDBGifReader} + '?productID=' + ${productVO.productID}" alt="Accessories Pack"/>
+	                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a></div>
+	                  </div>
+	                  <h4 class="shop-item-title font-alt"><div th:text="${productVO.productName}"></div></h4>£9.00
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	          
+	          <div th:if="${jibeiProductList != null}">
+	          123
+	          	<div th:each="jibeiProductVO : ${jibeiProductList}">
+	              <div class="col-sm-6 col-md-3 col-lg-3">
+	                <div class="shop-item">
+	                  <div class="shop-item-image"><img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkID}" alt="Accessories Pack"/>
+	                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a></div>
+	                  </div>
+	                  <h4 class="shop-item-title font-alt">寄杯商品name
+<!-- 	                  <div th:text="${jibeiProductVO.productName}"></div> -->
+	                  </h4>£9.00
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+              <!-- thy到這邊 -->
+              <!-- 商品(底) -->
+            </div>
+          </div>
+        </section>
+<!-- 我要的，到這裡 -->
 
 
 
