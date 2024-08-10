@@ -36,7 +36,7 @@ public class DrinkOrderDetailController {
 	DrinkOrderService drinkOrderSvc;
 
 //	會員查訂單明細
-	@GetMapping("userDrinkOrderDetail")
+	@PostMapping("userDrinkOrderDetail")
 	public String userDrinkOrderDetail(
 			@RequestParam("drinkOrderID") String drinkOrderID,ModelMap model,HttpSession session) {
 		
