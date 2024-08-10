@@ -31,9 +31,6 @@ public class ProductVO implements Serializable{
 	@NotNull(message = "商品價格:不可為空")
 	@Column(name="productPrice")
 	private Integer productPrice;
-
-	@Column(name="productDprice")
-	private Integer productDprice;
 	
 	
 	@Column(name="productDes")
@@ -91,14 +88,6 @@ public class ProductVO implements Serializable{
 
 	public void setProductPrice(Integer productPrice) {
 		this.productPrice = productPrice;
-	}
-
-	public Integer getProductDprice() {
-		return productDprice;
-	}
-
-	public void setProductDprice(Integer productDprice) {
-		this.productDprice = productDprice;
 	}
 
 	public String getProductDes() {
@@ -166,7 +155,7 @@ public class ProductVO implements Serializable{
 	}
 
 	public ProductVO(Integer productID, @NotEmpty(message = "請輸入商品名稱") String productName,
-			@NotNull(message = "商品價格:不可為空") Integer productPrice, Integer productDprice, String productDes,
+			@NotNull(message = "商品價格:不可為空") Integer productPrice,  String productDes,
 			@NotNull(message = "商品庫存:不可為空") Integer productInv, @NotNull(message = "商品狀態:不可為空") byte productStatus,
 			Byte productTag, byte[] productPic, Timestamp productUpdateTime, Timestamp productCreateTime,
 			Integer memberID) {
@@ -174,7 +163,6 @@ public class ProductVO implements Serializable{
 		this.productID = productID;
 		this.productName = productName;
 		this.productPrice = productPrice;
-		this.productDprice = productDprice;
 		this.productDes = productDes;
 		this.productInv = productInv;
 		this.productStatus = productStatus;

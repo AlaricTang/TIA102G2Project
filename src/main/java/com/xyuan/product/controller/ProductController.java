@@ -57,7 +57,7 @@ public class ProductController {
 	
 	
 	//取得一個種類的商品	
-	@PostMapping("getOneType_For_Display")
+	@GetMapping("getOneType_For_Display")
 	public String getOne_For_Display(
 		//從HTTP請求中獲取名為"productTag"的參數值。這個參數將以"String"形式傳遞給方法
 		@RequestParam("productTag") String str_productTag,
@@ -65,10 +65,11 @@ public class ProductController {
 		
 						//先將String轉為byte(因為productTag的型別是byte)
 		Byte productTag = Byte.valueOf(str_productTag);
+		System.out.println(productTag);
 											//getByTag方法(寫在service)來根據產品標籤獲取產品列表
 		List<ProductVO> productTaglist = productSvc.getByTag(productTag);
 	
-		model.addAttribute("productTaglist",productTaglist);
+		model.addAttribute("productList",productTaglist);
 		return "back-end/product/listAllProduct";
 	}
 

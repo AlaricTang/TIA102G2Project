@@ -22,11 +22,11 @@
 				<li class="dropdown"><a href="#">線上預訂</a></li>
 				<li class="dropdown"><a class="dropdown-toggle" th:href="@{/product/listAllProduct}" data-toggle="dropdown">周邊商品</a>
 					<ul class="dropdown-menu" role="rpoduct">
-						<li><a th:href="@{/product/listAllProduct}" data-toggle="dropdown">所有商品</a></li>
-						<li><a th:href="@{/product/getOneType_For_Display}" data-toggle="dropdown">種類一</a></li>
-						<li><a th:href="@{/product/getOneType_For_Display}" data-toggle="dropdown">種類二</a></li>
-						<li><a th:href="@{/product/getOneType_For_Display}" data-toggle="dropdown">種類三</a></li>
-						<li><a th:href="@{/jibeiProduct/jibeiProductList}" data-toggle="dropdown">寄杯商品</a></li>
+						<li><a th:href="@{/product/listAllProduct}" >所有商品</a></li>
+						<li><a th:href="@{/product/getOneType_For_Display?productTag=1}" >種類一</a></li>
+						<li><a th:href="@{/product/getOneType_For_Display?productTag=2}" >種類二</a></li>
+						<li><a th:href="@{/product/getOneType_For_Display?productTag=3}" >種類三</a></li>
+						<li><a th:href="@{/jibeiProduct/jibeiProductList}" >寄杯商品</a></li>
 					</ul>
 				</li>
 				<li class="dropdown"><a href="#">門市資訊</a></li>
