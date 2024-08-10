@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -145,9 +146,7 @@ public class DrinkOrderFrontController {
 			drinkDetails.setDrinkOrderVO(saveDrinkOrder); //訂單明細 綁 訂單ID 
 			drinkOrderDetailSvc.addDrinkOrderDetail(drinkDetails);//存訂單明細
 		}
-		
 
-		
 		drinkCartService.deleteDrinkOrder(userID);//下訂完 刪購物人資訊
 		drinkCartService.deleteDrinkCart(userID); //下訂完 刪購物車明細
 				
@@ -177,6 +176,14 @@ public class DrinkOrderFrontController {
 		return "back-end/drinkOrder/userDrinkOrder";
 	}
 	
+	@PostMapping("cancelDrinkOrder")
+	public String cancelDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
+		drinkOrder.setDrinkOrderStatus(Byte.valueOf("0"));
+		drinkOrderSvc.updateDrinkOrder(drinkOrder);
+		return "redirect:/drinkOrder/userDrinkOrder";
+	}
+	
 	@GetMapping("fakeLoggingPage")
 	public String fakeLoggingPage() {
 		return "back-end/drinkOrder/fakeLogging";
@@ -188,7 +195,12 @@ public class DrinkOrderFrontController {
 		session.setAttribute("user",testUser);
 		return "redirect:/";
 	}
-
+	
+	@GetMapping("fakeLeave")
+	public String fakeLeave(HttpSession session) {
+		session.removeAttribute("user");
+		return "redirect:/";
+	}
 
 }
 //.
