@@ -179,11 +179,21 @@ public class DrinkOrderFrontController {
 	@PostMapping("cancelDrinkOrder")
 	public String cancelDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
 		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
-		drinkOrder.setDrinkOrderStatus(Byte.valueOf("0"));
+		drinkOrder.setDrinkOrderStatus(Byte.valueOf("2"));
+		drinkOrderSvc.updateDrinkOrder(drinkOrder);
+		return "redirect:/drinkOrder/userDrinkOrder";
+	}
+	@PostMapping("sussesPaidDrinkOrder")
+	public String sussesPaidDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
+		drinkOrder.setDrinkOrderPayStatus(Byte.valueOf("1"));
 		drinkOrderSvc.updateDrinkOrder(drinkOrder);
 		return "redirect:/drinkOrder/userDrinkOrder";
 	}
 	
+	
+	
+//=================================================================
 	@GetMapping("fakeLoggingPage")
 	public String fakeLoggingPage() {
 		return "back-end/drinkOrder/fakeLogging";

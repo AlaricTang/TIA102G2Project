@@ -44,8 +44,8 @@ public class DrinkOrderDetailController {
 		model.addAttribute("drinkOrderDetail",drinkOrderDetail);
 		
 		UserVO user = (UserVO)session.getAttribute("user");
-		List<DrinkOrderVO> drinkOrderList = drinkOrderSvc.getAllUserDrinkOrder(user.getUserId());
-		model.addAttribute("drinkOrderList",drinkOrderList);
+		List<DrinkOrderVO> userDrinkOrderList = drinkOrderSvc.getAllUserDrinkOrder(user.getUserId());
+		model.addAttribute("userDrinkOrderList",userDrinkOrderList);
 		
 		return "back-end/drinkOrder/userDrinkOrder";
 	}
