@@ -51,53 +51,281 @@
 		});
 	});
 </script>
-<style type="text/css">
-body {
-	margin: 1rem 12rem 2rem 12rem;
-}
+<style>
+		.form-item {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-item label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-item input,
+        .form-item select {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        #example {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #example thead tr {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #example th, #example td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    #example tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #example tbody tr:hover {
+        background-color: #e6f7ff;
+    }
+
+    .rent-section {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .return-section {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .card-body {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 </style>
 </head>
-<body>
+<body class="sb-nav-fixed">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-buton justify-content-center">
-		 <div align="center"> <h2>所有員工資料 - listAllEmp.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/cupRecord/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
-</nav>
+<!-- 最上面的那一條 -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">啡常渴以</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+<!-- 最上面的那一條 -->
 
-<table id="example" class="display" style="width: 100%">
-  <thead >
-	<tr style="background-color:#CCCCFF">
-		<th>環保杯紀錄編號</th>
-		<th>租借人(會員)ID</th>
-		<th>環保杯ID</th>
-		<th>飲品訂單ID</th>
-		<th>出租店ID</th>
-		<th>歸還店ID</th>
-		<th>租借時間</th>
-		<th>歸還時間</th>
-		<th>修改</th>
-<!-- 		<th>刪除</th> -->
-	</tr>
-  </thead>
-	
-  <tbody>
-		<th:block th:each="cupRecordVO : ${cupRecordListData}">
+	<div id="layoutSidenav">
+		<!-- 左邊的那一條 -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">首頁</div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            後端首頁
+                        </a>
+                        <div class="sb-sidenav-menu-heading">功能介面</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseAccountManagement" aria-expanded="false"
+                            aria-controls="collapseAccountManagement">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            帳號管理
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseAccountManagement" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html">會員管理</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">員工管理</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapsePageManagement" aria-expanded="false"
+                            aria-controls="collapsePageManagement">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            頁面管理
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePageManagement" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html">菜單圖示更換</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">活動列表</a>
+                            </nav>
+                        </div>
+
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            店家資訊管理
+                        </a>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseCupPageManagement" aria-expanded="false"
+                            aria-controls="collapsePageManagement">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            租借區管理
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseCupPageManagement" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/cup/listAllCup">環保杯查詢/管理</a>
+                                <a class="nav-link" href="/cupRecord/listAllCupRecord">環保杯租借紀錄</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseDrinkOrderManagement" aria-expanded="false"
+                            aria-controls="collapsePageManagement">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            預定飲品管理
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseDrinkOrderManagement" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html">訂單管理</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">訂單紀錄</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseProductManagement" aria-expanded="false"
+                            aria-controls="collapsePageManagement">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            商品上架管理
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProductManagement" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html">商品管理</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">寄杯管理</a>
+                                <a class="nav-link" href="/drink/listAllDrink">飲品管理</a>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Start Bootstrap
+                </div>
+            </nav>
+        </div>
+        <!-- 左邊的那一條 -->
+        
+        <!--右半邊的空白頁 -->
+<div id="layoutSidenav_content">
+        <main>
+<div class="container-fluid px-4">
+     <h1 class="mt-4">租借紀錄管理</h1>
+           
+  <div class="card mb-4">
+     <div class="card-header">
+     	<i class="fas fa-table me-1"></i>
+        所有環保杯紀錄
+     </div>
+     <div class="card-body">
+     <form method="post" th:action="@{listCupRecords_ByCompositeQuery}">
+     	<div class="form-row">
+     		<div class="form-item col-md-3">
+                <label>輸入租借人ID:</label>
+                <input type="number" name="userID" value="" min="0">
+            </div>
+     		
+     		<div class="form-item col-md-3">
+                <label>歸還店家ID:</label>
+                <input type="number" name="storeReturnID" value="" min="0">
+            </div>
+     	
+     		<div class="form-item col-md-3">
+                <label>出租店家ID:</label>
+                <input type="number" name="storeRentID" value="" min="0">
+            </div>
+            
+            <div class="form-item col-md-3">
+                <label>輸入環保杯ID:</label>
+                <input type="number" name="cupID" value="" min="0">
+            </div>
+            
+            <div class="form-item col-md-3">
+                <label>出租時間:</label>
+                <input type="date" name="cupRecordRentDate" value="">
+            </div>
+            
+            <div class="form-item col-md-3">
+                <label>歸還時間:</label>
+                <input type="date" name="cupRecordReturnDate" value="">
+            </div>
+            
+            <div class="form-item col-md-1">
+            <br>
+                <input type="submit" class="btn btn-primary" value="送出">
+            </div>
+     	</div>
+     </form>
+     </div>      
+     <div class="card-body">
+     	<table id="example" class="display">
+     		<thead >
+				<tr>
+				<th>紀錄編號</th>
+				<th>租借人ID</th>
+				<th>環保杯ID</th>
+				<th>飲品訂單ID</th>
+				<th>出租店ID</th>
+				<th>租借時間</th>
+				<th>歸還店ID</th>
+				<th>歸還時間</th>
+				</tr>
+  			</thead>
+  		<tbody>
+			<th:block th:each="cupRecordVO : ${cupRecordListData}">
 			<tr>
 				<td th:text="${cupRecordVO.cupRecordID}"></td>
 				<td th:text="${cupRecordVO.userID}"></td>
 				<td th:text="${cupRecordVO.cupID}"></td>
 				<td th:text="${cupRecordVO.drinkOrderID}"></td>
-				<td th:text="${cupRecordVO.storeRentID}"></td>
-				<td th:text="${cupRecordVO.storeReturnID}"></td>
-				<td th:text="${cupRecordVO.cupRecordRentDate}"></td>
-				<td th:text="${cupRecordVO.cupRecordReturnDate}"></td>
+				<td th:text="${cupRecordVO.storeRentID}" class="rent-section"></td>
+				<td th:text="${cupRecordVO.cupRecordRentDate}" class="rent-section"></td>
+				<td th:text="${cupRecordVO.storeReturnID}" class="return-section"></td>
+				<td th:text="${cupRecordVO.cupRecordReturnDate}" class="return-section"></td>
 <!-- 				<td th:text="${empVO.deptVO.deptno} + '-[' + ${empVO.deptVO.dname} + ']'"></td> -->
-			<td>
-			  <form method="post" th:action="@{/cupRecord/getOne_For_Update}" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
-			     <input type="hidden" name="cupRecordID" th:value="${cupRecordVO.cupRecordID}"></form>
-			
-			</td>
 <!-- 			<td> -->
 <!-- 			  <form method="post" th:action="@{/cupRecord/delete}" style="margin-bottom: 0px;"> -->
 <!-- 			     <input type="submit" value="刪除"> -->
@@ -105,9 +333,61 @@ body {
 			
 <!-- 			</td> -->
 			</tr>
-		</th:block>
-  </tbody>
-</table>
+			</th:block>
+  		</tbody>
+     	</table>
+     </div>  	
+  </div>
+</div>
+            
+        </main>
+</div>
+</div>
+
+<!-- <table id="example" class="display" style="width: 100%"> -->
+<!--   <thead > -->
+<!-- 	<tr style="background-color:#CCCCFF"> -->
+<!-- 		<th>環保杯紀錄編號</th> -->
+<!-- 		<th>租借人(會員)ID</th> -->
+<!-- 		<th>環保杯ID</th> -->
+<!-- 		<th>飲品訂單ID</th> -->
+<!-- 		<th>出租店ID</th> -->
+<!-- 		<th>歸還店ID</th> -->
+<!-- 		<th>租借時間</th> -->
+<!-- 		<th>歸還時間</th> -->
+<!-- 		<th>修改</th> -->
+<!-- <!-- 		<th>刪除</th> -->
+<!-- 	</tr> -->
+<!--   </thead> -->
+	
+<!--   <tbody> -->
+<!-- 		<th:block th:each="cupRecordVO : ${cupRecordListData}"> -->
+<!-- 			<tr> -->
+<!-- 				<td th:text="${cupRecordVO.cupRecordID}"></td> -->
+<!-- 				<td th:text="${cupRecordVO.userID}"></td> -->
+<!-- 				<td th:text="${cupRecordVO.cupID}"></td> -->
+<!-- 				<td th:text="${cupRecordVO.drinkOrderID}"></td> -->
+<!-- 				<td th:text="${cupRecordVO.storeRentID}"></td> -->
+<!-- 				<td th:text="${cupRecordVO.storeReturnID}"></td> -->
+<!-- 				<td th:text="${cupRecordVO.cupRecordRentDate}"></td> -->
+<!-- 				<td th:text="${cupRecordVO.cupRecordReturnDate}"></td> -->
+<!-- <!-- 				<td th:text="${empVO.deptVO.deptno} + '-[' + ${empVO.deptVO.dname} + ']'"></td> --> -->
+<!-- 			<td> -->
+<!-- 			  <form method="post" th:action="@{/cupRecord/getOne_For_Update}" style="margin-bottom: 0px;"> -->
+<!-- 			     <input type="submit" value="修改"> -->
+<!-- 			     <input type="hidden" name="cupRecordID" th:value="${cupRecordVO.cupRecordID}"></form> -->
+			
+<!-- 			</td> -->
+<!-- <!-- 			<td> -->
+<!-- <!-- 			  <form method="post" th:action="@{/cupRecord/delete}" style="margin-bottom: 0px;"> --> -->
+<!-- <!-- 			     <input type="submit" value="刪除"> -->
+<!-- <!-- 			     <input type="hidden" name="cupRecordID" th:value="${cupRecordVO.cupRecordID}"></form> --> -->
+			
+<!-- <!-- 			</td> -->
+<!-- 			</tr> -->
+<!-- 		</th:block> -->
+<!--   </tbody> -->
+<!-- </table> -->
 
 </body>
 </html>

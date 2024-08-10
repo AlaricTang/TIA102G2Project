@@ -292,6 +292,7 @@ public class CupController {
 	    return "redirect:/cup/listAllCup";
 	}
 	
+	// 不太確定 報廢要不要設定紀錄需討論
 	// ===================   方法 3 店家畫面按下"報廢按鈕"   =============================
 	@PostMapping("discardCup")
 	public String discardCup(@Valid CupVO cupVO,@RequestParam("cupID") String cupID,
