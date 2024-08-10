@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ellie.store.model.StoreService;
+import com.ellie.store.model.StoreVO;
 import com.ellie.user.model.UserVO;
 import com.redis.productCart.ProductCartService;
 import com.xyuan.product.model.ProductService;
@@ -39,6 +43,9 @@ public class ProductOrderFrontController {
 	
 	@Autowired
 	ProductOrderDetailService productOrderDetailSvc;
+	
+	@Autowired
+	StoreService storeSvc;
 
 	
 /* ------------------------------------------------------------------------------ */	
@@ -48,7 +55,6 @@ public class ProductOrderFrontController {
 	@GetMapping("productOrderPage")
 	public String productOrderPage(ModelMap model, HttpSession session) throws IOException {
 		int totalPrice = 0;
-		ProductOrderVO productOrderVO = new ProductOrderVO();
 		List<ProductOrderDetailVO> productCartList = new ArrayList<>();
 		
 	//訂購人
@@ -56,29 +62,7 @@ public class ProductOrderFrontController {
 		//.getAttribute拿到的是object透過(UserVO)轉換為UserVO類型
 		UserVO user = (UserVO)session.getAttribute("user");
 		Integer userID = user.getUserId();		//使用getUserId()
-		productOrderVO.setUserID(userID);		//用setUserID()將userID的資料放進productOrderVO
-		
-	//收件者姓名
-		String str_receiverName = productCartService.getOneDrinkOrder(userID,"str_receiverName");
-		productOrderVO.setReceiverName(str_receiverName);
-		
-	//收件者電話
-		String str_receiverPhone = productCartService.getOneDrinkOrder(userID,"str_receiverPhone");
-		productOrderVO.setReceiverPhone(str_receiverPhone);
-		
-	//收件者信箱
-		String str_receiverMail = productCartService.getOneDrinkOrder(userID,"str_receiverMail");
-		productOrderVO.setReceiverMail(str_receiverMail);
-		
-		
-	//付款方式byte
-		String str_productOrderPayM = productCartService.getOneDrinkOrder(userID,"str_productOrderPayM");
-		productOrderVO.setProductOrderPayM(Byte.valueOf(str_productOrderPayM));
-		
-	//備註
-		String str_productOrderNote = productCartService.getOneDrinkOrder(userID,"str_productOrderNote");
-		productOrderVO.setProductOrderNote(str_productOrderNote);
-		
+			
 		
 	//購物車列表 + 確認訂單金額價錢
 		productCartList = productCartService.getProductCart(userID);
@@ -87,18 +71,13 @@ public class ProductOrderFrontController {
 			ProductVO product = productService.getOneProduct(productCartItem.getProductID());
 			totalPrice += product.getProductPrice();
 		}
-		productOrderVO.setProductOrderAmount(totalPrice);
 		
-		session.setAttribute("productOrderVO", productOrderVO);
+		List<StoreVO> storeList = storeSvc.getAll();
 		
 		//給前端
-		model.addAttribute("userName", user.getUserName());
-		model.addAttribute("receiverName", str_receiverName);
-		model.addAttribute("receiverPhone", str_receiverPhone);
-		model.addAttribute("receiverMail", str_receiverMail);
-		model.addAttribute("productOrderPayM", str_productOrderPayM);
-		model.addAttribute("productOrderNote", str_productOrderNote);
-		model.addAttribute("str_productOrderAmount", totalPrice);
+		model.addAttribute("userID", userID);
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("storeList", storeList);
 		
 		model.addAttribute("productCartList", productCartList);
 		return "back-end/productOrder/productOrderPage";	
@@ -106,36 +85,65 @@ public class ProductOrderFrontController {
 	}
 	//////////////////////還沒加入比對庫存
 	
-	//堂安說
+	@GetMapping("productOrderFail")
+	public String productOrderFail(HttpSession session, ModelMap model) {
+		String orderFailMessage = (String)session.getAttribute("orderFailMessage");
+		model.addAttribute("orderFailMessage",orderFailMessage);
+		session.removeAttribute("orderFailMessage");
+		return "back-end/productOrder/productOrderFail";
+	}
+	
+	//有FK的版本			if(cartProduct.getProductOrderDetailAmount() > cartProduct.getProductVO().getProductInv()) {
+
 	//	下單,跳轉到成功頁面
 	//  這裡含 存訂單明細的動作
 	@PostMapping("order")
-	synchronized public String order(ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
+	synchronized public String order(@Valid ProductOrderVO productOrderVO, ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
 		
 		//判斷訂單正確與否 & 存訂單
-		ProductOrderVO productOrderVO = (ProductOrderVO)session.getAttribute("productOrder");
+//		ProductOrderVO productOrderVO = (ProductOrderVO)session.getAttribute("productOrder");
 		
 		productOrderVO.setProductOrderStatus(Byte.valueOf("0")); //訂單狀態 預設 未完成
 		productOrderVO.setProductOrderPayStatus(Byte.valueOf("0")); //付款狀態 預設 未付款
-		ProductOrderVO saveProductOrder = productOrderSvc.addandGetProductOrder(productOrderVO);	//存訂單
 		
 		Integer userID = productOrderVO.getUserID();
+
+		//productCartService使用getProductCart()透過userID獲得user的購物車裡面的商品
 		List<ProductOrderDetailVO> cartProducts = productCartService.getProductCart(userID);
-		Integer productOrderID = saveProductOrder.getProductOrderID();
+			
+		//庫存判斷
+		String orderFailMessage = null; //給前端的失敗資訊
+		for(ProductOrderDetailVO cartProduct : cartProducts) {
+			if(cartProduct.getProductOrderDetailAmount() > productService.getOneProduct(cartProduct.getProductID()).getProductInv()) {
+				orderFailMessage += productService.getOneProduct(cartProduct.getProductID()).getProductName() + ":庫存不足, ";
+			}
+		}		
+		if(orderFailMessage != null) {
+			session.setAttribute("orderFailMessage", orderFailMessage);
+			return "redirect: /productOrder/productOrderFail";			
+		}
+		
+		//付款方式
 		if(productOrderVO.getProductOrderPayM() == 1) {	
 			//如果為線上付款 去綠界
 			productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));		//執行完 狀態設為 已付款
 		}
+		
+		
+		
+		
+		ProductOrderVO saveProductOrder = productOrderSvc.addandGetProductOrder(productOrderVO);	//存訂單
+		
+		Integer productOrderID = saveProductOrder.getProductOrderID();
 		for(ProductOrderDetailVO productDetails : cartProducts) {
 			productDetails.setProductOrderID(productOrderID);
 			productOrderDetailSvc.addProductOrderDetail(productDetails);
 		}
 		
-		
-		
-		productCartService.deleteDrinkOrder(userID);	//下訂完 刪購物人資訊
-		productCartService.deleteDrinkCart(userID);		//下訂完 刪購物車明細
-		
+		productCartService.deleteProductOrder(userID);	//下訂完 刪購物人資訊 hash
+																																									
+		productCartService.deleteProductCart(userID);		//下訂完 刪購物車明細 List 
+																																								
 		redirectAttributes.addAttribute("saveProductOrder", saveProductOrder);
 			return "redirect:/productOrder/orderSuccess";
 	}
@@ -160,6 +168,17 @@ public class ProductOrderFrontController {
 		}
 		
 		
+		//會員頁面新增listAllByUserID
+		@GetMapping("userListAllPdOrder")
+		public String userListAllPdOrder( @RequestParam("userID") String str_userID, 
+				ModelMap model) {
+			
+			Integer userID = Integer.valueOf(str_userID);
+			List<ProductOrderVO> userListAllProduct = productOrderSvc.getAllUserProductOrder(userID);
+			
+			model.addAttribute("userListAllProduct", userListAllProduct );
+			return "back-end/productOrder/userListAllProduct";
+		}
 		
 		
 		

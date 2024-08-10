@@ -91,7 +91,7 @@ public class ProductCartService {
 	}
 	
 	//清空購物車  //<<<<<<<<<<<<<<<<<< 這邊方法名幫我改  ProductCart 因為我動了，你的controller會報錯 我就沒改了
-	public void deleteDrinkCart(Integer userID)throws IOException{
+	public void deleteProductCart(Integer userID)throws IOException{
 		String cartKey = PRODUCTCART_PREFIX + userID.toString();
 		jedisSvc.delete(cartKey);
 	}
@@ -107,13 +107,13 @@ public class ProductCartService {
 	}
 	
 	//取得 某項購物人資訊  //<<<<<<<<<<<<<<<<<< 這邊方法名幫我改 getOneProductOrder
-	public String getOneDrinkOrder(Integer userID , String key) throws IOException{
+	public String getOneProductOrder(Integer userID , String key) throws IOException{
 		String productOrderKey = PRODUCTORDER_PREFIX + userID.toString();
 		return jedisSvc.getOneOneOne(productOrderKey,key);
 	}
 	
-	//清空 訂購人資訊 //<<<<<<<<<<<<<<<<<< 這邊方法名幫我改 deleteOneProductOrder
-	public void deleteDrinkOrder(Integer userID)throws IOException{
+	//清空 訂購人資訊 //<<<<<<<<<<<<<<<<<< 這邊方法名幫我改 deleteProductOrder
+	public void deleteProductOrder(Integer userID)throws IOException{
 		String productOrderKey = PRODUCTORDER_PREFIX + userID.toString();
 		jedisSvc.delete(productOrderKey);
 	}
