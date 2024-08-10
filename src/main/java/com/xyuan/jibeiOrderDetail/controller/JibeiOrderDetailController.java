@@ -12,28 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ellie.user.model.UserVO;
+import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailService;
 import com.xyuan.productOrder.model.ProductOrderService;
 import com.xyuan.productOrder.model.ProductOrderVO;
-import com.xyuan.productOrderDetail.model.ProductOrderDetailService;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
 @Controller
 @RequestMapping("/productOrderDetail")
-public class jibeiOrderDetailController {
+public class JibeiOrderDetailController {
 	
 	@Autowired
-	ProductOrderDetailService productOrderDetailSvc;
-	
+	JibeiOrderDetailService jibeiOrderDetailSvc;
+								//JibeiOrderDetailSvc
 	@Autowired
 	ProductOrderService productOrderSvc;
-
+						//productOrderSvc
 	
 	//會員查訂單明細
 	@GetMapping("userProductOrderDetail")
 	public String userProductOrderDetail(
 			@RequestParam("productOrderID") String productOrderID, ModelMap model, HttpSession session) {
 			
-		List<ProductOrderDetailVO> productOrderDetail = productOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
+		List<ProductOrderDetailVO> productOrderDetail = jibeiOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
 		model.addAttribute("productOrderDetail", productOrderDetail);
 		
 		UserVO user = (UserVO)session.getAttribute("user");
@@ -50,7 +50,7 @@ public class jibeiOrderDetailController {
 	public String orderHistory_ProductOrderDetail(
 			@RequestParam("productOrderID") String productOrderID, ModelMap model) {
 			
-		List<ProductOrderDetailVO> productOrderDetail = productOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
+		List<ProductOrderDetailVO> productOrderDetail = jibeiOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
 		model.addAttribute("productOrderDetail", productOrderDetail);
 		
 		List<ProductOrderVO> productOrderList = productOrderSvc.getAll();
@@ -64,7 +64,7 @@ public class jibeiOrderDetailController {
 	public String orderManage_ProductOrderDetail(
 			@RequestParam("productOrderID") String productOrderID, ModelMap model) {
 			
-		List<ProductOrderDetailVO> productOrderDetail = productOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
+		List<ProductOrderDetailVO> productOrderDetail = jibeiOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
 		model.addAttribute("productOrderDetail", productOrderDetail);
 		
 		List<ProductOrderVO> productOrderList = productOrderSvc.getAllUndone();

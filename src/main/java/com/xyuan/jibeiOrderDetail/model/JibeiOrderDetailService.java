@@ -37,7 +37,7 @@ public class JibeiOrderDetailService {
 		return repository.findAll();
 	}
 	
-	public List<ProductOrderDetailVO> getByProducOrderID(Integer productOrderID){
+	public List<ProductOrderDetailVO> getByProductOrderID(Integer productOrderID){
 		return repository.getByProductOrderID(productOrderID);
 	}
 	
