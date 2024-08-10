@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<ProductVO, Integer>{
 	@Query(value="select * from product where productTag = ?1", nativeQuery = true)
 	List<ProductVO> getByTag(Byte productTag);
 	
-	@Query(value = "select * from product where productsStatus = ?1", nativeQuery = true)
+	@Query(value = "select * from product where productStatus = ?1", nativeQuery = true)
 	List<ProductVO> getProductByStatus(int status);
 }
 
