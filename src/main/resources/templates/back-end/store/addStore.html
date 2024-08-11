@@ -1,0 +1,150 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>店家資料新增</title>
+    <style type="text/css">
+        button {
+            padding: 10px;
+        }
+        form {
+            display: table;
+        }
+        form div {
+            display: table-row;
+        }
+        label, input, span, select {
+            display: table-cell;
+            margin: 10px;
+            text-align: left;        
+        }
+        input[type=text], input[type=password], input[type=time], input[type=date], textarea {
+            width: 200px;
+            margin: 10px;
+        }
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center">
+        <h2>店家資料新增</h2>
+        <h3><a class="navbar-brand" th:href="@{/store/select_page}">回查詢頁</a></h3>
+    </div>
+</nav>
+
+<div align="center">
+    <h3><b>所有欄位皆為必填欄位</b></h3>
+    <form th:action="@{/store/addStore}" method="post" th:object="${storeVO}">
+        <div>
+            <label>店家帳號:</label>
+            <input type="text" th:field="*{storeAcc}" onclick="hideContent('storeAcc.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storeAcc')}" th:errors="*{storeAcc}" class="error" id="storeAcc.errors"></span>
+        </div>
+
+        <div>
+            <label>店家密碼:</label>
+            <input type="password" th:field="*{storePwd}" onclick="hideContent('storePwd.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storePwd')}" th:errors="*{storePwd}" class="error" id="storePwd.errors"></span>
+        </div>
+
+        <div>
+            <label>店家名稱:</label>
+            <input type="text" th:field="*{storeName}" onclick="hideContent('storeName.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storeName')}" th:errors="*{storeName}" class="error" id="storeName.errors"></span>
+        </div>
+
+        <div>
+            <label>店家地址:</label>
+            <input type="text" th:field="*{storeAddr}" onclick="hideContent('storeAddr.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storeAddr')}" th:errors="*{storeAddr}" class="error" id="storeAddr.errors"></span>
+        </div>
+
+<!-- 
+        <div>
+            <label>店家經緯度:</label>
+            <input type="text" th:field="*{storeMap}" onclick="hideContent('storeMap.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storeMap')}" th:errors="*{storeMap}" class="error" id="storeMap.errors"></span>
+        </div>
+ -->
+        <div>
+            <label>店家電話:</label>
+            <input type="text" th:field="*{storePhone}" onclick="hideContent('storePhone.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storePhone')}" th:errors="*{storePhone}" class="error" id="storePhone.errors"></span>
+        </div>
+
+        <div>
+            <label>店家介紹:</label>
+            <textarea th:field="*{storeDes}" onclick="hideContent('storeDes.errors');"></textarea><br/>
+            <span th:if="${#fields.hasErrors('storeDes')}" th:errors="*{storeDes}" class="error" id="storeDes.errors"></span>
+        </div>
+
+        <div>
+            <label>店家圖片:</label>
+            <input type="file" th:field="*{storePic}" onclick="hideContent('storePic.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('storePic')}" th:errors="*{storePic}" class="error" id="storePic.errors"></span>
+        </div>
+
+        <div>
+            <label>店家環保杯數:</label>
+            <input type="text" th:field="*{storeCups}" onclick="hideContent('storeCups.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('storeCups')}" th:errors="*{storeCups}" class="error" id="storeCups.errors"></span>
+        </div>
+
+        <div>
+            <label>店家開店時間:</label>
+            <input type="time" th:field="*{storeOpenTime}" onclick="hideContent('storeOpenTime.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storeOpenTime')}" th:errors="*{storeOpenTime}" class="error" id="storeOpenTime.errors"></span>
+        </div>
+
+        <div>
+            <label>店家關店時間:</label>
+            <input type="time" th:field="*{storeCloseTime}" onclick="hideContent('storeCloseTime.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storeCloseTime')}" th:errors="*{storeCloseTime}" class="error" id="storeCloseTime.errors"></span>
+        </div>
+
+        <div>
+            <label>店家建立日期:</label>
+            <input type="date" th:field="*{storeCreateDate}" onclick="hideContent('storeCreateDate.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('storeCreateDate')}" th:errors="*{storeCreateDate}" class="error" id="storeCreateDate.errors"></span>
+        </div>
+
+<!-- 
+        <div>
+            <label>建立員工ID:</label>
+            <input type="text" th:field="*{createdByMemberID}" onclick="hideContent('createdByMemberID.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('createdByMemberID')}" th:errors="*{createdByMemberID}" class="error" id="createdByMemberID.errors"></span>
+        </div>
+
+        <div>
+            <label>修改員工ID:</label>
+            <input type="text" th:field="*{editedByMemberID}" onclick="hideContent('editedByMemberID.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('editedByMemberID')}" th:errors="*{editedByMemberID}" class="error" id="editedByMemberID.errors"></span>
+        </div>
+ -->
+        <div>
+            <button type="submit" id="submit">送出新增</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function hideContent(d) {
+        document.getElementById(d).style.display = "none";
+    }
+</script>
+
+</body>
+</html>
