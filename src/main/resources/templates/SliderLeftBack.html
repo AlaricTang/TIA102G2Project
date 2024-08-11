@@ -1,0 +1,119 @@
+<th:block th:fragment="SliderLeftBack" >
+	<div id="layoutSidenav">
+		<!-- 左邊的那一條 -->
+	        <div id="layoutSidenav_nav">
+	            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+	                <div class="sb-sidenav-menu">
+	                    <div class="nav">
+	                    
+	                        <div class="sb-sidenav-menu-heading">首頁</div>
+	                        <a class="nav-link" th:href="@{/backendHomepage}">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+	                            後端首頁
+	                        </a>
+	                        
+	                        
+	                        <div class="sb-sidenav-menu-heading">功能介面</div>
+	                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+	                            data-bs-target="#collapseAccountManagement" aria-expanded="false"
+	                            aria-controls="collapseAccountManagement">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+	                            帳號管理
+	                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                        </a>
+	                        <div class="collapse" id="collapseAccountManagement" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+	                            <nav class="sb-sidenav-menu-nested nav">
+	                                <a class="nav-link" href="layout-static.html">會員管理</a>
+	                                <a class="nav-link" href="layout-sidenav-light.html">員工管理</a>
+	                            </nav>
+	                        </div>
+	                        
+	                        
+	                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+	                            data-bs-target="#collapsePageManagement" aria-expanded="false"
+	                            aria-controls="collapsePageManagement">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+	                            頁面管理
+	                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                        </a>
+	                        <div class="collapse" id="collapsePageManagement" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+	                            <nav class="sb-sidenav-menu-nested nav">
+	                                <a class="nav-link" href="layout-static.html">菜單圖示更換</a>
+	                                <a class="nav-link" href="layout-sidenav-light.html">活動列表</a>
+	                            </nav>
+	                        </div>
+	
+	                        
+	                        <a class="nav-link" href="index.html">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+	                            店家資訊管理
+	                        </a>
+	
+	                        
+	                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+	                            data-bs-target="#collapseCupPageManagement" aria-expanded="false"
+	                            aria-controls="collapsePageManagement">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+	                            租借區管理
+	                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                        </a>
+	                        <div class="collapse" id="collapseCupPageManagement" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+	                            <nav class="sb-sidenav-menu-nested nav">
+	                                <a class="nav-link" href="/cup/listAllCup">環保杯查詢/管理</a>
+	                                <a class="nav-link" href="/cupRecord/listAllCupRecord">環保杯租借紀錄</a>
+	                            </nav>
+	                        </div>
+	                        	                        
+	                        
+	                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+	                            data-bs-target="#collapseProductManagement" aria-expanded="false"
+	                            aria-controls="collapsePageManagement">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+	                            飲品/商品/寄杯商品
+	                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                        </a>
+	                        <div class="collapse" id="collapseProductManagement" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+	                            <nav class="sb-sidenav-menu-nested nav">
+	                                <a class="nav-link" th:href="@{/drink/listAllDrink}">飲品管理</a>
+	                                <a class="nav-link" href="layout-static.html">商品管理</a>
+	                                <a class="nav-link" href="layout-sidenav-light.html">寄杯管理</a>
+	                            </nav>
+	                        </div>
+	                        
+	                        
+	                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+	                            data-bs-target="#collapseDrinkOrderManagement" aria-expanded="false"
+	                            aria-controls="collapsePageManagement">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+	                            預定飲品訂單
+	                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                        </a>
+	                        <div class="collapse" id="collapseDrinkOrderManagement" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+	                            <nav class="sb-sidenav-menu-nested nav">
+	                                <a class="nav-link" href="layout-static.html">訂單管理</a>
+	                                <a class="nav-link" href="layout-sidenav-light.html">訂單紀錄</a>
+	                            </nav>
+	                        </div>
+
+	                        
+	                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+	                            data-bs-target="#collapseDrinkOrderManagement" aria-expanded="false"
+	                            aria-controls="collapsePageManagement">
+	                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+	                            商品訂單
+	                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                        </a>
+	                        <div class="collapse" id="collapseDrinkOrderManagement" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+	                            <nav class="sb-sidenav-menu-nested nav">
+	                                <a class="nav-link" href="layout-static.html">訂單管理</a>
+	                                <a class="nav-link" href="layout-sidenav-light.html">訂單紀錄</a>
+	                            </nav>
+	                        </div>
+	                    </div>
+	                </div>
+	                
+	            </nav>
+	        </div>
+	        <!-- 左邊的那一條 -->
+	</div>
+</th:block>
