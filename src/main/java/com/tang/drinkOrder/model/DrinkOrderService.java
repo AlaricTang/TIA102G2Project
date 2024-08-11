@@ -46,7 +46,8 @@ public class DrinkOrderService {
 	}
 	
 	public List<DrinkOrderVO> getAll(Map<String, String> map){
-		return CompositeQuery_DrinkOrder.getAllC(map);
+		Optional<List<DrinkOrderVO>> optional = Optional.ofNullable(CompositeQuery_DrinkOrder.getAllC(map));
+		return optional.orElse(null);
 	}
 	
 	public void updateDrinkOrder(DrinkOrderVO drinkOrderVO) {

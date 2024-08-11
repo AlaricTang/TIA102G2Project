@@ -76,8 +76,8 @@ public class DrinkOrderDetailController {
 	public String orderHistory_DrinkOrderDetail(
 			@RequestParam("drinkOrderID") String drinkOrderID,ModelMap model) {
 		
-		List<DrinkOrderDetailVO> drinkOrderDetail = drinkOrderDetailSvc.getByDrinkOrderID(Integer.valueOf(drinkOrderID));
-		model.addAttribute("drinkOrderDetail",drinkOrderDetail);
+		List<DrinkOrderDetailVO> drinkOrderDetailList = drinkOrderDetailSvc.getByDrinkOrderID(Integer.valueOf(drinkOrderID));
+		model.addAttribute("drinkOrderDetailList",drinkOrderDetailList);
 		
 		List<DrinkOrderVO> drinkOrderList = drinkOrderSvc.getAll();
 		model.addAttribute("drinkOrderList",drinkOrderList);
