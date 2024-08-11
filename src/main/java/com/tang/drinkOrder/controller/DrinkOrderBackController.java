@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
 import com.tang.drinkOrder.model.DrinkOrderService;
 import com.tang.drinkOrder.model.DrinkOrderVO;
@@ -31,11 +32,16 @@ public class DrinkOrderBackController {
 	@Autowired
 	DrinkOrderDetailService drinkOrderDetailService;
 
+	@Autowired
+	StoreService storeSvc;
 	//===============總公司端==================
 	@GetMapping("orderHistory")
 	public String orderHistory(ModelMap model) {
 		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAll();
 		model.addAttribute("drinkOrderList",drinkOrderList);
+		
+		List<StoreVO> storeList = storeSvc.getAll();
+		model.addAttribute("storeList",storeList);
 		return "back-end/drinkOrder/orderHistory";
 	}
 
@@ -43,6 +49,9 @@ public class DrinkOrderBackController {
 	public String orderManage(ModelMap model) {
 		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAllUndone();
 		model.addAttribute("drinkOrderList",drinkOrderList);
+		
+		List<StoreVO> storeList = storeSvc.getAll();
+		model.addAttribute("storeList",storeList);
 		return "back-end/drinkOrder/orderManage";
 	}
 
