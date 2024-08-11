@@ -50,17 +50,10 @@
 </nav>
 
 
-
-
-
-
-
-
-
 <div align="center">
 
     <h3><b>所有欄位皆為必填欄位</b></h3>
-    <form th:action="@{/user/add}" method="post" th:object="${userVO}">
+    <form th:action="@{/insert}" method="post" th:object="${userVO}">
     
      <div>
             <label>電子郵件:</label>
