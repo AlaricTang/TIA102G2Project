@@ -45,11 +45,11 @@ public class CupVO implements java.io.Serializable{
 	private Integer cupStatus; // 0(歸還), 1(出租), 2(報廢)
 	
 //	@Temporal(TemporalType.DATE)
-    @Column(name = "cupRentDate" ,insertable = false)
+    @Column(name = "cupRentDate")
 	private Date cupRentDate;
 	
 
-    @Column(name = "cupCreateDate",updatable = false ,insertable = false)
+    @Column(name = "cupCreateDate",updatable = false)
 	private Date cupCreateDate;
 
     public CupVO() {

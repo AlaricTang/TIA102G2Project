@@ -115,13 +115,18 @@ public class DrinkController {
 			// EmpService empSvc = new EmpService();
 			byte[] upFiles = drinkSvc.getOneDrink(drinkVO.getDrinkID()).getDrinkPic();
 			drinkVO.setDrinkPic(upFiles);
+			System.out.println("1");
 		} else {
 			for (MultipartFile multipartFile : parts) {
 				byte[] upFiles = multipartFile.getBytes();
 				drinkVO.setDrinkPic(upFiles);
 			}
+			System.out.println("2");
 		}
 		if (result.hasErrors()) {
+			result.getFieldErrors().forEach(error -> {
+		        System.out.println("Field: " + error.getField() + " - " + error.getDefaultMessage());
+		    });
 			return "back-end/drink/update_drink_input";
 		}
 		/*************************** 2.開始修改資料 *****************************************/

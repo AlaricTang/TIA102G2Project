@@ -11,122 +11,189 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--  ======== Document Title =====================================  -->
 <title>租借環保杯 - select_page.html</title>
 
-<head th:insert="~{/back-end/cup/included-fragment}"></head> 使用included-fragment.html網頁的全部
-<link rel="stylesheet" type="text/css" th:href="@{/css/styleBack.css}">
-<style type="text/css">
+<!-- ●●css for jquery datatables 用 -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
 
-	button {
-		padding: 5px;
-	}
-	form {
-		display: table;
-	}
-	form div {
-		display: table-row;
-	}
-	label, input, span, select {
-		display: table-cell;
-		margin: 2px;
-		text-align: left;		
-	}
-	input[type=text], input[type=password], select, textarea {
-		width: 200px;
-		margin: 2px;
-	}
-	form div div {
-		display: table-cell;
-	}
-	.center {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    span {
-		display: inline-block;
-		width: 150px;
-		text-align: left;
-		font-weight: bold;
-	}
-	div.a {
-        display: inline-block;
-        width: 50%;
-        height: auto;
-        padding: 5px;
-        border: 0px solid blue;    
-        background-color: white; 
-    }
-    div.b {
-        position: absolute; 
-        bottom: 1%; 
-        right: 2%; 
-        width: 45%;
-        padding: 5px; 
-        border: 1px solid blue;
-    }
+    <script th:src="@{js/scriptsBack.js}"></script>
+   	<script th:src="@{js/datatables-simple-demo.js}"></script>
+ 	<script th:src="@{demo/chart-area-demo.js}"></script>
+ 	<script th:src="@{demo/chart-bar-demo.js}"></script>
+ 	<script th:src="@{demo/chart-pie-demo.js}"></script>
+    
+    <script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>
+<style type="text/css">
+.form-item {
+            margin-bottom: 15px;
+        }
+
+        .form-item label {
+            font-weight: 600;
+        }
+
+        .form-item input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            box-sizing: border-box;
+        }
+
+        .status-returned {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-rented {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ffeeba;
+        }
+
+        .status-scrapped {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-unknown {
+            background-color: #d6d8d9;
+            color: #383d41;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #c6c8ca;
+        }
+
+        .status-icon {
+            margin-right: 5px;
+        }
+        
+        .card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
 </style>
 </head>
-<body>
+<body class="sb-nav-fixed">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>環保杯租借 - select_page.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/back1.gif}">回index.html</a></h3></div>
-</nav>
+<!-- header -->
+    <div th:include="headerBack :: headerBack"></div>
+<!-- header -->
+ <div id="layoutSidenav">
+ 	<!-- footer -->
+   	<div th:include="SliderLeftBack :: SliderLeftBack"></div>
+   	<!-- footer -->
+ 	
+ 	<!--右半邊的空白頁 -->
+    <div id="layoutSidenav_content">
+    	 <main>
+    	 <br>
+    	 <br>
+                <div class="container-fluid px-4" style="max-width: 600px; margin: 0 auto;">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-header">
+                            租借環保杯
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/cup/userRentCup}" method="post">
+                                <div class="form-item">
+                                    <label for="cupID">杯子編號:</label>
+                                    <input type="number" id="cupID" name="cupID" required min=1>
+                                    <span class="error" th:text="${errorMessage1}" ></span>
+                                </div>
+                                <div>
+                                    <span class="error" th:text="${errorMessage3}"></span>
+                                </div>
+                                <div class="form-item">
+                                    <label for="userID">會員編號:</label>
+                                    <input type="number" id="userID" name="userID" required min=1>
+                                    <span class="error" th:text="${errorMessage2}"></span>
+                                </div>
+                                <div class="form-item text-center">
+                                    <button type="submit" class="btn-primary">租借</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+    </div>
+ </div>
 
-	<h4><span>資料查詢:</span></h4>
-	<!-- 錯誤表列 -->
-	<div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div><br>
-	<div class="a">
-	  <ul>
-		<li><h5><a href='listAllCup'>List</a> all Cups. <br><br></h5></li>
-
-		<li>
-			<form method="post" th:action="@{getOne_For_Display}">
-				輸入環保杯編號:
-				<input type="text" name="cupID" th:value="${param.cupID}" > 
-				<input type="submit" value="送出"> (輸入如1,2...等)
-			</form><br>
-		</li>
-		
-		<li>
-			<form method="post" th:action="@{getOne_For_Display}">
-				輸入會員ID:
-				<input type="text" name="memberID" th:value="${param.memberID}" > 
-				<input type="submit" value="送出">
-			</form><br>
-		</li>
-		
-	<!-- 新增租借表單 -->
-<li>
-    <h4><span>租借環保杯:</span></h4>
-    <form th:action="@{/cup/userRentCup}" method="post">
-        <div>
-            <label for="cupID">杯子編號:</label>
-            <input type="number" id="cupID" name="cupID" required>
-            <span class="error" th:text="${errorMessage1}" ></span>
-        </div>
-        <div>
-            <span class="error" th:text="${errorMessage3}"></span>
-        </div>
-        <div>
-            <label for="userID">會員編號:</label>
-            <input type="number" id="userID" name="userID" required>
-            <span class="error" th:text="${errorMessage2}" ></span>
-        </div>
-        <div>
-            <button type="submit">租借</button>
-        </div>
-    </form>
-</li>
+<!-- <li> -->
+<!--     <h4><span>租借環保杯:</span></h4> -->
+<!--     <form th:action="@{/cup/userRentCup}" method="post"> -->
+<!--         <div> -->
+<!--             <label for="cupID">杯子編號:</label> -->
+<!--             <input type="number" id="cupID" name="cupID" required> -->
+<!--             <span class="error" th:text="${errorMessage1}" ></span> -->
+<!--         </div> -->
+<!--         <div> -->
+<!--             <span class="error" th:text="${errorMessage3}"></span> -->
+<!--         </div> -->
+<!--         <div> -->
+<!--             <label for="userID">會員編號:</label> -->
+<!--             <input type="number" id="userID" name="userID" required> -->
+<!--             <span class="error" th:text="${errorMessage2}" ></span> -->
+<!--         </div> -->
+<!--         <div> -->
+<!--             <button type="submit">租借</button> -->
+<!--         </div> -->
+<!--     </form> -->
+<!-- </li> -->
   
-      </ul>
-    </div>
-    <!-- 旗標getOne_For_Display見EmpnoController.java的第74行 -->
-    <div class="b" th:if="${getOne_For_Display}">
-        <!--使用listOneEmp.html網頁的listOneEmp-div片段--> <!-- 見listOneEmp.html的第35行的th:fragment="listOneEmp-div" --> <!-- 使用th:replace也可 -->
-        <div th:insert="~{/back-end/cup/listOneCup :: listOneCup-div}"></div>
-    </div>
+<!--       </ul> -->
+<!--     </div> -->
+<!--     旗標getOne_For_Display見EmpnoController.java的第74行 -->
+<!--     <div class="b" th:if="${getOne_For_Display}"> -->
+<!--         使用listOneEmp.html網頁的listOneEmp-div片段 見listOneEmp.html的第35行的th:fragment="listOneEmp-div" 使用th:replace也可 -->
+<!--         <div th:insert="~{/back-end/cup/listOneCup :: listOneCup-div}"></div> -->
+<!--     </div> -->
 
 </body>
 </html>
