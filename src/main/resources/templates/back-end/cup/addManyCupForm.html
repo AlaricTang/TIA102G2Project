@@ -2,69 +2,190 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>環保杯新增 - addcup.html</title>
+
+
+	<!--  ======== Document Title =====================================  -->
+<title>新增環保杯 - addManyCup.html</title>
+
+<!-- ●●css for jquery datatables 用 -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+
+    <script th:src="@{js/scriptsBack.js}"></script>
+   	<script th:src="@{js/datatables-simple-demo.js}"></script>
+ 	<script th:src="@{demo/chart-area-demo.js}"></script>
+ 	<script th:src="@{demo/chart-bar-demo.js}"></script>
+ 	<script th:src="@{demo/chart-pie-demo.js}"></script>
     
-    <head th:insert="~{/back-end/cup/included-fragment}"></head>
-    <style type="text/css">
-        button {
+    <script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>
+<!-- ●● jquery datatables 設定 -->
+<style type="text/css">
+.form-item {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-item label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-item input,
+        .form-item select {
+            width: 100%;
             padding: 5px;
+            box-sizing: border-box;
         }
-        form {
-            display: table;
-        }
-        form div {
-            display: table-row;
-        }
-        label, input, span, select {
-            display: table-cell;
-            margin: 5px;
-            text-align: left;        
-        }
-        input[type=text], input[type=number], select, textarea {
-            width: 200px;
-            margin: 5px;
-        }
-        form div div {
-            display: table-cell;
-        }
-        .center {
-            margin-left: auto;
-            margin-right: auto;
-        }
-    </style>
+     	.status-returned {
+	        background-color: #d4edda;
+	        color: #155724;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #c3e6cb;
+	    }
+	
+	    .status-rented {
+	        background-color: #fff3cd;
+	        color: #856404;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #ffeeba;
+	    }
+	
+	    .status-scrapped {
+	        background-color: #f8d7da;
+	        color: #721c24;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #f5c6cb;
+	    }
+	
+	    .status-unknown {
+	        background-color: #d6d8d9;
+	        color: #383d41;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #c6c8ca;
+	    }
+	
+	    .status-icon {
+	        margin-right: 5px;
+	    }
+	    
+	    .card-body {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #example {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    #example thead tr {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #example th, #example td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    #example tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #example tbody tr:hover {
+        background-color: #e6f7ff;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .status-icon {
+        margin-right: 5px;
+    }
+</style>
 </head>
-<body>
+<body class="sb-nav-fixed">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-button justify-content-center">
-    <div align="center"> 
-        <h2>環保杯新增 - addcup.html</h2>
-        <h3><a class="navbar-brand" th:href="@{/cup/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3>
-    </div>
-</nav>
-
-<div align="center">
-    <h3><b>所有欄位皆為必填欄位</b></h3>
-    
-    <!-- 用來提交杯子數量並生成表單 -->
-    <form action="/cup/insertManyCup" method="post">
-    <div>
-        <label for="storeID">店家ID:</label>
-        <input type="number" id="storeID" name="storeID" required>
-        <span class="error" th:text="${errorMessage1}" ></span>
-    </div>
-    
-    <div>
-        <label for="memberID">創建者ID:</label>
-        <input type="number" id="memberID" name="memberID" required>
-        <span class="error" th:text="${errorMessage2}" ></span>
-    </div>
-
-    <label for="number">新增數量:</label>
-    <input type="number" id="number" name="number" min="1" required>
-
-    <input type="submit" value="Add Many Cups">
-</form>
+<!-- 最上面的那一條 -->
+    <div th:include="headerBack :: headerBack"></div>
+<!-- 最上面的那一條 -->
+<div id="layoutSidenav">
+	<!-- 左邊的那一條 -->
+    <div th:include="SliderLeftBack :: SliderLeftBack"></div>
+	<!-- 左邊的那一條 -->
+	
+	 <!--右半邊的內容 -->
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">新增環保杯</h1>
+<!--             <ol class="breadcrumb mb-4"> -->
+<!--                 <li class="breadcrumb-item"><a href="/index">後端首頁</a></li> -->
+<!--                 <li class="breadcrumb-item active">新增環保杯</li> -->
+<!--             </ol> -->
+            
+            <!-- 主要卡片容器 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-plus me-1"></i>
+                    新增環保杯表單
+                </div>
+                <div class="card-body">
+                    <h3 class="text-center mb-4"><b>所有欄位皆為必填欄位</b></h3>
+                    
+                    <!-- 用來提交杯子數量並生成表單 -->
+                    <form action="/cup/insertManyCup" method="post">
+                        <div class="mb-3">
+                            <label for="storeID" class="form-label">店家ID:</label>
+                            <input type="number" id="storeID" name="storeID" class="form-control" required min="0">
+                            <span class="text-danger" th:text="${errorMessage1}"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="memberID" class="form-label">創建者ID:</label>
+                            <input type="number" id="memberID" name="memberID" class="form-control" required min="0">
+                            <span class="text-danger" th:text="${errorMessage2}"></span>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="number" class="form-label">新增數量:</label>
+                            <input type="number" id="number" name="number" class="form-control" min="1" required>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">新增杯子</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
 </div>
 
 <!-- JavaScript part -->

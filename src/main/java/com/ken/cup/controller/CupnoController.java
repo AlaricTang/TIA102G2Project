@@ -1,7 +1,5 @@
 package com.ken.cup.controller;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -24,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ellie.member.model.MemberService;
+import com.ellie.store.model.StoreService;
 import com.ellie.user.model.UserService;
-import com.ellie.user.model.UserVO;
 import com.ken.cup.model.CupService;
 import com.ken.cup.model.CupVO;
 
@@ -37,11 +36,11 @@ public class CupnoController {
 	@Autowired
 	CupService cupSvc;
 
-//	@Autowired
-//	StoreService storeSvc;
-//	
-//	@Autowired
-//	MemberService memberSvc;
+	@Autowired
+	StoreService storeSvc;
+	
+	@Autowired
+	MemberService memberSvc;
 //	
 	@Autowired
 	UserService userSvc;

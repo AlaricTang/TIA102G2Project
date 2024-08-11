@@ -110,9 +110,33 @@ public class CupController {
 		}
 		// 跟notify一樣 因為沒有圖片 所以這邊對照0205範例 不對圖片部分進行除錯
 		/*************************** 2.開始修改資料 *****************************************/
+		
 		// EmpService empSvc = new EmpService();
 		cupSvc.updateCup(cupVO);
-
+		
+		// 取得當前更新前的資料
+	    CupVO existingCupVO = cupSvc.getOneCup(cupVO.getCupID());
+		 // 新增 CupRecord 記錄
+	    CupRecordVO cupRecordVO = new CupRecordVO();
+	    cupRecordVO.setUserID(cupVO.getUserID());
+	    cupRecordVO.setCupID(cupVO.getCupID());
+	    cupRecordVO.setStoreRentID(cupVO.getStoreID());
+	    cupRecordVO.setCupRecordRentDate(existingCupVO.getCupRentDate()); // 記錄當時租借日期
+	    
+	    // 如果杯子已經歸還，則記錄歸還日期
+	    if (cupVO.getCupStatus() == 0) {
+	        LocalDateTime now = LocalDateTime.now();
+	        Date sqlDate = Date.valueOf(now.toLocalDate());
+	        cupRecordVO.setCupRecordReturnDate(sqlDate);
+	        cupRecordVO.setStoreReturnID(cupVO.getStoreID());
+	    }
+	    
+	    cupRecordSvc.addCupRecord(cupRecordVO);
+	    
+	 // 更新操作後，重新取得最新的 cupVO
+	    cupVO = cupSvc.getOneCup(Integer.valueOf(cupVO.getCupID()));	
+	    System.out.println(cupVO.getCupCreateDate());
+	    
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("success", "- (修改成功)");
 		cupVO = cupSvc.getOneCup(Integer.valueOf(cupVO.getCupID()));
@@ -206,7 +230,7 @@ public class CupController {
 	    
 	    
 	    // 如果當前杯子狀態為1(已被出租)
-	    if (existingCupVO.getCupStatus() == 1) {
+	    if (existingCupVO != null && existingCupVO.getCupStatus() == 1) {
 	    	model.addAttribute("errorMessage3", "該杯子已被出租");
 	    }
 	    
@@ -221,18 +245,22 @@ public class CupController {
 	    Date sqlDate = Date.valueOf(now.toLocalDate());
 	    existingCupVO.setCupRentDate(sqlDate);
 	    
-	    
-		 // 新增 CupRecord 記錄
-	    CupRecordVO cupRecordVO = new CupRecordVO();
-	    cupRecordVO.setUserID(Integer.valueOf(userID));
-	    cupRecordVO.setCupID(Integer.valueOf(cupID));
-	    cupRecordVO.setStoreRentID(existingCupVO.getStoreID());  // 假設 storeID 已設置在 cupVO 中
-	    cupRecordVO.setCupRecordRentDate(sqlDate);
-
-	    cupRecordSvc.addCupRecord(cupRecordVO);
 
 	    cupSvc.updateCup(existingCupVO);
 	    model.addAttribute("successMessage", "租借成功");
+	    
+	    if(model.containsAttribute("successMessage")){
+	    	// 新增 CupRecord 記錄
+		    CupRecordVO cupRecordVO = new CupRecordVO();
+		    cupRecordVO.setUserID(Integer.valueOf(userID));
+		    cupRecordVO.setCupID(Integer.valueOf(cupID));
+		    cupRecordVO.setStoreRentID(existingCupVO.getStoreID());  // 假設 storeID 已設置在 cupVO 中
+		    cupRecordVO.setCupRecordRentDate(sqlDate);
+
+		    cupRecordSvc.addCupRecord(cupRecordVO);
+	    }
+	    
+	    
 	    return "redirect:/cup/listAllCup";
 	}
 	
@@ -261,7 +289,7 @@ public class CupController {
 	 	}
 	 	
 	 	// 如果當前杯子狀態為0(尚未出租)
-	    if (existingCupVO.getCupStatus() == 0) {
+	    if (existingCupVO != null && existingCupVO.getCupStatus() == 0) {
 	    	model.addAttribute("errorMessage3", "該杯子已經被歸還(尚未出租)");
 	    }
 	    
@@ -278,17 +306,18 @@ public class CupController {
 	    existingCupVO.setCupRentDate(sqlDate);
 	    cupSvc.updateCup(existingCupVO);
 	    
-	    
-	    // 新增 CupRecord 記錄
-	    CupRecordVO cupRecordVO = new CupRecordVO();
-	    cupRecordVO.setUserID(null); // 代表已經歸還，使用者為null
-	    cupRecordVO.setCupID(Integer.valueOf(cupID)); // 杯子ID
-	    cupRecordVO.setStoreReturnID(existingCupVO.getStoreID());  // 這個會吃到上面的setStoreID
-	    cupRecordVO.setCupRecordReturnDate(sqlDate); // 歸還日期
-
-	    cupRecordSvc.addCupRecord(cupRecordVO);
-	    
 	    model.addAttribute("successMessage", "歸還成功");
+	    
+	    if(model.containsAttribute("successMessage")) {
+	    	// 新增 CupRecord 記錄
+		    CupRecordVO cupRecordVO = new CupRecordVO();
+		    cupRecordVO.setUserID(null); // 代表已經歸還，使用者為null
+		    cupRecordVO.setCupID(Integer.valueOf(cupID)); // 杯子ID
+		    cupRecordVO.setStoreReturnID(existingCupVO.getStoreID());  // 這個會吃到上面的setStoreID
+		    cupRecordVO.setCupRecordReturnDate(sqlDate); // 歸還日期
+		    cupRecordSvc.addCupRecord(cupRecordVO);
+	    }
+	    
 	    return "redirect:/cup/listAllCup";
 	}
 	
@@ -307,7 +336,7 @@ public class CupController {
 	    }
 	    
 	    // 如果當前杯子狀態為2(已經報廢)
-	    if (existingCupVO.getCupStatus() == 2) {
+	    if (existingCupVO != null && existingCupVO.getCupStatus() == 2) {
 	    	model.addAttribute("errorMessage3", "該杯子已經被報廢");
 	    }
 	    
