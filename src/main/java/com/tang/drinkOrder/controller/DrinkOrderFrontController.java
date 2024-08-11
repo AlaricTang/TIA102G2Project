@@ -167,9 +167,10 @@ public class DrinkOrderFrontController {
 	
 	//錯誤驗證 會原沒登入的跳轉
 	@GetMapping("userDrinkOrder")
-	public String userDrinkOrder(ModelMap model,HttpSession session) {
+	public String userDrinkOrder(
+			@ModelAttribute("drinkOrderDetailList") ArrayList<DrinkOrderDetailVO> drinkOrderDetailList,
+			ModelMap model,HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("user");
-//		UserVO user = userSvc.getOneUser(1);
 		model.addAttribute("user",user);
 		List<DrinkOrderVO> userDrinkOrderList = drinkOrderSvc.getAllUserDrinkOrder(user.getUserId());
 		model.addAttribute("userDrinkOrderList",userDrinkOrderList);

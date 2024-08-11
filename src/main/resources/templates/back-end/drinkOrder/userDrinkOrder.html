@@ -57,6 +57,10 @@
 			border-collapse: collapse;
 			text-align:center;
 		}
+		
+		.drinkOrder, .drinkOrderDetail{
+			background-color: #ffe4c4;
+		}
 	</style>
   </head>
 
@@ -142,9 +146,33 @@
 			</table>
     	</div>
     	<br>
-    	<br>
-<!--     	<div th:if="${drinkOrderDetail}"> -->
-<!--     	</div> -->
+    	<div th:if="${#lists.size(drinkOrderDetailList) >1 }">
+    		<table class="drinkOrderDetail" style="width: 100%; ">
+			  <thead >
+				<tr style="background-color:#CCCCFF; " >
+					<th>飲品</th>
+					<th>冷/熱</th>
+					<th>使用環保杯</th>
+					<th>是否為寄杯</th>
+					<th>數量</th>
+					<th>價格</th>
+				</tr>
+			  </thead>
+				
+			  <tbody>
+					<th:block th:each="drinkOrderDetailVO : ${drinkOrderDetailList}">
+						<tr>
+							<td th:text="${drinkOrderDetailVO.drinkID}"></td>
+							<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsHot == 1? '熱':'冷' }"></td>
+							<td th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'' }"></td>
+							<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':''}"></td>
+							<td th:text="${drinkOrderDetailVO.drinkOrderDetailAmount}"></td>
+							<td th:text="${drinkOrderDetailVO.drinkOrderDetailPrice}"></td>
+						</tr>
+					</th:block>
+			  </tbody>
+			</table>
+    	</div>
     	
 
 	    <!-- footer -->

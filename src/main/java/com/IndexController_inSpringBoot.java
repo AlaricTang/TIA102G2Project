@@ -40,39 +40,10 @@ public class IndexController_inSpringBoot {
         return "index"; //view
     }
     
-    // http://......../hello?name=peter1
-//    @GetMapping("/hello")
-//    public String indexWithParam(
-//            @RequestParam(name = "name", required = false, defaultValue = "") String name, Model model) {
-//        model.addAttribute("message", name);
-//        return "index"; //view
-//    }
-    
-  
-    //=========== 以下第63~75行是提供給 /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html 要使用的資料 ===================   
-//    @GetMapping("/emp/select_page")
-//	public String select_page(Model model) {
-//		return "back-end/emp/select_page";
-//	}
-//    
-//    @GetMapping("/emp/listAllEmp")
-//	public String listAllEmp(Model model) {
-//		return "back-end/emp/listAllEmp";
-//	}
-//    
-//    @ModelAttribute("empListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
-//	protected List<EmpVO> referenceListData(Model model) {
-//		
-//    	List<EmpVO> list = empSvc.getAll();
-//		return list;
-//	}
-//    
-//	@ModelAttribute("deptListData") // for select_page.html 第135行用
-//	protected List<DeptVO> referenceListData_Dept(Model model) {
-//		model.addAttribute("deptVO", new DeptVO()); // for select_page.html 第133行用
-//		List<DeptVO> list = deptSvc.getAll();
-//		return list;
-//	}
+    @GetMapping("/backendHomepage")
+    public String backendHomepage(Model model) {
+    	return "backendHomepage";
+    }
     
     // =================== 飲品 ======================= //
     @GetMapping("/drink/select_page")
@@ -80,10 +51,6 @@ public class IndexController_inSpringBoot {
     	return "back-end/drink/select_page";
     }
     
-//    @GetMapping("/drink/listAllDrink")
-//	public String listAllDrink(Model model) {
-//		return "back-end/drink/listAllDrink";
-//	}
     
     @ModelAttribute("drinkListData") // for select_page.html
     protected List<DrinkVO> referenceListDataDrink(Model model) {
