@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="BIG5">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>會員基本資料</title>
+    <head th:insert="~{/back-end/user/included-fragment}"></head>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center">
+        <h2>會員基本資料</h2>
+       <!--   <h3><a class="navbar-brand" th:href="@{/home}">返回首頁</a></h3>-->
+    </div>
+</nav>
+
+<div align="center">
+    <h3><b>會員基本資料</b></h3>
+    <div>
+        <label>姓名:</label>
+        <span th:text="${userVO.userName}"></span>
+    </div>
+    
+    <div>
+        <label>性別:</label>
+        <span th:text="${userVO.userGender == 1 ? '男' : '女'}"></span>
+    </div>
+
+    <div>
+        <label>生日:</label>
+        <span th:text="${#dates.format(userVO.userBirth, 'yyyy-MM-dd')}"></span>
+    </div>
+    
+    <div>
+        <label>手機:</label>
+        <span th:text="${userVO.userPhone}"></span>
+    </div>
+    
+    <div>
+        <label>電子郵件:</label>
+        <span th:text="${userVO.userEmail}"></span>
+    </div>
+
+    <div>
+        <label>地址:</label>
+        <span th:text="${userVO.userAddr}"></span>
+    </div>
+
+   <!--   <div>
+        <label>建立時間:</label>
+        <span th:text="${#dates.format(userVO.userCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    </div>
+    -->
+</div>
 
 </body>
 </html>

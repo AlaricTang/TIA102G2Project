@@ -34,8 +34,8 @@ public class UserController {
 		return "back-end/user/select_page";
 	}
 
-	@PostMapping("add")
-	public String add(@Valid UserVO userVO, BindingResult result, ModelMap model) {
+	@PostMapping("insert")
+	public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "back-end/user/addUser";
 		}
