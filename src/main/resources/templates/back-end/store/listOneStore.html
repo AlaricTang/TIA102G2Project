@@ -1,0 +1,66 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>商店詳情</title>
+    <th:block th:insert="~{/back-end/store/included-fragment}"></th:block>
+    <style type="text/css">
+        .detail {
+            margin: 50px;
+        }
+        .detail div {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center">
+        <h2>商店詳情</h2>
+        <h3><a class="navbar-brand" th:href="@{/store/listAllStore}">返回商店列表</a></h3>
+    </div>
+</nav>
+
+<div class="detail">
+    
+    <div>
+        <label>帳號: </label>
+        <span th:text="${store.storeAcc}"></span>
+    </div>
+    <div>
+        <label>名稱: </label>
+        <span th:text="${store.storeName}"></span>
+    </div>
+    <div>
+        <label>地址: </label>
+        <span th:text="${store.storeAddr}"></span>
+    </div>
+    <div>
+        <label>電話: </label>
+        <span th:text="${store.storePhone}"></span>
+    </div>
+    <div>
+        <label>描述: </label>
+        <span th:text="${store.storeDes}"></span>
+    </div>
+    
+    <!--  
+    <div>
+        <label>創建者: </label>
+        <span th:text="${store.createdByMemberID}"></span>
+    </div>
+    <div>
+        <label>編輯者: </label>
+        <span th:text="${store.editedByMemberID}"></span>
+    </div>
+    -->
+</div>
+</body>
+</html>

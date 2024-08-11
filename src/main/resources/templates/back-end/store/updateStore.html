@@ -1,0 +1,107 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>更新商店</title>
+    <th:block th:insert="~{/back-end/store/included-fragment}"></th:block>
+    <style type="text/css">
+        form {
+            margin: 50px auto;
+            width: 400px;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+        form div {
+            margin-bottom: 10px;
+        }
+        label, input, select, textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+    <div align="center">
+        <h2>更新商店</h2>
+        <h3><a class="navbar-brand" th:href="@{/store/listAllStore}">返回商店列表</a></h3>
+    </div>
+</nav>
+
+<div align="center" style="margin-top: 100px;">
+    <form th:action="@{/store/updateStore}" method="post" th:object="${storeVO}">
+        <input type="hidden" th:field="*{storeID}" />
+        <div>
+            <label>帳號:</label>
+            <input type="text" th:field="*{storeAcc}" required />
+            <span th:if="${#fields.hasErrors('storeAcc')}" th:errors="*{storeAcc}" class="error"></span>
+        </div>
+        <div>
+            <label>密碼:</label>
+            <input type="password" th:field="*{storePwd}" required />
+            <span th:if="${#fields.hasErrors('storePwd')}" th:errors="*{storePwd}" class="error"></span>
+        </div>
+        <div>
+            <label>名稱:</label>
+            <input type="text" th:field="*{storeName}" required />
+            <span th:if="${#fields.hasErrors('storeName')}" th:errors="*{storeName}" class="error"></span>
+        </div>
+        <div>
+            <label>地址:</label>
+            <input type="text" th:field="*{storeAddr}" required />
+            <span th:if="${#fields.hasErrors('storeAddr')}" th:errors="*{storeAddr}" class="error"></span>
+        </div>
+        <div>
+            <label>地圖URL:</label>
+            <input type="text" th:field="*{storeMap}" required />
+            <span th:if="${#fields.hasErrors('storeMap')}" th:errors="*{storeMap}" class="error"></span>
+        </div>
+        <div>
+            <label>電話:</label>
+            <input type="text" th:field="*{storePhone}" />
+            <span th:if="${#fields.hasErrors('storePhone')}" th:errors="*{storePhone}" class="error"></span>
+        </div>
+        <div>
+            <label>描述:</label>
+            <textarea th:field="*{storeDes}"></textarea>
+            <span th:if="${#fields.hasErrors('storeDes')}" th:errors="*{storeDes}" class="error"></span>
+        </div>
+        <div>
+            <label>圖片:</label>
+            <input type="file" th:field="*{storePic}" />
+        </div>
+        <div>
+            <label>營業開始時間:</label>
+            <input type="time" th:field="*{storeOpenTime}" />
+        </div>
+        <div>
+            <label>營業結束時間:</label>
+            <input type="time" th:field="*{storeCloseTime}" />
+        </div>
+       <!--   <div>
+            <label>編輯者 :</label>
+            <input type="number" th:field="*{editedByMemberID}" required />
+            <span th:if="${#fields.hasErrors('editedByMemberID')}" th:errors="*{editedByMemberID}" class="error"></span>
+        </div>
+        -->
+        <button type="submit">更新商店</button>
+    </form>
+</div>
+</body>
+</html>
