@@ -51,6 +51,10 @@ public class IndexController_inSpringBoot {
     	return "back-end/drink/select_page";
     }
     
+    @GetMapping("drink/listAllDrinkFront")
+    public String listAllDrinkFront(Model model) {
+    	return "back-end/drink/listAllDrinkFront";
+    }
     
     @ModelAttribute("drinkListData") // for select_page.html
     protected List<DrinkVO> referenceListDataDrink(Model model) {

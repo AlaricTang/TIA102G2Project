@@ -230,7 +230,7 @@ public class CupController {
 	    
 	    
 	    // 如果當前杯子狀態為1(已被出租)
-	    if (existingCupVO != null && existingCupVO.getCupStatus() == 1) {
+	    if (existingCupVO != null && existingCupVO.getCupStatus().equals(1)) {
 	    	model.addAttribute("errorMessage3", "該杯子已被出租");
 	    }
 	    
@@ -289,7 +289,7 @@ public class CupController {
 	 	}
 	 	
 	 	// 如果當前杯子狀態為0(尚未出租)
-	    if (existingCupVO != null && existingCupVO.getCupStatus() == 0) {
+	    if (existingCupVO != null && existingCupVO.getCupStatus().equals(0)) {
 	    	model.addAttribute("errorMessage3", "該杯子已經被歸還(尚未出租)");
 	    }
 	    
@@ -336,7 +336,7 @@ public class CupController {
 	    }
 	    
 	    // 如果當前杯子狀態為2(已經報廢)
-	    if (existingCupVO != null && existingCupVO.getCupStatus() == 2) {
+	    if (existingCupVO != null && existingCupVO.getCupStatus().equals(2)) {
 	    	model.addAttribute("errorMessage3", "該杯子已經被報廢");
 	    }
 	    

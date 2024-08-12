@@ -59,7 +59,7 @@ public class DrinkVO  implements java.io.Serializable{
     private Date drinkUpdateDate;
     
 //    @Temporal(TemporalType.DATE)
-    @Column(name = "drinkCreateDate", updatable = false)
+    @Column(name = "drinkCreateDate", updatable = false ,insertable = false)
     private Date drinkCreateDate;
     
 //    @ManyToOne

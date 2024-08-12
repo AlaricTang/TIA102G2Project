@@ -180,6 +180,7 @@
      		<thead >
 				<tr>
 				<th>紀錄編號</th>
+				<th>環保杯編號</th>
 				<th>租借人ID</th>
 				<th>環保杯ID</th>
 				<th>飲品訂單ID</th>
@@ -193,6 +194,7 @@
 			<th:block th:each="cupRecordVO : ${cupRecordListData}">
 			<tr>
 				<td th:text="${cupRecordVO.cupRecordID}"></td>
+				<td th:text="${cupRecordVO.cupID}"></td>
 				<td th:text="${cupRecordVO.userID}"></td>
 				<td th:text="${cupRecordVO.cupID}"></td>
 				<td th:text="${cupRecordVO.drinkOrderID}"></td>
