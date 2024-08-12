@@ -22,7 +22,7 @@ public class CampaignDBGifReaderController {
 
 
 	@GetMapping("campaignDBGifReader")
-	public void dBGifReader(@RequestParam("drinkID") String campaignID, HttpServletRequest req, HttpServletResponse res)
+	public void dBGifReader(@RequestParam("campaignID") String campaignID, HttpServletRequest req, HttpServletResponse res)
 			                                                                                          throws IOException {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();

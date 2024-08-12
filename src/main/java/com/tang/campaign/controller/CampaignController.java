@@ -44,38 +44,31 @@ public class CampaignController {
 	
 	//跳新增頁
 	@GetMapping("addCampaignPage")
-	public String addCampaignPage(ModelMap model) {
+	public String addCampaignPage(ModelMap model,HttpSession session) {
 		CampaignVO campaignVO = new CampaignVO();
 		model.addAttribute("campaignVO",campaignVO);
+		
+		//session 看有無已選擇商品
+		@SuppressWarnings("unchecked")
+		List<CampaignProductVO> campaignProductList =(List<CampaignProductVO>) session.getAttribute("campaignProductList");
+		model.addAttribute("campaignProductList",campaignProductList);
 		return "back-end/campaign/addCampaign";
 	}
-	
-	//跳更新頁
-	@PostMapping("updateCampaignPage")
-	public String updateCampaignPage(
-			@RequestParam("campaignID") String campaignID,
-			HttpSession session) {
-		CampaignVO campaignVO = campaignSvc.getOneCampaign(Integer.valueOf(campaignID));
-		session.setAttribute("updateCampaignVO", campaignVO);//因為 在選擇活動商品後 我要還要顯示這個VO
-		
-		List<CampaignProductVO> campaignProductList = campaignProductSvc.getAllByCampaignID(Integer.valueOf(campaignID));
-		session.setAttribute("campaignDrink", campaignProductList);
-		return "back-end/campaign/updateCampaign";
-	}
+
 	
 	
 	//新增
-	@GetMapping("insert")
+	@PostMapping("insert")
 	public String insert(
 			@Valid CampaignVO campaignVO, BindingResult result, 
-			@RequestParam("upFiles") MultipartFile[] parts,
+			@RequestParam("campaignPic") MultipartFile[] parts,
 			ModelMap model,
 			HttpSession session
 			)throws IOException{
 		
 
 		//=========== 圖片 ===========
-		result = removeFieldError(campaignVO, result, "upFiles");
+		result = removeFieldError(campaignVO, result, "campaignPic");
 		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
 			model.addAttribute("errorMessage", "活動照片: 請上傳照片");
 		} else {
@@ -93,30 +86,44 @@ public class CampaignController {
 		
 		//session 取出要加入的飲品
 		@SuppressWarnings("unchecked")
-		List<CampaignProductVO> beCampaignProductList = (List<CampaignProductVO>)session.getAttribute("campaignDrink"); 
+		List<CampaignProductVO> campaignProductList = (List<CampaignProductVO>)session.getAttribute("campaignProductList"); 
 		
-		if(!beCampaignProductList.isEmpty()) {
+		if(!campaignProductList.isEmpty()) {
 			//存活動
 			CampaignVO campaign = campaignSvc.addCampaign(campaignVO);
 			
 			//綁活動VO & 存活動飲品
-			for(CampaignProductVO beCampaignProduct:beCampaignProductList) {
-				beCampaignProduct.setCampaignVO(campaign);
-				campaignProductSvc.addCampaignProduct(beCampaignProduct);
+			for(CampaignProductVO campaignProductVO:campaignProductList) {
+				campaignProductVO.setCampaignVO(campaign);
+				campaignProductSvc.addCampaignProduct(campaignProductVO);
 			}			
 		}else{
 			model.addAttribute("errorMessage", "請選擇商品");
 			model.addAttribute("campaignVO",campaignVO);
 			return "back-end/campaign/addCampaign";
 		}
-		session.removeAttribute("beCampaignDrink");
+		session.removeAttribute("campaignProductList");
 		//返回活動列表
-		List<CampaignVO> list = campaignSvc.gatAll();
-		model.addAttribute("campaignListData", list);
+		List<CampaignVO> campaignList = campaignSvc.gatAll();
+		model.addAttribute("campaignList", campaignList);
 		model.addAttribute("success", "- (新增成功)");
 		return "redirect:/campaign/campaignList";
 	}
 		
+	
+	//跳更新頁
+	@PostMapping("updateCampaignPage")
+	public String updateCampaignPage(
+			@RequestParam("campaignID") String campaignID,
+			HttpSession session) {
+		CampaignVO campaignVO = campaignSvc.getOneCampaign(Integer.valueOf(campaignID));
+		session.setAttribute("updateCampaignVO", campaignVO);//因為 在選擇活動商品後 我要還要顯示這個VO
+		
+		List<CampaignProductVO> campaignProductList = campaignProductSvc.getAllByCampaignID(Integer.valueOf(campaignID));
+		session.setAttribute("campaignDrink", campaignProductList);
+		return "back-end/campaign/updateCampaign";
+	}
+	
 	@PostMapping("update")
 	public String update (
 			@Valid CampaignVO campaignVO,BindingResult result,

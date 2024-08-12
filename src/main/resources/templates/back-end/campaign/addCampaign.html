@@ -71,6 +71,15 @@
 		    font-size: 0.875em;
 		}
 		
+		#campaignPdTable{
+			width: 100%;
+		    border-collapse: collapse;
+		    margin-bottom: 20px;
+		    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		    font-family: Arial, sans-serif;
+		    font-size: 14px;
+		}
+		
 		#image-preview {
 		    margin-top: 15px;
 		    display: flex;
@@ -190,6 +199,22 @@
 		.btn-primary:hover {
 		    background-color: #0056b3;
 		}
+		
+		#campaignPdBtn {
+			background-color: #007bff;
+		    color: white;
+		    border: none;
+		    padding: 6px 12px;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    transition: background-color 0.3s;
+		}
+		
+		#campaignPdBtn:hover {
+		    background-color: #0056b3;
+		}
+		
+		
 	</style>
 	
 </head>
@@ -248,14 +273,30 @@
 					            <input  type="date" th:field="*{campaignEndDate}" /><br>
 					            <span th:if="${#fields.hasErrors('campaignStartDate')}" th:errors="*{campaignStartDate}" class="error" id="campaignStartDate.errors"></span>
 					            <span th:if="${#fields.hasErrors('campaignEndDate')}" th:errors="*{campaignEndDate}" class="error" id="campaignEndDate.errors"></span>
-					        </div>
-					        <br>
+					        </div><br>
+					        
+					        
 					        <div class="form-item">
 							    <label>照片:</label>
 							    <input type="file" th:field="*{campaignPic}" multiple="multiple" onchange="previewImages(event);" />
 							    <span class="error" th:utext="${errorMessage}" id="campaignPic.errors">${errorMessage}</span>
 							    <div id="image-preview" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+							</div><br>
+							
+							<div class="form-item">
+								<label>活動商品選擇:</label>
+								<a id="campaignPdBtn" href="/campaign/goSelectedDrink">選擇商品</a><br>
+			
+								<div th:if="${session.campaignProductList != null}">
+									<table id="campaignPdTable">
+										<th:block th:each="campaignProductVO : ${session.campaignProductList}">
+											<td th:text="${campaignProductVO.drinkID}"></td>
+										</th:block>
+									</table>
+								</div>
 							</div>
+							
+							
 					        <div class="form-item" style="width: 100%;">
 					            <label>活動描述:</label>
 					            <textarea id="campaignDescription" th:field="*{campaignDes}" style="width: 100%;" rows="4"></textarea>
@@ -265,7 +306,7 @@
 					        <!-- 送出按鈕 -->
 					        <div class="row mb-3">
 					            <div class="col-md-12 text-center">
-					                <button type="submit" id="submit" class="btn btn-primary"> 送出新增 </button>
+					                <button th:href="@{/campaign/insert}" type="submit" id="submit" class="btn btn-primary"> 送出新增 </button>
 					            </div>
 					        </div>
 					      </form>
