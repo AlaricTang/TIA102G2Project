@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-//import com.LI.customer.model.CustomerVO;
+import com.LI.customer.model.CustomerVO;
 
 @Entity
 @Table(name = "reply")
@@ -43,6 +43,10 @@ public class ReplyVO implements java.io.Serializable {
 	@NotNull
 	@Column(name = "replyTime")
 	private Timestamp replyTime;
+	
+//	@ManyToOne
+//	@JoinColumn(name = "memberID")
+//	private MemberVO memberVO;
 	
 	@NotNull
 	@Column(name = "memberID")
