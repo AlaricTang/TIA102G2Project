@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>更新商店</title>
+    <title>更新店家</title>
     <th:block th:insert="~{/back-end/store/included-fragment}"></th:block>
     <style type="text/css">
         form {
@@ -39,7 +39,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
     <div align="center">
-        <h2>更新商店</h2>
+        <h2>更新店家</h2>
         <h3><a class="navbar-brand" th:href="@{/store/listAllStore}">返回商店列表</a></h3>
     </div>
 </nav>
@@ -100,7 +100,7 @@
             <span th:if="${#fields.hasErrors('editedByMemberID')}" th:errors="*{editedByMemberID}" class="error"></span>
         </div>
         -->
-        <button type="submit">更新商店</button>
+        <button type="submit">更新店家</button>
     </form>
 </div>
 </body>
