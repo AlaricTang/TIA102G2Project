@@ -98,7 +98,7 @@ public class ProductBackController {
 	    return "back-end/product/listOneProduct";
 	}
 
-	@PostMapping("listAllProductBack")
+	@GetMapping("listAllProductBack")
 	public String listAllProductBack(ModelMap model) {
 		
 		List<ProductVO> onNormalProductList = ProductSvc.getOnProduct();

@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="BIG5">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!--  ======== Document Title =====================================  -->
+<title>新增商品</title>
+
+
+<!-- ●●css for jquery datatables 用 -->
+<link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+
+<script th:src="@{js/scriptsBack.js}"></script>
+<script th:src="@{js/datatables-simple-demo.js}"></script>
+<script th:src="@{demo/chart-area-demo.js}"></script>
+<script th:src="@{demo/chart-bar-demo.js}"></script>
+<script th:src="@{demo/chart-pie-demo.js}"></script>
+
+<script crossorigin="anonymous"
+	src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
+<script crossorigin="anonymous"
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script crossorigin="anonymous"
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script crossorigin="anonymous"
+	src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+
+
+
 </head>
-<body>
+
+<body class="sb-nav-fixed">
+	<!-- header -->
+	<div th:include="headerBack :: headerBack"></div>
+	<!-- header -->
+	<div id="layoutSidenav">
+		<!-- footer -->
+		<div th:include="SliderLeftBack :: SliderLeftBack"></div>
+		<!-- footer -->
+		<!--右半邊的空白頁 -->
+		<div id="layoutSidenav_content">
+<!--         	這個先當後台的範例模板 -->
+<!--         	前端Code寫這裡 就好 -->
+
+
+
+			<div id="layoutSidenav_content">
+				<main>
+					<div class="container-fluid px-4">
+						<h1 class="mt-4">新增商品</h1>
+		</div>
+
+		</main>
+		</div>
+		</div>
+		</div>
 
 </body>
 </html>
