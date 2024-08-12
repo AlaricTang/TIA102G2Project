@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ public class DrinkOrderService {
 	@Autowired
 	DrinkOrderRepository repository;
 	
+	@Autowired
+    private SessionFactory sessionFactory;
 	
 	public DrinkOrderVO addAndGetDrinkOrder(DrinkOrderVO drinkOrderVO) {
 		DrinkOrderVO saveDrinkOrderVO = repository.save(drinkOrderVO);
@@ -46,7 +49,7 @@ public class DrinkOrderService {
 	}
 	
 	public List<DrinkOrderVO> getAll(Map<String, String> map){
-		Optional<List<DrinkOrderVO>> optional = Optional.ofNullable(CompositeQuery_DrinkOrder.getAllC(map));
+		Optional<List<DrinkOrderVO>> optional = Optional.ofNullable(CompositeQuery_DrinkOrder.getAllC(map,sessionFactory.openSession()));
 		return optional.orElse(null);
 	}
 	
