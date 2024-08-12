@@ -75,7 +75,7 @@ public class ProductController {
 
 		
 	//取得一個商品（點擊進入詳細頁面） 	
-	@PostMapping("pdDetail")
+	@GetMapping("pdDetail")
 	public String pdDetail(
 			@RequestParam("productID") String str_productID, 
 			ModelMap model) {
@@ -118,7 +118,7 @@ public class ProductController {
 		//model.addAttribute("jpdList",jpdList)
 	//return ""
 	 
-	@PostMapping("switchToCartPage")
+	@GetMapping("switchToCartPage")
 	public String switchToCartPage (ModelMap model, HttpSession session) throws IOException{
 		
 		UserVO user = (UserVO)session.getAttribute("user");
