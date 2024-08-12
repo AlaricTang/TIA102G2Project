@@ -11,6 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>店家資料新增</title>
+    <head th:insert="~{/back-end/store/included-fragment}"></head>
     <style type="text/css">
         button {
             padding: 10px;
@@ -48,7 +49,7 @@
 <div align="center">
     <h3><b>所有欄位皆為必填欄位</b></h3>
     <form th:action="@{/store/addStore}" method="post" th:object="${storeVO}">
-        <div>
+       <!--   <div>
             <label>店家帳號:</label>
             <input type="text" th:field="*{storeAcc}" onclick="hideContent('storeAcc.errors');" required /><br/>
             <span th:if="${#fields.hasErrors('storeAcc')}" th:errors="*{storeAcc}" class="error" id="storeAcc.errors"></span>
@@ -59,7 +60,7 @@
             <input type="password" th:field="*{storePwd}" onclick="hideContent('storePwd.errors');" required /><br/>
             <span th:if="${#fields.hasErrors('storePwd')}" th:errors="*{storePwd}" class="error" id="storePwd.errors"></span>
         </div>
-
+-->
         <div>
             <label>店家名稱:</label>
             <input type="text" th:field="*{storeName}" onclick="hideContent('storeName.errors');" required /><br/>
@@ -115,12 +116,13 @@
             <span th:if="${#fields.hasErrors('storeCloseTime')}" th:errors="*{storeCloseTime}" class="error" id="storeCloseTime.errors"></span>
         </div>
 
+<!--  
         <div>
             <label>店家建立日期:</label>
             <input type="date" th:field="*{storeCreateDate}" onclick="hideContent('storeCreateDate.errors');" required /><br/>
             <span th:if="${#fields.hasErrors('storeCreateDate')}" th:errors="*{storeCreateDate}" class="error" id="storeCreateDate.errors"></span>
         </div>
-
+-->
 <!-- 
         <div>
             <label>建立員工ID:</label>

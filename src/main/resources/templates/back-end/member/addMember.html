@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>會員資料新增 - addMember.html</title>
+<title>員工資料新增  </title>
+<head th:insert="~{/back-end/member/included-fragment}"></head>
 
 <head th:insert="~{/back-end/member}"></head>
 <style type="text/css">
@@ -38,8 +39,8 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
     <div align="center"> 
-        <h2>會員資料新增</h2>
-        <h3><a class="navbar-brand" th:href="@{/member/listAllMember}">回會員列表</a></h3>
+        <h2>員工資料新增</h2>
+        <h3><a class="navbar-brand" th:href="@{/member/listAllMember}">回員工列表</a></h3>
     </div>
 </nav>
 
@@ -48,34 +49,40 @@
     <form th:action="@{/member/insert}" method="post" th:object="${memberVO}" enctype="multipart/form-data">
         
         <div>
-            <label>會員姓名:</label>
-            <input type="text" th:field="*{name}" onclick="hideContent('name.errors');" /><br/>
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error" id="name.errors"></span>
+            <label>員工姓名:</label>
+            <input type="text" th:field="*{memberName}" onclick="hideContent('name.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" class="error" id="memberName.errors"></span>
         </div>
         
         <div>
             <label>電子郵件:</label>
-            <input type="text" th:field="*{email}" onclick="hideContent('email.errors');" /><br/>
-            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error" id="email.errors"></span>
+            <input type="text" th:field="*{memberEmail}" onclick="hideContent('email.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" class="error" id="memberEmail.errors"></span>
         </div>
-        
+       
+       <!--  
         <div>
-            <label>註冊日期:</label>
+            <label>入職日期:</label>
             <input type="date" th:field="*{registrationDate}" onclick="hideContent('registrationDate.errors');" /><br/>
             <span th:if="${#fields.hasErrors('registrationDate')}" th:errors="*{registrationDate}" class="error" id="registrationDate.errors"></span>
+        </div>
+        -->  
+        <div>
+            <label>帳號:</label>
+            <input type="text" th:field="*{memberAcc}" onclick="hideContent('memberAcc.errors');" required /><br/>
+            <span th:if="${#fields.hasErrors('memberAcc')}" th:errors="*{memberAcc}" class="error" id="memberAcc.errors"></span>
         </div>
         
         <div>
             <label>密碼:</label>
-            <input type="password" th:field="*{password}" onclick="hideContent('password.errors');" /><br/>
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error" id="password.errors"></span>
+            <input type="password" th:field="*{memberPassword}" onclick="hideContent('password.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('memberPassword')}" th:errors="*{memberPassword}" class="error" id="memberPassword.errors"></span>
         </div>
         
         <div>
-            <label>照片:</label>
-            <input type="file" th:field="*{profilePicture}" onclick="previewImage()" multiple="multiple" onchange="hideContent('profilePicture.errors');" />
-            <span class="error" th:utext="${errorMessage}" id="profilePicture.errors">${errorMessage}</span>
-            <div id="blob_holder"></div>
+            <label>員工照片:</label>
+            <input type="file" th:field="*{memberPic}" onclick="hideContent('memberPic.errors');" /><br/>
+            <span th:if="${#fields.hasErrors('memberPic')}" th:errors="*{memberPic}" class="error" id="memberPic.errors"></span>
         </div>
         
         <div>

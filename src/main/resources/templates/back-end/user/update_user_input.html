@@ -53,11 +53,13 @@
 <div align="center">
     <h3><b>所有欄位皆為必填欄位</b></h3>
     <form th:action="@{/user/update_user_input}" method="post" th:object="${userVO}">
+       
+       <!--  
         <div>
             <label>會員ID:</label>
             <input type="text" th:field="*{userID}" style="border:0px ; font-weight: bold;" readonly /><br/>
         </div>
-
+-->
         <div>
             <label>電子郵件:</label>
             <input type="text" th:field="*{userEmail}" onclick="hideContent('userEmail.errors');" /><br/>
@@ -96,12 +98,12 @@
             <textarea th:field="*{userAddr}" rows="4" cols="50" onclick="hideContent('userAddr.errors');"></textarea><br/>
             <span th:if="${#fields.hasErrors('userAddr')}" th:errors="*{userAddr}" class="error" id="userAddr.errors"></span>
         </div>
-
+<!--  
         <div>
             <label>創建時間:</label>
             <input type="text" th:field="*{userCreateTime}" readonly /><br/>
         </div>
-
+-->
         <div>
             <div></div>
             <div><button type="submit" id="submit"> 送出修改 </button></div>
