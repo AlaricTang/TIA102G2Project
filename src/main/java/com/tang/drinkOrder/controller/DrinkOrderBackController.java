@@ -74,7 +74,7 @@ public class DrinkOrderBackController {
 		map.put("drinkOrderStartCreateTime", drinkOrderStartCreateTime);
 		map.put("drinkOrderEndCreateTime", drinkOrderEndCreateTime);
 		map.put("drinkOrderStatus", drinkOrderStatus);
-		
+		System.out.println(drinkOrderStatus);
 		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAll(map);
 		
 		//沒查到,error準備
@@ -123,9 +123,21 @@ public class DrinkOrderBackController {
 	}
 	
 	
+	@PostMapping("successDrinkOrder")
+	public String successDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
+		drinkOrder.setDrinkOrderStatus(Byte.valueOf("1"));
+		drinkOrderService.updateDrinkOrder(drinkOrder);
+		return "redirect:/drinkOrder/userDrinkOrder";
+	}
 	
-	
-	
+	@PostMapping("sussesPaidDrinkOrder")
+	public String sussesPaidDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
+		drinkOrder.setDrinkOrderPayStatus(Byte.valueOf("1"));
+		drinkOrderService.updateDrinkOrder(drinkOrder);
+		return "redirect:/drinkOrder/userDrinkOrder";
+	}
 	
 	//===============店家端==================
 	@GetMapping("storeOrderHistory")

@@ -184,13 +184,6 @@ public class DrinkOrderFrontController {
 		drinkOrderSvc.updateDrinkOrder(drinkOrder);
 		return "redirect:/drinkOrder/userDrinkOrder";
 	}
-	@PostMapping("sussesPaidDrinkOrder")
-	public String sussesPaidDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
-		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
-		drinkOrder.setDrinkOrderPayStatus(Byte.valueOf("1"));
-		drinkOrderSvc.updateDrinkOrder(drinkOrder);
-		return "redirect:/drinkOrder/userDrinkOrder";
-	}
 	
 	
 	

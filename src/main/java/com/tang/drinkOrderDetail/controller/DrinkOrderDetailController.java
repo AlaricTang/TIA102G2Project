@@ -72,7 +72,7 @@ public class DrinkOrderDetailController {
 //	存訂單的動作 跟 存存訂單明細同步 所以寫在drinkOrderController
 	
 //後臺 訂單紀錄 查詢明細
-	@GetMapping("orderHistory_DrinkOrderDetail")
+	@PostMapping("orderHistory_DrinkOrderDetail")
 	public String orderHistory_DrinkOrderDetail(
 			@RequestParam("drinkOrderID") String drinkOrderID,ModelMap model) {
 		
@@ -85,7 +85,7 @@ public class DrinkOrderDetailController {
 	}
 	
 //後臺 訂單管理 查詢明細
-	@GetMapping("orderManage_DrinkOrderDetail")
+	@PostMapping("orderManage_DrinkOrderDetail")
 	public String orderManage_DrinkOrderDetail(
 			@RequestParam("drinkOrderID") String drinkOrderID,ModelMap model) {
 		

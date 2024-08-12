@@ -93,18 +93,16 @@ public class CampaignController {
 		
 		//session 取出要加入的飲品
 		@SuppressWarnings("unchecked")
-		List<CampaignProductVO> beCampaignDrinkList = (List<CampaignProductVO>)session.getAttribute("campaignDrink"); 
+		List<CampaignProductVO> beCampaignProductList = (List<CampaignProductVO>)session.getAttribute("campaignDrink"); 
 		
-		if(!beCampaignDrinkList.isEmpty()) {
+		if(!beCampaignProductList.isEmpty()) {
 			//存活動
 			CampaignVO campaign = campaignSvc.addCampaign(campaignVO);
-//			//準備綁活動飲品的活動ID
-//			Integer campaignID = campaign.getCampaignID();
 			
 			//綁活動VO & 存活動飲品
-			for(CampaignProductVO beCampaignDrink:beCampaignDrinkList) {
-				beCampaignDrink.setCampaignVO(campaign);
-				campaignProductSvc.addCampaignProduct(beCampaignDrink);
+			for(CampaignProductVO beCampaignProduct:beCampaignProductList) {
+				beCampaignProduct.setCampaignVO(campaign);
+				campaignProductSvc.addCampaignProduct(beCampaignProduct);
 			}			
 		}else{
 			model.addAttribute("errorMessage", "請選擇商品");
