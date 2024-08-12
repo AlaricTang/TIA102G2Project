@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.tang.campaignProduct.model.CampaignProductVO;
 
@@ -28,12 +30,15 @@ public class CampaignVO implements Serializable{
 	@Column(name="campaignID", updatable = false, insertable = false)
 	private Integer campaignID;
 	
+	@NotEmpty(message="活動名稱: 請勿空白")
 	@Column(name="campaignName")
 	private String campaignName;
 	
 	//折數
+	@NotNull(message = "請輸入要打幾折")
 	@Column(name="campaignDiscount")
 	private Integer campaignDiscount;
+	
 	
 	@Column(name="campaignDes")
 	private String campaignDes;
