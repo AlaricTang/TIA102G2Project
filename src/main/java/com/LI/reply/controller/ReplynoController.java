@@ -70,7 +70,7 @@ public class ReplynoController {
 	    List<ReplyVO> replyList = replySvc.getRepliesByCustomerID(Integer.valueOf(customerID));
 	    model.addAttribute("replyListData", replyList);
 	    
-		return "back-end/reply/listOneReply"; 
+		return "back-end/reply/listOneCustomer"; 
 		}
 
 	

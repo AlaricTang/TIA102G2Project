@@ -43,7 +43,7 @@ public class CustomernoController {
 	//ReplyService replySvc;
 
 	// 顯示所有頁面
-	@GetMapping("select_page") 
+	@GetMapping("listAllCustomer") 
 	public String viewAllCustomers(ModelMap model) {
 	    
 	    // 獲取所有客戶留言
