@@ -205,12 +205,7 @@ public class DrinkController {
 	    model.addAttribute("coffeeDrinks", coffeeDrinks);
 	    model.addAttribute("machaDrinks", machaDrinks);
 	    model.addAttribute("otherDrinks", otherDrinks);
-//	    if( greenTeaDrinks != null) {
-//	    	System.out.println("有東西");
-//	    }else {
-//	    	System.out.println("沒東西");
-//	    }
-//	    System.out.println(greenTeaDrinks);
+
 	    return "back-end/drink/listAllDrinkFront";
 	}
 	
