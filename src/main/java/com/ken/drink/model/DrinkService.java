@@ -47,7 +47,7 @@ public class DrinkService {
 	}
 	
 	// 根據標籤查詢飲品
-    public List<DrinkVO> getDrinksByTag(String drinkTag) {
-        return repository.findByDrinkTag(drinkTag);
+    public List<DrinkVO> getDrinksByTagAndStatus(String drinkTag, Byte drinkStatus) {
+        return repository.findByDrinkTagAndDrinkStatus(drinkTag, drinkStatus);
     }
 }
