@@ -23,6 +23,7 @@ public class DrinkCartService {
 	private static final String DRINKCART_PREFIX="drinkCart:";
 	private static final String DRINKORDER_PREFIX="drinkOrder:";
 	
+	//======= 加入購物車 ======
 	public void addDrinkCartItem(Integer userId, DrinkOrderDetailVO cartItem) throws IOException {
 		String cartKey = DRINKCART_PREFIX + userId;
 		List<DrinkOrderDetailVO> cartItems  = new ArrayList<>();
@@ -60,7 +61,7 @@ public class DrinkCartService {
         }
 	}
 
-	//取出購物車 object轉成VO
+	//======= 取出購物車 object轉成VO =======
 	public List<DrinkOrderDetailVO> getDrinkCart (Integer userID) throws IOException  {
 		String cartKey = DRINKCART_PREFIX + userID.toString();
 		List<DrinkOrderDetailVO> drinkCartItems  = new ArrayList<>();
@@ -71,19 +72,20 @@ public class DrinkCartService {
 		return drinkCartItems ;
 	}
 	
-	
+	//====== 刪掉某項商品 ======
 	public void removeDrinkCartItem (Integer userID,Integer drinkID) throws IOException{
 		String cartKey = DRINKCART_PREFIX + userID.toString();
 		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
         for (Object cartJson : cartJsonList) {
         	DrinkOrderDetailVO drinkOrderDetail = gson.fromJson(cartJson.toString(), DrinkOrderDetailVO.class);
             if (drinkOrderDetail.getDrinkID().equals(drinkID)) {
-            	jedisSvc.removeItemFromList(cartKey, cartJson);
+            	jedisSvc.removeItemFromList(cartKey, drinkOrderDetail);
                 break;
             }
         }
 	}
 	
+	//====== 刪掉購物車 ======
 	public void deleteDrinkCart(Integer userID)throws IOException{
 		String cartKey = DRINKCART_PREFIX + userID.toString();
 		jedisSvc.delete(cartKey);
