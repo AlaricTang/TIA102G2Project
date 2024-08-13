@@ -1,10 +1,231 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="BIG5">
-<title>Insert title here</title>
-</head>
-<body>
+<html  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <!--  ======== Document Title =====================================  -->
+    <title>啡常渴以 | fakeLogging</title>
+    
+    
+    <!--  ======== Favicons =====================================  -->
+   	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+    
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    
+    
+    <!--  ======== Stylesheets =====================================  -->
+    
+    <!-- Default stylesheets-->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
+    
+    <!-- Template specific stylesheets-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+	
+	<!-- Main stylesheet and color file -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+	<style >
+		table, table td, table th{
+			border: 1px solid black;
+			border-collapse: collapse;
+			text-align:center;
+		}
+		
+		.drinkOrder, .drinkOrderDetail{
+			background-color: #ffe4c4;
+		}
+	</style>
+  </head>
+  
+  
+  
+  
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+  	<main>
 
-</body>
+	    <!-- header -->
+	    <div th:replace="header :: header"></div>
+	    <!-- header -->
+		
+
+		<div class="main">
+<!-- 			<span th:text="${user.userName}"></span> <br> -->
+			<br><br>
+			<table style="width: 100%; ">
+			  <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                    </thead>
+				
+				<tbody>
+                                        <tr>
+                                            <td>安安</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td>
+                                        </tr>
+                                        <tr>
+                                            <td>丁丁</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td>
+                                        </tr>
+                                    </tbody>
+				
+				
+				
+				
+				
+				
+				
+				
+<!-- 			  <tbody> -->
+<!-- 					<th:block th:each="drinkOrderVO : ${userDrinkOrderList}"> -->
+<!-- 						<tr> -->
+<!-- 							<td th:text="${drinkOrderVO.drinkOrderID}"></td> -->
+<!-- 							<td th:text="${drinkOrderVO.storeID}"></td> -->
+<!-- 							<td th:text="${drinkOrderVO.drinkOrderPickTime}"></td> -->
+<!-- 							<td th:text="${drinkOrderVO.drinkOrderCreateTime}"></td> -->
+<!-- 							<td th:text="${drinkOrderVO.drinkOrderTTPrice}"></td> -->
+<!-- 							<td> -->
+<!-- 				                <span th:switch="${drinkOrderVO.drinkOrderPayStatus}"> -->
+<!-- 				                    <span th:case="0">未付款</span> -->
+<!-- 				                    <span th:case="1">已付款</span> -->
+<!-- 				                    <span th:case="*">未知狀態</span> 若出現非預期狀態 -->
+<!-- 				                </span> -->
+<!-- 			            	</td> -->
+<!-- 			            	<td> -->
+<!-- 			            		<div th:if="${drinkOrderVO.drinkOrderPayStatus != 1 && drinkOrderVO.drinkOrderStatus == 0 }"> -->
+<!-- 								  	<form method="post" th:action="@{/drinkOrder/sussesPaidDrinkOrder}" style="margin-bottom: 0px;"> -->
+<!-- 								     	<input type="submit" value="完成付款"> -->
+<!-- 								     	<input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
+<!-- 								  	</form> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
+<!-- 							<td> -->
+<!-- 				                <span th:switch="${drinkOrderVO.drinkOrderStatus}"> -->
+<!-- 				                    <span th:case="0">未完成</span> -->
+<!-- 				                    <span th:case="1">已完成</span> -->
+<!-- 				                    <span th:case="2">已取消</span> -->
+<!-- 				                    <span th:case="*">未知狀態</span> 若出現非預期狀態 -->
+<!-- 				                </span> -->
+<!-- 			            	</td> -->
+<!-- 							<td> -->
+<!-- 								<div th:if="${drinkOrderVO.drinkOrderStatus == 0 }"> -->
+<!-- 								    <form method="post" th:action="@{/drinkOrder/cancelDrinkOrder}" style="margin-bottom: 0px;"> -->
+<!-- 								       <input type="submit" value="取消訂單"> -->
+<!-- 								       <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
+<!-- 								    </form> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
+<!-- 							<td> -->
+<!-- 							  <form method="post" th:action="@{/drinkOrderDetail/userDrinkOrderDetail}" style="margin-bottom: 0px;"> -->
+<!-- 							     <input type="submit" value="查看明細"> -->
+<!-- 							     <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
+<!-- 							  </form> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 					</th:block> -->
+<!-- 			  </tbody> -->
+			</table>
+    	</div>
+    	
+    	
+    	<br>
+<!--     	<div th:if="${#lists.size(drinkOrderDetailList) >1 }"> -->
+<!--     		<table class="drinkOrderDetail" style="width: 100%; "> -->
+<!-- 			  <thead > -->
+<!-- 				<tr style="background-color:#CCCCFF; " > -->
+<!-- 					<th>飲品</th> -->
+<!-- 					<th>冷/熱</th> -->
+<!-- 					<th>使用環保杯</th> -->
+<!-- 					<th>是否為寄杯</th> -->
+<!-- 					<th>數量</th> -->
+<!-- 					<th>價格</th> -->
+<!-- 				</tr> -->
+<!-- 			  </thead> -->
+				
+<!-- 			  <tbody> -->
+<!-- 					<th:block th:each="drinkOrderDetailVO : ${drinkOrderDetailList}"> -->
+<!-- 						<tr> -->
+<!-- 							<td th:text="${drinkOrderDetailVO.drinkID}"></td> -->
+<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsHot == 1? '熱':'冷' }"></td> -->
+<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'' }"></td> -->
+<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':''}"></td> -->
+<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailAmount}"></td> -->
+<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailPrice}"></td> -->
+<!-- 						</tr> -->
+<!-- 					</th:block> -->
+<!-- 			  </tbody> -->
+<!-- 			</table> -->
+<!--     	</div> -->
+    	
+  
+  
+  
+  
+  
+
+  	    <!-- footer -->
+	    <div th:include="footer :: footer"></div>
+	    <!-- footer -->
+    	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+   </main>
+    
+    
+    <!--  ======== JavaScripts =====================================  -->
+    <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/wow/dist/wow.js}"></script>
+    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+    <script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/smoothscroll.js}"></script>
+    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    
+  </body>
 </html>
+  
+  
