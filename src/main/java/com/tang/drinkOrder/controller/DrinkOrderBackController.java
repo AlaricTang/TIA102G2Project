@@ -34,6 +34,10 @@ public class DrinkOrderBackController {
 
 	@Autowired
 	StoreService storeSvc;
+	
+	@Autowired
+	DrinkOrderService drinkOrderSvc;
+	
 	//===============總公司端==================
 	@GetMapping("orderHistory")
 	public String orderHistory(ModelMap model) {
@@ -128,7 +132,7 @@ public class DrinkOrderBackController {
 		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
 		drinkOrder.setDrinkOrderStatus(Byte.valueOf("1"));
 		drinkOrderService.updateDrinkOrder(drinkOrder);
-		return "redirect:/drinkOrder/userDrinkOrder";
+		return "redirect:/drinkOrder/orderHistory";
 	}
 	
 	@PostMapping("sussesPaidDrinkOrder")
@@ -136,8 +140,20 @@ public class DrinkOrderBackController {
 		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
 		drinkOrder.setDrinkOrderPayStatus(Byte.valueOf("1"));
 		drinkOrderService.updateDrinkOrder(drinkOrder);
-		return "redirect:/drinkOrder/userDrinkOrder";
+		return "redirect:/drinkOrder/orderManage";
 	}
+	
+	
+	@PostMapping("cancelDrinkOrder")
+	public String cancelDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
+		drinkOrder.setDrinkOrderStatus(Byte.valueOf("2"));
+		drinkOrderSvc.updateDrinkOrder(drinkOrder);
+		return "redirect:/drinkOrder/orderHistory";
+	}
+	
+	
+	
 	
 	//===============店家端==================
 	@GetMapping("storeOrderHistory")

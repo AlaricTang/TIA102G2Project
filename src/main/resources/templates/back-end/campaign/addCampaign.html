@@ -245,77 +245,72 @@
 			             <div class="card-body">
 			             	<div class="form-container">
 			             	<!-- 主要內容 -->
-			             	
-			             	
-			             	
-					      <form th:action="@{/campaign/insert}" method="post" th:object="${campaignVO}" enctype="multipart/form-data">
-					      	<h2 class="form-header" ><b>請輸入下列資訊</b></h2>
-					      	
-					        <div class="form-item">
-					            <label for="campaignName">活動名稱</label>
-					            <input type="text" th:field="*{campaignName}" onclick="hideContent('campaignName.errors');" /><br/>
-					            <span  th:if="${#fields.hasErrors('campaignName')}" th:errors="*{campaignName}" class="error" id="campaignName.errors"></span>
-					        </div>
-					        <br>
-					        
-<!-- 					        <div class="form-item"></div> -->
-					        
-					        
-					        <div class="form-item">
-					            <label>活動折扣:</label>
-					            <input type="text" th:field="*{campaignDiscount}" onclick="hideContent('campaignDiscount.errors');" /><br/>
-					            <span  th:if="${#fields.hasErrors('campaignDiscount')}" th:errors="*{campaignDiscount}" class="error" id="campaignDiscount.errors"></span>
-					        </div>
-
-					        <div class="form-dateitem">
-					            <label>活動時間:</label>
-					            <input  type="date" th:field="*{campaignStartDate}"/> 至
-					            <input  type="date" th:field="*{campaignEndDate}" /><br>
-					            <span th:if="${#fields.hasErrors('campaignStartDate')}" th:errors="*{campaignStartDate}" class="error" id="campaignStartDate.errors"></span>
-					            <span th:if="${#fields.hasErrors('campaignEndDate')}" th:errors="*{campaignEndDate}" class="error" id="campaignEndDate.errors"></span>
-					        </div><br>
-					        
-					        
-					        <div class="form-item">
-							    <label>照片:</label>
-							    <input type="file" th:field="*{campaignPic}" multiple="multiple" onchange="previewImages(event);" />
-							    <span class="error" th:utext="${errorMessage}" id="campaignPic.errors">${errorMessage}</span>
-							    <div id="image-preview" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
-							</div><br>
-							
-							<div class="form-item">
-								<label>活動商品選擇:</label>
-								<a id="campaignPdBtn" href="/campaign/goSelectedDrink">選擇商品</a><br>
-			
-								<div th:if="${session.campaignProductList != null}">
-									<table id="campaignPdTable">
-										<th:block th:each="campaignProductVO : ${session.campaignProductList}">
-											<td th:text="${campaignProductVO.drinkID}"></td>
-										</th:block>
-									</table>
+s
+						      <form th:action="@{/campaign/insert}" method="post" th:object="${campaignVO}" enctype="multipart/form-data">
+						      	<h2 class="form-header" ><b>請輸入下列資訊</b></h2>
+						      	
+						        <div class="form-item">
+						            <label for="campaignName">活動名稱</label>
+						            <input type="text" th:field="*{campaignName}" onclick="hideContent('campaignName.errors');" /><br/>
+						            <span  th:if="${#fields.hasErrors('campaignName')}" th:errors="*{campaignName}" class="error" id="campaignName.errors"></span>
+						        </div>
+						        <br>
+						        
+						        <div class="form-item">
+						            <label>活動折扣:</label>
+						            <input type="text" th:field="*{campaignDiscount}" onclick="hideContent('campaignDiscount.errors');" /><br/>
+						            <span  th:if="${#fields.hasErrors('campaignDiscount')}" th:errors="*{campaignDiscount}" class="error" id="campaignDiscount.errors"></span>
+						        </div>
+	
+						        <div class="form-dateitem">
+						            <label>活動時間:</label>
+						            <input  type="date" th:field="*{campaignStartDate}"/> 至
+						            <input  type="date" th:field="*{campaignEndDate}" /><br>
+						            <span th:if="${#fields.hasErrors('campaignStartDate')}" th:errors="*{campaignStartDate}" class="error" id="campaignStartDate.errors"></span>
+						            <span th:if="${#fields.hasErrors('campaignEndDate')}" th:errors="*{campaignEndDate}" class="error" id="campaignEndDate.errors"></span>
+						        </div><br>
+						        
+						        
+						        <div class="form-item">
+								    <label>照片:</label>
+								    <input type="file" th:field="*{campaignPic}" multiple="multiple" onchange="previewImages(event);" />
+								    <span class="error" th:utext="${errorMessage}" id="campaignPic.errors">${errorMessage}</span>
+								    <div id="image-preview" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+								</div><br>
+								
+								<div class="form-item">
+									<label>活動商品選擇:</label>
+									<a id="campaignPdBtn" href="/campaign/goSelectedDrink">選擇商品</a><br>
+				
+									<div th:if="${session.campaignProductList != null}">
+										<table id="campaignPdTable">
+											<th:block th:each="campaignProductVO : ${session.campaignProductList}">
+												<td th:text="${campaignProductVO.drinkID}"></td>
+											</th:block>
+										</table>
+									</div>
 								</div>
-							</div>
-							
-							
-					        <div class="form-item" style="width: 100%;">
-					            <label>活動描述:</label>
-					            <textarea id="campaignDescription" th:field="*{campaignDes}" style="width: 100%;" rows="4"></textarea>
-					            <span  th:if="${#fields.hasErrors('campaignDes')}" th:errors="*{campaignDes}" class="error" id="campaignDes.errors"></span>
-					        </div>
-					
-					        <!-- 送出按鈕 -->
-					        <div class="row mb-3">
-					            <div class="col-md-12 text-center">
-					                <button th:href="@{/campaign/insert}" type="submit" id="submit" class="btn btn-primary"> 送出新增 </button>
-					            </div>
-					        </div>
-					      </form>
+								
+								
+						        <div class="form-item" style="width: 100%;">
+						            <label>活動描述:</label>
+						            <textarea id="campaignDescription" th:field="*{campaignDes}" style="width: 100%;" rows="4"></textarea>
+						            <span  th:if="${#fields.hasErrors('campaignDes')}" th:errors="*{campaignDes}" class="error" id="campaignDes.errors"></span>
+						        </div>
+						
+						        <!-- 送出按鈕 -->
+						        <div class="row mb-3">
+						            <div class="col-md-12 text-center">
+						                <button type="submit" id="submit" class="btn btn-primary"> 送出新增 </button>
+						            </div>
+						        </div>
+						      </form>
 					      
 					      
+		             		</div>
 		             	</div>
-		             </div>
-		        </div>
-		    </div>
+		        	</div>
+		    	</div>
 			</main>        
         </div>
     </div>
