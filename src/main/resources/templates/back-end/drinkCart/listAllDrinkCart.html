@@ -127,10 +127,7 @@
 		                <button class="btn btn-primary" onclick="window.history.back()">返回</button> 
 		            </div>
 		            <div style="flex: 2; text-align: center;">
-		                <h1 style="margin: 0; font-size: 24px; font-weight: bold;">飲品菜單</h1>
-		            </div>
-		            <div style="flex: 1; text-align: right;">
-		                <button class="btn btn-secondary">查看寄杯</button>
+		                <h1 style="margin: 0; font-size: 24px; font-weight: bold;">購物車</h1>
 		            </div>
 		        </div>
 		    </div>
@@ -178,98 +175,6 @@
                     </div>
                 </div>
                 
-                <!-- 紅茶飲品 -->
-                <div class="row multi-columns-row">
-              <div class="col-sm-8 col-sm-offset-2">
-                <h2 class="module-title font-alt mb-0">Black Tea</h2>
-                <hr class="title-separator">
-              </div>
-                <div th:if="${blackTeaDrinks != null}">
-                    <div th:each="drinkVO : ${blackTeaDrinks}">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            <div class="shop-item">
-                                <div class="shop-item-image">
-                                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" alt="Drink Image"/>
-                                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">客制選項</span></a></div>
-                                </div>
-                                <h4 class="shop-item-title font-alt" th:text="${drinkVO.drinkName}"></h4>
-                                <p th:text="'價格: NT' + ${drinkVO.drinkPrice}"></p>
-                                <p th:text="${drinkVO.drinkDes}"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 奶茶飲品 -->
-            <div class="row multi-columns-row">
-              <div class="col-sm-8 col-sm-offset-2">
-                <h2 class="module-title font-alt mb-0">Milk Tea</h2>
-                <hr class="title-separator">
-              </div>
-                <div th:if="${milkTeaDrinks != null}">
-                    <div th:each="drinkVO : ${milkTeaDrinks}">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            <div class="shop-item">
-                                <div class="shop-item-image">
-                                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" alt="Drink Image"/>
-                                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">客制選項</span></a></div>
-                                </div>
-                                <h4 class="shop-item-title font-alt" th:text="${drinkVO.drinkName}"></h4>
-                                <p th:text="'價格: NT' + ${drinkVO.drinkPrice}"></p>
-                                <p th:text="${drinkVO.drinkDes}"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 咖啡飲品 -->
-            <div class="row multi-columns-row">
-              <div class="col-sm-8 col-sm-offset-2">
-                <h2 class="module-title font-alt mb-0">Coffee</h2>
-                <hr class="title-separator">
-              </div>
-                <div th:if="${coffeeDrinks != null}">
-                    <div th:each="drinkVO : ${coffeeDrinks}">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            <div class="shop-item">
-                                <div class="shop-item-image">
-                                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" alt="Drink Image"/>
-                                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">客制選項</span></a></div>
-                                </div>
-                                <h4 class="shop-item-title font-alt" th:text="${drinkVO.drinkName}"></h4>
-                                <p th:text="'價格: NT' + ${drinkVO.drinkPrice}"></p>
-                                <p th:text="${drinkVO.drinkDes}"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 抹茶飲品 -->
-            <div class="row multi-columns-row">
-              <div class="col-sm-8 col-sm-offset-2">
-                <h2 class="module-title font-alt mb-0">Macha Tea</h2>
-                <hr class="title-separator">
-              </div>
-                <div th:if="${machaDrinks != null}">
-                    <div th:each="drinkVO : ${machaDrinks}">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            <div class="shop-item">
-                                <div class="shop-item-image">
-                                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" alt="Drink Image"/>
-                                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">客制選項</span></a></div>
-                                </div>
-                                <h4 class="shop-item-title font-alt" th:text="${drinkVO.drinkName}"></h4>
-                                <p th:text="'價格: NT' + ${drinkVO.drinkPrice}"></p>
-                                <p th:text="${drinkVO.drinkDes}"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             <!-- 其他選項 -->
             
 <section class="module-small bg-dark-30">
