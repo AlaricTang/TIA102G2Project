@@ -92,7 +92,7 @@ public class ProductController {
 	//加入購物車
 	@PostMapping("productAddToCart")
 	public String productAddToCart(
-	        @RequestParam("productId") String productID,
+	        @RequestParam("productID") String productID,
 	        @RequestParam("orderAmount") String orderAmount,
 	        HttpSession session) throws IOException {
 
@@ -102,10 +102,23 @@ public class ProductController {
 	    UserVO user = (UserVO)session.getAttribute("user");
 	    productCartSvc.addCartItem(user.getUserId().toString(), productItem);
 	    return "redirect:/product/pdDetail?productID=" + productID;
-//	    return "redirect:/";
-
 	}
+	
+	
+	//加入購物車
+		@GetMapping("productAddToCartOnListAllPdPage")
+		public String productAddToCartOnListAllPdPage(
+		        @RequestParam("productID") String productID,
+		        @RequestParam("orderAmount") String orderAmount,
+		        HttpSession session) throws IOException {
 
+		    ProductOrderDetailVO productItem = new ProductOrderDetailVO();
+		    productItem.setProductID(Integer.valueOf(productID)); // 确保这里获取到的是productID
+		    productItem.setProductOrderDetailAmount(Integer.valueOf(orderAmount));
+		    UserVO user = (UserVO)session.getAttribute("user");
+		    productCartSvc.addCartItem(user.getUserId().toString(), productItem);
+		    return "redirect:/product/listAllProduct";
+		}
 
 	//跳轉到購物車page
 		// 要取得user的購物車列表 (商品 and 寄杯)
