@@ -67,6 +67,24 @@
         .card span.value {
             font-weight: 500;
         }
+        .back-link {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+        display: inline-block;
+        margin-top: 10px;
+        border: 2px solid #007bff;
+        padding: 5px 15px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+    }
 </style>
 </head>
 <body class="sb-nav-fixed">
@@ -84,6 +102,7 @@
             <div class="container-fluid">
                 <div class="content-header">
                     <h3>更新結果</h3>
+                    <a class="back-link" th:href="@{/cup/listAllCup}">返回飲品管理</a>
                 </div>
                 
                 <div class="card mx-auto" style="max-width: 600px;">

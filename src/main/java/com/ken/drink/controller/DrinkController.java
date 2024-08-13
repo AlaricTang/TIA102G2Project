@@ -45,7 +45,7 @@ public class DrinkController {
 		return "back-end/drink/addDrink";
 	}
 	
-	// 自訂查詢 (用標籤分類 預計給Front畫面用 因測試關係 先用在back)
+
 	@GetMapping("listAllDrink")
 	public String listAllDrinks(ModelMap model) {
 		List<DrinkVO> list = drinkSvc.getAll();
@@ -177,5 +177,26 @@ public class DrinkController {
 		List<DrinkVO> list = drinkSvc.getAll(map);
 		model.addAttribute("drinkListData", list); // for listAllEmp.html 第85行用
 		return "back-end/drink/listAllDrink";
+	}
+	
+	// =================== 方法 1 前台飲品菜單依照Tag分類 =============================
+	
+	@GetMapping("drinksByTag")
+	public String getDrinksByTag(Model model) {
+	    List<DrinkVO> greenTeaDrinks = drinkSvc.getDrinksByTag("綠茶");
+	    List<DrinkVO> blackTeaDrinks = drinkSvc.getDrinksByTag("紅茶");
+	    List<DrinkVO> milkTeaDrinks = drinkSvc.getDrinksByTag("奶茶");
+	    List<DrinkVO> coffeeDrinks = drinkSvc.getDrinksByTag("咖啡");
+	    List<DrinkVO> machaDrinks = drinkSvc.getDrinksByTag("抹茶");
+	    List<DrinkVO> otherDrinks = drinkSvc.getDrinksByTag("其他");
+	    
+	    model.addAttribute("greenTeaDrinks", greenTeaDrinks);
+	    model.addAttribute("blackTeaDrinks", blackTeaDrinks);
+	    model.addAttribute("milkTeaDrinks", milkTeaDrinks);
+	    model.addAttribute("coffeeDrinks", coffeeDrinks);
+	    model.addAttribute("machaDrinks", machaDrinks);
+	    model.addAttribute("otherDrinks", otherDrinks);
+
+	    return "back-end/drink/listAllDrinkFront";
 	}
 }
