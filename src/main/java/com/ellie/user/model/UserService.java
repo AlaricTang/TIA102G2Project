@@ -49,6 +49,11 @@ public class UserService {
 	public UserVO findByEmail(String email) {
         return repository.findByUserEmail(email);
     }
+
+    public UserVO findById(Integer id) {
+        Optional<UserVO> optional = repository.findById(id);
+        return optional.orElse(null); 
+    }
 }
 
 
