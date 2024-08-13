@@ -177,8 +177,8 @@ public class DrinkOrderFrontController {
 		return "back-end/drinkOrder/userDrinkOrder";
 	}
 	
-	@PostMapping("cancelDrinkOrder")
-	public String cancelDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+	@PostMapping("userCancelDrinkOrder")
+	public String userCancelDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
 		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
 		drinkOrder.setDrinkOrderStatus(Byte.valueOf("2"));
 		drinkOrderSvc.updateDrinkOrder(drinkOrder);

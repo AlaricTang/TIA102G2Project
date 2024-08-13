@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -34,17 +35,20 @@ public class CampaignController {
 	@Autowired
 	CampaignProductService campaignProductSvc;
 	
-	//查全部
+	//=============== 查全部 =========
 	@GetMapping("campaignList")
-	public String campaignList(ModelMap model) {
+	public String campaignList(ModelMap model,HttpSession session) {
 		List<CampaignVO> campaignList = campaignSvc.gatAll();
 		model.addAttribute("campaignList",campaignList);
+		
+//		session.removeAttribute("campaignProductList");
 		return "back-end/campaign/campaignList";
 	}
 	
-	//跳新增頁
+	//=============== 跳新增頁 ===============
 	@GetMapping("addCampaignPage")
 	public String addCampaignPage(ModelMap model,HttpSession session) {
+		
 		CampaignVO campaignVO = new CampaignVO();
 		model.addAttribute("campaignVO",campaignVO);
 		
@@ -56,8 +60,7 @@ public class CampaignController {
 	}
 
 	
-	
-	//新增
+	//=============== 新增 ===============
 	@PostMapping("insert")
 	public String insert(
 			@Valid CampaignVO campaignVO, BindingResult result, 
@@ -106,35 +109,48 @@ public class CampaignController {
 		//返回活動列表
 		List<CampaignVO> campaignList = campaignSvc.gatAll();
 		model.addAttribute("campaignList", campaignList);
-		model.addAttribute("success", "- (新增成功)");
 		return "redirect:/campaign/campaignList";
 	}
 		
 	
-	//跳更新頁
+	//=============== 跳更新頁 判斷有無session===============
 	@PostMapping("updateCampaignPage")
 	public String updateCampaignPage(
-			@RequestParam("campaignID") String campaignID,
-			HttpSession session) {
-		CampaignVO campaignVO = campaignSvc.getOneCampaign(Integer.valueOf(campaignID));
-		session.setAttribute("updateCampaignVO", campaignVO);//因為 在選擇活動商品後 我要還要顯示這個VO
+			@RequestParam("campaignID") String campaignID,ModelMap model,
+			HttpSession session,HttpServletRequest request) {
 		
-		List<CampaignProductVO> campaignProductList = campaignProductSvc.getAllByCampaignID(Integer.valueOf(campaignID));
-		session.setAttribute("campaignDrink", campaignProductList);
+		
+		String refererUrl = request.getHeader("Referer");
+		System.out.println(refererUrl);
+		if (refererUrl.endsWith("/campaign/campaignList")) {
+			session.removeAttribute("campaignProductList");
+		}
+		
+		System.out.println(campaignID);
+		CampaignVO campaignVO = campaignSvc.getOneCampaign(Integer.valueOf(campaignID));
+		model.addAttribute("campaignVO", campaignVO);
+		
+		if( session.getAttribute("campaignProductList") == null ) {
+			List<CampaignProductVO> campaignProductList = campaignProductSvc.getAllByCampaignID(Integer.valueOf(campaignID));
+			session.setAttribute("campaignProductList", campaignProductList);			
+		}
+		//給商品選擇跳回來用的
+		session.setAttribute("beUpdateCampaignID", campaignID);
 		return "back-end/campaign/updateCampaign";
 	}
 	
+	//=============== 更新 清session===============
 	@PostMapping("update")
 	public String update (
 			@Valid CampaignVO campaignVO,BindingResult result,
-			@RequestParam("upFiles") MultipartFile[] parts,
+			@RequestParam("campaignPic") MultipartFile[] parts,
 			ModelMap model,
 			HttpSession session
 			) throws IOException {
 		
 		
 		//=========== 圖片 ===========
-		result = removeFieldError(campaignVO, result, "upFiles");
+		result = removeFieldError(campaignVO, result, "campaignPic");
 		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時，返回原圖
 			byte[] upFiles = campaignSvc.getOneCampaign(campaignVO.getCampaignID()).getCampaignPic();
 			campaignVO.setCampaignPic(upFiles);
@@ -154,26 +170,23 @@ public class CampaignController {
 		
 		//取出要更新的 新的活動商品列
 	    @SuppressWarnings("unchecked")
-		List<CampaignProductVO> campaignDrinkList = (List<CampaignProductVO>) session.getAttribute("campaignDrink");
+		List<CampaignProductVO> campaignProductList = (List<CampaignProductVO>) session.getAttribute("campaignProductList");
 
-	    if(!campaignDrinkList.isEmpty()) {
+	    if(!campaignProductList.isEmpty()) {
 			//更新活動
 			CampaignVO campaign = campaignSvc.updateCampaign(campaignVO);
-			Integer campaignID = campaign.getCampaignID();
 			//活動商品 資料更新
-	    	campaignProductSvc.updateCampaignProducts(campaignID, campaignDrinkList);	    	
+	    	campaignProductSvc.updateCampaignProducts(campaign, campaignProductList);	
+
 	    }else {
 			model.addAttribute("errorMessage", "請選擇商品");
 			model.addAttribute("campaignVO",campaignVO);
 	    	return "back-end/campaign/updateCampaign";
 	    }
-		session.removeAttribute("beCampaignDrink");
-		//返回活動列表
-		List<CampaignVO> list = campaignSvc.gatAll();
-		model.addAttribute("campaignListData", list);
-		model.addAttribute("success", "- (更新成功)");
+		
 		return "redirect:/campaign/campaignList";
 	}
+	
 	
 	
 	
