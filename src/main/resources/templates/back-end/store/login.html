@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>店家詳細資訊</title>
+    <title>後台 | 登入</title>
 
     <!-- 引入樣式表 -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
@@ -26,21 +26,25 @@
 
     <style>
         body {
-            background-color: #f4f6f9;
+            background-color: #f0f2f5;
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
         .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
+            max-width: 500px;
+            padding: 0 15px;
         }
 
         .form-container {
             background: #ffffff;
             padding: 2rem;
             border-radius: .5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
         }
 
         .form-container h2 {
@@ -56,8 +60,8 @@
 
         .form-group label {
             display: block;
-            font-weight: 600;
-            color: #333;
+            font-weight: 500;
+            color: #555;
             margin-bottom: .5rem;
         }
 
@@ -81,7 +85,7 @@
             border-radius: .375rem;
             padding: .75rem 1.25rem;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 500;
             color: #fff;
             transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
         }
@@ -91,41 +95,13 @@
             border-color: #004085;
         }
 
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-            border-radius: .375rem;
-            padding: .75rem 1.25rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-            transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
-            text-decoration: none; 
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            border-color: #545b62;
-        }
-
-        .img-container {
-            margin: 1rem 0;
-        }
-
-        .img-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: .375rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            display: block;
-            margin-left: 0;
-        }
-
-        textarea.form-control {
-            resize: vertical;
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            text-align: center;
         }
     </style>
-    
 </head>
 
 <body class="sb-nav-fixed">
@@ -140,37 +116,32 @@
 
         <!-- 主要內容區域 -->
         <div id="layoutSidenav_content">
+            <!-- 後台登入表單 -->
             <div class="container">
                 <div class="form-container">
-                    <h2>店家詳細資訊</h2>
+                    <h2 class="text-center">後台登入</h2>
+                    <form action="#" th:action="@{/store/login}" method="post">
+                        <div class="form-group">
+                            <label for="role">角色:</label>
+                            <select id="role" name="role" class="form-control" required>
+                                <option value="store">店家端</option>
+                                <option value="member">員工端</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="storeName">店家名稱:</label>
-                        <input type="text" id="storeName" class="form-control" th:value="${storeVO.storeName}" readonly>
-                    </div>
+                        <div class="form-group">
+                            <label for="storeAcc">帳號:</label>
+                            <input type="text" id="storeAcc" name="storeAcc" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="storeAddr">店家地址:</label>
-                        <input type="text" id="storeAddr" class="form-control" th:value="${storeVO.storeAddr}" readonly>
-                    </div>
+                        <div class="form-group">
+                            <label for="storePwd">密碼:</label>
+                            <input type="password" id="storePwd" name="storePwd" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="storeOpenTime">營業時間:</label>
-                        <input type="text" id="storeOpenTime" class="form-control" th:value="${storeVO.storeOpenTime}" readonly>
-                    </div>
-
-                    <div class="form-group img-container">
-                        <label for="storePic">店家圖片:</label>
-                        <img th:src="@{'data:image/png;base64,' + ${#fields.format(storeVO.storePic, 'base64')}}"
-                             alt="店家圖片" style="max-width: 100%; height: auto;">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="storeDes">店家描述:</label>
-                        <textarea id="storeDes" class="form-control" rows="4" readonly th:text="${storeVO.storeDes}"></textarea>
-                    </div>
-
-                    <a href="/store/listAllStores" class="btn btn-secondary w-100 mt-3">返回店家管理</a>
+                        <button type="submit" class="btn btn-primary w-100">登入</button>
+                        <p th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger text-center mt-3"></p>
+                    </form>
                 </div>
             </div>
         </div>
