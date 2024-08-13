@@ -1,10 +1,359 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="BIG5">
-<title>Insert title here</title>
-</head>
-<body>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+    <!--  ======== Document Title =====================================  -->
+	<title>非常渴以 | 寄杯商品管理</title>
+	
+	    <!-- ●●css for jquery datatables 用 -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    
 
+    <script th:src="@{/js/scriptsBack.js}"></script>
+   	<script th:src="@{/js/datatables-simple-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-area-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-bar-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-pie-demo.js}"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
+    <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
+	
+	<style>
+		/* 通用表單項目樣式 */
+		.form-item {
+		    display: inline-block;
+		    margin-right: 15px;
+		    margin-bottom: 10px;
+		}
+		
+		.form-item label {
+		    display: block;
+		    margin-bottom: 5px;
+		    font-weight: bold;
+		}
+		
+		.form-item input, 
+		.form-item select {
+		    width: 100%;
+		    padding: 5px;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		    box-sizing: border-box;
+		}
+		
+		/* 表格樣式 */
+		#example {
+		    width: 100%;
+		    border-collapse: collapse;
+		    margin-bottom: 20px;
+		    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		    font-family: Arial, sans-serif;
+		    font-size: 14px;
+		}
+		
+		#example thead tr {
+		    background-color: #c9Bdab;
+		    color: white;
+		}
+		
+		#example th, 
+		#example td {
+		    padding: 12px 15px;
+		    border-bottom: 1px solid #ddd;
+		    text-align: center;
+		}
+		
+		#example tbody tr:nth-child(even) {
+		    background-color: #f2f2f2;
+		}
+		
+		#example tbody tr:hover {
+		    background-color: #e6f7ff;
+		}
+		/* 表格2樣式 */
+		#example2 {
+		    width: 100%;
+		    border-collapse: collapse;
+		    margin-bottom: 20px;
+		    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		    font-family: Arial, sans-serif;
+		    font-size: 14px;
+		}
+		
+		#example2 thead tr {
+		    background-color: #c9Bdab;
+		    color: white;
+		}
+		
+		#example2 th, 
+		#example2 td {
+		    padding: 12px 15px;
+		    border-bottom: 1px solid #ddd;
+		    text-align: center;
+		}
+		
+		#example2 tbody tr:nth-child(even) {
+		    background-color: #f2f2f2;
+		}
+		
+		#example2 tbody tr:hover {
+		    background-color: #e6f7ff;
+		}
+		
+		/* 上架和下架的顏色區分 */
+		.status-available {
+		    background-color: #d4edda; /* 綠色背景，代表上架 */
+		    color: #155724;
+		    font-weight: bold;
+		}
+		
+		.status-unavailable {
+		    background-color: #f8d7da; /* 紅色背景，代表下架 */
+		    color: #721c24;
+		    font-weight: bold;
+		}
+		
+		/* 搜尋表單樣式 */
+		.form-row {
+		    display: flex;
+		    align-items: center;
+		    margin-bottom: 20px;
+		}
+		
+		.btn-primary {
+		    background-color: #007bff;
+		    border-color: #007bff;
+		    color: white;
+		    padding: 7px 12px;
+		    border-radius: 4px;
+		    cursor: pointer;
+		}
+		
+		.btn-primary:hover {
+		    background-color: #0056b3;
+		}
+	
+	</style>
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable(
+				{
+					"lengthMenu" : [ 3, 5, 10, 20, 50, 100 ],
+					"searching" : true,
+					"paging" : true,
+					"ordering" : true,
+					"language" : {
+					"processing" : "處理中...",
+					"loadingRecords" : "載入中...",
+					"lengthMenu" : "顯示 _MENU_ 筆結果",
+					"zeroRecords" : "沒有符合的結果",
+					"info" : "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+					"infoEmpty" : "顯示第 0 至 0 筆結果，共 0 筆",
+					"infoFiltered" : "(從 _MAX_ 筆結果中過濾)",
+					"search" : "搜尋:",
+					"paginate" : {
+						"first" : "第一頁",
+						"previous" : "上一頁",
+						"next" : "下一頁",
+						"last" : "最後一頁"
+					},
+					"aria" : {
+						"sortAscending" : ": 升冪排列",
+						"sortDescending" : ": 降冪排列"
+					}
+				}
+			});
+		});
+		$(document).ready(function() {
+			$('#example2').DataTable(
+				{
+					"lengthMenu" : [ 3, 5, 10, 20, 50, 100 ],
+					"searching" : true,
+					"paging" : true,
+					"ordering" : true,
+					"language" : {
+					"processing" : "處理中...",
+					"loadingRecords" : "載入中...",
+					"lengthMenu" : "顯示 _MENU_ 筆結果",
+					"zeroRecords" : "沒有符合的結果",
+					"info" : "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+					"infoEmpty" : "顯示第 0 至 0 筆結果，共 0 筆",
+					"infoFiltered" : "(從 _MAX_ 筆結果中過濾)",
+					"search" : "搜尋:",
+					"paginate" : {
+						"first" : "第一頁",
+						"previous" : "上一頁",
+						"next" : "下一頁",
+						"last" : "最後一頁"
+					},
+					"aria" : {
+						"sortAscending" : ": 升冪排列",
+						"sortDescending" : ": 降冪排列"
+					}
+				}
+			});
+		});
+</script>
+</head>
+<body class="sb-nav-fixed">
+	<!-- 最上面的那一條 -->
+	<div th:include="headerBack :: headerBack"></div>
+	<!-- 最上面的那一條 -->
+	<div id="layoutSidenav">
+        <!-- 左邊的那一條 -->
+        <div th:include="SliderLeftBack :: SliderLeftBack"></div>
+        <!-- 左邊的那一條 -->		
+        <!-- 右邊空白頁面 注意 因為這個模板的關係 所以他是包在左邊那條的div裡面 -->
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<h1 class="mt-4">寄杯商品管理</h1>
+					<div>
+						<a href='/jibeiProduct/addPage' class="custom-btn">新增寄杯商品</a>
+					</div>
+					
+					
+					<div class="card mb-4">
+						<div class="card-header">
+							<i class="fas fa-table me-1"></i> 所有上架商品資料
+						</div>
+						<div class="card-body">
+						
+							<form method="post" th:action="@{/jibeiProduct/getJibeiProduct}">
+							    <div class="form-row">
+							    
+							        <div class="form-item col-md-3">
+							            <label for="drinkID">輸入商品名稱(要改fk):</label>
+							            <input type="text" name="drinkID" id="drinkID" >
+							        </div>
+							        
+							        
+							        <div class="form-item col-md-3">
+							            <label for="jibeiProductStatus">寄杯商品狀態:</label>
+							            <select name="jibeiProductStatus" id="jibeiProductStatus">
+							                <option value="">請選擇</option>
+							                <option value="1">上架</option>
+							                <option value="0">下架</option>
+							            </select>
+							        </div>
+							        
+							        
+							        <div class="form-item col-md-1">
+							            <br>
+							            <input type="submit" class="btn btn-primary" value="送出">
+							        </div>
+							        
+							    </div>
+							</form>
+						</div>
+						
+						<div class="card-body">
+							<table id="example" class="display">
+							    <thead>
+							        <tr>
+							            <th>商品編號</th>
+							            <th>商品名稱</th>
+							            <th>商品單價</th>
+							            <th>商品描述</th>
+							            <th>上架中商品</th>
+							            <th>商品圖片</th>
+							            <th>更新時間</th>
+							            <th>創建時間</th>
+							            <th>最新修改者</th>
+							            <th>修改</th>
+							        </tr>
+							    </thead>
+							    <tbody>
+							        <th:block th:each="jibeiProductVO : ${onList}">
+							            <tr>
+							                <td th:text="${jibeiProductVO.jibeiProductID}"></td>
+							                <td th:text="${jibeiProductVO.drinkID}"></td>
+							                <td th:text="${jibeiProductVO.jibeiProductPrice}"></td>
+							                <td th:text="${jibeiProductVO.jibeiProductDes}"></td>
+							                <td class="status-available"><span th:text="上架"></span></td>
+							                <td>
+							                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkID}" width="100px">
+							                </td>
+							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
+							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
+							                <td th:text="${jibeiProductVO.memberID}"></td>
+							                <td>
+							                    <form method="post" th:action="@{/jibeiProductVO/updatePage}" style="margin-bottom: 0px;">
+							                        <input type="submit" value="修改" class="btn btn-primary">
+							                        <input type="hidden" name="jibeiProductID" th:value="${jibeiProductVO.jibeiProductID}">
+							                    </form>
+							                </td>
+							            </tr>
+							        </th:block>
+							    </tbody>
+							</table>
+							
+						</div>
+					</div>
+					
+					<div class="card mb-4">
+						<div class="card-header">
+							<i class="fas fa-table me-1"></i> 所有下架商品資料
+						</div>
+						
+						
+						<div class="card-body">
+							<table id="example2" class="display">
+							    <thead>
+							        <tr>
+							            <th>商品編號</th>
+							            <th>商品名稱</th>
+							            <th>商品單價</th>
+							            <th>商品描述</th>
+							            <th>下架中商品</th>
+							            <th>商品圖片</th>
+							            <th>更新時間</th>
+							            <th>創建時間</th>
+							            <th>最新修改者</th>
+							            <th>修改</th>
+							        </tr>
+							    </thead>
+							    <tbody>
+							        <th:block th:each="jibeiProductVO : ${offList}">
+							            <tr>
+							                <td th:text="${jibeiProductVO.jibeiProductID}"></td>
+							                <td th:text="${jibeiProductVO.drinkID}"></td>
+							                <td th:text="${jibeiProductVO.jibeiProductPrice}"></td>
+							                <td th:text="${jibeiProductVO.jibeiProductDes}"></td>
+							                <td class="status-unavailable"><span th:text="下架"></span></td>
+							                <td>
+							                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkID}" width="100px">
+							                </td>
+							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
+							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
+							                <td th:text="${jibeiProductVO.memberID}"></td>
+							                <td>
+							                    <form method="post" th:action="@{/jibeiProductVO/updatePage}" style="margin-bottom: 0px;">
+							                        <input type="submit" value="修改" class="btn btn-primary">
+							                        <input type="hidden" name="jibeiProductID" th:value="${jibeiProductVO.jibeiProductID}">
+							                    </form>
+							                </td>
+							            </tr>
+							        </th:block>
+							    </tbody>
+							</table>
+							
+							
+						</div>
+					</div>
+					
+					
+				</div>
+			</main>
+		</div>
+	</div>	
 </body>
 </html>

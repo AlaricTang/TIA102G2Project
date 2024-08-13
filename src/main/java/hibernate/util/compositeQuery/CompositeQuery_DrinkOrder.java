@@ -12,13 +12,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.ken.cup.model.CupVO;
 import com.tang.drinkOrder.model.DrinkOrderVO;
-
-import hibernate.util.HibernateUtil;
 
 public class CompositeQuery_DrinkOrder {	
 	
@@ -39,6 +35,7 @@ public class CompositeQuery_DrinkOrder {
 	
 	//根據判斷 寫複合查詢
 	public static List<DrinkOrderVO> getAllC(Map<String, String> map,Session session){
+		String startCreateTime = null ,endCreateTime = null;
 		Transaction tx = session.beginTransaction();
 		List<DrinkOrderVO> list = null;
 		try {
@@ -68,12 +65,20 @@ public class CompositeQuery_DrinkOrder {
 				predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
 			}
 			
+			
+			if(keys.contains("drinkOrderStartCreateTime")) {
+				 startCreateTime = map2.get("drinkOrderStartCreateTime").replace("T", " ") + ":00";
+			}
+			if(keys.contains("drinkOrderEndCreateTime")) {
+				 endCreateTime = map2.get("drinkOrderEndCreateTime").replace("T", " ") + ":00";
+			}
+			
 			if(keys.contains("drinkOrderStartCreateTime") && keys.contains("drinkOrderEndCreateTime")) {
-				predicateList.add(builder.between(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderStartCreateTime")), Timestamp.valueOf(map2.get("drinkOrderEndCreateTime"))));
+				predicateList.add(builder.between(root.get("drinkOrderCreateTime"), Timestamp.valueOf(startCreateTime), Timestamp.valueOf(endCreateTime)));
 			}else if (keys.contains("drinkOrderStartCreateTime") && !(keys.contains("drinkOrderEndCreateTime"))) {
-				predicateList.add(builder.greaterThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderStartCreateTime"))));
+				predicateList.add(builder.greaterThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(startCreateTime)));
 			}else if ( !(keys.contains("drinkOrderStartCreateTime")) && keys.contains("drinkOrderEndCreateTime")) {
-				predicateList.add(builder.lessThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(map2.get("drinkOrderEndCreateTime"))));
+				predicateList.add(builder.lessThan(root.get("drinkOrderCreateTime"), Timestamp.valueOf(endCreateTime)));
 			}
 			
 			criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));

@@ -45,7 +45,7 @@ public class JibeiProductVO implements Serializable {
 	@Column(name="jibeiProductStatus")
 	private Byte jibeiProductStatus;
 	
-	@Column(name="jibeiProductUpdateTime",insertable = false)
+	@Column(name="jibeiProductUpdateTime")
 	private Timestamp jibeiProductUpdateTime;
 	
 	@Column(name="jibeiProductCreateTime" ,updatable = false, insertable = false)
@@ -56,7 +56,7 @@ public class JibeiProductVO implements Serializable {
 //	private MemberVO memberVO;
 
 	@NotNull(message = "最新修改(建立)之員工")
-	@Column(name="memberID", insertable = false)
+	@Column(name="memberID")
 	private Integer memberID;
 
 	public JibeiProductVO() {
