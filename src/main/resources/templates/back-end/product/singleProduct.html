@@ -117,16 +117,18 @@
 								</div>
 							</div>
 							<div class="row mb-20">
-								<div class="col-sm-4 mb-sm-20">
-									<input class="form-control input-lg" type="number" name=""
-										value="1" max="40" min="1" required="required" />
-								</div>
-<!-- 還沒有購物車，不確定是否正確 -->
-								<div class="col-sm-8">
-									<a class="btn btn-lg btn-block btn-round btn-b"
-										th:href="@{/product/pdDetail?productId=${productID}}">加入購物車</a>
-								</div>
-
+								<form method="post" th:action="@{/product/productAddToCart}">
+									<div class="col-sm-4 mb-sm-20">
+										<input class="form-control input-lg" type="number" name="orderAmount"
+											value="1" max="40" min="1" required="required" />
+									</div>
+							<input type="hidden" name="productID" th:value="${singleProduct.productID}">
+	
+	<!-- 還沒有購物車，不確定是否正確 -->
+									<div class="col-sm-8">
+										<input type="submit" class="btn btn-lg btn-block btn-round btn-b"  value="加入購物車" />
+									</div>
+								</form>
 							</div>
 							<div class="row mb-20">
 								<div class="col-sm-12">

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+     <!--  ======== Document Title =====================================  -->
+    <title>後台首頁</title>
+
+
+    <!-- ●●css for jquery datatables 用 -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    
+
+    <script th:src="@{/js/scriptsBack.js}"></script>
+   	<script th:src="@{/js/datatables-simple-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-area-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-bar-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-pie-demo.js}"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
+    <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
+      
+ 	<style type="text/css">
+ 		.btn-primary {
+		    background-color: #007bff;
+		    color: white;
+		    border: none;
+		    padding: 6px 12px;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    transition: background-color 0.3s;
+		}
+		
+		.btn-primary:hover {
+		    background-color: #0056b3;
+		}
+		
+		#seleteTable{
+			width: 100%;
+	        border-collapse: collapse;
+	        margin-bottom: 20px;
+	        border: 1px solid black;
+		}
+		
+		#seleteTable thead tr {
+	        background-color: #4CAF50;
+	        color: white;
+	    }
+	    
+	    #seleteTable th, #seleteTable td {
+	        padding: 12px 15px;
+	        border-bottom: 1px solid #ddd;
+	        text-align: center;
+	    }
+	    
+	    #seleteTable tbody tr:nth-child(even) {
+	        background-color: #f2f2f2;
+	    }
+	
+	    #seleteTable tbody tr:hover {
+	        background-color: #e6f7ff;
+	    }
+		
+		#submit {
+		    background-color: #62CB69;
+		}
+		#submit:hover {
+		    background-color: #45a049;
+		}
+		
+	
+		
+ 	</style>
+	
+</head>
+
+<body class="sb-nav-fixed">
+
+	<!-- header -->
+    <div th:include="headerBack :: headerBack"></div>
+    <!-- header -->
+
+    <div id="layoutSidenav">
+        <!-- footer -->
+      	<div th:include="SliderLeftBack :: SliderLeftBack"></div>
+      	<!-- footer -->
+
+        <!--右半邊的空白頁 -->
+        <div id="layoutSidenav_content">
+        <main>
+        	<div class="container-fluid px-4">
+        		<h1>活動商品選擇</h1>
+        		<div class="card mb-4">
+			    	<div class="card-header">
+			       		<i class="fas fa-plus me-1"></i>
+			            未選擇之商品列表
+			    	</div>
+			    	<div class="card-body">
+			    	
+			    	
+			    	
+			    		<form method="post" th:action="@{/campaign/selectUpdateDrink}">
+					    <table id="seleteTable">
+							<thead>
+								<tr>
+					       			<th>飲品名</th>
+					       			<th></th>
+					       			<th>飲品原價</th>
+					      			<th>選擇</th>
+					       		</tr>
+							</thead>
+							<tbody>
+						       	<th:block th:each="drinkVO : ${filteredDrinkList}">
+									
+									<tr>
+										<td th:text="${drinkVO.drinkName}"></td>
+										<td>
+						                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" width="100px">
+						                </td>
+										<td th:text="${drinkVO.drinkPrice}"></td>
+										<td>
+											<label class="check-box">
+										        <input type="checkbox"  name="selectDrinks" th:value="${drinkVO.drinkID}"/>
+										        	
+										        <span>選擇</span>
+											</label>
+										</td>
+									</tr>
+						                 
+								</th:block>
+							</tbody>
+						</table>
+						<button type="submit" id="submit" class="btn btn-primary"> 確定 </button>
+						</form>
+					</div>
+        		</div>
+        	</div>
+        </main>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

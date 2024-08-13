@@ -30,8 +30,8 @@
     <script>
 		$(document).ready(function() {
 			$('#example').DataTable({
-				"lengthMenu" : [ 3, 5, 10, 20, 50,100 ],
-				"searching" :false,
+				"lengthMenu" : [ 5, 10, 20, 50,100 ],
+				"searching" :true,
 				"paging" : true,
 				"ordering" : true,
 				"language" : {
@@ -42,7 +42,7 @@
 				"info" : "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
 				"infoEmpty" : "顯示第 0 至 0 筆結果，共 0 筆",
 				"infoFiltered" : "(從 _MAX_ 筆結果中過濾)",
-				"search" : "搜尋:",
+				"search" : "名稱搜尋:",
 				"paginate" : {
 					"first" : "第一頁",
 					"previous" : "上一頁",
@@ -62,7 +62,7 @@
 		/* 通用表單項目樣式 */
 		.form-item {
 		    display: inline-block;
-		    margin-right: 15px;
+		    margin-right: 10px;
 		    margin-bottom: 10px;
 		}
 		
@@ -84,7 +84,9 @@
 		/* 表格樣式 */
 		#example {
 		    width: 100%;
-		    border-collapse: collapse;
+/* 		    border-collapse: collapse; */
+			padding-top:10px;
+		    margin-top: 20px;
 		    margin-bottom: 20px;
 		    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 		    font-family: Arial, sans-serif;
@@ -187,9 +189,8 @@
 							                <td th:text="${campaignVO.campaignEndDate}"></td>
 							                <td>
 							                    <form method="post" th:action="@{/campaign/updateCampaignPage}" style="margin-bottom: 0px;">
-							                        <input type="submit" value="修改/查看" class="btn btn-primary">
-							                        <input type="hidden" name="campaignID" th:value="${campaignVO.campaignID}">
-							                    </form>
+											    	<input type="submit" value="修改/查看" class="btn btn-primary">
+											    	<input type="hidden" name="campaignID" th:value="${campaignVO.campaignID}"></form>
 							                </td>
 							            </tr>
 							        </th:block>

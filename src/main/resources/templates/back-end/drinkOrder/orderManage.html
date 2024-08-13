@@ -179,12 +179,12 @@
 									</td>
 									<td>
 									  <form method="post" th:action="@{/drinkOrder/cancelDrinkOrder}" style="margin-bottom: 0px;">
-									     <input type="submit" value="完成" class="btn btn-primary">
+									     <input type="submit" value="取消" class="btn btn-primary">
 									     <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"></form>
 									</td>
 									<td>
 									  <form method="post" th:action="@{/drinkOrder/successDrinkOrder}" style="margin-bottom: 0px;">
-									     <input type="submit" value="取消" class="btn btn-primary">
+									     <input type="submit" value="完成" class="btn btn-primary">
 									     <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"></form>
 									</td>
 									<td>

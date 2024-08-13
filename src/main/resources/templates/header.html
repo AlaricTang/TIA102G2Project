@@ -45,6 +45,7 @@
 						<li><a href="#">最新消息</a></li>
 						<li><a th:href="@{/drinkOrder/fakeLeave}">登出</a></li>
 					</ul>
+					<li class="dropdown"><a th:href="@{/product/switchToCartPage}">查看購物車</a></li>
 				</li>
 				<li class="dropdown" th:unless="${session.user != null }">
 					<a th:href="@{/drinkOrder/fakeLoggingPage}">登入</a>
