@@ -60,9 +60,9 @@ public class DrinkOrderBackController {
 	}
 
 	
-	//從訂單紀錄來
+	//======= 複合查詢(從訂單紀錄來) =======
 	@PostMapping("getDrinkOrder")
-	public String getOneDrinkOrder(
+	public String getDrinkOrder(
 			@RequestParam("drinkOrderID") String drinkOrderID,
 			@RequestParam("userID") String userID,
 			@RequestParam("storeID") String storeID,
@@ -94,7 +94,7 @@ public class DrinkOrderBackController {
 	}
 	
 	
-	//從訂單管理來
+	//======= 複合查詢(從訂單管理來) =======
 	@PostMapping("getUndoneDrinkOrder")
 	public String getUndoneDrinkOrder(
 			@RequestParam("drinkOrderID") String drinkOrderID,
@@ -126,7 +126,7 @@ public class DrinkOrderBackController {
 		return "back-end/drinkOrder/orderManage";
 	}
 	
-	
+	//======= 完成 訂單狀態 =======
 	@PostMapping("successDrinkOrder")
 	public String successDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
 		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
@@ -134,7 +134,7 @@ public class DrinkOrderBackController {
 		drinkOrderService.updateDrinkOrder(drinkOrder);
 		return "redirect:/drinkOrder/orderHistory";
 	}
-	
+	//======= 完成 付款狀態 =======
 	@PostMapping("sussesPaidDrinkOrder")
 	public String sussesPaidDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
 		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
@@ -143,7 +143,7 @@ public class DrinkOrderBackController {
 		return "redirect:/drinkOrder/orderManage";
 	}
 	
-	
+	//======= 取消 訂單狀態 =======
 	@PostMapping("cancelDrinkOrder")
 	public String cancelDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
 		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
@@ -151,8 +151,6 @@ public class DrinkOrderBackController {
 		drinkOrderSvc.updateDrinkOrder(drinkOrder);
 		return "redirect:/drinkOrder/orderHistory";
 	}
-	
-	
 	
 	
 	//===============店家端==================
