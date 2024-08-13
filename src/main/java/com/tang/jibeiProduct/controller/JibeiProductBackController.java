@@ -2,13 +2,17 @@ package com.tang.jibeiProduct.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ellie.member.model.MemberVO;
+import com.ellie.store.model.StoreService;
 import com.ken.drink.model.DrinkService;
+import com.ken.drink.model.DrinkVO;
 import com.tang.jibeiProduct.model.JibeiProductService;
 import com.tang.jibeiProduct.model.JibeiProductVO;
 
@@ -26,6 +33,9 @@ public class JibeiProductBackController {
 	
 	@Autowired
 	DrinkService drinkSvc;
+
+	@Autowired
+	StoreService storeSvc;
 	
 	@Autowired
 	JibeiProductService jibeiProductSvc;
@@ -42,7 +52,10 @@ public class JibeiProductBackController {
 	@GetMapping("addPage")
 	public String addPage(ModelMap model) {
 		JibeiProductVO jibeiProduct = new JibeiProductVO();
-		model.addAttribute("jibeiProduct",jibeiProduct);
+		model.addAttribute("jibeiProductVO",jibeiProduct);
+		
+		List<DrinkVO> drinkList = drinkSvc.getAll();
+		model.addAttribute("drinkList",drinkList);
 		return "back-end/jibeiProduct/addPage";
 	}
 	
@@ -50,8 +63,10 @@ public class JibeiProductBackController {
 	public String add(@Valid JibeiProductVO jibeiProduct,BindingResult result, 
 			ModelMap model, HttpSession session) {
 		//補齊
-		jibeiProduct.setJibeiProductStatus(Byte.valueOf("0"));
-		jibeiProduct.setMemberID((Integer)session.getAttribute("member"));
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		jibeiProduct.setJibeiProductUpdateTime(timestamp);
+		jibeiProduct.setMemberID(member.getMemberID());
 		//新增
 		jibeiProductSvc.addJibeiProduct(jibeiProduct);
 		//新增後回列表
@@ -107,7 +122,23 @@ public class JibeiProductBackController {
 		return "back-end/jibeiProduct/jibeiProductManage"; 
 	}
 
-
+	@PostMapping("getJibeiProduct")
+	public String getJibeiProduct(HttpServletRequest req, Model model) {
+		Map<String, String[]> map = req.getParameterMap();
+		Map<String, String[]> canUpdateMap = new HashMap<>(map);
+		
+		String[] onStatus = {"1"};
+		canUpdateMap.replace("jibeiProductStatus", onStatus);
+		List<JibeiProductVO> onList = jibeiProductSvc.getAll(canUpdateMap);
+		
+		String[] offStatus = {"0"};
+		canUpdateMap.replace("jibeiProductStatus", offStatus);
+		List<JibeiProductVO> offList = jibeiProductSvc.getAll(canUpdateMap);
+		
+		model.addAttribute("onList", onList); 
+		model.addAttribute("offList", offList); 
+		return "back-end/jibeiProduct/jibeiProductManage";
+	}
 	
 	
 
