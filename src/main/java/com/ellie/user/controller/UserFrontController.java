@@ -19,6 +19,17 @@ public class UserFrontController {
 
     @Autowired
     UserService userService;
+    
+ // 會員基本資料頁面
+    @GetMapping("viewProfile")
+    public String viewProfile(HttpSession session, ModelMap model) {
+        UserVO user = (UserVO) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/user/login";
+        }
+        model.addAttribute("user", user);
+        return "back-end/user/viewProfile";
+    }
 
     // 登入頁面
     @GetMapping("login")
@@ -88,22 +99,11 @@ public class UserFrontController {
             model.addAttribute("successMessage", "密碼重設成功，請登入");
             return "back-end/user/login";
         } else {
-            model.addAttribute("errorMessage", "該郵箱未註冊");
+            model.addAttribute("errorMessage", "該信箱未註冊");
             return "back-end/user/resetPassword";
         }
     }
 
-
-    // 會員基本資料頁面
-    @GetMapping("viewProfile")
-    public String viewProfile(HttpSession session, ModelMap model) {
-        UserVO user = (UserVO) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/user/login";
-        }
-        model.addAttribute("user", user);
-        return "back-end/user/viewProfile";
-    }
 
     // 處理會員登出
     @GetMapping("logout")

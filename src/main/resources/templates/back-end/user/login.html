@@ -6,10 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <!--  ======== Document Title =====================================  -->
     <title>啡常渴以 | 登入</title>
-
 
     <!--  ======== Favicons =====================================  -->
     <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
@@ -30,9 +28,7 @@
     <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-
     <!--  ======== Stylesheets =====================================  -->
-
     <!-- Default stylesheets-->
     <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
 
@@ -52,38 +48,81 @@
     <!-- Main stylesheet and color file -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+
     <style>
-        table,
-        table td,
-        table th {
-            border: 1px solid black;
-            border-collapse: collapse;
-            text-align: center;
+        /* Custom styles for the login section */
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, #f0f8ff, #e6e6fa);
+            padding: 20px;
         }
 
-        .drinkOrder,
-        .drinkOrderDetail {
-            background-color: #ffe4c4;
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: orange;
+            border-color: white;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .alert-danger {
+            margin-top: 20px;
+        }
+
+        .text-center a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
-
-
-
-
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
-
         <!-- header -->
         <div th:replace="header :: header"></div>
         <!-- header -->
 
-
-        <!-- 從這裡開始打 -->
+        <!-- 登入區域 -->
         <div class="main">
             <section class="login-section">
-                <div class="container">
+                <div class="login-container">
                     <h2 class="text-center">登入</h2>
                     <form action="#" th:action="@{/user/login}" method="post">
                         <div class="form-group">
@@ -97,18 +136,13 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">登入</button>
                         </div>
-                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}">
-                        </div>
+                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
                     </form>
                     <p class="text-center"><a href="#" th:href="@{/user/forgotPassword}">忘記密碼?</a></p>
                     <p class="text-center">還沒有帳號? <a href="#" th:href="@{/user/register}">註冊</a></p>
                 </div>
             </section>
         </div>
-
-
-
-
 
         <!-- footer -->
         <div th:include="footer :: footer"></div>
@@ -117,7 +151,6 @@
             <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
         </div>
     </main>
-
 
     <!--  ======== JavaScripts =====================================  -->
     <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
@@ -133,7 +166,6 @@
     <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
     <script th:src="@{/js/plugins.js}"></script>
     <script th:src="@{/js/main.js}"></script>
-
 </body>
 
 </html>

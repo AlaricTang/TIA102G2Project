@@ -1,107 +1,244 @@
-
-
-
-
-
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>更新店家</title>
-    <th:block th:insert="~{/back-end/store/included-fragment}"></th:block>
-    <style type="text/css">
-        form {
-            margin: 50px auto;
-            width: 400px;
-            border: 1px solid #ccc;
+    <title>後台 | 修改店家</title>
+
+    <!-- css for jquery datatables -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css">
+
+    <!-- JavaScript includes -->
+    <script th:src="@{/js/scriptsBack.js}"></script>
+    <script th:src="@{/js/datatables-simple-demo.js}"></script>
+    <script th:src="@{/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/demo/chart-bar-demo.js}"></script>
+    <script th:src="@{/demo/chart-pie-demo.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
             padding: 20px;
         }
-        form div {
-            margin-bottom: 10px;
+
+        .form-container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: .5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        label, input, select, textarea {
+
+        .form-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .form-group label {
             display: block;
-            width: 100%;
-            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: .5rem;
         }
-        button {
+
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: .375rem;
+            padding: .75rem 1.25rem;
+            font-size: 1rem;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .25);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: .375rem;
+            padding: .5rem 1rem; 
+            font-size: 0.875rem; 
+            font-weight: 600;
+            color: #fff;
+            transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+            text-transform: uppercase;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            border-radius: .375rem;
+            padding: .5rem 1rem; 
+            font-size: 0.875rem; 
+            font-weight: 600;
+            color: #fff;
+            transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+            text-transform: uppercase;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .img-container {
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: .375rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            display: block;
+            margin: 0 auto;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: .5rem;
+            font-weight: 600;
+        }
+
+        form input, form textarea {
             width: 100%;
-            padding: 10px;
-            background-color: green;
-            color: white;
+            max-width: 600px; 
+            margin-bottom: 1rem;
+            padding: .75rem;
+            border-radius: .375rem;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+        }
+
+        form button {
+            width: 100%;
+            max-width: 600px; 
+            padding: .5rem 1rem; 
             border: none;
+            border-radius: .375rem;
+            background-color: #007bff;
+            color: white;
+            font-size: 0.875rem; 
             cursor: pointer;
+            font-weight: 600;
+            transition: background-color .15s ease-in-out;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-    <div align="center">
-        <h2>更新店家</h2>
-        <h3><a class="navbar-brand" th:href="@{/store/listAllStore}">返回商店列表</a></h3>
-    </div>
-</nav>
 
-<div align="center" style="margin-top: 100px;">
-    <form th:action="@{/store/updateStore}" method="post" th:object="${storeVO}">
-        <input type="hidden" th:field="*{storeID}" />
-        <div>
-            <label>帳號:</label>
-            <input type="text" th:field="*{storeAcc}" required />
-            <span th:if="${#fields.hasErrors('storeAcc')}" th:errors="*{storeAcc}" class="error"></span>
+<body class="sb-nav-fixed">
+
+    <!-- header -->
+    <div th:include="headerBack :: headerBack"></div>
+    <!-- header -->
+
+    <div id="layoutSidenav">
+        <!-- footer -->
+        <div th:include="SliderLeftBack :: SliderLeftBack"></div>
+        <!-- footer -->
+
+        <!-- 右半邊的空白頁 -->
+        <div id="layoutSidenav_content">
+            <div class="container">
+                <div class="form-container">
+                    <h2>修改店家</h2>
+                    <form action="/store/updateStore" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="storeID" th:value="${storeVO.storeID}">
+                        <div class="form-group">
+                            <label for="storeName">店家名稱:</label>
+                            <input type="text" id="storeName" name="storeName" th:value="${storeVO.storeName}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="storeOpenTime">開店時間:</label>
+                            <input type="time" id="storeOpenTime" name="storeOpenTime" th:value="${storeVO.storeOpenTime}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="storeCloseTime">關店時間:</label>
+                            <input type="time" id="storeCloseTime" name="storeCloseTime" th:value="${storeVO.storeCloseTime}" class="form-control">
+                        </div>
+                        <div class="form-group img-container">
+                            <label for="storePic">店家圖片:</label>
+                            <img id="previewImage" src="#" alt="預覽圖片" style="display:none;">
+                            <input type="file" id="storePic" name="storePic" class="form-control" onchange="previewImage(event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="storeDes">店家描述:</label>
+                            <textarea id="storeDes" name="storeDes" class="form-control" th:text="${storeVO.storeDes}"></textarea>
+                        </div>
+                        <button type="submit">修改</button>
+                    </form>
+                    <p th:if="${success}" th:text="${success}" style="color: #28a745; text-align: center; font-weight: bold;"></p>
+                </div>
+            </div>
         </div>
-        <div>
-            <label>密碼:</label>
-            <input type="password" th:field="*{storePwd}" required />
-            <span th:if="${#fields.hasErrors('storePwd')}" th:errors="*{storePwd}" class="error"></span>
-        </div>
-        <div>
-            <label>名稱:</label>
-            <input type="text" th:field="*{storeName}" required />
-            <span th:if="${#fields.hasErrors('storeName')}" th:errors="*{storeName}" class="error"></span>
-        </div>
-        <div>
-            <label>地址:</label>
-            <input type="text" th:field="*{storeAddr}" required />
-            <span th:if="${#fields.hasErrors('storeAddr')}" th:errors="*{storeAddr}" class="error"></span>
-        </div>
-        <div>
-            <label>地圖URL:</label>
-            <input type="text" th:field="*{storeMap}" required />
-            <span th:if="${#fields.hasErrors('storeMap')}" th:errors="*{storeMap}" class="error"></span>
-        </div>
-        <div>
-            <label>電話:</label>
-            <input type="text" th:field="*{storePhone}" />
-            <span th:if="${#fields.hasErrors('storePhone')}" th:errors="*{storePhone}" class="error"></span>
-        </div>
-        <div>
-            <label>描述:</label>
-            <textarea th:field="*{storeDes}"></textarea>
-            <span th:if="${#fields.hasErrors('storeDes')}" th:errors="*{storeDes}" class="error"></span>
-        </div>
-        <div>
-            <label>圖片:</label>
-            <input type="file" th:field="*{storePic}" />
-        </div>
-        <div>
-            <label>營業開始時間:</label>
-            <input type="time" th:field="*{storeOpenTime}" />
-        </div>
-        <div>
-            <label>營業結束時間:</label>
-            <input type="time" th:field="*{storeCloseTime}" />
-        </div>
-       <!--   <div>
-            <label>編輯者 :</label>
-            <input type="number" th:field="*{editedByMemberID}" required />
-            <span th:if="${#fields.hasErrors('editedByMemberID')}" th:errors="*{editedByMemberID}" class="error"></span>
-        </div>
-        -->
-        <button type="submit">更新店家</button>
-    </form>
-</div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var preview = document.getElementById('previewImage');
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+
 </body>
 </html>

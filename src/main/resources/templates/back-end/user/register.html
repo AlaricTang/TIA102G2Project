@@ -2,156 +2,175 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!--  ======== Document Title =====================================  -->
+    <title>啡常渴以 | 註冊</title>
 
-	<!--  ======== Document Title =====================================  -->
-	<title>啡常渴以 | 註冊</title>
+    <!--  ======== Favicons =====================================  -->
+    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
 
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
-	<!--  ======== Favicons =====================================  -->
-	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
-	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
-	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
-	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
-	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
-	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
-	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
-	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
-	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
-	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
-	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
-	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+    <!--  ======== Stylesheets =====================================  -->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
 
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
-	<meta name="theme-color" content="#ffffff">
+    <!-- Template specific stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+    <link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+    <link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+    <link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
 
+    <!-- Main stylesheet and color file -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
 
-	<!--  ======== Stylesheets =====================================  -->
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-	<!-- Default stylesheets-->
-	<link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
 
-	<!-- Template specific stylesheets-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
-	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
-	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
-	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
-	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
-	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
-	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
-	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
-	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+        .register-section {
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Adjust as needed */
+            width: 100%;
+        }
 
-	<!-- Main stylesheet and color file -->
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
-	<style>
-		table,
-		table td,
-		table th {
-			border: 1px solid black;
-			border-collapse: collapse;
-			text-align: center;
-		}
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-		.drinkOrder,
-		.drinkOrderDetail {
-			background-color: #ffe4c4;
-		}
-	</style>
+        .form-control {
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            font-size: 1rem;
+        }
+    </style>
 </head>
 
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
-	<main>
+    <main>
+        <!-- header -->
+        <div th:replace="header :: header"></div>
+        <!-- header -->
 
-		<!-- header -->
-		<div th:replace="header :: header"></div>
-		<!-- header -->
+        <!-- 從這裡開始打 -->
+        <div class="main">
+            <section class="register-section">
+                <h2 class="text-center mb-4" style="font-weight: bold; font-size: 2.5rem; color: #343a40;">註冊</h2>
+                <form action="#" th:action="@{/user/register}" method="post" class="p-4">
+                    <div class="form-group">
+                        <label for="userName" style="font-size: 1.2rem; font-weight: 600;">姓名</label>
+                        <input type="text" id="userName" name="userName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userGender" style="font-size: 1.2rem; font-weight: 600;">性別</label>
+                        <select id="userGender" name="userGender" class="form-control" required>
+                            <option value="">選擇性別</option>
+                            <option value="0">男</option>
+                            <option value="1">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userBirth" style="font-size: 1.2rem; font-weight: 600;">生日</label>
+                        <input type="date" id="userBirth" name="userBirth" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPhone" style="font-size: 1.2rem; font-weight: 600;">電話</label>
+                        <input type="tel" id="userPhone" name="userPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail" style="font-size: 1.2rem; font-weight: 600;">電子郵件</label>
+                        <input type="email" id="userEmail" name="userEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPwd" style="font-size: 1.2rem; font-weight: 600;">密碼</label>
+                        <input type="password" id="userPwd" name="userPwd" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userAddr" style="font-size: 1.2rem; font-weight: 600;">地址</label>
+                        <input type="text" id="userAddr" name="userAddr" class="form-control" required>
+                    </div>
+                    <div class="form-group mt-4 text-center">
+                        <button type="submit" class="btn btn-primary btn-block">註冊</button>
+                    </div>
+                    <div th:if="${successMessage}" class="alert alert-success mt-3" role="alert" th:text="${successMessage}"></div>
+                </form>
+            </section>
+        </div>
 
-		<!-- 從這裡開始打 -->
-		<div class="main">
-			<section class="register-section">
-				<div class="container">
-					<h2 class="text-center">註冊</h2>
-					<form action="#" th:action="@{/user/register}" method="post">
-						<div class="form-group">
-							<label for="userName">姓名</label>
-							<input type="text" id="userName" name="userName" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<label for="userGender">性別</label>
-							<select id="userGender" name="userGender" class="form-control" required>
-								<option value="">選擇性別</option>
-								<option value="0">男</option>
-								<option value="1">女</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="userBirth">生日</label>
-							<input type="date" id="userBirth" name="userBirth" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<label for="userPhone">電話</label>
-							<input type="tel" id="userPhone" name="userPhone" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<label for="userEmail">電子郵件</label>
-							<input type="email" id="userEmail" name="userEmail" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<label for="userPwd">密碼</label>
-							<input type="password" id="userPwd" name="userPwd" class="form-control" required>
-						</div>
-					<!--  	<div class="form-group">
-							<label for="userConfirmPwd">確認密碼</label>
-							<input type="password" id="userConfirmPwd" name="userConfirmPwd" class="form-control"
-								required>
-						</div>
-						-->
-						<div class="form-group">
-							<label for="userAddr">地址</label>
-							<input type="text" id="userAddr" name="userAddr" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary">註冊</button>
-						</div>
-						<div th:if="${successMessage}" class="alert alert-success" role="alert"
-							th:text="${successMessage}"></div>
-					</form>
-				</div>
-			</section>
-		</div>
+        <!-- footer -->
+        <div th:replace="footer :: footer"></div>
+        <!-- footer -->
+    </main>
 
-		<!-- footer -->
-		<div th:include="footer :: footer"></div>
-		<!-- footer -->
-		<div class="scroll-up">
-			<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
-		</div>
-	</main>
-
-	<!--  ======== JavaScripts =====================================  -->
-	<script th:src="@{/lib/jquery/dist/jquery.js}"></script>
-	<script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
-	<script th:src="@{/lib/wow/dist/wow.js}"></script>
-	<script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
-	<script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
-	<script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
-	<script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
-	<script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
-	<script th:src="@{/lib/smoothscroll.js}"></script>
-	<script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
-	<script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
-	<script th:src="@{/js/plugins.js}"></script>
-	<script th:src="@{/js/main.js}"></script>
-
+    <!--  ======== Javascript Files =====================================  -->
+    <script th:src="@{/lib/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/jquery.mb.YTPlayer/dist/jquery.mb.YTPlayer.min.js}"></script>
+    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/lib/jquery.countTo/jquery.countTo.js}"></script>
+    <script th:src="@{/lib/jquery.stellar/jquery.stellar.min.js}"></script>
+    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 
 </html>

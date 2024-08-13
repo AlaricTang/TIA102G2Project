@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>後台 | 新增員工</title>
+    <title>後台 | 修改員工資料</title>
 
     <!-- 引入樣式表 -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
@@ -24,6 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
 
+    <!-- 添加樣式 -->
     <style>
         body {
             background-color: #f8f9fa;
@@ -31,57 +32,65 @@
         }
 
         .container {
-            max-width: 700px;
-            margin: 30px auto;
+            max-width: 800px;
+            margin-top: 50px;
+            padding: 0 15px;
         }
 
         .form-container {
             background: #ffffff;
             padding: 2rem;
             border-radius: .5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,.1);
-            border: 0.6px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
+            border: 1px solid #dee2e6;
         }
 
         .form-container h2 {
             margin-bottom: 1.5rem;
             font-size: 1.75rem;
-            color: #343a40;
+            color: #333;
+            text-align: center;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
+            font-size: 1rem;
             font-weight: 500;
-            color: #495057;
+            color: #333;
             margin-bottom: .5rem;
         }
 
-        .form-control {
-            border: 1px solid #ced4da;
+        .form-group input {
             border-radius: .375rem;
-            padding: 0.5rem 1rem;
+            border: 1px solid #ced4da;
+            padding: .75rem;
             font-size: 1rem;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
-            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color .15s ease-in-out;
         }
 
-        .form-control:focus {
-            border-color: #80bdff;
-            box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .25);
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: 0;
+        }
+
+        .form-group input[type="file"] {
+            padding: .375rem 0;
         }
 
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
             border-radius: .375rem;
-            padding: .75rem 1.25rem;
+            padding: .75rem;
             font-size: 1rem;
             font-weight: 500;
-            color: #ffffff;
+            color: #fff;
             transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
         }
 
@@ -91,9 +100,9 @@
         }
 
         .text-success {
-            font-size: 1.125rem;
-            font-weight: 500;
             color: #28a745;
+            font-size: 1rem;
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -110,37 +119,33 @@
 
         <!-- 主要內容區域 -->
         <div id="layoutSidenav_content">
-            <!-- 新增員工表單 -->
+            <!-- 修改員工 -->
             <div class="container">
                 <div class="form-container">
-                    <h2 class="text-center">新增員工</h2>
-                    <form th:action="@{/member/addMember}" th:object="${memberVO}" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="memberName">姓名:</label>
-                            <input type="text" id="memberName" th:field="*{memberName}" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="memberEmail">電子信箱:</label>
-                            <input type="text" id="memberEmail" th:field="*{memberEmail}" class="form-control" required>
-                        </div>
-
+                    <h2 class="text-center">修改員工資料</h2>
+                    <form th:action="@{/member/updateMember}" th:object="${memberVO}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{memberID}">
                         <div class="form-group">
                             <label for="memberAcc">帳號:</label>
-                            <input type="text" id="memberAcc" th:field="*{memberAcc}" class="form-control" required>
+                            <input type="text" id="memberAcc" th:field="*{memberAcc}" class="form-control" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="memberPwd">密碼:</label>
-                            <input type="password" id="memberPwd" th:field="*{memberPwd}" class="form-control" required>
+                            <input type="password" id="memberPwd" th:field="*{memberPwd}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="memberName">姓名:</label>
+                            <input type="text" id="memberName" th:field="*{memberName}" class="form-control" required>
                         </div>
 
                         <div class="form-group">
                             <label for="memberPic">圖片:</label>
-                            <input type="file" id="memberPic" name="memberPic" class="form-control">
+                            <input type="file" id="memberPic" name="memberPic" multiple class="form-control">
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">新增</button>
+                        <button type="submit" class="btn btn-primary w-100">更新</button>
                         <div th:if="${success}" th:text="${success}" class="text-success text-center mt-3"></div>
                     </form>
                 </div>
