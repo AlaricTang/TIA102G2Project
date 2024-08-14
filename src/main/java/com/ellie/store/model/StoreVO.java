@@ -3,12 +3,15 @@ package com.ellie.store.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.ellie.member.model.MemberVO;
 
 import java.util.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
+
 
 @Entity
 @Table(name = "store")
@@ -36,7 +39,7 @@ public class StoreVO {
 	private String storeAddr;
 
 //	@NotEmpty(message =  "店家地圖:不可為空")
-	@Column(name = "storeMap")
+	@Column(name = "storeMap", updatable = false)
 	private String storeMap;
 
 	@Column(name = "storePhone")
@@ -59,11 +62,11 @@ public class StoreVO {
 	@Column(name = "storeCloseTime")
 	private Time storeCloseTime;
 
-	@NotEmpty(message = "不可為空")
-	@Column(name = "storeCreateDate")
+
+	@Column(name = "storeCreateDate",updatable = false, insertable = false )
 	private Date storeCreateDate;
 
-	@NotEmpty(message = "不可為空")
+//	@NotEmpty(message = "不可為空")
 	@Column(name = "createdByMemberID")
 	private Integer createdByMemberID;
 
@@ -75,11 +78,12 @@ public class StoreVO {
 
 	@ManyToOne
 	@JoinColumn(name = "createdByMemberID", insertable = false, updatable = false)
-	private MemberVO createdByMember;
+	private StoreVO createdByMember;
+
 
 	@ManyToOne
 	@JoinColumn(name = "editedByMemberID", insertable = false, updatable = false)
-	private MemberVO editedByMember;
+	private StoreVO editedByMember;
 
 	public Integer getStoreID() {
 		return storeID;
@@ -209,21 +213,22 @@ public class StoreVO {
 		this.storeUpdateTime = storeUpdateTime;
 	}
 
-	public MemberVO getCreatedByMember() {
+	public StoreVO getCreatedByMember() {
 		return createdByMember;
 	}
 
-	public void setCreatedByMember(MemberVO createdByMember) {
+	public void setCreatedByMember(StoreVO createdByMember) {
 		this.createdByMember = createdByMember;
 	}
 
-	public MemberVO getEditedByMember() {
+	public StoreVO getEditedByMember() {
 		return editedByMember;
 	}
 
-	public void setEditedByMember(MemberVO editedByMember) {
+	public void setEditedByMember(StoreVO editedByMember) {
 		this.editedByMember = editedByMember;
 	}
+
 
 	@Override
 	public String toString() {
@@ -232,8 +237,7 @@ public class StoreVO {
 				+ ", storeDes=" + storeDes + ", storePic=" + Arrays.toString(storePic) + ", storeCups=" + storeCups
 				+ ", storeOpenTime=" + storeOpenTime + ", storeCloseTime=" + storeCloseTime + ", storeCreateDate="
 				+ storeCreateDate + ", createdByMemberID=" + createdByMemberID + ", editedByMemberID="
-				+ editedByMemberID + ", storeUpdateTime=" + storeUpdateTime + ", createdByMember=" + createdByMember
-				+ ", editedByMember=" + editedByMember + "]";
+				+ editedByMemberID + ", storeUpdateTime=" + storeUpdateTime +" ]";
 	}
 
 }

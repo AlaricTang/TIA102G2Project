@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>後台 | 新增員工</title>
 
-    <!-- ●●css for jquery datatables 用 -->
+    <!-- 引入樣式表 -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css"/>
 
-    
+    <!-- 引入 JavaScript -->
     <script th:src="@{/js/scriptsBack.js}"></script>
-    <script th:src="@{/js/datatables-simple-demo.js}"></script>
+    <!-- <script th:src="@{/js/datatables-simple-demo.js}"></script> -->
     <script th:src="@{/demo/chart-area-demo.js}"></script>
     <script th:src="@{/demo/chart-bar-demo.js}"></script>
     <script th:src="@{/demo/chart-pie-demo.js}"></script>
@@ -132,7 +132,7 @@
 
                         <div class="form-group">
                             <label for="memberPwd">密碼:</label>
-                            <input type="password" id="memberPwd" th:field="*{memberPwd}" class="form-control" required>
+                            <input autocomplete="false" type="password" id="memberPwd" th:field="*{memberPwd}" class="form-control" required>
                         </div>
 
                         <div class="form-group">

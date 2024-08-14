@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hibernate.util.compositeQuery.CompositeQuery_Member; // 引入對應的複合查詢工具類
 
 @Service("memberService")
 public class MemberService {
@@ -42,9 +41,9 @@ public class MemberService {
         return repository.findAll();
     }
 
-    public List<MemberVO> getAll(Map<String, String[]> map) {
-        return CompositeQuery_Member.getAllC(map, sessionFactory.openSession());
-    }
+//    public List<MemberVO> getAll(Map<String, String[]> map) {
+//        return CompositeQuery_Member.getAllC(map, sessionFactory.openSession());
+//    }
 
     public MemberVO findByAcc(String memberAcc) {
         return repository.findByMemberAcc(memberAcc);

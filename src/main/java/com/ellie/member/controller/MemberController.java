@@ -1,9 +1,11 @@
 package com.ellie.member.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,9 +20,8 @@ import com.ellie.member.model.MemberVO;
 import com.ellie.member.model.MemberService;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/member")
@@ -80,18 +81,19 @@ public class MemberController {
 	@PostMapping("/addMember")
 	public String addMember(@ModelAttribute("memberVO") MemberVO memberVO, BindingResult result,
 			@RequestParam("memberPic") MultipartFile[] parts, ModelMap model) throws IOException {
-		if (result.hasErrors()) {
+		result = removeFieldError(memberVO, result, "memberPic");
+		if (result.hasErrors()) {	
 			return "back-end/member/addMember";
 		}
 
 		// 檢查是否有圖片檔案
+		
 		if (parts != null && parts.length > 0 && !parts[0].isEmpty()) {
 			memberVO.setMemberPic(parts[0].getBytes());
 		} else {
 			memberVO.setMemberPic(null); // 或者設置一個默認的圖片
 		}
-
-		memberVO.setMemberCreateDate(new Timestamp(System.currentTimeMillis()));
+		memberVO.setCreatedByMemberID(1);
 		memberService.addMember(memberVO);
 
 		List<MemberVO> list = memberService.getAll();
@@ -106,7 +108,7 @@ public class MemberController {
 		MemberVO memberVO = memberService.getOneMember(memberID);
 		if (memberVO != null) {
 			modelMap.addAttribute("memberVO", memberVO);
-			return "back-end/member/editMember"; // 返回顯示員工修改頁面
+			return "back-end/member/updateMember"; // 返回顯示員工修改頁面
 		} else {
 			return "redirect:/member/listAllMembers"; // 如果找不到該員工回到員工列表
 		}
@@ -116,6 +118,7 @@ public class MemberController {
 	@PostMapping("/updateMember")
 	public String updateMember(@ModelAttribute("memberVO") @Valid MemberVO memberVO, BindingResult result,
 			@RequestParam("memberPic") MultipartFile[] parts, ModelMap model) throws IOException {
+		result = removeFieldError(memberVO, result, "memberPic");
 		if (result.hasErrors()) {
 			return "back-end/member/updateMember";
 		}
@@ -148,13 +151,22 @@ public class MemberController {
 		return "back-end/member/listAllMembers"; // 刪除成功後重導至列表頁面
 	}
 
-	// 根據複合查詢條件列出員工
-	@PostMapping("/listMembers_ByCompositeQuery")
-	public String listMembersByCompositeQuery(HttpServletRequest req, ModelMap modelMap) {
-		Map<String, String[]> map = req.getParameterMap();
-		List<MemberVO> list = memberService.getAll(map);
-		modelMap.addAttribute("members", list);
-		return "back-end/member/listAllMembers"; // 返回顯示員工列表
+//	// 根據複合查詢條件列出員工
+//	@PostMapping("/listMembers_ByCompositeQuery")
+//	public String listMembersByCompositeQuery(HttpServletRequest req, ModelMap modelMap) {
+//		Map<String, String[]> map = req.getParameterMap();
+//		List<MemberVO> list = memberService.getAll(map);
+//		modelMap.addAttribute("members", list);
+//		return "back-end/member/listAllMembers"; // 返回顯示員工列表
+//	}
+	public BindingResult removeFieldError(MemberVO memberVO, BindingResult result, String removedFieldname) {
+		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname))
+				.collect(Collectors.toList());
+		result = new BeanPropertyBindingResult(memberVO, "memberVO");
+		for (FieldError fieldError : errorsListToKeep) {
+			result.addError(fieldError);
+		}
+		return result;
 	}
-
 }

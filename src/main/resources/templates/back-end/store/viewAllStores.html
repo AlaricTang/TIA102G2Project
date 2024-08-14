@@ -46,7 +46,64 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
     
-    
+    <!-- Custom styles for the table -->
+    <style>
+        .main {
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .table {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 15px;
+        }
+
+        .table th {
+            background-color: #f1f1f1;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .table td {
+            color: #555;
+        }
+
+        .table img {
+            max-width: 100px;
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: orange;
+            border-color: #007bff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.4);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+            box-shadow: 0 6px 8px rgba(0, 86, 179, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
@@ -56,9 +113,36 @@
         <!-- header -->
         
         <div class="main">
-        
+            <h1>店家列表</h1>
+            <div class="container">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>店家圖片</th>
+                            <th>店家名稱</th>
+                            <th>店家地址</th>
+                            <th>店家電話</th>
+                            <th>營業時間</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="store : ${stores}">
+                            <td>
+                                <img th:src="@{'/images/stores/' + ${store.storePic}}" alt="店家圖片">
+                            </td>
+                            <td th:text="${store.storeName}">店家名稱</td>
+                            <td th:text="${store.storeAddr}">店家地址</td>
+                            <td th:text="${store.storePhone}">店家電話</td>
+                            <td th:text="${store.storeOpenTime} + ' - ' + ${store.storeCloseTime}">營業時間</td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/store/viewOneStore(storeID=${store.storeID})}">查看詳情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-            
+        
         <!-- footer -->
         <div th:include="footer :: footer"></div>
         <!-- footer -->

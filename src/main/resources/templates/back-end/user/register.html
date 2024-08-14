@@ -23,9 +23,9 @@
     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
     <link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
-
+    
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" th:content="@{/images/favicons/ms-icon-144x144.png}">
     <meta name="theme-color" content="#ffffff">
 
     <!--  ======== Stylesheets =====================================  -->
@@ -72,7 +72,7 @@
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px; /* Adjust as needed */
+            max-width: 900px; /* 調整為較寬的容器 */
             width: 100%;
         }
 
@@ -81,7 +81,7 @@
         }
 
         .form-control {
-            padding: 15px;
+            padding: 10px;
             border-radius: 5px;
             border: 1px solid #ced4da;
         }
@@ -102,6 +102,27 @@
         .alert {
             font-size: 1rem;
         }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+
+        .form-group {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 280px; /* 最小寬度 */
+        }
+
+        label {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .form-group.full-width {
+            flex: 100%;
+        }
     </style>
 </head>
 
@@ -111,42 +132,47 @@
         <div th:replace="header :: header"></div>
         <!-- header -->
 
-        <!-- 從這裡開始打 -->
         <div class="main">
             <section class="register-section">
                 <h2 class="text-center mb-4" style="font-weight: bold; font-size: 2.5rem; color: #343a40;">註冊</h2>
                 <form action="#" th:action="@{/user/register}" method="post" class="p-4">
-                    <div class="form-group">
-                        <label for="userName" style="font-size: 1.2rem; font-weight: 600;">姓名</label>
-                        <input type="text" id="userName" name="userName" class="form-control" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userName">姓名</label>
+                            <input type="text" id="userName" name="userName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userGender">性別</label>
+                            <select id="userGender" name="userGender" class="form-control" required>
+                                <option value="">選擇性別</option>
+                                <option value="0">男</option>
+                                <option value="1">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="userBirth">生日</label>
+                            <input type="date" id="userBirth" name="userBirth" class="form-control" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="userGender" style="font-size: 1.2rem; font-weight: 600;">性別</label>
-                        <select id="userGender" name="userGender" class="form-control" required>
-                            <option value="">選擇性別</option>
-                            <option value="0">男</option>
-                            <option value="1">女</option>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userPhone">電話</label>
+                            <input type="tel" id="userPhone" name="userPhone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">電子郵件</label>
+                            <input type="email" id="userEmail" name="userEmail" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPwd">密碼</label>
+                            <input type="password" id="userPwd" name="userPwd" class="form-control" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="userBirth" style="font-size: 1.2rem; font-weight: 600;">生日</label>
-                        <input type="date" id="userBirth" name="userBirth" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="userPhone" style="font-size: 1.2rem; font-weight: 600;">電話</label>
-                        <input type="tel" id="userPhone" name="userPhone" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="userEmail" style="font-size: 1.2rem; font-weight: 600;">電子郵件</label>
-                        <input type="email" id="userEmail" name="userEmail" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="userPwd" style="font-size: 1.2rem; font-weight: 600;">密碼</label>
-                        <input type="password" id="userPwd" name="userPwd" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="userAddr" style="font-size: 1.2rem; font-weight: 600;">地址</label>
-                        <input type="text" id="userAddr" name="userAddr" class="form-control" required>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="userAddr">地址</label>
+                            <input type="text" id="userAddr" name="userAddr" class="form-control" required>
+                        </div>
                     </div>
                     <div class="form-group mt-4 text-center">
                         <button type="submit" class="btn btn-primary btn-block">註冊</button>
@@ -156,20 +182,25 @@
             </section>
         </div>
 
-        <!-- footer -->
-        <div th:replace="footer :: footer"></div>
-        <!-- footer -->
+         <!-- footer -->
+	    <div th:include="footer :: footer"></div>
+	    <!-- footer -->
+    	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
 
     <!--  ======== Javascript Files =====================================  -->
     <script th:src="@{/lib/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/wow/dist/wow.min.js}"></script>
+    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.min.js}"></script>
+    <script th:src="@{/lib/isotope/dist/isotope.pkgd.min.js}"></script>
+    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/lib/flexslider/jquery.flexslider-min.js}"></script>
     <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
-    <script th:src="@{/lib/jquery.mb.YTPlayer/dist/jquery.mb.YTPlayer.min.js}"></script>
+    <script th:src="@{/lib/smoothscroll.js}"></script>
     <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.min.js}"></script>
-    <script th:src="@{/lib/jquery.countTo/jquery.countTo.js}"></script>
-    <script th:src="@{/lib/jquery.stellar/jquery.stellar.min.js}"></script>
     <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </body>
 
