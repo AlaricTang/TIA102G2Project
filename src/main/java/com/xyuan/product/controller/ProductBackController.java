@@ -88,6 +88,9 @@ public class ProductBackController {
 	        }
 	    }
 	    if (result.hasErrors()) {
+			result.getFieldErrors().forEach(error -> {
+		        System.out.println("Field: " + error.getField() + " - " + error.getDefaultMessage());
+		    });
 	        return "back-end/product/updateProductInput";
 	    }
 
