@@ -83,60 +83,50 @@
 		<!-- header -->
 		
 		<div class="main">
-			<section class="module">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-6 mb-sm-40">
-							<img th:src="@{/drink/drinkDBGifReader} + '?drinkID=' + ${singleDrink.drinkID}" alt="Single Product Image" />
-						</div>
-						
-						<div class="col-sm-6">
-							<div class="row">
-								<div class="col-sm-12">
-									<h1 class="product-title font-alt" th:text="${singleDrink.drinkName}"></h1>
-								</div>
-							</div>
-							
-							
-							<div class="row mb-20">
-								<div class="col-sm-12">
-									<div class="price font-alt">
-										<p th:text="'價格: NT' + ${drinkVO.drinkPrice}"></p>
-									</div>
-								</div>
-							</div>
-							<div class="row mb-20">
-								<div class="col-sm-12">
-									<div class="description" th:text="${singleDrink.drinkDes}">
-								</div>
-							</div>
-							
-							<div class="row mb-20">
-								<form method="post" th:action="@{/drink/drinkAddToCart}">
-									<div class="col-sm-4 mb-sm-20">
-										<input class="form-control input-lg" type="number" name="orderAmount"
-											value="1" max="40" min="1" required="required" />
-									</div>
-									<input type="hidden" name="drinkID" th:value="${singleDrink.drinkID}">
-	
-	<!-- 還沒有購物車，不確定是否正確 -->
-									<div class="col-sm-8">
-										<input type="submit" class="btn btn-lg btn-block btn-round btn-b"  value="加入購物車" />
-									</div>
-								</form>
-							</div>
-							
-							<div class="row mb-20">
-								<div class="col-sm-12">
-									<div class="product_meta">
-										飲品分類：<a th:text="${singleDrink.drinkTag}"></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<!-- singleDrink.html -->
+
+<form th:action="@{/drink/drinkAddToCart}" method="POST">
+    <div class="form-group">
+        <label for="drinkName">飲品名稱:</label>
+        <input type="text" id="drinkName" name="drinkName" class="form-control" 
+               th:value="${drinkVO.drinkName}" readonly/>
+    </div>
+    
+    <div class="form-group">
+        <label for="drinkOrderDetailAmount">數量:</label>
+        <input type="number" id="drinkOrderDetailAmount" name="drinkOrderDetailAmount" class="form-control" 
+               value="1" min="1" required/>
+    </div>
+
+    <div class="form-group">
+        <label for="drinkOrderDetailIsHot">是否熱飲:</label>
+        <select id="drinkOrderDetailIsHot" name="drinkOrderDetailIsHot" class="form-control">
+            <option value="0">否</option>
+            <option value="1">是</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="drinkOrderDetailUseCup">是否用環保杯:</label>
+        <select id="drinkOrderDetailUseCup" name="drinkOrderDetailUseCup" class="form-control">
+            <option value="0">否</option>
+            <option value="1">是</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="drinkOrderDetailIsJibei">是否用寄杯:</label>
+        <select id="drinkOrderDetailIsJibei" name="drinkOrderDetailIsJibei" class="form-control">
+            <option value="0">否</option>
+            <option value="1">是</option>
+        </select>
+    </div>
+    
+    <!-- 隱藏的欄位，用於傳遞 drinkID -->
+    <input type="hidden" name="drinkID" th:value="${drinkVO.drinkID}"/>
+
+    <button type="submit" class="btn btn-primary">加入購物車</button>
+</form>
 			
 			
 			
