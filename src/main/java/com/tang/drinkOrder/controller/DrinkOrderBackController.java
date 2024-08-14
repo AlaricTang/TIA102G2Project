@@ -78,7 +78,6 @@ public class DrinkOrderBackController {
 		map.put("drinkOrderStartCreateTime", drinkOrderStartCreateTime);
 		map.put("drinkOrderEndCreateTime", drinkOrderEndCreateTime);
 		map.put("drinkOrderStatus", drinkOrderStatus);
-		System.out.println(drinkOrderStatus);
 		List<DrinkOrderVO> drinkOrderList = drinkOrderService.getAll(map);
 		
 		//沒查到,error準備

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <!--  ======== Document Title =====================================  -->
+    <title>啡常渴以 | 我的寄杯</title>
+    
+    
+    <!--  ======== Favicons =====================================  -->
+   	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+    
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    
+    
+    <!--  ======== Stylesheets =====================================  -->
+    
+    <!-- Default stylesheets-->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
+    
+    <!-- Template specific stylesheets-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+	
+	<!-- Main stylesheet and color file -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+	<style >
+		.card-body {
+    background-color: #fff; /* 白色背景 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+    margin-top: 20px; /* 上方留空間 */
+}
+
+.shop-item {
+    background-color: #f9f9f9; /* 淺灰背景 */
+    border: 1px solid #ddd; /* 邊框 */
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center; /* 置中 */
+}
+
+.shop-item-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.shop-item-details h4 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.shop-item-details p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.drink-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* 保持圖片比例，裁剪多餘部分 */
+}
+
+.title-separator {
+    border: 0;
+    height: 2px; /* 線條高度 */
+    background-color: #3C3C3C; /* 線條顏色 */
+    margin: 20px 0; /* 上下間距 */
+    border-radius: 5px; /* 圓角處理 */
+}
+
+.row.multi-columns-row {
+    margin-top: 40px; /* 品項區塊之間的距離 */
+}
+	</style>
+  </head>
+
+
+
+
+
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+  	<main>
+
+	    <!-- header -->
+	    <div th:replace="header :: header"></div>
+	    <!-- header -->
+		<div class="main">
+		
+		
+		
+		
+		
+		加入我的寄杯 測試<br>
+		<form method="post" action="/user/fakeBuyJibei">
+			飲品ID:<br>
+			<input type="number" name="drinkID"><br>
+			數量:<br>
+			<input type="number" name="number"><br>
+			<input type="submit" value="加入假資料">
+		</form>
+		
+		
+		<hr>
+        <section class="module-small" style="padding-top: 30px">
+            <div class="container">
+            
+            <!-- 上方功能欄 -->
+        <div class="row" style="margin-bottom: 20px;">
+		    <div class="col-sm-12">
+		        <div class="functional-bar" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: flex; align-items: center;">
+		            <div style="flex: 1;">
+		                <button class="btn btn-primary" onclick="window.history.back()">返回</button> 
+		            </div>
+		            <div style="flex: 2; text-align: center;">
+		                <h1 style="margin: 0; font-size: 24px; font-weight: bold;">飲品菜單</h1>
+		            </div>
+		            <div style="flex: 1; text-align: right;">
+		                <button class="btn btn-secondary">查看寄杯</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+            
+            
+            <!-- 綠茶飲品 -->
+                <div class="row multi-columns-row">
+                <!-- 測試 犧牲品1號 -->
+        <section class="module bg-dark-30 parallax-bg restaurant-menu-bg" style="height: 280px" data-background="/images/restaurant/slider2.jpg">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-2 col-sm-offset-5">
+                <div class="alt-module-subtitle"><span class="holder-w"></span>
+                  <h5 class="font-serif">啡常渴以</h5><span class="holder-w"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2">
+                <h2 class="module-title font-alt mb-0">最新菜單</h2>
+              </div>
+            </div>
+          </div>
+        </section>
+        <br>
+        	<div class="col-sm-8 col-sm-offset-2">
+                <h2 class="module-title font-alt mb-0">我的寄杯</h2>
+                <hr class="title-separator">
+            </div>
+              	<div th:each="userJibeiVO : ${userJibeiList}">
+                	<div class="col-sm-6 col-md-3 col-lg-3">
+                    	<div class="shop-item">
+                        	<div class="shop-item-image">
+                            	<img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${userJibeiVO.drinkID}" alt="Drink Image"/>
+         	                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add One</span></a></div>
+                            </div>    
+                            <h4 class="shop-item-title font-alt" th:text="${userJibeiVO.drinkName}"></h4>
+                            <p th:text="'尚餘: ' + ${userJibeiVO.number} +'杯' "></p>
+                            <form method="get" action="#">
+ 	                           	<label >使用</label>
+                            	<input type="number" name="" min="0" th:max="${userJibeiVO.number}"><br>
+                            	<input type="checkbox" id="usecup"><label for="usecup">是否使用環保杯</label>
+                            	  <input type="radio" id="option1" name="ishot" value="0">
+								  <label for="option1">冷</label>
+								  
+								  <input type="radio" id="option2" name="ishot" value="value2">
+								  <label for="option2">熱</label><br>
+                            	<input type="submit" value="加入購物車">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+                
+            
+            <!-- 其他選項 -->
+            
+<section class="module-small bg-dark-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h3 class="module-title font-alt">訂購數量:</h3>
+                <input type="number" class="form-control input-sm" min="0" value=""/>
+            </div>
+            <div class="col-md-3">
+                <h3 class="module-title font-alt">金額:</h3>
+                <input type="number" class="form-control input-sm" min="0" value=""/>
+            </div>
+            <div class="col-md-3 text-center">
+                <h3 class="module-title font-alt">&nbsp;</h3> <!-- 用來給按鈕和標題對齊 -->
+                <button class="btn btn-primary btn-lg">查看訂單</button>
+            </div>
+        </div>
+    </div>
+</section>
+            
+            </div>
+        </section>
+        
+        
+
+        
+        
+    </div>
+	    <!-- footer -->
+	    <div th:include="footer :: footer"></div>
+	    <!-- footer -->
+    	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+   </main>
+    
+    
+    <!--  ======== JavaScripts =====================================  -->
+    <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/wow/dist/wow.js}"></script>
+    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+    <script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/smoothscroll.js}"></script>
+    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+  </body>
+</html>

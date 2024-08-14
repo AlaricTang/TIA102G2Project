@@ -1,6 +1,5 @@
 package com.ellie.user.controller;
 
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,41 +18,8 @@ public class UserBackController {
     @Autowired
     UserService userService;
 
-    // 後台登入頁面
-    @GetMapping("loginBack")
-    public String loginBack() {
-        return "back-end/user/loginBack"; // 後台登入頁面
-    }
-
-    // 處理後台登入
-    @PostMapping("loginBack")
-    public String loginBack(@RequestParam("userEmail") String userEmail,
-                            @RequestParam("userPwd") String userPwd,
-                            @RequestParam("role") String role, // 店家端或員工端
-                            HttpSession session, 
-                            ModelMap model) {
-        UserVO user = userService.findByEmail(userEmail);
-        if (user != null && user.getUserPwd().equals(userPwd)) {
-            session.setAttribute("user", user);
-            session.setAttribute("role", role); // 儲存角色資訊
-            if ("store".equals(role)) {
-                return "redirect:/user/storeHome"; // 店家端首頁?
-            } else {
-                return "redirect:/user/memberHome"; // 員工端首頁?
-            }
-        } else {
-            model.addAttribute("errorMessage", "帳號或密碼錯誤");
-            return "back-end/user/loginBack"; // 登入頁面
-        }
-    }
+  
     
-    // 後台登出
-    @GetMapping("logoutBack")
-    public String logoutBack(HttpSession session) {
-        session.invalidate();
-        return "redirect:/user/loginBack"; // 重導回登入頁面
-    }
-
     // 顯示全部會員
     @GetMapping("listAllUsers")
     public String listAllUsers(ModelMap model) {
