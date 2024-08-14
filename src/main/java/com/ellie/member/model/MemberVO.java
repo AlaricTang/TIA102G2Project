@@ -30,18 +30,17 @@ public class MemberVO {
 	@Column(name = "memberEmail")
 	private String memberEmail;
 
-	@NotEmpty(message = "請選擇性別")
 	@Column(name = "memberGender")
-	private Byte memberGender;
+	private Integer memberGender;
 
 	@Column(name = "memberPic", columnDefinition="MEDIUMBLOB")
 	private byte[] memberPic;
 
-	@NotEmpty(message = "不可為空")
-	@Column(name = "memberCreateDate", updatable = false)
+	
+	@Column(name = "memberCreateDate", updatable = false, insertable = false)
 	private Timestamp memberCreateDate;
 
-	@NotEmpty(message = "不可為空")
+//	@NotEmpty(message = "不可為空")
 	@Column(name = "createdByMemberID")
 	private Integer createdByMemberID;
 
@@ -97,11 +96,11 @@ public class MemberVO {
 		this.memberEmail = memberEmail;
 	}
 
-	public Byte getMemberGender() {
+	public Integer getMemberGender() {
 		return memberGender;
 	}
 
-	public void setMemberGender(Byte memberGender) {
+	public void setMemberGender(Integer memberGender) {
 		this.memberGender = memberGender;
 	}
 

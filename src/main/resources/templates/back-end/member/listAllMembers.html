@@ -154,10 +154,10 @@
                     <h2 class="text-center">員工列表</h2>
                     <a href="/member/addMember" class="btn btn-primary mb-2">新增員工</a>
                     <div class="form-container">
-                        <form th:action="@{/member/listMembers_ByCompositeQuery}" method="post">
-                            <!-- 可選的查詢條件表單 -->
+                      <!--   <form th:action="@{/member/listMembers_ByCompositeQuery}" method="post">
                             <input type="submit" value="查詢" class="btn btn-primary">
-                        </form>
+                        </form> -->
+                        
                     </div>
                     <table id="membersTable" class="table table-striped">
                         <thead>
@@ -181,7 +181,7 @@
                                         <input type="submit" value="刪除" class="btn btn-danger"
                                             onclick="return confirm('確定刪除?');">
                                     </form>
-                                </td>
+                                                                       </td>
                             </tr>
                         </tbody>
                     </table>

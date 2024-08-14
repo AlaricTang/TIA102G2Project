@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>後台 | 修改員工資料</title>
 
-    <!-- ●●css for jquery datatables 用 -->
+    <!-- 引入樣式表 -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css"/>
 
-    
+    <!-- 引入 JavaScript -->
     <script th:src="@{/js/scriptsBack.js}"></script>
     <script th:src="@{/js/datatables-simple-demo.js}"></script>
     <script th:src="@{/demo/chart-area-demo.js}"></script>
@@ -24,7 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
 
-   
+    <!-- 添加樣式 -->
     <style>
         body {
             background-color: #f8f9fa;
@@ -138,6 +138,11 @@
                         <div class="form-group">
                             <label for="memberName">姓名:</label>
                             <input type="text" id="memberName" th:field="*{memberName}" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="createdByMemberID">創建者:</label>
+                            <input type="text" id="createdByMemberID" th:field="*{createdByMemberID}" class="form-control" readonly>
                         </div>
 
                         <div class="form-group">
