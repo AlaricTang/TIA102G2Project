@@ -95,7 +95,7 @@
 
 			<!-- 我要的 -->
 			<!-- 種類的btn  -->
-			<section class="module-small">
+			<section class="module-small" >
 				<div class="container">
 					<div class="col-sm-2">
 						<a th:href="@{/product/listAllProduct}"><button
@@ -117,9 +117,7 @@
 						<a th:href="@{/jibeiProduct/jibeiProductList}"><button
 								class="btn btn-block btn-round btn-g">寄杯商品</button></a>
 					</div>
-							<div>
-						<a th:href='checkCart' class="custom-btn">購物車</a>
-					</div>
+
 				</div>
 			</section>
 			<!-- 種類btn到這邊 -->
@@ -142,7 +140,8 @@
 										 	</a>
 
 											<div class="shop-item-detail">
-												<a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
+												<a th:href="@{/product/productAddToCartOnListAllPdPage}+ '?productID=' + ${productVO.productID} + '&orderAmount=1' " 
+												class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
 											</div>
 										</div>
 										<h4 class="shop-item-title font-alt">

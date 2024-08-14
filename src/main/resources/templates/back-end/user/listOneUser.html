@@ -1,56 +1,132 @@
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>會員資料</title>
-    <style type="text/css">
-        span {
-            display: inline-block;
-            width: 150px;
-            text-align: left;
-            font-weight: bold;
+
+    <title>後台 | 會員資料</title>
+
+	<!-- ●●css for jquery datatables 用 -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" /> -->
+
+    <script th:src="@{/js/scriptsBack.js}"></script>
+    <script th:src="@{/js/datatables-simple-demo.js}"></script>
+    <script th:src="@{/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/demo/chart-bar-demo.js}"></script>
+    <script th:src="@{/demo/chart-pie-demo.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+
+    <style>
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .card-body {
+            background-color: #ffffff;
+            padding: 2rem;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .nav-link {
+            color: #ffffff;
+        }
+        .nav-link:hover {
+            color: #e2e6ea;
+        }
+        .navbar {
+            border-bottom: 1px solid #dee2e6;
+        }
+        .btn-light {
+            color: #000;
+            background-color: #f8f9fa;
+            border-color: #e2e6ea;
+        }
+        .btn-light:hover {
+            color: #000;
+            background-color: #e2e6ea;
+            border-color: #d6d9db;
+        }
+        .text-muted {
+            color: #6c757d !important;
+        }
+        .navbar-dark .navbar-brand {
+            color: #ffffff;
+        }
+        .navbar-dark .navbar-brand:hover {
+            color: #e2e6ea;
         }
     </style>
 </head>
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-    <div align="center">
-        <h2>會員個人資料</h2>
-        <h3>
-            <a class="navbar-brand" th:href="@{/user/select_page}">
-                回查詢頁
-                <label th:text="${success}"></label>
-            </a>
-        </h3>
+
+<body class="sb-nav-fixed">
+    <!-- header -->
+    <div th:include="headerBack :: headerBack"></div>
+    <!-- header -->
+
+    <div id="layoutSidenav">
+        <!-- footer -->
+        <div th:include="SliderLeftBack :: SliderLeftBack"></div>
+        <!-- footer -->
+
+        <!-- 主要內容區域 -->
+        <div id="layoutSidenav_content">
+            <div class="container mt-4">
+
+                <nav class="navbar navbar-expand-md navbar-dark bg-success mb-4">
+                    <div class="container">
+                        <h2 class="navbar-brand mb-0">會員個人資料</h2>
+                        <a class="btn btn-light ms-auto" th:href="@{/user/listAllUsers}">
+                            回查詢頁
+                            <label th:text="${success}" class="ms-2"></label>
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- 會員詳細資訊 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">查詢結果:</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- 顯示會員詳細資料 -->
+                        <dl class="row">
+                            <dt class="col-sm-3">會員ID:</dt>
+                            <dd class="col-sm-9 text-muted" th:text="${userVO.userID}"></dd>
+
+                            <dt class="col-sm-3">電子郵件:</dt>
+                            <dd class="col-sm-9 text-muted" th:text="${userVO.userEmail}"></dd>
+
+                            <dt class="col-sm-3">姓名:</dt>
+                            <dd class="col-sm-9 text-muted" th:text="${userVO.userName}"></dd>
+
+                            <dt class="col-sm-3">出生日期:</dt>
+                            <dd class="col-sm-9 text-muted" th:text="${userVO.userBirth}"></dd>
+
+                            <dt class="col-sm-3">電話:</dt>
+                            <dd class="col-sm-9 text-muted" th:text="${userVO.userPhone}"></dd>
+
+                            <dt class="col-sm-3">性別:</dt>
+                            <dd class="col-sm-9 text-muted" th:text="${userVO.userGender == 1 ? '男' : '女'}"></dd>
+
+                            <dt class="col-sm-3">地址:</dt>
+                            <dd class="col-sm-9 text-muted" th:text="${userVO.userAddr}"></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
-
-<div align="center" th:fragment="listOneUser-div">
-    <!-- 用戶詳細信息顯示 -->
-    <h3><span>查詢結果 :</span></h3>
-    <span>會員ID:</span><span th:text="${user.userID}"></span><br/>
-    <span>電子郵件:</span><span th:text="${user.userEmail}"></span><br/>
-    <span>姓名:</span><span th:text="${user.userName}"></span><br/>
-    <span>出生日期:</span><span th:text="${#dates.format(user.userBirth, 'yyyy-MM-dd')}"></span><br/>
-    <span>電話:</span><span th:text="${user.userPhone}"></span><br/>
-    <span>性別:</span><span th:text="${user.userGender == 1 ? '男' : '女'}"></span><br/>
-    <span>地址:</span><span th:text="${user.userAddr}"></span><br/>
-    <span>創建時間:</span><span th:text="${#dates.format(user.userCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></span><br/>
-    
-    <!-- 編輯和刪除操作 -->
-    <a th:href="@{/user/update_user_input/{id}(id=${user.userID})}">編輯</a>
-    <form th:action="@{/user/delete/{id}(id=${user.userID})}" method="post" style="display:inline;">
-        <button type="submit">刪除</button>
-    </form>
-</div>
-
 </body>
+
 </html>

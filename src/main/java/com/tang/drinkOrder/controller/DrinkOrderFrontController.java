@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ellie.member.model.MemberService;
+import com.ellie.member.model.MemberVO;
 import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
 import com.ellie.user.model.UserService;
@@ -52,6 +54,9 @@ public class DrinkOrderFrontController {
 	
 	@Autowired
 	UserService userSvc;
+
+	@Autowired
+	MemberService memberSvc;
 	
 	//購物車頁面進來 跳轉到 要下單頁面
 		//需要將購物人資訊  購物車物品列出來 
@@ -204,6 +209,24 @@ public class DrinkOrderFrontController {
 	public String fakeLeave(HttpSession session) {
 		session.removeAttribute("user");
 		return "redirect:/";
+	}
+	
+	@GetMapping("fakeLoginPage")
+	public String fakeLoginPage() {
+		return "back-end/drinkOrder/fakeLoginPage";
+	}
+	
+	@PostMapping("fakeLogin")
+	public String fakeLogin(@RequestParam("member") String member,HttpSession session) {
+		MemberVO testMember = memberSvc.getOneMember(Integer.valueOf(member));
+		session.setAttribute("member",testMember);
+		return "redirect:/backendHomepage";
+	}
+	
+	@GetMapping("fakeLogout")
+	public String fakeLogout(HttpSession session) {
+		session.removeAttribute("member");
+		return "redirect:/backendHomepage";
 	}
 
 }

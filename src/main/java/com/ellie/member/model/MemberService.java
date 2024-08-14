@@ -45,4 +45,8 @@ public class MemberService {
     public List<MemberVO> getAll(Map<String, String[]> map) {
         return CompositeQuery_Member.getAllC(map, sessionFactory.openSession());
     }
+
+    public MemberVO findByAcc(String memberAcc) {
+        return repository.findByMemberAcc(memberAcc);
+    }
 }

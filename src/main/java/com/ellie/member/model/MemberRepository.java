@@ -11,4 +11,6 @@ public interface MemberRepository extends JpaRepository<MemberVO, Integer> {
     @Query(value = "delete from member where memberID = ?1", nativeQuery = true)
     void deleteByMemberID(int memberID);
 
+	 // 根據會員帳號查詢
+    MemberVO findByMemberAcc(String memberAcc);
 }

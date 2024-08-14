@@ -1,10 +1,286 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="BIG5">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+     <!--  ======== Document Title =====================================  -->
+    <title>非常渴以 | 新增寄杯商品</title>
+
+
+    <!-- ●●css for jquery datatables 用 -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    
+
+    <script th:src="@{/js/scriptsBack.js}"></script>
+   	<script th:src="@{/js/datatables-simple-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-area-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-bar-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-pie-demo.js}"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
+    <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
+      
+    <style type="text/css">
+		
+		.form-item {
+		    display: inline-block;
+		    margin-right: 10px;
+		    margin-bottom: 10px;
+		    width: 45%;
+		}
+		
+		.form-item label {
+		    display: block;
+		    margin-bottom: 5px;
+		    font-weight: bold;
+		}
+		
+		.form-item input,
+		.form-item select {
+		    width: 100%;
+		    padding: 8px;
+		    box-sizing: border-box;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		}
+		
+		.error {
+		    color: red;
+		    font-size: 0.875em;
+		}
+		
+		#image-preview {
+		    margin-top: 15px;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    border: 1px dashed #ccc;
+		    padding: 10px;
+		    border-radius: 4px;
+		}
+		
+		#image-preview img {
+		    width: 100%;
+		    height: auto;
+		    max-width: 400px; /* 增大圖片預覽框寬度 */
+		    max-height: 400px; /* 增大圖片預覽框高度 */
+		    border-radius: 4px;
+		}
+		
+		#submit {
+		    display: inline-block;
+		    background-color: #4CAF50;
+		    color: white;
+		    padding: 10px 20px;
+		    border: none;
+		    border-radius: 4px;
+		    cursor: pointer;
+		}
+		
+		#submit:hover {
+		    background-color: #45a049;
+		}
+		
+		.form-container {
+		    max-width: 800px;
+		    margin: auto;
+		}
+		
+		.form-header {
+		    text-align: center;
+		    margin-bottom: 20px;
+		}
+		
+		.status-returned {
+		    background-color: #d4edda;
+		    color: #155724;
+		    padding: 5px;
+		    border-radius: 5px;
+		    border: 1px solid #c3e6cb;
+		}
+		
+		.status-rented {
+		    background-color: #fff3cd;
+		    color: #856404;
+		    padding: 5px;
+		    border-radius: 5px;
+		    border: 1px solid #ffeeba;
+		}
+		
+		.status-scrapped {
+		    background-color: #f8d7da;
+		    color: #721c24;
+		    padding: 5px;
+		    border-radius: 5px;
+		    border: 1px solid #f5c6cb;
+		}
+		
+		.status-unknown {
+		    background-color: #d6d8d9;
+		    color: #383d41;
+		    padding: 5px;
+		    border-radius: 5px;
+		    border: 1px solid #c6c8ca;
+		}
+		
+		.card-body {
+		    background-color: #f9f9f9;
+		    padding: 20px;
+		    border-radius: 10px;
+		    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		}
+		
+		#example {
+		    width: 100%;
+		    border-collapse: collapse;
+		    margin-bottom: 20px;
+		}
+		
+		#example thead tr {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+		
+		#example th, #example td {
+		    padding: 12px 15px;
+		    border-bottom: 1px solid #ddd;
+		    text-align: center;
+		}
+		
+		#example tbody tr:nth-child(even) {
+		    background-color: #f2f2f2;
+		}
+		
+		#example tbody tr:hover {
+		    background-color: #e6f7ff;
+		}
+		
+		.btn-primary {
+		    background-color: #007bff;
+		    color: white;
+		    border: none;
+		    padding: 6px 12px;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    transition: background-color 0.3s;
+		}
+		
+		.btn-primary:hover {
+		    background-color: #0056b3;
+		}
+	</style>
+ 	
+	
 </head>
-<body>
+
+<body class="sb-nav-fixed">
+
+
+	<!-- header -->
+    <div th:include="headerBack :: headerBack"></div>
+    <!-- header -->
+
+    <div id="layoutSidenav">
+        <!-- footer -->
+      	<div th:include="SliderLeftBack :: SliderLeftBack"></div>
+      	<!-- footer -->
+
+        <!--右半邊的空白頁 -->
+        <div id="layoutSidenav_content">
+        	<main>
+				<div class="container-fluid px-4">
+			    	<h1 class="mt-4">新增寄杯商品</h1>
+			        
+			        <!-- 主要內容 -->
+			        <div class="card mb-4">
+			        	 <div class="card-header">
+			                 <i class="fas fa-plus me-1"></i>
+			                 新增寄杯商品表單
+			             </div>
+			             
+			             <div class="card-body">
+			             	<div class="form-container">
+			             	<!-- 主要內容 -->
+							      <form th:action="@{/jibeiProduct/add}" method="post" th:object="${jibeiProductVO}" enctype="multipart/form-data">
+							      	<h2 class="form-header" ><b>請輸入下列資訊</b></h2>
+							      	
+							        <div class="form-item">
+						                <label>選擇要綁訂之飲品:</label>
+						                <select name="drinkID">
+							            		<option value="">請選擇</option>
+							                	<th:block th:each="drinkVO : ${drinkList}">
+								            		<option th:value="${drinkVO.drinkID}" th:text="${drinkVO.drinkName}"></option>
+								            	</th:block>	
+						        		</select><br>
+							            <span th:if="${#fields.hasErrors('drinkID')}" th:errors="*{drinkID}" class="error" id="drinkID.errors"></span>
+							        </div>
+							        
+							        <div class="form-item">
+							            <label>上架狀態:</label>
+							            <select th:field="*{jibeiProductStatus}">
+							            <option value="1">上架</option>
+							            <option value="0">下架</option>
+							            </select>
+							            <br/>
+							            <span th:if="${#fields.hasErrors('jibeiProductStatus')}" th:errors="*{jibeiProductStatus}" class="error" id="jibeiProductStatus.errors"></span>
+							        </div>
+							        
+							        <div class="form-item">
+							            <label>組合數量:</label>
+							            <input type="number" th:field="*{jibeiProductAmount}" onclick="hideContent('jibeiProductAmount.errors');" min="1"/><br/>
+							            <span  th:if="${#fields.hasErrors('jibeiProductAmount')}" th:errors="*{jibeiProductAmount}" class="error" id="jibeiProductAmount.errors"></span>
+							        </div>
+
+							        <div class="form-item">
+							            <label>商品價格:</label>
+							            <input type="number" th:field="*{jibeiProductPrice}" onclick="hideContent('jibeiProductPrice.errors');" min="0"/><br/>
+							            <span  th:if="${#fields.hasErrors('jibeiProductPrice')}" th:errors="*{jibeiProductPrice}" class="error" id="jibeiProductPrice.errors"></span>
+							        </div>
+							        
+							        <br>
+									
+							        <div class="form-item" style="width: 100%;">
+							            <label>寄杯商品描述:</label>
+							            <textarea id="drinkDescription" th:field="*{jibeiProductDes}" style="width: 100%;" rows="4"></textarea>
+							            <span  th:if="${#fields.hasErrors('jibeiProductDes')}" th:errors="*{drinkDes}" class="error" id="jibeiProductDes.errors"></span>
+							        </div>
+							
+							        <!-- 送出按鈕 -->
+							        <div class="row mb-3">
+							            <div class="col-md-12 text-center">
+							                <button type="submit" id="submit" class="btn btn-primary"> 送出新增 </button>
+							            </div>
+							        </div>
+							
+							      </form>
+			             	</div>
+			             </div>
+			        </div>
+			    </div>
+				</main>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </div>
+    </div>
+
 
 </body>
+
 </html>

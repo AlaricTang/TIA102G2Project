@@ -1,116 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-     <!--  ======== Document Title =====================================  -->
-    <title>商品管理</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>商品管理</title>
+<head th:insert="~{/back-end/drink/included-fragment}"></head>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<!-- ●●js  for jquery datatables 用 -->
+<script
+	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<!-- ●●js  for jquery datatables 用 -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
 
 
-    <!-- ●●css for jquery datatables 用 -->
-    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
-
-    <script th:src="@{js/scriptsBack.js}"></script>
-   	<script th:src="@{js/datatables-simple-demo.js}"></script>
- 	<script th:src="@{demo/chart-area-demo.js}"></script>
- 	<script th:src="@{demo/chart-bar-demo.js}"></script>
- 	<script th:src="@{demo/chart-pie-demo.js}"></script>
-    
-    <script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
-    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
-    <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
-    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
-      
- 	<style>
+<style>
 /* 通用表單項目樣式 */
 .form-item {
-    display: inline-block;
-    margin-right: 15px;
-    margin-bottom: 10px;
+	display: inline-block;
+	margin-right: 15px;
+	margin-bottom: 10px;
 }
 
 .form-item label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
 }
 
-.form-item input, 
-.form-item select {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.form-item input, .form-item select {
+	width: 100%;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
 }
 
 /* 表格樣式 */
 #example {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    font-size: 14px;
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	font-family: Arial, sans-serif;
+	font-size: 14px;
 }
 
 #example thead tr {
-    background-color: #778899;
-    color: white;
+	background-color: #EA7500;
+	color: white;
 }
 
-#example th, 
-#example td {
-font-size: 12px;
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
+#example th, #example td {
+	padding: 12px 15px;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
 }
 
 #example tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
 
 #example tbody tr:hover {
-    background-color: #e6f7ff;
+	background-color: #e6f7ff;
 }
 
 /* 上架和下架的顏色區分 */
 .status-available {
-    background-color: #d4edda; /* 綠色背景，代表上架 */
-    color: #155724;
-    font-weight: bold;
+	background-color: #d4edda; /* 綠色背景，代表上架 */
+	color: #155724;
+	font-weight: bold;
 }
 
 .status-unavailable {
-    background-color: #f8d7da; /* 紅色背景，代表下架 */
-    color: #721c24;
-    font-weight: bold;
+	background-color: #f8d7da; /* 紅色背景，代表下架 */
+	color: #721c24;
+	font-weight: bold;
 }
 
 /* 搜尋表單樣式 */
 .form-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: white;
-    padding: 7px 12px;
-    border-radius: 4px;
-    cursor: pointer;
+	background-color: #007bff;
+	border-color: #007bff;
+	color: white;
+	padding: 7px 12px;
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+	background-color: #0056b3;
 }
-
 </style>
 <script>
 	$(document)
@@ -119,8 +106,7 @@ font-size: 12px;
 						$('#example')
 								.DataTable(
 										{
-											"lengthMenu" : [ 3, 5, 10, 20, 50,
-													100 ],
+											"lengthMenu" : [ 5, 10, 20, 50, 100 ],
 											"searching" : true,
 											"paging" : true,
 											"ordering" : true,
@@ -147,124 +133,92 @@ font-size: 12px;
 										});
 					});
 </script>
-	
+
+
 </head>
 
+
 <body class="sb-nav-fixed">
-
-	<!-- header -->
-    <div th:include="headerBack :: headerBack"></div>
-    <!-- header -->
-
-    <div id="layoutSidenav">
-        <!-- footer -->
-      	<div th:include="SliderLeftBack :: SliderLeftBack"></div>
-      	<!-- footer -->
-
-        <!--右半邊的空白頁 -->
-        <div id="layoutSidenav_content">
-<!--         	這個先當後台的範例模板 -->
-<!--         	前端Code寫這裡 就好 -->
-        
-        
-        
- <main>
+	<!-- 最上面的那一條 -->
+	<div th:include="headerBack :: headerBack"></div>
+	<!-- 最上面的那一條 -->
+	<div id="layoutSidenav">
+		<!-- 左邊的那一條 -->
+		<div th:include="SliderLeftBack :: SliderLeftBack"></div>
+		<!-- 左邊的那一條 -->
+		<!-- 右邊空白頁面 注意 因為這個模板的關係 所以他是包在左邊那條的div裡面 -->
+		<div id="layoutSidenav_content">
+			<main>
 				<div class="container-fluid px-4">
 					<h1 class="mt-4">商品管理</h1>
 					<div>
-						<a th:href='addProduct' class="custom-btn">新增商品</a>
+						<a href='addProduct' class="custom-btn">新增商品</a>
 					</div>
 					<div class="card mb-4">
 						<div class="card-header">
 							<i class="fas fa-table me-1"></i> 所有商品資料
 						</div>
-<!-- 						<div class="card-body"> -->
-<!-- 							<form method="post" th:action="@{listDrinks_ByCompositeQuery}"> -->
-<!--     <div class="form-row"> -->
-<!--         <div class="form-item col-md-3"> -->
-<!--             <label for="drinkName">輸入飲品名稱:</label> -->
-<!--             <input type="text" name="drinkName" id="drinkName" value=""> -->
-<!--         </div> -->
-<!--         <div class="form-item col-md-3"> -->
-<!--             <label for="drinkTag">輸入飲品標籤:</label> -->
-<!--             <select name="drinkTag" id="drinkTag"> -->
-<!--                 <option value="">請選擇</option> -->
-<!--                 <option value="綠茶">綠茶</option> -->
-<!--                 <option value="紅茶">紅茶</option> -->
-<!--                 <option value="咖啡">咖啡</option> -->
-<!--                 <option value="奶茶">奶茶</option> -->
-<!--                 <option value="抹茶">抹茶</option> -->
-<!--             </select> -->
-<!--         </div> -->
-<!--         <div class="form-item col-md-3"> -->
-<!--             <label for="drinkStatus">飲品狀態:</label> -->
-<!--             <select name="drinkStatus" id="drinkStatus"> -->
-<!--                 <option value="">請選擇</option> -->
-<!--                 <option value="1">上架</option> -->
-<!--                 <option value="0">下架</option> -->
-<!--             </select> -->
-<!--         </div> -->
-<!--         <div class="form-item col-md-1"> -->
-<!--             <br> -->
-<!--             <input type="submit" class="btn btn-primary" value="送出"> -->
-<!--         </div> -->
-<!--     </div> -->
-<!-- </form> -->
-<!-- 						</div> -->
+
+
+
 						<div class="card-body">
-<table id="example" class="display">
-    <thead>
-        <tr>
-            <th>商品編號</th>
-            <th>商品名稱</th>
-            <th>商品價格</th>
-            <th>商品描述</th>
-            <th>商品庫存</th>
-            <th>商品狀態</th>
-            <th>商品標籤</th>
-            <th>商品圖片</th>
-            <th>更新時間</th>
-            <th>創建時間</th>
-            <th>修改員工</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-<!--         <th:block th:each="productVO : ${drinkListData}"> -->
-<!--             <tr> -->
-<!--                 <td th:text="${drinkVO.drinkID}"></td> -->
-<!--                 <td th:text="${drinkVO.drinkName}"></td> -->
-<!--                 <td th:text="${drinkVO.drinkPrice}"></td> -->
-<!--                 <td th:text="${drinkVO.drinkDes}"></td> -->
-<!--                 <td> -->
-<!--                     <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" width="100px"> -->
-<!--                 </td> -->
-<!--                 <td th:text="${drinkVO.drinkTag}"></td> -->
-<!--                 <td th:classappend="${drinkVO.drinkStatus == 1 ? 'status-available' : 'status-unavailable'}"> -->
-<!--                     <span th:text="${drinkVO.drinkStatus == 1 ? '上架' : '下架'}"></span> -->
-<!--                 </td> -->
-<!--                 <td th:text="${drinkVO.drinkUpdateDate}"></td> -->
-<!--                 <td th:text="${drinkVO.drinkCreateDate}"></td> -->
-<!--                 <td th:text="${drinkVO.editedByMemberID}"></td> -->
-<!--                 <td th:text="${drinkVO.createdByMemberID}"></td> -->
-<!--                 <td> -->
-<!--                     <form method="post" th:action="@{/drink/getOne_For_Update}" style="margin-bottom: 0px;"> -->
-<!--                         <input type="submit" value="修改" class="btn btn-primary"> -->
-<!--                         <input type="hidden" name="drinkID" th:value="${drinkVO.drinkID}"> -->
-<!--                     </form> -->
-<!--                 </td> -->
-<!--             </tr> -->
-<!--         </th:block> -->
-    </tbody>
-</table>
+							<table id="example" class="display">
+								<thead>
+									<tr>
+										<th>商品編號</th>
+										<th>商品名稱</th>
+										<th>單價</th>
+										<th>商品描述</th>
+										<th>商品庫存</th>
+										<th>商品狀態</th>
+										<th>商品標籤</th>
+										<th>商品圖片</th>
+										<th>更新時間</th>
+										<th>創建時間</th>
+										<th>修改員工編號</th>
+										<th>修改</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="productVO : ${productList}">
+										<tr>
+											<td th:text="${productVO.productID}"></td>
+											<td th:text="${productVO.productName}"></td>
+											<td th:text="${productVO.productPrice}"></td>
+											<td th:text="${productVO.productDes}"></td>
+											<td th:text="${productVO.productInv}"></td>
+											<td
+												th:classappend="${productVO.productStatus == 1 ? 'status-available' : 'status-unavailable'}">
+												<span
+												th:text="${productVO.productStatus == 1 ? '上架' : '下架'}"></span>
+											</td>
+											<td th:text="${productVO.productTag}"></td>
+											<td><img
+												th:src="@{/product/ProductDBGifReader} + '?productID=' + ${productVO.productID}"
+												width="100px"></td>
+											<td th:text="${#dates.format(productVO.productUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
+											<td th:text="${#dates.format(productVO.productCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
+											<td th:text="${productVO.memberID}"></td>
+											<td>
+												<form method="post"
+													th:action="@{/product/getOne_For_Update}"
+													style="margin-bottom: 0px;">
+													<input type="submit" value="修改" class="btn btn-primary">
+													<input type="hidden" name="productID"
+														th:value="${productVO.productID}">
+												</form>
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
-			</main>
 		</div>
-	</div>	
-
-
+		</main>
+	</div>
+	</div>
 </body>
-
 </html>
+

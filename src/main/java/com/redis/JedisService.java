@@ -95,8 +95,8 @@ public class JedisService {
 	
     public void removeItemFromList(String key, Object item) {
 		try(Jedis jedis = jedisPool.getResource()){
-			String itemStr = item.toString();
-			jedis.lrem(key, 0, itemStr);
+			String jsonString = gson.toJson(item);
+			jedis.lrem(key, 0, jsonString);
 		}
     }
 	

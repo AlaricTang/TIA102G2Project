@@ -1,5 +1,6 @@
 package com.xyuan.productOrder.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.redis.userJibei.UserJibeiService;
+import com.redis.userJibei.UserJibeiVO;
 import com.tang.drinkOrder.model.DrinkOrderVO;
+import com.tang.jibeiProduct.model.JibeiProductService;
+import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailService;
+import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
 import com.xyuan.productOrder.model.ProductOrderService;
 import com.xyuan.productOrder.model.ProductOrderVO;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailService;
@@ -32,9 +38,18 @@ public class ProductOrderBackController {
 	
 	@Autowired
 	ProductOrderDetailService productOrderDetailService;
+	
+	@Autowired
+	JibeiOrderDetailService jibeiOrderDetailSvc;
+	
+	@Autowired
+	JibeiProductService jibeiProductSvc;
+	
+	@Autowired
+	UserJibeiService userJibeiSvc;
 
 /* --------------------總公司-------------------- */
-	
+	//======= 跳轉 訂單紀錄 =======
 	@GetMapping("orderHistory")
 	public String orderHistory(ModelMap model) {
 		List<ProductOrderVO> productOrderList = productOrderService.getAll();		
@@ -42,6 +57,7 @@ public class ProductOrderBackController {
 		return "back-end/productOrder/orderHistory";
 	}
 	
+	//======= 跳轉 訂單管理 =======
 	@GetMapping("orderManage")
 	public String orderManage(ModelMap model) {
 		List<ProductOrderVO> productOrderList = productOrderService.getAllUndone();		
@@ -49,10 +65,9 @@ public class ProductOrderBackController {
 		return "back-end/productOrder/orderManage";
 	}
 	
-	//from 訂單紀錄
-	
+	//======= 複合查詢 from 訂單紀錄 =======
 	@PostMapping("getProductOrder")
-	public String getOneProductOrder(
+	public String getProductOrder(
 			@RequestParam("productOrderID") String productOrderID,
 			@RequestParam("userID") String userID,
 			@RequestParam("productOrderStartCreateTime") String productOrderStartCreateTime,
@@ -79,7 +94,7 @@ public class ProductOrderBackController {
 		return "back-end/productOrder/orderHistory";		
 	}
 	
-	//from訂單管理
+	//======= 複合查詢 from 訂單管理 =======
 	@PostMapping("getUndoneProductOrder")
 	public String getUndoneProductOrder(
 			@RequestParam("productOrderID") String productOrderID,
@@ -111,6 +126,54 @@ public class ProductOrderBackController {
 		
 	}
 	
+	//======= 完成 訂單(含付款)狀態 加入會員寄杯=======
+	@PostMapping("successProductOrder")
+	public String successDrinkOrder(@RequestParam("productOrderID") String productOrderID, ModelMap model) throws IOException {
+		//狀態改變 存訂單
+		ProductOrderVO productOrder = productOrderService.getOneProductOrder(Integer.valueOf(productOrderID));
+		productOrder.setProductOrderStatus(Byte.valueOf("1"));
+		productOrder.setProductOrderPayStatus(Byte.valueOf("1"));
+		productOrderService.updateProductOrder(productOrder);
+		
+		
+		//取訂單userID
+		Integer userID = productOrderService.getOneProductOrder(Integer.valueOf(productOrderID)).getUserID();
+		
+		
+		//取此訂單明細 去forEach 
+		List<JibeiOrderDetailVO> beUserJibeiList = jibeiOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
+		for(JibeiOrderDetailVO beUserJibei : beUserJibeiList ) {
+			UserJibeiVO userJibei = new UserJibeiVO();
+			
+			//for(一個明細VO	: 這筆訂單的所有明細)
+			//1. 一個明細VO >> 寄杯商品ID
+			//2. 寄杯商品Svc(寄杯商品ID) >> 取得寄杯商品VO >> 飲品
+			userJibei.setDrinkID(jibeiProductSvc.getOneJibeiProduct(beUserJibei.getJibeiProductID()).getDrinkID());
+			userJibei.setNumber(beUserJibei.getJibeiOrderDetailAmount());
+			
+			//存進User寄杯
+			userJibeiSvc.addUserJibei(userID, userJibei);
+		}
+		return "redirect:/productOrder/orderHistory";
+	}
+	
+	//======= 完成 付款狀態 =======
+	@PostMapping("sussesPaidProductOrder")
+	public String sussesPaidProductOrder(@RequestParam("productOrderID") String productOrderID, ModelMap model) {
+		ProductOrderVO productOrder = productOrderService.getOneProductOrder(Integer.valueOf(productOrderID));
+		productOrder.setProductOrderPayStatus(Byte.valueOf("1"));
+		productOrderService.updateProductOrder(productOrder);
+		return "redirect:/productOrder/orderManage";
+	}
+	
+	//======= 取消 訂單狀態 =======
+	@PostMapping("cancelProductOrder")
+	public String cancelDrinkOrder(@RequestParam("productOrderID") String productOrderID, ModelMap model) {
+		ProductOrderVO productOrder = productOrderService.getOneProductOrder(Integer.valueOf(productOrderID));
+		productOrder.setProductOrderStatus(Byte.valueOf("2"));
+		productOrderService.updateProductOrder(productOrder);
+		return "redirect:/productOrder/orderHistory";
+	}
 /* -------------------- 店家 -------------------- */
 
 	//商品的店家端只有寄杯商品	

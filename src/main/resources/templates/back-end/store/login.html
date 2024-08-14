@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <title>後台 | 新增店家</title>
+    <title>後台 | 登入</title>
 
     <!-- ●●css for jquery datatables 用 -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css"/>
 
     
     <script th:src="@{/js/scriptsBack.js}"></script>
@@ -30,30 +28,34 @@
         body {
             background-color: #f0f2f5;
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
         .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 2rem;
+            max-width: 500px;
+            padding: 0 15px;
         }
 
         .form-container {
             background: #ffffff;
             padding: 2rem;
             border-radius: .5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
         }
 
         .form-container h2 {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-size: 1.75rem;
             color: #333;
             text-align: center;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
@@ -66,7 +68,7 @@
         .form-control {
             border: 1px solid #ced4da;
             border-radius: .375rem;
-            padding: 0.5rem 1rem;
+            padding: .75rem 1.25rem;
             font-size: 1rem;
             box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
             transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -93,25 +95,16 @@
             border-color: #004085;
         }
 
-        .text-success {
-            color: #28a745;
+        .text-danger {
+            color: #dc3545;
             font-size: 0.875rem;
             margin-top: 1rem;
             text-align: center;
-        }
-
-        .form-control[type="file"] {
-            padding: 0.75rem;
-        }
-
-        .form-control textarea {
-            resize: vertical;
         }
     </style>
 </head>
 
 <body class="sb-nav-fixed">
-
     <!-- header -->
     <div th:include="headerBack :: headerBack"></div>
     <!-- header -->
@@ -123,51 +116,35 @@
 
         <!-- 主要內容區域 -->
         <div id="layoutSidenav_content">
+            <!-- 後台登入表單 -->
             <div class="container">
                 <div class="form-container">
-                    <h2>新增店家</h2>
-                    <form action="/store/addStore" method="post" enctype="multipart/form-data">
+                    <h2 class="text-center">後台登入</h2>
+                    <form action="#" th:action="@{/store/login}" method="post">
                         <div class="form-group">
-                            <label for="storeName" class="form-label">店家名稱:</label>
-                            <input type="text" id="storeName" name="storeName" class="form-control" required>
+                            <label for="role">角色:</label>
+                            <select id="role" name="role" class="form-control" required>
+                                <option value="store">店家端</option>
+                                <option value="member">員工端</option>
+                            </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="storeAddr" class="form-label">店家地址:</label>
-                            <input type="text" id="storeAddr" name="storeAddr" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="storeOpenTime" class="form-label">開店時間:</label>
-                            <input type="time" id="storeOpenTime" name="storeOpenTime" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="storePhone" class="form-label">店家電話:</label>
-                            <input type="text" id="storePhone" name="storePhone" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="storeAcc" class="form-label">店家帳號:</label>
+                            <label for="storeAcc">帳號:</label>
                             <input type="text" id="storeAcc" name="storeAcc" class="form-control" required>
                         </div>
+
                         <div class="form-group">
-                            <label for="storePwd" class="form-label">店家密碼:</label>
+                            <label for="storePwd">密碼:</label>
                             <input type="password" id="storePwd" name="storePwd" class="form-control" required>
                         </div>
-                        <div class="form-group">
-                            <label for="storePic" class="form-label">店家圖片:</label>
-                            <input type="file" id="storePic" name="storePic" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="storeDes" class="form-label">店家描述:</label>
-                            <textarea id="storeDes" name="storeDes" class="form-control" rows="4"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary w-100">新增</button>
-                        <p th:if="${success}" th:text="${success}" class="text-success mt-3"></p>
+
+                        <button type="submit" class="btn btn-primary w-100">登入</button>
+                        <p th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger text-center mt-3"></p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
-
 </html>
