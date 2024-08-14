@@ -253,6 +253,7 @@ public class DrinkController {
 		return "redirect:/drink/listAllDrinkFront";
 	}
 	
+	// 切換
 	@GetMapping("switchToDrinkCartPage")
 	public String switchToDrinkCartPage(ModelMap model, HttpSession session) throws IOException{
 		UserVO user = (UserVO)session.getAttribute("user");
