@@ -81,12 +81,15 @@ public class JibeiProductBackController {
 	
 	
 	@PostMapping("updatePage")
-	public String updatePage(@RequestParam("jibeiProductID") String jibeiProductID, ModelMap model) {
+	public String updatePage(@RequestParam("jibeiProductID") String jibeiProductID, ModelMap model,HttpSession session) {
+		
 		JibeiProductVO jibeiProduct = jibeiProductSvc.getOneJibeiProduct(Integer.valueOf(jibeiProductID));
 		//給要更新得 寄杯商品
 		model.addAttribute("jibeiProduct",jibeiProduct);
 		//給這個 寄杯商品 綁得飲品ID 後續前端去取他的圖片
-		model.addAttribute("jibeiDrinkID",jibeiProduct.getDrinkID()); //前端  <img th:src="@{/drink/DBGifReader} + '?drinkID=' + ${jibeiDrinkID}">
+		model.addAttribute("member",session.getAttribute("member"));
+		model.addAttribute("drinkVO",drinkSvc.getOneDrink(jibeiProduct.getDrinkID())); //前端  <img th:src="@{/drink/DBGifReader} + '?drinkID=' + ${jibeiDrinkID}">
+		model.addAttribute("drinkList",drinkSvc.getAll());
 		return "back-end/jibeiProduct/updatePage" ;
 	}
 	
@@ -94,18 +97,19 @@ public class JibeiProductBackController {
 	public String update(@Valid JibeiProductVO jibeiProduct,BindingResult result, 
 			ModelMap model,HttpSession session) {
 		//補齊
-		jibeiProduct.setMemberID((Integer)session.getAttribute("member"));
+		jibeiProduct.setMemberID(((MemberVO)session.getAttribute("member")).getMemberID());
 		Timestamp updateTime = new Timestamp(new Date().getTime());
 		jibeiProduct.setJibeiProductUpdateTime(updateTime);
 		//更新
-		jibeiProductSvc.updateJibeiProduct(jibeiProduct);
+		JibeiProductVO jibeiProductVO = jibeiProductSvc.updateJibeiProduct(jibeiProduct);
 		//更新後回列表
-		List<JibeiProductVO> onList = jibeiProductSvc.getOnJibeiProduct();
-		List<JibeiProductVO> offList = jibeiProductSvc.getOffJibeiProduct();
-		model.addAttribute("onList",onList);
-		model.addAttribute("offList",offList);
-		model.addAttribute("success", "- (更新成功)");
-		return "back-end/jibeiProduct/jibeiProductManage";
+//		List<JibeiProductVO> onList = jibeiProductSvc.getOnJibeiProduct();
+//		List<JibeiProductVO> offList = jibeiProductSvc.getOffJibeiProduct();
+//		model.addAttribute("offList",offList);
+//		model.addAttribute("success", "- (更新成功)");
+		model.addAttribute("jibeiProductVO",jibeiProductVO);
+		model.addAttribute("drinkVO",drinkSvc.getOneDrink(jibeiProductVO.getDrinkID()));
+		return "back-end/jibeiProduct/updateDone";
 	}
 	
 	
@@ -128,11 +132,12 @@ public class JibeiProductBackController {
 		Map<String, String[]> canUpdateMap = new HashMap<>(map);
 		
 		String[] onStatus = {"1"};
-		canUpdateMap.replace("jibeiProductStatus", onStatus);
-		List<JibeiProductVO> onList = jibeiProductSvc.getAll(canUpdateMap);
-		
 		String[] offStatus = {"0"};
-		canUpdateMap.replace("jibeiProductStatus", offStatus);
+			
+		canUpdateMap.put("jibeiProductStatus", onStatus);
+		List<JibeiProductVO> onList = jibeiProductSvc.getAll(canUpdateMap);
+
+		canUpdateMap.put("jibeiProductStatus", offStatus);
 		List<JibeiProductVO> offList = jibeiProductSvc.getAll(canUpdateMap);
 		
 		model.addAttribute("onList", onList); 

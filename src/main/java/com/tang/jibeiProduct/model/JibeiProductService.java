@@ -23,8 +23,8 @@ public class JibeiProductService {
 		repository.save(jibeiProductVO);
 	}
 
-	public void updateJibeiProduct(JibeiProductVO jibeiProductVO) {
-		repository.save(jibeiProductVO);
+	public JibeiProductVO updateJibeiProduct(JibeiProductVO jibeiProductVO) {
+		return repository.save(jibeiProductVO);
 	}
 
 	public void deleteJibeiProduct(Integer jibeiProductID) {

@@ -66,7 +66,7 @@ public class JibeiProductFrontController {
 		jibeiProductCartSvc.addCartItem(user.getUserId(),jibeiProductItem);
 		
 		
-		return "redirect:/jibeiProductFront/singleJibeiProduct"+"?jibeiProductID="+jibeiProductID;
+		return "redirect:/jibeiProduct/jibeiPdDetail"+"?jibeiProductID="+jibeiProductID;
 	}
 	//加入購物車
 	@PostMapping("addOneToCart")

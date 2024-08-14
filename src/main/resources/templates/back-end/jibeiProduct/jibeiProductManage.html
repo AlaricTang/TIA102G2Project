@@ -236,14 +236,14 @@
 							        </div>
 							        
 							        
-							        <div class="form-item col-md-3">
-							            <label for="jibeiProductStatus">寄杯商品狀態:</label>
-							            <select name="jibeiProductStatus" id="jibeiProductStatus">
-							                <option value="">請選擇</option>
-							                <option value="1">上架</option>
-							                <option value="0">下架</option>
-							            </select>
-							        </div>
+<!-- 							        <div class="form-item col-md-3"> -->
+<!-- 							            <label for="jibeiProductStatus">寄杯商品狀態:</label> -->
+<!-- 							            <select name="jibeiProductStatus" id="jibeiProductStatus"> -->
+<!-- 							                <option value="">請選擇</option> -->
+<!-- 							                <option value="1">上架</option> -->
+<!-- 							                <option value="0">下架</option> -->
+<!-- 							            </select> -->
+<!-- 							        </div> -->
 							        
 							        
 							        <div class="form-item col-md-1">
@@ -286,9 +286,9 @@
 							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
 							                <td th:text="${jibeiProductVO.memberID}"></td>
 							                <td>
-							                    <form method="post" th:action="@{/jibeiProductVO/updatePage}" style="margin-bottom: 0px;">
-							                        <input type="submit" value="修改" class="btn btn-primary">
+							                    <form method="post" th:action="@{/jibeiProduct/updatePage}" style="margin-bottom: 0px;">
 							                        <input type="hidden" name="jibeiProductID" th:value="${jibeiProductVO.jibeiProductID}">
+							                        <input type="submit" value="修改" class="btn btn-primary">
 							                    </form>
 							                </td>
 							            </tr>
@@ -336,7 +336,7 @@
 							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
 							                <td th:text="${jibeiProductVO.memberID}"></td>
 							                <td>
-							                    <form method="post" th:action="@{/jibeiProductVO/updatePage}" style="margin-bottom: 0px;">
+							                    <form method="post" th:action="@{/jibeiProduct/updatePage}" style="margin-bottom: 0px;">
 							                        <input type="submit" value="修改" class="btn btn-primary">
 							                        <input type="hidden" name="jibeiProductID" th:value="${jibeiProductVO.jibeiProductID}">
 							                    </form>

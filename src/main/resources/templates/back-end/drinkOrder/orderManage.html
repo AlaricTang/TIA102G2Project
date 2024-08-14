@@ -12,6 +12,8 @@
     <!-- ●●css for jquery datatables 用 -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    
 
     <script th:src="@{/js/scriptsBack.js}"></script>
    	<script th:src="@{/js/datatables-simple-demo.js}"></script>
@@ -19,10 +21,12 @@
  	<script th:src="@{/demo/chart-bar-demo.js}"></script>
  	<script th:src="@{/demo/chart-pie-demo.js}"></script>
     
-    <script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
-    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
-    <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
-    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
+    <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>   
       
  	<style type="text/css">
  		.form-item {
@@ -178,13 +182,13 @@
 									     <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"></form>
 									</td>
 									<td>
-									  <form method="post" th:action="@{/drinkOrder/cancelDrinkOrder}" style="margin-bottom: 0px;">
-									     <input type="submit" value="取消" class="btn btn-primary">
+									  <form method="post" th:action="@{/drinkOrder/successDrinkOrder}" style="margin-bottom: 0px;">
+									     <input type="submit" value="完成" class="btn btn-primary">
 									     <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"></form>
 									</td>
 									<td>
-									  <form method="post" th:action="@{/drinkOrder/successDrinkOrder}" style="margin-bottom: 0px;">
-									     <input type="submit" value="完成" class="btn btn-primary">
+									  <form method="post" th:action="@{/drinkOrder/cancelDrinkOrder}" style="margin-bottom: 0px;">
+									     <input type="submit" value="取消" class="btn btn-primary">
 									     <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"></form>
 									</td>
 									<td>
