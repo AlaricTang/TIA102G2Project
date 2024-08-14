@@ -35,7 +35,7 @@ public class StoreVO {
 	@Column(name = "storeAddr")
 	private String storeAddr;
 
-	@NotEmpty(message =  "店家地圖:不可為空")
+//	@NotEmpty(message =  "店家地圖:不可為空")
 	@Column(name = "storeMap")
 	private String storeMap;
 

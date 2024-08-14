@@ -54,16 +54,12 @@ public class MemberController {
 	}
 
 
-	// 登出功能
-	@GetMapping("/logout")
-	public String logout(HttpServletRequest request, ModelMap modelMap) {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate(); // 使會話失效
-		}
-		modelMap.addAttribute("success", "- (登出成功)"); // 可選：添加登出成功信息
-		return "redirect:/member/login"; // 登出後重導至登入頁面
-	}
+	 // 登出功能
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/";
+    }
 
 	// 顯示員工列表
 	@GetMapping("/listAllMembers")
