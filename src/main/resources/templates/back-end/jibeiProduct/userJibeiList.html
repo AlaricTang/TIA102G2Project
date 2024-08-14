@@ -128,10 +128,10 @@
 		                <button class="btn btn-primary" onclick="window.history.back()">返回</button> 
 		            </div>
 		            <div style="flex: 2; text-align: center;">
-		                <h1 style="margin: 0; font-size: 24px; font-weight: bold;">飲品菜單</h1>
+		                <h1 style="margin: 0; font-size: 24px; font-weight: bold;">我的寄杯</h1>
 		            </div>
 		            <div style="flex: 1; text-align: right;">
-		                <button class="btn btn-secondary">查看寄杯</button>
+		                <button class="btn btn-secondary" style="display: none">查看寄杯</button>
 		            </div>
 		        </div>
 		    </div>
@@ -152,16 +152,12 @@
             </div>
             <div class="row">
               <div class="col-sm-8 col-sm-offset-2">
-                <h2 class="module-title font-alt mb-0">最新菜單</h2>
+                <h2 class="module-title font-alt mb-0">我的寄杯</h2>
               </div>
             </div>
           </div>
         </section>
         <br>
-        	<div class="col-sm-8 col-sm-offset-2">
-                <h2 class="module-title font-alt mb-0">我的寄杯</h2>
-                <hr class="title-separator">
-            </div>
               	<div th:each="userJibeiVO : ${userJibeiList}">
                 	<div class="col-sm-6 col-md-3 col-lg-3">
                     	<div class="shop-item">
@@ -171,7 +167,6 @@
                             </div>    
                             <h4 class="shop-item-title font-alt" th:text="${userJibeiVO.drinkName}"></h4>
                             <p th:text="'尚餘: ' + ${userJibeiVO.number} +'杯' "></p>
-                            </form>
                         </div>
                     </div>
                 </div>
