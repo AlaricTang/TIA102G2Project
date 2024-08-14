@@ -30,26 +30,28 @@
 						<li><a th:href="@{/jibeiProduct/jibeiProductList}" >寄杯商品</a></li>
 					</ul>
 				</li>
-				<li class="dropdown"><a href="#">門市資訊</a></li>
+				<li class="dropdown"><a href="/store/viewAllStores">門市資訊</a></li>
 				<li class="dropdown"><a href="#">聯絡我們</a></li>
 				<li class="dropdown" th:if="${session.user != null}">
 					<a class="dropdown-toggle" href="#" data-toggle="dropdown">會員專區</a>
 					<ul class="dropdown-menu" role="user">
 						<li><a href="#">會員首頁</a></li>
-						<li><a href="#">會員基本資料</a></li>
+						<li><a href="/user/viewProfile">會員基本資料</a></li>
 						<li><a th:href="@{/drinkOrder/userDrinkOrder}">飲品訂購紀錄</a></li>
 						<li><a th:href="@{/productOrder/userProductOrder}">商品訂單紀錄</a></li>
 						<li><a href="/user/userJibeiList">我的寄杯</a></li>
 						<li><a href="#">環保杯租借紀錄</a></li>
-						<li><a href="#">修改密碼</a></li>
+						<li><a href="/user/resetPassword">修改密碼</a></li>
 						<li><a href="#">最新消息</a></li>
 						<li><a th:href="@{/drinkOrder/fakeLeave}">登出</a></li>
 					</ul>
 					<li class="dropdown"><a th:href="@{/product/switchToCartPage}">查看購物車</a></li>
 				</li>
 				<li class="dropdown" th:unless="${session.user != null }">
-					<a th:href="@{/drinkOrder/fakeLoggingPage}">登入</a>
+					<a th:href="@{/user/login}">登入</a>
 				</li>
+				<li class="dropdown" th:unless="${session.user != null }"><a th:href="@{/drinkOrder/fakeLoggingPage}">假登入</a></li>
+					
 			</ul>
 			<!--以上都是header標籤內容-->
 		</div>

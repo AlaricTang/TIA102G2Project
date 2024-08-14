@@ -164,12 +164,12 @@
 												th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkID}"
 												alt="Accessories Pack" />
 											<div class="shop-item-detail">
-												<a class="btn btn-round btn-b"><span class="icon-basket">Add
-														To Cart</span></a>
+												<a th:href="@{/jibeiProduct/addOneToCart}+ '?jibeiProductID=' + ${jibeiProductVO.drinkID} + '&orderAmount=1' " 
+												class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
 											</div>
 										</div>
 										<h4 class="shop-item-title font-alt">
-										<a th:href="@{/jibeiProductFront/singleJibeiProduct} + '?jibeiProductID=' + ${jibeiProductVO.jibeiProductID}">
+										<a th:href="@{/jibeiProduct/jibeiPdDetail} + '?jibeiProductID=' + ${jibeiProductVO.jibeiProductID}">
 											<div th:text="${jibeiProductVO.drinkID}"></div>
 											<div th:text="'$' + ${#numbers.formatInteger(jibeiProductVO.jibeiProductPrice, 3, 'COMMA')}"></div>
 											</a>
