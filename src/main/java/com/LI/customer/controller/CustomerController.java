@@ -42,6 +42,10 @@ public class CustomerController {
 	//@Autowired
 	//ReplyService replySvc;
 
+	@GetMapping("select_page") // 測試用，用於開啟select_page
+	public String getSelectPage() {
+		return "back-end/customer/select_page";
+	}
 
 	// 用戶端新增客戶留言+紀錄在後台
 	@PostMapping("insert")
@@ -136,7 +140,7 @@ public class CustomerController {
 		//List<ReplyVO> list2 = replySvc.getAll();
 		//model.addAttribute("replyListData",list2);    // for select_page.html 第135行用
 		String message = strBuilder.toString();
-	    return new ModelAndView("front-end/customer/select_page", "errorMessage", "請修正以下錯誤:<br>"+message);
+	    return new ModelAndView("back-end/customer/select_page", "errorMessage", "請修正以下錯誤:<br>"+message);
 	}
 
 

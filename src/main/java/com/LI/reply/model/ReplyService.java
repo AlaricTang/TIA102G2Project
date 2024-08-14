@@ -12,15 +12,16 @@ import org.springframework.stereotype.Service;
 @Service("replyService")
 public class ReplyService {
 
-	@Autowired
-	ReplyRepository repository;
+	//先註解
+//	@Autowired
+//	ReplyRepository repository;
 	
 	//Reply表格查詢特定客戶留言+客服回覆用
 	@Autowired
     private ReplyRepository replyRepository;
 
 	public void addReply(ReplyVO replyVO) {
-		repository.save(replyVO);
+		replyRepository.save(replyVO);
 	}
 
 //	public void updateReply(ReplyVO replyVO) {
@@ -34,7 +35,7 @@ public class ReplyService {
 
 
 	public ReplyVO getOneReply(Integer replyID) {
-		Optional<ReplyVO> optional = repository.findById(replyID);
+		Optional<ReplyVO> optional = replyRepository.findById(replyID);
 //		return optional.get();
 		return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
 	}
