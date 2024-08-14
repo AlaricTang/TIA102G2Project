@@ -99,15 +99,28 @@ public class ProductBackController {
 	    return "back-end/product/listOneProduct";
 	}
 
+	//只顯示上架商品
+//	@GetMapping("listAllProductBack")
+//	public String listAllProductBack(ModelMap model) {
+//		
+//		List<ProductVO> onNormalProductList = ProductSvc.getOnProduct();
+//		model.addAttribute("productList", onNormalProductList);
+//	
+//		return "back-end/product/listAllProductBack";
+//	}
+	
+	
+	//後台顯示上下架
 	@GetMapping("listAllProductBack")
 	public String listAllProductBack(ModelMap model) {
 		
-		List<ProductVO> onNormalProductList = ProductSvc.getOnProduct();
-		model.addAttribute("productList", onNormalProductList);
+		List<ProductVO> OnAndOffProductOnBack = ProductSvc.getAll();
+		model.addAttribute("listAllProductBackOnOff", OnAndOffProductOnBack);
 	
 		return "back-end/product/listAllProductBack";
-	}
-		
+	}	
+	
+	
 	
 	public BindingResult removeFieldError(@Valid ProductVO productVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
