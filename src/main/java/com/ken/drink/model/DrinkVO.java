@@ -55,7 +55,7 @@ public class DrinkVO  implements java.io.Serializable{
     private Byte drinkStatus;  // Change Integer to Byte
     
 //    @Temporal(TemporalType.DATE)
-    @Column(name = "drinkUpdateDate" ,insertable = false)
+    @Column(name = "drinkUpdateDate")
     private Date drinkUpdateDate;
     
 //    @Temporal(TemporalType.DATE)

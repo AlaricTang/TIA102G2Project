@@ -262,6 +262,11 @@
 	 	<span th:if="${#fields.hasErrors('drinkUpdateDate')}" th:errors="*{drinkUpdateDate}" class="error" id="drinkUpdateDate.errors"></span>
 	 </div>
 	 
+	 <div class="form-item" hidden>
+		<label>創建日期:</label>
+	 	<input type="date" th:field="*{drinkCreateDate}" readonly/><br/>
+	 </div>
+	 
 	 <div class="form-item">
         <label>更新者:</label>
         <input type="text" th:field="*{editedByMemberID}"  /><br/>

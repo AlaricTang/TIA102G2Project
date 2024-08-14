@@ -151,6 +151,7 @@ public class DrinkController {
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("success", "- (修改成功)");
 		drinkVO = drinkSvc.getOneDrink(Integer.valueOf(drinkVO.getDrinkID()));
+		System.out.println("drinkCreateDate: " + drinkVO.getDrinkCreateDate());
 		model.addAttribute("drinkVO", drinkVO);
 		return "back-end/drink/listOneDrink"; // 修改成功後轉交listOneEmp.html
 	}
@@ -293,6 +294,11 @@ public class DrinkController {
 	    }
 	    return getDrinksByTag(model);
 	}
+	
+//	public String displayDrinkCart(Model model, HttpSession session) {
+//		Integer userId = (Integer) session.getAttribute("userId");
+//	    List<DrinkOrderDetailVO> drinkCartItems = drinkCartSvc.getDrinkCart(userId);
+//	}
 
 //	// 切換到購物車頁面
 //	@GetMapping("switchToDrinkCartPage")
