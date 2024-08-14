@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>後台 | 修改店家</title>
 
-    <!-- ●●css for jquery datatables 用 -->
+    <!-- css for jquery datatables -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css">
 
-    
+    <!-- JavaScript includes -->
     <script th:src="@{/js/scriptsBack.js}"></script>
     <script th:src="@{/js/datatables-simple-demo.js}"></script>
     <script th:src="@{/demo/chart-area-demo.js}"></script>
@@ -187,7 +187,7 @@
         <div th:include="SliderLeftBack :: SliderLeftBack"></div>
         <!-- footer -->
 
-        <!-- 主要內容區域 -->
+        <!-- 右半邊的空白頁 -->
         <div id="layoutSidenav_content">
             <div class="container">
                 <div class="form-container">
@@ -199,18 +199,36 @@
                             <input type="text" id="storeName" name="storeName" th:value="${storeVO.storeName}" class="form-control" required>
                         </div>
                         <div class="form-group">
+                            <label for="storeAddr">店家地址:</label>
+                            <input type="text" id="storeAddr" name="storeAddr" th:value="${storeVO.storeAddr}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
                             <label for="storeOpenTime">開店時間:</label>
                             <input type="time" id="storeOpenTime" name="storeOpenTime" th:value="${storeVO.storeOpenTime}" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="storeCloseTime">關店時間:</label>
-                            <input type="time" id="storeCloseTime" name="storeCloseTime" th:value="${storeVO.storeCloseTime}" class="form-control">
+                            <input type="time" id="storeCloseTime" name="storeCloseTime" th:value="${storeVO.storeCloseTime}" class="form-control" readonly>
                         </div>
+                        <div class="form-group">
+                            <label for="storePhone" class="form-label">店家電話:</label>
+                            <input type="text" id="storePhone" name="storePhone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="storeAcc">帳號:</label>
+                            <input type="text" id="storeAcc" name="storeAcc" th:value="${storeVO.storeAcc}" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="storePwd">密碼:</label>
+                            <input type="password" id="storePwd" name="storePwd" th:value="${storeVO.storePwd}" class="form-control">
+                        </div>
+
                         <div class="form-group img-container">
                             <label for="storePic">店家圖片:</label>
                             <img id="previewImage" src="#" alt="預覽圖片" style="display:none;">
                             <input type="file" id="storePic" name="storePic" class="form-control" onchange="previewImage(event)">
                         </div>
+
                         <div class="form-group">
                             <label for="storeDes">店家描述:</label>
                             <textarea id="storeDes" name="storeDes" class="form-control" th:text="${storeVO.storeDes}"></textarea>

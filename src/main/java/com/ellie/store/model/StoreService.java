@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hibernate.util.compositeQuery.CompositeQuery_Store; // 對應的複合查詢工具類
 
 @Service("storeService")
 public class StoreService {
@@ -42,8 +41,8 @@ public class StoreService {
         return repository.findAll();
     }
 
-    public List<StoreVO> getAll(Map<String, String[]> map) {
-        return CompositeQuery_Store.getAllC(map, sessionFactory.openSession());
-    }
+//    public List<StoreVO> getAll(Map<String, String[]> map) {
+//        return CompositeQuery_Store.getAllC(map, sessionFactory.openSession());
+//    }
 }
 
