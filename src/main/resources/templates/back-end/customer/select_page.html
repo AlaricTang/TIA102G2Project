@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <!--  ======== Document Title =====================================  -->
+    <title>啡常渴以 | Home</title>
+    
+    
+    <!--  ======== Favicons =====================================  -->
+   	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+
+    
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    
+    
+    <!--  ======== Stylesheets =====================================  -->
+    
+    <!-- Default stylesheets-->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
+    
+    <!-- Template specific stylesheets-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+	
+	<!-- Main stylesheet and color file -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+
+  </head>
+
+
+
+
+
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+
+
+      <!-- header -->
+      <div th:include="header :: header"></div>
+      <!-- header -->
+
+
+	  <!--banner-->
+      <section class="home-section home-full-height" id="home">
+        <div class="hero-slider">
+          <ul class="slides">
+            <!--之後banner圖片來自資料庫-->
+            <li class="bg-dark-30 restaurant-page-header bg-dark" style="background-image:url(&quot;images/restaurant/slider1.jpg&quot;);">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-1"> Hello & welcome</div>
+                  <div class="font-alt mb-40 titan-title-size-4">We are 啡常渴以</div>
+                  <a class="section-scroll btn btn-border-w btn-round" href="#">Check Our Menu | 飲品菜單</a>
+                </div>
+              </div>
+            </li>
+
+            <li class="bg-dark-30 restaurant-page-header bg-dark" style="background-image:url(&quot;images/restaurant/slider2.jpg&quot;);">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-2">有一天，丁丁跟小易一起去海邊散步</div>
+                  <div class="font-alt mb-30 titan-title-size-2">小易: 丁丁，你看，你就像這片海一樣</div>
+                  <div class="font-alt mb-30 titan-title-size-2">丁丁: 為什麼? 你說我跟大海一樣，心胸很寬闊嗎?</div>
+                  <div class="font-alt mb-30 titan-title-size-2">小易: 不是，我是說你跟這片大海一樣，很多魚</div>
+                  <a class="btn btn-border-w btn-round" href="#">Discover our store | 門市資訊</a>
+                </div>
+              </div>
+            </li>
+
+            <li class="bg-dark-30 restaurant-page-header bg-dark" style="background-image:url(&quot;images/restaurant/slider3.jpg&quot;);">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-1"> Take a look at</div>
+                  <div class="font-alt mb-40 titan-title-size-3">our product</div>
+                  <a class="section-scroll btn btn-border-w btn-round" th:href="@{/product/listAllProduct}">Check Our Product | 周邊商品</a>
+                </div>
+              </div>
+            </li>
+
+
+          </ul>
+        </div>
+      </section>
+	  <!--banner-->
+
+
+      <div class="main">
+        
+        <section class="module" id="specialities">
+          <div class="container">
+
+            <div class="row multi-columns-row">
+              <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="content-box">
+                  <a href="#">
+                    <div class="features-icon"><span class="icon-pencil"></span></div>
+                    <h3 class="content-box-title font-serif">預定自取</h3>
+                  </a>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="content-box">
+                  <a th:href="@{/drink/select_page}">
+                    <div class="features-icon"><span class="icon-book-open"></span></div>
+                    <h3 class="content-box-title font-serif">飲品菜單</h3>
+                  </a>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="content-box">
+                  <a href="">
+                    <div class="features-icon"><span class="icon-map"></span></div>
+                    <h3 class="content-box-title font-serif">門市資訊</h3>
+                  </a>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="content-box">
+                  <a href="">
+                    <div class="features-icon"><span class=" icon-wine"></span></div>
+                    <h3 class="content-box-title font-serif">我的寄杯</h3>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="content-box">
+                  <a th:href="@{/cup/select_page}">
+                    <div class="features-icon"><span class=" icon-wine"></span></div>
+                    <h3 class="content-box-title font-serif">環保杯(借用)</h3>
+                  </a>
+                </div>
+              </div>
+              
+              <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="content-box">
+                  <a th:href="@{/cupRecord/select_page}">
+                    <div class="features-icon"><span class=" icon-wine"></span></div>
+                    <h3 class="content-box-title font-serif">環保杯紀錄(借用)</h3>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <section class="module pt-0 pb-0" id="about">
+          <div class="row position-relative m-0">
+            <div class="col-xs-12 col-md-6 side-image" data-background="images/section-14.jpg"></div>
+            
+            <div class="col-xs-12 col-md-6 col-md-offset-6 side-image-text">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2 class="module-title font-alt align-left">About Reusable Cup</h2>
+                  <div class="module-subtitle font-serif align-left">"In every walk with nature one receives far more than he seeks." <br>– John Muir</div>
+                  <p>在現代社會的快節奏生活中，環保杯的出現無疑是對環境的禮讚。<br>它不僅是人們手中的一杯清茶，更是一種生活方式的轉變，象徵對自然的尊重和對未來的希冀。<br><br>每一個環保杯，宛如在陽光下閃耀的綠色希望，它告訴我們，地球的未來掌握在我們手中。當你用環保杯盛滿一杯清水，你同時也在為地球的清新呼吸注入一股清流。<br>讓我們摒棄一次性用品，擁抱這份綠色心意，共同編織一個更為純淨的未來。環保杯，不僅是一個物品，更是一段美麗的環保詩篇。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="module" id="menu">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-2 col-sm-offset-5">
+                <div class="alt-module-subtitle"><span class="holder-w"></span>
+                  <h5 class="font-serif">Most popular Drinks</h5><span class="holder-w"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2">
+                <h2 class="module-title font-alt">熱門飲品</h2>
+              </div>
+            </div>
+            <div class="row multi-columns-row">
+              <div class="col-sm-6">
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">焦糖瑪奇朵</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$120</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">抹茶拿鐵</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$100</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">紅茶拿鐵</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$100</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">冠軍黑咖啡</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$65</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">燕麥冠軍拿鐵咖啡</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$120</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">燕麥抹茶拿鐵</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$120</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">莊園星空拿鐵</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$120</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">可可拿鐵</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$100</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">芝麻拿鐵</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$110</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="menu">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h4 class="menu-title font-alt">抹茶奶霜冰沙</h4>
+                    </div>
+                    <div class="col-sm-4 menu-price-detail">
+                      <h4 class="menu-price font-alt">$145</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center"><a class="btn btn-border-d mt-50" href="#">Check our full menu | 查看完整菜單</a></div>
+          </div>
+        </section>
+
+
+        <section class="module module-video bg-dark-30" data-background="images/restaurant/coffee_bg.png">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt mb-0">Within this humble shop, the whispers of the earth find voice in every sip.</h2>
+              </div>
+            </div>
+          </div>
+          <div class="video-player" data-property="{videoURL:'https://www.youtube.com/watch?v=i_XV7YCRzKo', containment:'.module-video', startAt:3, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
+        </section>
+
+      </div>
+      
+      
+      <!-- footer -->
+      <div th:include="footer :: footer"></div>
+      <!-- footer -->
+      <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+    </main>
+    
+    
+    <!--  ======== JavaScripts =====================================  -->
+    <script th:src="@{lib/jquery/dist/jquery.js}"></script>
+    <script th:src="@{lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{lib/wow/dist/wow.js}"></script>
+    <script th:src="@{lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+    <script th:src="@{lib/isotope/dist/isotope.pkgd.js}"></script>
+    <script th:src="@{lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{lib/flexslider/jquery.flexslider.js}"></script>
+    <script th:src="@{lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{lib/smoothscroll.js}"></script>
+    <script th:src="@{lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+    <script th:src="@{lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
+    <script th:src="@{js/plugins.js}"></script>
+    <script th:src="@{js/main.js}"></script>
+  </body>
+</html>

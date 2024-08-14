@@ -16,6 +16,6 @@ public interface DrinkRepository extends JpaRepository<DrinkVO , Integer>{
 	
 	// 根據標籤查詢飲品
 	
-    List<DrinkVO> findByDrinkTag(String drinkTag);
+    List<DrinkVO> findByDrinkTagAndDrinkStatus(String drinkTag, Byte drinkStatus);
 
 }

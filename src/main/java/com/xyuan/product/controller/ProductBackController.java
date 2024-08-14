@@ -53,6 +53,7 @@ public class ProductBackController {
 		}
 		if (result.hasErrors() || parts[0].isEmpty()) {
 			return "back-end/product/addProduct";
+//			return "/";
 		}
 		
 		ProductSvc.addProduct(productVO);
