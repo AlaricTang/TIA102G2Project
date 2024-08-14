@@ -50,7 +50,7 @@ public class ProductVO implements Serializable{
 	@Column(name="productTag")
 	private Byte productTag;
 	
-	@Column(name="productPic")
+	@Column(name="productPic" ,columnDefinition="MEDIUMBLOB")
 	private byte[] productPic;	//MEDIUMBLOB
 	
 	@Column(name="productUpdateTime")
