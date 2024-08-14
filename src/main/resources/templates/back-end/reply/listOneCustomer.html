@@ -102,7 +102,7 @@
 										<td
 											th:text="${#dates.format(customer.customerTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
 										<td><a
-											th:href="@{/customer/listOneCustomer(customerID=${customer.customerID})}"
+											th:href="@{/reply/getOne_For_Display(customerID=${customer.customerID})}"
 											class="btn btn-primary btn-sm">查看詳情</a></td>
 									</tr>
 								</tbody>
