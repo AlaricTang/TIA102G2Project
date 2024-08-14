@@ -209,7 +209,6 @@
 				            <p class="no-items-message">此分類目前沒有上架的飲品</p>
 				        </div>
 				    </div>
-				    
 				    	<!-- 如果有上架的飲品，顯示商品 -->
 				    <div th:if="${blackTeaDrinks != null && !#lists.isEmpty(blackTeaDrinks)}">
 				        <div th:each="drinkVO : ${blackTeaDrinks}">
