@@ -46,7 +46,7 @@ public class CustomerController {
 	public String getSelectPage() {
 		return "back-end/customer/select_page";
 	}
-
+//here
 	// 用戶端新增客戶留言+紀錄在後台
 	@PostMapping("insert")
 	public String insert(@Valid CustomerVO customerVO, BindingResult result,  ModelMap model) throws IOException {
@@ -56,8 +56,7 @@ public class CustomerController {
 		//去除BindingResult中upFiles欄位的FieldError紀錄
 		result = removeFieldError(customerVO, result, "addCustomerMessage");
 
-		if (result.hasErrors()) {
-			
+		if (result.hasErrors()) {  
 			// customerName驗證
 			FieldError customerNameError = result.getFieldError("customerName");
 			if (customerNameError != null && (customerNameError.getDefaultMessage() == null || customerNameError.getDefaultMessage().trim().length() == 0)) { 
@@ -111,6 +110,7 @@ public class CustomerController {
 		// 新增成功後，重導至原本留言頁面(select_page)
 		return "redirect:/customer/select_page"; 
 	}
+	//here
 	
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	private BindingResult removeFieldError(@Valid CustomerVO customerVO, BindingResult result, String removedFieldname) {
