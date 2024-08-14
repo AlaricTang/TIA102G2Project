@@ -51,7 +51,7 @@ public class CampaignVO implements Serializable{
 	@Column(name="campaignEndDate")
 	private Date campaignEndDate;
 	
-	@Column(name="campaignPic")
+	@Column(name="campaignPic", columnDefinition="MEDIUMBLOB")
 	private byte[] campaignPic;
 	
 	//註1:【現在是設定成 cascade="all" lazy="false" inverse="true"之意】
