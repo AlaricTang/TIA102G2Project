@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ellie.store.model.StoreService;
+import com.ellie.store.model.StoreVO;
 import com.ellie.user.model.UserVO;
 import com.ken.drink.model.DrinkService;
 import com.ken.drink.model.DrinkVO;
 import com.redis.drinkCartTest.DrinkCartService;
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailService;
 import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Controller
@@ -37,6 +40,12 @@ public class DrinkController {
 	
 	@Autowired
 	DrinkCartService drinkCartSvc;
+	
+	@Autowired
+	StoreService storeSvc;
+	
+	@Autowired
+	DrinkOrderDetailService drinkOrderDetailSvc;
 	
 //	@Autowired
 //	MemberService memberSvc;
@@ -209,59 +218,91 @@ public class DrinkController {
 	    return "back-end/drink/listAllDrinkFront";
 	}
 	
-	// =================== 方法 2 購物車 =============================
-	// 點擊進入詳細頁面
-	@GetMapping("drinkDetail")
-	public String drinkDetail(
-			@RequestParam("drinkID") String str_drinkID,
-			ModelMap model) {
-		Integer drinkID = Integer.valueOf(str_drinkID);
-		DrinkVO singleDrink = drinkSvc.getOneDrink(drinkID);
-		
-		model.addAttribute("singleDrink",singleDrink);
-		return "back-end/drink/singleDrink";
-		
+	// =================== 方法 2 購物車功能 =============================
+
+	// 點擊線上預訂飲品，跳轉到選擇店家和取餐時間的頁面
+	@GetMapping("orderOnline")
+	public String orderOnline(Model model) {
+	    // StoreService 提供店家資料
+	    List<StoreVO> storeList = storeSvc.getAll();
+	    model.addAttribute("storeList", storeList);
+	    return "back-end/drink/selectStore";
 	}
-	
-	// 加入購物車
+
+	// 選擇店家、取餐時間和日期後，列出所有飲品
+	@GetMapping("listDrinksForOrder")
+	public String listDrinksForOrder(
+	    @RequestParam("storeID") String storeID,
+	    @RequestParam("pickupTime") String pickupTime,
+//	    @RequestParam("userID") String userID,
+	    HttpSession session,
+	    Model model) throws IOException {
+
+	    // 取得當前使用者的 userID
+	    UserVO user = (UserVO) session.getAttribute("user");
+	    Integer userID = user.getUserId();
+
+	    // 將選擇的店家和取餐時間存入 Redis
+	    drinkCartSvc.setOneDrinkOrder(userID, "drinkOrderStore", storeID);
+	    drinkCartSvc.setOneDrinkOrder(userID, "drinkOrderPickTime", pickupTime);
+	    drinkCartSvc.setOneDrinkOrder(userID, "cupNumber", "0");
+
+	    // 顯示飲品列表
+	    return getDrinksByTag(model);
+	}
+
+	// 顯示單一飲品頁面
+	@GetMapping("singleDrink")
+	public String singleDrink(
+	    @RequestParam("drinkID") String drinkID,
+	    Model model) {
+
+	    DrinkVO drinkVO = drinkSvc.getOneDrink(Integer.valueOf(drinkID));
+	    model.addAttribute("drinkVO", drinkVO);
+	    
+	    return "back-end/drink/singleDrink";
+	}
+
+	// 將客置選項加入購物車 
 	@PostMapping("drinkAddToCart")
 	public String drinkAddToCart(
-		@RequestParam("drinkID") String drinkID,
-		@RequestParam("orderAmount") String orderAmount,
-		HttpSession session ) throws IOException {
-		
-		DrinkOrderDetailVO drinkItem = new DrinkOrderDetailVO();
-		drinkItem.setDrinkID(Integer.valueOf(drinkID));
-		drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(orderAmount));
-		UserVO user = (UserVO)session.getAttribute("user");
-		drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
-		return "redirect:/drink/drinkDetail?drinkID=" + drinkID;
+	    @RequestParam("drinkID") String drinkID,
+	    @RequestParam("drinkOrderDetailIsHot") String drinkOrderDetailIsHot,
+	    @RequestParam("drinkOrderDetailUseCup") String drinkOrderDetailUseCup,
+	    @RequestParam("drinkOrderDetailAmount") String drinkOrderDetailAmount,
+	    @RequestParam("drinkOrderDetailIsJibei") String drinkOrderDetailIsJibei,
+	    HttpSession session,
+	    Model model) throws IOException {
+
+		// 客置選項
+	    DrinkOrderDetailVO drinkItem = new DrinkOrderDetailVO();
+	    drinkItem.setDrinkID(Integer.valueOf(drinkID));
+	    drinkItem.setDrinkOrderDetailIsHot(Byte.valueOf(drinkOrderDetailIsHot));
+	    drinkItem.setDrinkOrderDetailUseCup(Byte.valueOf(drinkOrderDetailUseCup));
+	    drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(drinkOrderDetailAmount));
+	    drinkItem.setDrinkOrderDetailIsJibei(Byte.valueOf(drinkOrderDetailIsJibei));
+
+	    UserVO user = (UserVO) session.getAttribute("user");
+	    drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
+	    
+	    // 當使用者有使用環保杯的時候 數量會+1
+	    if(Byte.valueOf(drinkOrderDetailUseCup) == 1) {
+	    	String str_cupNumber = drinkCartSvc.getOneDrinkOrder(user.getUserId(), "cupNumber");
+	    	Integer cupNumber = Integer.valueOf(str_cupNumber)+1;
+	    	drinkCartSvc.setOneDrinkOrder(user.getUserId(), "cupNumber", cupNumber.toString()  );                      
+	    }
+	    return getDrinksByTag(model);
 	}
-	
-	// 加入購物車
-	@GetMapping("drinkAddToCartOnListAlldrinkPage")
-	public String drinkAddToCartOnListAlldrinkPage(
-			@RequestParam("drinkID") String drinkID,
-			@RequestParam("orderAmount") String orderAmount,
-			HttpSession session ) throws IOException { 
-		
-		DrinkOrderDetailVO drinkItem = new DrinkOrderDetailVO();
-		drinkItem.setDrinkID(Integer.valueOf(drinkID));
-		drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(orderAmount));
-		UserVO user = (UserVO)session.getAttribute("user");
-		drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
-		return "redirect:/drink/listAllDrinkFront";
-	}
-	
-	// 切換
-	@GetMapping("switchToDrinkCartPage")
-	public String switchToDrinkCartPage(ModelMap model, HttpSession session) throws IOException{
-		UserVO user = (UserVO)session.getAttribute("user");
-		
-		List<DrinkOrderDetailVO> ddList = drinkCartSvc.getDrinkCart(user.getUserId());
-		
-		model.addAttribute("ddList",ddList);
-		
-		return "back-end/drink/checkCart";
-	}
+
+//	// 切換到購物車頁面
+//	@GetMapping("switchToDrinkCartPage")
+//	public String switchToDrinkCartPage(ModelMap model, HttpSession session) throws IOException{
+//	    UserVO user = (UserVO)session.getAttribute("user");
+//
+//	    List<DrinkOrderDetailVO> ddList = drinkCartSvc.getDrinkCart(user.getUserId());
+//
+//	    model.addAttribute("ddList",ddList);
+//
+//	    return "back-end/drink/checkCart";
+//	}
 }
