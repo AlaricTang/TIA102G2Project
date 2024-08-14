@@ -108,7 +108,7 @@ public class UserFrontController {
     // 處理會員登出
     @GetMapping("logout")
     public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/user/login";
+        session.removeAttribute("user");
+        return "redirect:/";
     }
 }

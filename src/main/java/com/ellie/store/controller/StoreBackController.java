@@ -53,15 +53,13 @@ public class StoreBackController {
     }
 
     // 登出功能
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, ModelMap modelMap) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate(); // 使會話失效
-        }
-        modelMap.addAttribute("success", "- (登出成功)"); // 可選：添加登出成功訊息
-        return "redirect:/store/login"; // 登出後重導至登入頁面
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/";
     }
+
+        
 
     // 顯示店家列表
     @GetMapping("/listAllStores")
