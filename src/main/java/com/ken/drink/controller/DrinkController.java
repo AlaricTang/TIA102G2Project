@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ellie.member.model.MemberService;
+import com.ellie.user.model.UserVO;
 import com.ken.drink.model.DrinkService;
 import com.ken.drink.model.DrinkVO;
+import com.redis.drinkCartTest.DrinkCartService;
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Controller
 @RequestMapping("/drink")
@@ -31,6 +34,9 @@ public class DrinkController {
 	
 	@Autowired
 	DrinkService drinkSvc;
+	
+	@Autowired
+	DrinkCartService drinkCartSvc;
 	
 //	@Autowired
 //	MemberService memberSvc;
@@ -183,12 +189,15 @@ public class DrinkController {
 	
 	@GetMapping("drinksByTag")
 	public String getDrinksByTag(Model model) {
-	    List<DrinkVO> greenTeaDrinks = drinkSvc.getDrinksByTag("綠茶");
-	    List<DrinkVO> blackTeaDrinks = drinkSvc.getDrinksByTag("紅茶");
-	    List<DrinkVO> milkTeaDrinks = drinkSvc.getDrinksByTag("奶茶");
-	    List<DrinkVO> coffeeDrinks = drinkSvc.getDrinksByTag("咖啡");
-	    List<DrinkVO> machaDrinks = drinkSvc.getDrinksByTag("抹茶");
-	    List<DrinkVO> otherDrinks = drinkSvc.getDrinksByTag("其他");
+		
+		Byte availableStatus = 1; // 假設 1 表示上架
+		
+	    List<DrinkVO> greenTeaDrinks = drinkSvc.getDrinksByTagAndStatus("綠茶", availableStatus);
+	    List<DrinkVO> blackTeaDrinks = drinkSvc.getDrinksByTagAndStatus("紅茶", availableStatus);
+	    List<DrinkVO> milkTeaDrinks = drinkSvc.getDrinksByTagAndStatus("奶茶", availableStatus);
+	    List<DrinkVO> coffeeDrinks = drinkSvc.getDrinksByTagAndStatus("咖啡", availableStatus);
+	    List<DrinkVO> machaDrinks = drinkSvc.getDrinksByTagAndStatus("抹茶", availableStatus);
+	    List<DrinkVO> otherDrinks = drinkSvc.getDrinksByTagAndStatus("其他", availableStatus);
 	    
 	    model.addAttribute("greenTeaDrinks", greenTeaDrinks);
 	    model.addAttribute("blackTeaDrinks", blackTeaDrinks);
@@ -196,12 +205,63 @@ public class DrinkController {
 	    model.addAttribute("coffeeDrinks", coffeeDrinks);
 	    model.addAttribute("machaDrinks", machaDrinks);
 	    model.addAttribute("otherDrinks", otherDrinks);
-	    if( greenTeaDrinks != null) {
-	    	System.out.println("有東西");
-	    }else {
-	    	System.out.println("沒東西");
-	    }
-	    System.out.println(greenTeaDrinks);
+
 	    return "back-end/drink/listAllDrinkFront";
+	}
+	
+	// =================== 方法 2 購物車 =============================
+	// 點擊進入詳細頁面
+	@GetMapping("drinkDetail")
+	public String drinkDetail(
+			@RequestParam("drinkID") String str_drinkID,
+			ModelMap model) {
+		Integer drinkID = Integer.valueOf(str_drinkID);
+		DrinkVO singleDrink = drinkSvc.getOneDrink(drinkID);
+		
+		model.addAttribute("singleDrink",singleDrink);
+		return "back-end/drink/singleDrink";
+		
+	}
+	
+	// 加入購物車
+	@PostMapping("drinkAddToCart")
+	public String drinkAddToCart(
+		@RequestParam("drinkID") String drinkID,
+		@RequestParam("orderAmount") String orderAmount,
+		HttpSession session ) throws IOException {
+		
+		DrinkOrderDetailVO drinkItem = new DrinkOrderDetailVO();
+		drinkItem.setDrinkID(Integer.valueOf(drinkID));
+		drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(orderAmount));
+		UserVO user = (UserVO)session.getAttribute("user");
+		drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
+		return "redirect:/drink/drinkDetail?drinkID=" + drinkID;
+	}
+	
+	// 加入購物車
+	@GetMapping("drinkAddToCartOnListAlldrinkPage")
+	public String drinkAddToCartOnListAlldrinkPage(
+			@RequestParam("drinkID") String drinkID,
+			@RequestParam("orderAmount") String orderAmount,
+			HttpSession session ) throws IOException { 
+		
+		DrinkOrderDetailVO drinkItem = new DrinkOrderDetailVO();
+		drinkItem.setDrinkID(Integer.valueOf(drinkID));
+		drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(orderAmount));
+		UserVO user = (UserVO)session.getAttribute("user");
+		drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
+		return "redirect:/drink/listAllDrinkFront";
+	}
+	
+	// 切換
+	@GetMapping("switchToDrinkCartPage")
+	public String switchToDrinkCartPage(ModelMap model, HttpSession session) throws IOException{
+		UserVO user = (UserVO)session.getAttribute("user");
+		
+		List<DrinkOrderDetailVO> ddList = drinkCartSvc.getDrinkCart(user.getUserId());
+		
+		model.addAttribute("ddList",ddList);
+		
+		return "back-end/drink/checkCart";
 	}
 }

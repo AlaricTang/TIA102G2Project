@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!--  ======== Document Title =====================================  -->
+<title>啡常渴以 | fakeLogging</title>
+
+<!--  ======== Favicons =====================================  -->
+<link rel="apple-touch-icon" sizes="57x57"
+	th:href="@{/images/favicons/apple-icon-57x57.png}">
+<link rel="apple-touch-icon" sizes="60x60"
+	th:href="@{/images/favicons/apple-icon-60x60.png}">
+<link rel="apple-touch-icon" sizes="72x72"
+	th:href="@{/images/favicons/apple-icon-72x72.png}">
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/images/favicons/apple-icon-76x76.png}">
+<link rel="apple-touch-icon" sizes="114x114"
+	th:href="@{/images/favicons/apple-icon-114x114.png}">
+<link rel="apple-touch-icon" sizes="120x120"
+	th:href="@{/images/favicons/apple-icon-120x120.png}">
+<link rel="apple-touch-icon" sizes="144x144"
+	th:href="@{/images/favicons/apple-icon-144x144.png}">
+<link rel="apple-touch-icon" sizes="152x152"
+	th:href="@{/images/favicons/apple-icon-152x152.png}">
+<link rel="apple-touch-icon" sizes="180x180"
+	th:href="@{/images/favicons/apple-icon-180x180.png}">
+<link rel="icon" type="image/png" sizes="192x192"
+	th:href="@{/images/favicons/android-icon-192x192.png}">
+<link rel="icon" type="image/png" sizes="32x32"
+	th:href="@{/images/favicons/favicon-32x32.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/images/favicons/favicon-96x96.png}">
+<link rel="icon" type="image/png" sizes="16x16"
+	th:href="@{/images/favicons/favicon-16x16.png}">
+
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage"
+	content="images/favicons/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+
+<!--  ======== Stylesheets =====================================  -->
+
+<!-- Default stylesheets-->
+<link rel="stylesheet"
+	th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
+
+<!-- Template specific stylesheets-->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+
+<!-- Main stylesheet and color file -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+</head>
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+	
+	<main>
+	
+		<!-- header -->
+		<div th:replace="header :: header"></div>
+		<!-- header -->
+		
+		<div class="main">
+			<section class="module">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6 mb-sm-40">
+							<img th:src="@{/drink/drinkDBGifReader} + '?drinkID=' + ${singleDrink.drinkID}" alt="Single Product Image" />
+						</div>
+						
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-12">
+									<h1 class="product-title font-alt" th:text="${singleDrink.drinkName}"></h1>
+								</div>
+							</div>
+							
+							
+							<div class="row mb-20">
+								<div class="col-sm-12">
+									<div class="price font-alt">
+										<p th:text="'價格: NT' + ${drinkVO.drinkPrice}"></p>
+									</div>
+								</div>
+							</div>
+							<div class="row mb-20">
+								<div class="col-sm-12">
+									<div class="description" th:text="${singleDrink.drinkDes}">
+								</div>
+							</div>
+							
+							<div class="row mb-20">
+								<form method="post" th:action="@{/drink/drinkAddToCart}">
+									<div class="col-sm-4 mb-sm-20">
+										<input class="form-control input-lg" type="number" name="orderAmount"
+											value="1" max="40" min="1" required="required" />
+									</div>
+									<input type="hidden" name="drinkID" th:value="${singleDrink.drinkID}">
+	
+	<!-- 還沒有購物車，不確定是否正確 -->
+									<div class="col-sm-8">
+										<input type="submit" class="btn btn-lg btn-block btn-round btn-b"  value="加入購物車" />
+									</div>
+								</form>
+							</div>
+							
+							<div class="row mb-20">
+								<div class="col-sm-12">
+									<div class="product_meta">
+										飲品分類：<a th:text="${singleDrink.drinkTag}"></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			
+			
+		</div>
+		
+		<!-- footer -->
+		<div th:include="footer :: footer"></div>
+		<!-- footer -->
+		<div class="scroll-up">
+			<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+		</div>
+	</main>
+	
+	<!--  ======== JavaScripts =====================================  -->
+	<script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+	<script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<script th:src="@{/lib/wow/dist/wow.js}"></script>
+	<script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+	<script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+	<script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+	<script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+	<script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+	<script th:src="@{/lib/smoothscroll.js}"></script>
+	<script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+	<script
+		th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
