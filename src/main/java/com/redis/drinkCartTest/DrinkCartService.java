@@ -63,7 +63,7 @@ public class DrinkCartService {
 
 	//======= 取出購物車 object轉成VO =======
 	public List<DrinkOrderDetailVO> getDrinkCart (Integer userID) throws IOException  {
-		String cartKey = DRINKCART_PREFIX + userID.toString();
+		String cartKey = DRINKCART_PREFIX + userID;
 		List<DrinkOrderDetailVO> drinkCartItems  = new ArrayList<>();
 		List<Object> cartJsonList  = jedisSvc.getItemsFromList(cartKey);
 		for(Object cartJson : cartJsonList ) {
