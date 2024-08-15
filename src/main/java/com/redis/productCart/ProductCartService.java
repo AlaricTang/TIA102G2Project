@@ -38,7 +38,7 @@ public class ProductCartService {
 			//針對每個VO的drinkID 比對要加入的VO的drinkID
 				//有找到: 原VO更新	加到List<VO>
 				//沒找到: 原VO不更新	加到List<VO> 
-			if (existingCartItem.getProductID().equals(cartItem.getProductID())) {
+			if (existingCartItem.getProductVO().getProductID().equals(cartItem.getProductVO().getProductID())) {
 				
 				existingCartItem.setProductOrderDetailAmount(
 						existingCartItem.getProductOrderDetailAmount() + cartItem.getProductOrderDetailAmount());// 更新数量
@@ -82,8 +82,8 @@ public class ProductCartService {
 		String cartKey = PRODUCTCART_PREFIX + userID.toString();
 		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
         for (Object cartJson : cartJsonList) {
-        	ProductOrderDetailVO drinkOrderDetail = gson.fromJson(cartJson.toString(), ProductOrderDetailVO.class);
-            if (drinkOrderDetail.getProductID().equals(productID)) {
+        	ProductOrderDetailVO productOrderDetail = gson.fromJson(cartJson.toString(), ProductOrderDetailVO.class);
+            if (productOrderDetail.getProductVO().getProductID().equals(productID)) {
             	jedisSvc.removeItemFromList(cartKey, cartJson);
                 break;
             }

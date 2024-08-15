@@ -58,25 +58,21 @@ public class JibeiProductFrontController {
 			HttpSession session) throws IOException {
 		
 		JibeiOrderDetailVO jibeiProductItem = new JibeiOrderDetailVO();
-		jibeiProductItem.setJibeiProductID(Integer.valueOf(jibeiProductID));
+		jibeiProductItem.setJibeiProductVO(jibeiProductSvc.getOneJibeiProduct(Integer.valueOf(jibeiProductID)));
 		jibeiProductItem.setJibeiOrderDetailAmount(Integer.valueOf(orderAmount));
-		
 		UserVO user = (UserVO)session.getAttribute("user");
-	
 		jibeiProductCartSvc.addCartItem(user.getUserId(),jibeiProductItem);
-		
-		
 		return "redirect:/jibeiProduct/jibeiPdDetail"+"?jibeiProductID="+jibeiProductID;
 	}
 	//加入購物車
-	@PostMapping("addOneToCart")
+	@GetMapping("addOneToCart")
 	public String addOneToCart(
 			@RequestParam("jibeiProductID") String jibeiProductID,
 			@RequestParam("orderAmount") String orderAmount,
 			HttpSession session) throws IOException {
 		
 		JibeiOrderDetailVO jibeiProductItem = new JibeiOrderDetailVO();
-		jibeiProductItem.setJibeiProductID(Integer.valueOf(jibeiProductID));
+		jibeiProductItem.setJibeiProductVO(jibeiProductSvc.getOneJibeiProduct(Integer.valueOf(jibeiProductID)));
 		jibeiProductItem.setJibeiOrderDetailAmount(Integer.valueOf(orderAmount));
 		
 		UserVO user = (UserVO)session.getAttribute("user");
@@ -84,6 +80,18 @@ public class JibeiProductFrontController {
 		jibeiProductCartSvc.addCartItem(user.getUserId(),jibeiProductItem);
 		
 		
-		return "redirect:/jibeiProduct/jibeiProductList";
+		return "redirect:/product/listAllProduct";
 	}
+	
+	//刪除購物車 (一般商品)
+	@GetMapping("removeJibeiPdCart")
+	public String removeJibeiPdCart(
+			@RequestParam("jibeiProductID") String jibeiProductID,
+			HttpSession session) throws IOException {
+		
+		UserVO user = (UserVO)session.getAttribute("user");
+		jibeiProductCartSvc.removeJibeiProductCartItem(user.getUserId(), Integer.valueOf(jibeiProductID));  
+		return "redirect:/product/switchToCartPage";
+		}
+	
 }

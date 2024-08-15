@@ -2,14 +2,26 @@ package com.tang.jibeiProduct.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.google.gson.annotations.Expose;
+import com.ken.drink.model.DrinkVO;
+import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
 
 @Entity
 @Table(name="jibeiproduct")
@@ -22,13 +34,13 @@ public class JibeiProductVO implements Serializable {
 	private Integer jibeiProductID;
 	
 	
-//	@ManyToOne
-//	@JoinColumn(name="drinkID") // 指定用來join table的column
-//	private DrinkVO drinkVO;
+	@ManyToOne
+	@JoinColumn(name="drinkID") // 指定用來join table的column
+	private DrinkVO drinkVO;
 	
-	@NotNull(message = "請選擇商品")
-	@Column(name="drinkID")
-	private Integer drinkID;
+//	@NotNull(message = "請選擇商品")
+//	@Column(name="drinkID")
+//	private Integer drinkID;
 	
 	@NotNull(message = "請給予價錢")
 	@Column(name="jibeiProductPrice")
@@ -45,9 +57,11 @@ public class JibeiProductVO implements Serializable {
 	@Column(name="jibeiProductStatus")
 	private Byte jibeiProductStatus;
 	
+	@Expose(serialize = false)
 	@Column(name="jibeiProductUpdateTime")
 	private Timestamp jibeiProductUpdateTime;
 	
+	@Expose(serialize = false)
 	@Column(name="jibeiProductCreateTime" ,updatable = false, insertable = false)
 	private Timestamp jibeiProductCreateTime;
 	
@@ -59,6 +73,11 @@ public class JibeiProductVO implements Serializable {
 	@Column(name="memberID")
 	private Integer memberID;
 
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="jibeiProductVO")
+	@OrderBy("jibeiOrderDetailID asc")
+	private Set<JibeiOrderDetailVO> jibeiOrderDetailVO = new HashSet<JibeiOrderDetailVO>();
+	
+	
 	public JibeiProductVO() {
 	}
 
@@ -70,16 +89,26 @@ public class JibeiProductVO implements Serializable {
 		this.jibeiProductID = jibeiProductID;
 	}
 
-	public Integer getDrinkID() {
-		return drinkID;
-	}
-
-	public void setDrinkID(Integer drinkID) {
-		this.drinkID = drinkID;
-	}
+//	public Integer getDrinkID() {
+//		return drinkID;
+//	}
+//
+//	public void setDrinkID(Integer drinkID) {
+//		this.drinkID = drinkID;
+//	}
+	
+	
 
 	public Integer getJibeiProductPrice() {
 		return jibeiProductPrice;
+	}
+
+	public DrinkVO getDrinkVO() {
+		return drinkVO;
+	}
+
+	public void setDrinkVO(DrinkVO drinkVO) {
+		this.drinkVO = drinkVO;
 	}
 
 	public void setJibeiProductPrice(Integer jibeiProductPrice) {
@@ -133,6 +162,7 @@ public class JibeiProductVO implements Serializable {
 	public void setMemberID(Integer memberID) {
 		this.memberID = memberID;
 	}
+	
 	
 	
 }

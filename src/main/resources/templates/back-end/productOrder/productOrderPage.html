@@ -1,10 +1,157 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="BIG5">
-<title>Insert title here</title>
-</head>
-<body>
+<html  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <!--  ======== Document Title =====================================  -->
+    <title>啡常渴以 | 結帳頁</title>
+    
+    
+    <!--  ======== Favicons =====================================  -->
+   	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+    
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    
+    
+    <!--  ======== Stylesheets =====================================  -->
+    
+    <!-- Default stylesheets-->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
+    
+    <!-- Template specific stylesheets-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+	
+	<!-- Main stylesheet and color file -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+	<style >
+		table, table td, table th{
+			border: 1px solid black;
+			border-collapse: collapse;
+			text-align:center;
+		}
+		
+		.drinkOrder, .drinkOrderDetail{
+			background-color: #ffe4c4;
+		}
+	</style>
+	
+	
+  </head>
 
-</body>
+
+
+
+
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+  	<main>
+
+	    <!-- header -->
+	    <div th:replace="header :: header"></div>
+	    <!-- header -->
+		
+
+		<div class="main">
+		
+		<form method="post" action="/productOrder/order">
+			收件人姓名:<input name="receiverName" type="text" th:value="${session.user.userName}"><br>
+			電話:<input name="receiverPhone" type="tel" ><br>
+			信箱:<input name="receiverMail" type="email" ><br>
+			<h2>運送方式:</h2>
+			<input name="userID" type="hidden" th:value="${userID}">
+			<input name="productOrderAmount" type="hidden" th:value="${session.productNumber}">
+			
+		  	<input type="radio" id="textInput" name="inputType" value="text">
+			<label for="textInput">宅配到府</label><br>
+			
+			<input type="radio" id="selectInput" name="inputType" value="select">
+			<label for="selectInput">店內自取</label><br>
+			
+			<input type="hidden" name="productOrderPayM" value="0">
+			<!-- 預設顯示的元素 -->
+			<input name="productOrderAddr" type="text" id="textInputField" style="display:none">
+			<!-- 下拉選擇框預設不顯示 -->
+			<select name="productOrderAddr" id="selectInputField" style="display:none;">
+			  <option value="">請選擇一個選項</option>
+			  <th:block th:each="store:${storeList}">
+			  	  <option th:value="${store.storeName}" th:text="store.storeName"></option>
+			  </th:block>
+			</select><br>
+		  	  
+		  	
+		  	<input name="productOrderTTPrice" th:value="${session.productTotalPrice}" th:text="'總金額：$'+${session.productTotalPrice}"><br>
+		  	<input type="text" value="訂單備註">
+		  	
+		  	<input type="submit" value="確認下訂">
+		</form>
+		
+		</div>
+    	
+
+	    <!-- footer -->
+	    <div th:include="footer :: footer"></div>
+	    <!-- footer -->
+    	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+   </main>
+    
+    
+    <!--  ======== JavaScripts =====================================  -->
+    <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/wow/dist/wow.js}"></script>
+    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+    <script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/smoothscroll.js}"></script>
+    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script>
+	  document.querySelectorAll('input[name="inputType"]').forEach((radio) => {
+	    radio.addEventListener('change', function() {
+	      // 隐藏所有输入元素
+	      document.getElementById('textInputField').style.display = 'none';
+	      document.getElementById('selectInputField').style.display = 'none';
+	
+	      // 根据选择显示相应的输入元素
+	      if (this.value === 'text') {
+	        document.getElementById('textInputField').style.display = 'block';
+	      } else if (this.value === 'select') {
+	        document.getElementById('selectInputField').style.display = 'block';
+	      }
+	    });
+	  });
+	</script>
+    
+  </body>
 </html>

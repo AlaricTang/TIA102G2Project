@@ -97,7 +97,7 @@ public class ProductController {
 	        HttpSession session) throws IOException {
 
 	    ProductOrderDetailVO productItem = new ProductOrderDetailVO();
-	    productItem.setProductID(Integer.valueOf(productID)); // 确保这里获取到的是productID
+	    productItem.setProductVO(productSvc.getOneProduct(Integer.valueOf(productID))); // 确保这里获取到的是productID
 	    productItem.setProductOrderDetailAmount(Integer.valueOf(orderAmount));
 	    UserVO user = (UserVO)session.getAttribute("user");
 	    productCartSvc.addCartItem(user.getUserId().toString(), productItem);
@@ -113,7 +113,7 @@ public class ProductController {
 		        HttpSession session) throws IOException {
 
 		    ProductOrderDetailVO productItem = new ProductOrderDetailVO();
-		    productItem.setProductID(Integer.valueOf(productID)); // 确保这里获取到的是productID
+		    productItem.setProductVO(productSvc.getOneProduct(Integer.valueOf(productID))); // 确保这里获取到的是productID
 		    productItem.setProductOrderDetailAmount(Integer.valueOf(orderAmount));
 		    UserVO user = (UserVO)session.getAttribute("user");
 		    productCartSvc.addCartItem(user.getUserId().toString(), productItem);
@@ -135,17 +135,34 @@ public class ProductController {
 		UserVO user = (UserVO)session.getAttribute("user");
 		
 		List<ProductOrderDetailVO> pdList = productCartSvc.getProductCart(user.getUserId());
-		List<JibeiOrderDetailVO> jpdList = jibeiProductCartSvc.getJibeiProductCart(user.getUserId());
+//		List<JibeiOrderDetailVO> jpdList = jibeiProductCartSvc.getJibeiProductCart(user.getUserId());
 		
+		Integer productNumber = 0;
+		Integer totalPrice = 0;
+		for(ProductOrderDetailVO pd : pdList) {
+			productNumber += pd.getProductOrderDetailAmount();
+			totalPrice += (productSvc.getOneProduct(pd.getProductVO().getProductID())).getProductPrice()*pd.getProductOrderDetailAmount();
+		}
+		session.setAttribute("productTotalPrice", totalPrice);
+		session.setAttribute("productNumber",productNumber);
 		model.addAttribute("pdList",pdList);
-		model.addAttribute("jpdList",jpdList);
+//		model.addAttribute("jpdList",jpdList);
 	
+		
+		
 		return "back-end/product/checkCart";
 	}
 	
-	
-	
-	
+	//刪除購物車 (一般商品)
+	@GetMapping("removePdCart")
+	public String removePdCart(
+			@RequestParam("productID") String productID,
+			HttpSession session) throws IOException {
+		UserVO user = (UserVO)session.getAttribute("user");
+		productCartSvc.removeProductCartItem(user.getUserId(), Integer.valueOf(productID));
+
+		return "redirect:/product/switchToCartPage";
+	}
 	
 	
 	

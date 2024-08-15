@@ -225,15 +225,15 @@
 						<div class="card-header">
 							<i class="fas fa-table me-1"></i> 所有上架商品資料
 						</div>
-						<div class="card-body">
+<!-- 						<div class="card-body"> -->
 						
-							<form method="post" th:action="@{/jibeiProduct/getJibeiProduct}">
-							    <div class="form-row">
+<!-- 							<form method="post" th:action="@{/jibeiProduct/getJibeiProduct}"> -->
+<!-- 							    <div class="form-row"> -->
 							    
-							        <div class="form-item col-md-3">
-							            <label for="drinkID">輸入商品名稱(要改fk):</label>
-							            <input type="text" name="drinkID" id="drinkID" >
-							        </div>
+<!-- 							        <div class="form-item col-md-3"> -->
+<!-- 							            <label for="drinkID">輸入商品名稱:</label> -->
+<!-- 							            <input type="text" name="drinkVO" id="drinkID" > -->
+<!-- 							        </div> -->
 							        
 							        
 <!-- 							        <div class="form-item col-md-3"> -->
@@ -246,14 +246,14 @@
 <!-- 							        </div> -->
 							        
 							        
-							        <div class="form-item col-md-1">
-							            <br>
-							            <input type="submit" class="btn btn-primary" value="送出">
-							        </div>
+<!-- 							        <div class="form-item col-md-1"> -->
+<!-- 							            <br> -->
+<!-- 							            <input type="submit" class="btn btn-primary" value="送出"> -->
+<!-- 							        </div> -->
 							        
-							    </div>
-							</form>
-						</div>
+<!-- 							    </div> -->
+<!-- 							</form> -->
+<!-- 						</div> -->
 						
 						<div class="card-body">
 							<table id="example" class="display">
@@ -275,12 +275,12 @@
 							        <th:block th:each="jibeiProductVO : ${onList}">
 							            <tr>
 							                <td th:text="${jibeiProductVO.jibeiProductID}"></td>
-							                <td th:text="${jibeiProductVO.drinkID}"></td>
+							                <td th:text="${jibeiProductVO.drinkVO.drinkName}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductPrice}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductDes}"></td>
 							                <td class="status-available"><span th:text="上架"></span></td>
 							                <td>
-							                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkID}" width="100px">
+							                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkVO.drinkID}" width="100px">
 							                </td>
 							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
 							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
@@ -325,12 +325,12 @@
 							        <th:block th:each="jibeiProductVO : ${offList}">
 							            <tr>
 							                <td th:text="${jibeiProductVO.jibeiProductID}"></td>
-							                <td th:text="${jibeiProductVO.drinkID}"></td>
+							                <td th:text="${jibeiProductVO.drinkVO.drinkName}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductPrice}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductDes}"></td>
 							                <td class="status-unavailable"><span th:text="下架"></span></td>
 							                <td>
-							                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkID}" width="100px">
+							                    <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkVO.drinkID}" width="100px">
 							                </td>
 							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
 							                <td th:text="${#dates.format(jibeiProductVO.jibeiProductCreateTime, 'yyyy-MM-dd HH:mm')}"></td>

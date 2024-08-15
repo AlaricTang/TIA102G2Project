@@ -2,15 +2,23 @@ package com.xyuan.product.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
 
 @Entity
@@ -65,6 +73,20 @@ public class ProductVO implements Serializable{
 	
 	@Column(name="memberID", nullable = false)
 	private Integer memberID;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="productVO")
+	@OrderBy("productOrderDetailID asc")
+	private Set<ProductOrderDetailVO> productOrderDetails = new HashSet<ProductOrderDetailVO>();
+
+
+	
+	public Set<ProductOrderDetailVO> getProductOrderDetails() {
+		return productOrderDetails;
+	}
+
+	public void setProductOrderDetails(Set<ProductOrderDetailVO> productOrderDetails) {
+		this.productOrderDetails = productOrderDetails;
+	}
 
 	public Integer getProductID() {
 		return productID;
