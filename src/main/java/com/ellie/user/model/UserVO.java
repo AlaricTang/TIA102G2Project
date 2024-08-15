@@ -39,7 +39,7 @@ import java.util.Date;
 		@Column(name = "userPhone")
 		private String userPhone;
 
-		@NotEmpty(message = "請選擇性別")
+		
 		@Column(name = "userGender")
 		private Integer userGender;
 
@@ -47,8 +47,7 @@ import java.util.Date;
 		@Column(name = "userAddr")
 		private String userAddr;
 
-		@NotEmpty(message = "請勿空白")
-		@Column(name = "userCreateTime", updatable = false)
+		@Column(name = "userCreateTime", updatable = false, insertable = false)
 		private Timestamp userCreateTime;
 
 		public Integer getUserId() {

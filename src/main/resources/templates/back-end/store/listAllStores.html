@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>後台 | 商店列表</title>
+    <title>後台 | 店家列表</title>
 
    <!-- ●●css for jquery datatables 用 -->
     <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css">
@@ -141,11 +141,11 @@
 
         <!-- 主要內容區域 -->
         <div id="layoutSidenav_content">
-            <!-- 商店列表 -->
+            <!-- 店家列表 -->
             <div class="container">
                 <div class="table-container">
-                    <h2 class="text-center">商店列表</h2>
-                    <a href="/store/addStore" class="btn btn-primary mb-2">新增商店</a>
+                    <h2 class="text-center">店家列表</h2>
+                    <a href="/store/addStore" class="btn btn-primary mb-2">新增店家</a>
                    <!--   <div class="form-container">
                         <form th:action="@{/store/listStores_ByCompositeQuery}" method="post">
                           <input type="submit" value="查詢" class="btn btn-primary">
@@ -155,7 +155,7 @@
                     <table id="storesTable" class="table table-striped">
                         <thead>
                             <tr>
-                                <th>商店ID</th>
+                                <th>店家ID</th>
                                 <th>帳號</th>
                                 <th>名稱</th>
                                 <th>地址</th>
