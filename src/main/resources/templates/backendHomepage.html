@@ -28,8 +28,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
       
- 	
-	
+ 	<!-- style 依照自己情況用 -->
+	<style>
+.btn-custom {
+            background-color: #000;
+            color: #FFFFCE; 
+            border: 2px solid #FFFFCE;
+            font-weight: bold;
+        }
+
+        .btn-custom:hover {
+            background-color: #FFFFCE;
+            color: #000;
+            border-color: #000;
+        }
+        
+        .form-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .error {
+            color: red;
+        }
+
+</style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -44,25 +70,100 @@
       	<!-- footer -->
 
         <!--右半邊的空白頁 -->
-        <div id="layoutSidenav_content">
-        	這個先當後台的範例模板
-        	前端Code寫這裡 就好
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+<div id="layoutSidenav_content"> <!--<p class="lead">這個先當後台的範例模板，前端Code寫這裡就好</p> -->
+ 	<div class="container-fluid px-4">
+     <!-- 標題與模板描述 -->
+     <br>
+     	<a th:href="@{/}" class="btn btn-custom mb-4">返回前台</a>
+     	
+     	 <!-- 操作卡片區 -->
+            <div class="row mb-4">
+                <!-- 租借 -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body">租借杯子</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="btn btn-light text-primary stretched-link" th:href="@{/cup/userRentCup}">租借</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 歸還 -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">歸還杯子</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="btn btn-light text-success stretched-link" th:href="@{/cup/userReturnCup}">歸還</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 報廢 -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-danger text-white mb-4">
+                        <div class="card-body">報廢杯子</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="btn btn-light text-danger stretched-link" th:href="@{cup/discardCup}">報廢</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+          <!-- 查詢區域 -->
+<div class="form-container">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- 查詢店家可租杯子數量的表單 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-search"></i> 查詢店家可租杯子數量
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/cup/countCups}" method="post" class="row g-3">
+                        <div class="col-12">
+                            <label for="storeID" class="visually-hidden">店家ID</label>
+                            <input type="number" id="storeID" name="storeID" class="form-control" placeholder="輸入店家ID" required min="1">
+                        </div>
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-primary">查詢</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 顯示錯誤信息 -->
+            <div th:if="${errorMessage != null}" class="alert alert-danger">
+                <span class="error" th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- 顯示查詢結果 -->
+            <div th:if="${cupCounts != null || storeID != ''}" class="card bg-info text-white mb-4">
+                <div class="card-body">
+                    店家ID: <span th:text="${storeID != '' ? storeID : 'N/A'}"></span> <br/>
+                    店家名稱: <span th:text="${storeName != null ? storeName : 'N/A'}"></span> <br/>
+                    可出租的杯子數量: <span th:text="${cupCounts != null ? cupCounts : 0}"></span>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <span>查詢結果</span>
+                    <div class="small text-white">
+                        <i th:class="${cupCounts > 0 ? 'fas fa-check' : 'fas fa-times'}"></i>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!--右半邊的空白頁 -->
     </div>
+</div>
 
 
+
+	</div>
+</div>
+        <!--右半邊的空白頁 -->
+
+	</div>
 </body>
 
 </html>

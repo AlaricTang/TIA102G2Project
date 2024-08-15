@@ -364,13 +364,36 @@ public class CupController {
 	}
 	
 	// ===================   方法 4 計算還有多少杯子可以出租   =============================
+	@GetMapping("countCups")
+	public String showCountCupsForm(Model model) {
+	    model.addAttribute("cupCounts", 0L);
+	    model.addAttribute("storeID", "");
+	    return "backendHomepage"; 
+	}
+	
 	
 	@PostMapping("countCups")
 	public String countCups(@RequestParam("storeID") String storeID, Model model) {
+		
+		// 檢查店家是否存在
+	    StoreVO storeVO = storeSvc.getOneStore(Integer.valueOf(storeID));
+	    if (storeVO == null) {
+	        model.addAttribute("errorMessage", "店家不存在");
+	        model.addAttribute("cupCounts", 0L); // 仍然顯示0作為杯子數量
+	        model.addAttribute("storeID", storeID); // 將storeID一併傳回給前端，以便顯示
+	        return "backendHomepage"; 
+	    }
+		
+		
 	    Long cupCounts = cupSvc.countCupsByStoreAndStatus(Integer.valueOf(storeID));
+	    if (cupCounts == null) {
+	        cupCounts = 0L;  // 設置默認值
+	    }
+	    
 	    model.addAttribute("cupCounts", cupCounts);
 	    model.addAttribute("storeID", storeID); // 將storeID一併傳回給前端，以便顯示
-	    return "/back-end/cup/select_page";
+	    model.addAttribute("storeName", storeVO.getStoreName()); // 添加店家名稱
+	    return "backendHomepage";
 	}
 	
 	// ===================   方法 5 一次新增很多杯子   =============================
