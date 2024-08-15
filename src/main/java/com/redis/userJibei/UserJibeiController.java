@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ellie.user.model.UserVO;
 import com.ken.drink.model.DrinkService;
 import com.ken.drink.model.DrinkVO;
+import com.redis.drinkCartTest.DrinkCartService;
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Controller
 @RequestMapping("/user")
@@ -26,6 +28,9 @@ public class UserJibeiController {
 	
 	@Autowired
 	DrinkService drinkSvc;
+	
+	@Autowired
+	DrinkCartService drinkCartSvc;
 	
 	//前往 查看會員寄杯頁面
 	@GetMapping("userJibeiList")
@@ -43,6 +48,14 @@ public class UserJibeiController {
 		UserVO user = (UserVO)session.getAttribute("user");
 		List<UserJibeiVO> userJibeiList = userJibeiSvc.getUserJibei(user.getUserId());
 		model.addAttribute("userJibeiList",userJibeiList);
+		
+		List<DrinkOrderDetailVO> cartDrinkOrderList = drinkCartSvc.getDrinkCart(user.getUserId());
+		for(DrinkOrderDetailVO test:cartDrinkOrderList) {
+			System.out.println(test.getDrinkID());
+			System.out.println(test.getDrinkOrderDetailAmount());
+			System.out.println();
+		}
+		model.addAttribute("cartDrinkOrderList",cartDrinkOrderList);
 		return "back-end/jibeiProduct/goRedeemUserJibei";
 	}
 	
@@ -50,16 +63,25 @@ public class UserJibeiController {
 	@PostMapping("redeemUserJibei")
 	public String redeemUserJibei(
 			@RequestParam("drinkID") String drinkID,
-			@RequestParam("number") String number,
+			@RequestParam("drinkOrderDetailIsHot") String drinkOrderDetailIsHot,
+			@RequestParam("drinkOrderDetailUseCup") String drinkOrderDetailUseCup,
+			@RequestParam("drinkOrderDetailAmount") String drinkOrderDetailAmount,
 			ModelMap model,HttpSession session) throws IOException{
 		
-		UserVO user = (UserVO)session.getAttribute("user");
-		if( !userJibeiSvc.redeemUserJibei(user.getUserId(), Integer.valueOf(drinkID), Integer.valueOf(number))) {
-			model.addAttribute("errorMessage","兌換失敗");
-			return "back-end/jibeiProduct/userJibeiList";
-		}
+		DrinkOrderDetailVO drinkItem = new DrinkOrderDetailVO();
+	    drinkItem.setDrinkID(Integer.valueOf(drinkID));
+	    drinkItem.setDrinkOrderDetailIsHot(Byte.valueOf(drinkOrderDetailIsHot));
+	    drinkItem.setDrinkOrderDetailUseCup(Byte.valueOf(drinkOrderDetailUseCup));
+	    drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(drinkOrderDetailAmount));
+	    drinkItem.setDrinkOrderDetailIsJibei(Byte.valueOf("1"));
 		
-		return "redirect:/user/userJibeiList";
+	    UserVO user = (UserVO)session.getAttribute("user");
+	    userJibeiSvc.redeemUserJibei(user.getUserId(), Integer.valueOf(drinkID), Integer.valueOf(drinkOrderDetailAmount));
+
+	    drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
+	    
+		
+		return "redirect:/user/goRedeemUserJibei";
 	}
 	
 	@PostMapping("fakeBuyJibei")

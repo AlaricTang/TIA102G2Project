@@ -72,23 +72,27 @@ public class UserJibeiService {
 	}
 	
 	//======= 兌換(成功or失敗) 某項商品 =======
-	public boolean redeemUserJibei(Integer userID,Integer drinkID, Integer number) throws IOException {
+	public void redeemUserJibei(Integer userID,Integer drinkID, Integer number) throws IOException {
 		String userJibeikey = UserJibei_PREFIX + userID;
 		List<UserJibeiVO> userJibeiList  = new ArrayList<>();
 		boolean itemExists = false;
 
 		//取出 購物車裡的所有飲品 <json, json, json, json... >
 		List<Object> userJibeiJsonList = jedisSvc.getItemsFromList(userJibeikey);
-
+		
+		System.out.println(drinkID);
+		System.out.println(number);
+		
 		//針對每個 json 都轉成VO
 		for (Object jsonString : userJibeiJsonList) {
 			UserJibeiVO existingUserJibei = gson.fromJson(jsonString.toString(), UserJibeiVO.class);
 			//針對每個VO的drinkID 比對要加入的drinkID
 				//有找到: 原VO更新	加到List<VO>
 				//沒找到: 原VO不更新
-			
+			System.out.println(existingUserJibei.getDrinkID());
+			System.out.println(existingUserJibei.getDrinkName());
 			//有找到 兌換( 減數量(存進要更新的List) or刪除)
-			if(existingUserJibei.getDrinkID().equals(drinkID)) {
+			if(existingUserJibei.getDrinkID() == drinkID) {
 				
 				if (existingUserJibei.getNumber()> number) {
 					existingUserJibei.setNumber(existingUserJibei.getNumber() - number);// 更新数量
@@ -97,8 +101,6 @@ public class UserJibeiService {
 				}else if(existingUserJibei.getNumber() == number) {
 					removeUserJibei(userID, drinkID);
 					itemExists = true;
-				}else{
-					return false;
 				}
 			//沒找到 存進要更新的List
 			}else {
@@ -113,10 +115,8 @@ public class UserJibeiService {
 			for (UserJibeiVO item : userJibeiList) {
 				jedisSvc.saveItemToList(userJibeikey, gson.toJson(item));
 			}
-			return true;
 		}
 		//沒找到 回傳false
-		return false;
 	}
 		
 	

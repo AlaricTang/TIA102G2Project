@@ -19,6 +19,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.tang.drinkOrder.model.DrinkOrderVO;
+import com.tang.jibeiProduct.model.JibeiProductVO;
 
 @Entity
 @Table(name="Drink" )
@@ -83,6 +84,8 @@ public class DrinkVO  implements java.io.Serializable{
     
 //    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="drinkOrderVO")
 //    private Set<DrinkOrderVO> drinkOrders = new HashSet<DrinkOrderVO>();
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="drinkVO")
+    private Set<JibeiProductVO> jibeiProductVO = new HashSet<JibeiProductVO>();
     
     
     

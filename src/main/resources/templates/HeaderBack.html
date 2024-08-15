@@ -30,7 +30,7 @@
     	                <li><a class="dropdown-item" th:href="@{/drinkOrder/fakeLogout}">假Logout</a></li>
     	            </div>
     	            <div th:unless="${session.member != null }">
-    	                <li><a class="dropdown-item" href="#!">Log in</a></li>    	            
+    	                <li><a class="dropdown-item" href="/member/login">Log in</a></li>    	            
     	                <li><a class="dropdown-item" th:href="@{/drinkOrder/fakeLoginPage}">假Log in</a></li>    	            
     	            </div>
                 </ul>

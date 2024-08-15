@@ -271,7 +271,7 @@ public class DrinkController {
 	    @RequestParam("drinkOrderDetailIsHot") String drinkOrderDetailIsHot,
 	    @RequestParam("drinkOrderDetailUseCup") String drinkOrderDetailUseCup,
 	    @RequestParam("drinkOrderDetailAmount") String drinkOrderDetailAmount,
-	    @RequestParam("drinkOrderDetailIsJibei") String drinkOrderDetailIsJibei,
+//	    @RequestParam("drinkOrderDetailIsJibei") String drinkOrderDetailIsJibei,
 	    HttpSession session,
 	    Model model) throws IOException {
 
@@ -281,7 +281,7 @@ public class DrinkController {
 	    drinkItem.setDrinkOrderDetailIsHot(Byte.valueOf(drinkOrderDetailIsHot));
 	    drinkItem.setDrinkOrderDetailUseCup(Byte.valueOf(drinkOrderDetailUseCup));
 	    drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(drinkOrderDetailAmount));
-	    drinkItem.setDrinkOrderDetailIsJibei(Byte.valueOf(drinkOrderDetailIsJibei));
+	    drinkItem.setDrinkOrderDetailIsJibei(Byte.valueOf("0"));
 
 	    UserVO user = (UserVO) session.getAttribute("user");
 	    drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
