@@ -37,7 +37,7 @@ public class JibeiProductCartService {
 			//針對每個VO的drinkID 比對要加入的VO的drinkID
 				//有找到: 原VO更新	加到List<VO>
 				//沒找到: 原VO不更新	加到List<VO>
-			if (existingCartItem.getJibeiProductID().equals(cartItem.getJibeiProductID())) {
+			if (existingCartItem.getJibeiProductVO().getJibeiProductID().equals(cartItem.getJibeiProductVO().getJibeiProductID())) {
 				
 				existingCartItem.setJibeiOrderDetailAmount(
 						existingCartItem.getJibeiOrderDetailAmount() + cartItem.getJibeiOrderDetailAmount()); // 更新数量
@@ -75,7 +75,7 @@ public class JibeiProductCartService {
 		List<Object> cartJsonList = jedisSvc.getItemsFromList(cartKey);
 		for (Object cartJson : cartJsonList) {
 			JibeiOrderDetailVO jibeiOrderDetail = gson.fromJson(cartJson.toString(), JibeiOrderDetailVO.class);
-			if (jibeiOrderDetail.getJibeiProductID().equals(jibeiProductID)) {
+			if (jibeiOrderDetail.getJibeiProductVO().getJibeiProductID().equals(jibeiProductID)) {
 				jedisSvc.removeItemFromList(cartKey, cartJson);
 				break;
 			}

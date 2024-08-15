@@ -2,16 +2,26 @@ package com.xyuan.productOrder.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.google.gson.annotations.Expose;
+import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
+import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
 @Entity
 @Table(name = "productOrder")
@@ -29,7 +39,6 @@ public class ProductOrderVO implements Serializable {
 //	@JoinColumn(name="userID") 
 //	private UserVO userVO;
 	
-	@NotNull(message="請登入")
 	@Column(name="userID", updatable = false)
 	private Integer userID;
 	
@@ -41,7 +50,6 @@ public class ProductOrderVO implements Serializable {
 	@Column(name="productOrderAmount", updatable = false)
 	private Integer productOrderAmount;
 	
-	@NotNull(message = "訂單狀態:不可為空")
 	@Column(name="productOrderStatus", nullable = false)
 	private Byte productOrderStatus;
 
@@ -52,11 +60,9 @@ public class ProductOrderVO implements Serializable {
 	@Column(name="productOrderUpdateTime", insertable = false)
 	private Timestamp productOrderUpdateTime;
 	
-	@NotNull(message="訂單建立時間，請勿留空")
-	@Column(name="productOrderCreateTime", updatable = false, insertable = false)
+	@Column(name="productOrderCreateTime", updatable = false)
 	private Timestamp productOrderCreateTime;
 	
-	@NotNull(message = "付款方式:不可為空")
 	@Column(name="productOrderPayM", updatable = false)
 	private Byte productOrderPayM;
 	
@@ -64,7 +70,6 @@ public class ProductOrderVO implements Serializable {
 //	@JoinColumn(name="memberID")
 //	private MemberVO memberVO;
 
-	@NotNull(message = "最新修改(建立)之員工")
 	@Column(name="memberID", insertable = false)
 	private Integer memberID;
 
@@ -84,10 +89,17 @@ public class ProductOrderVO implements Serializable {
 	@Column(name="productOrderNote")
 	private String productOrderNote;
 
-	@NotNull
 	@Column(name="productOrderPayStatus")
 	private Byte productOrderPayStatus;
 
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="productOrderVO")
+	@OrderBy("productOrderDetailID asc")
+	private Set<ProductOrderDetailVO> productOrderDetails = new HashSet<ProductOrderDetailVO>();
+
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="productOrderVO")
+	@OrderBy("jibeiOrderDetailID asc")
+	private Set<JibeiOrderDetailVO> jibeiOrderDetailVO = new HashSet<JibeiOrderDetailVO>();
+	
 	public Integer getProductOrderID() {
 		return productOrderID;
 	}
@@ -199,6 +211,17 @@ public class ProductOrderVO implements Serializable {
 	public void setProductOrderNote(String productOrderNote) {
 		this.productOrderNote = productOrderNote;
 	}
+	
+	
+	
+
+	public Set<ProductOrderDetailVO> getProductOrderDetails() {
+		return productOrderDetails;
+	}
+
+	public void setProductOrderDetails(Set<ProductOrderDetailVO> productOrderDetails) {
+		this.productOrderDetails = productOrderDetails;
+	}
 
 	public ProductOrderVO(Integer productOrderID, @NotNull(message = "請登入") Integer userID,
 			@NotNull(message = "總金額：不可為空") Integer productOrderTTPrice,
@@ -237,6 +260,16 @@ public class ProductOrderVO implements Serializable {
 	public void setProductOrderPayStatus(Byte productOrderPayStatus) {
 		this.productOrderPayStatus= productOrderPayStatus;
 	}
+
+	public Set<JibeiOrderDetailVO> getJibeiOrderDetailVO() {
+		return jibeiOrderDetailVO;
+	}
+
+	public void setJibeiOrderDetailVO(Set<JibeiOrderDetailVO> jibeiOrderDetailVO) {
+		this.jibeiOrderDetailVO = jibeiOrderDetailVO;
+	}
+	
+	
 	
 
 }

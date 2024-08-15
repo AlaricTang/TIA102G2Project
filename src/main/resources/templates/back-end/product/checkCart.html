@@ -1,154 +1,198 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<html  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
-     <!--  ======== Document Title =====================================  -->
-    <title>購物車</title>
-
-
-    <!-- ●●css for jquery datatables 用 -->
-    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
-
-    <script th:src="@{js/scriptsBack.js}"></script>
-   	<script th:src="@{js/datatables-simple-demo.js}"></script>
- 	<script th:src="@{demo/chart-area-demo.js}"></script>
- 	<script th:src="@{demo/chart-bar-demo.js}"></script>
- 	<script th:src="@{demo/chart-pie-demo.js}"></script>
     
-    <script crossorigin="anonymous" src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
-    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
-    <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
-    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
-      
- 	
+    <!--  ======== Document Title =====================================  -->
+    <title>啡常渴以 | fakeLogging</title>
+    
+    
+    <!--  ======== Favicons =====================================  -->
+   	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+    
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    
+    
+    <!--  ======== Stylesheets =====================================  -->
+    
+    <!-- Default stylesheets-->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
+    
+    <!-- Template specific stylesheets-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
 	
-</head>
-
-查看購物車
-
-<!-- <body class="sb-nav-fixed"> -->
-
-<!-- 	<!-- header --> -->
-<!--     <div th:include="headerBack :: headerBack"></div> -->
-<!--     header -->
-
-<!--     <div id="layoutSidenav"> -->
-<!--         footer -->
-<!--       	<div th:include="SliderLeftBack :: SliderLeftBack"></div> -->
-<!--       	footer -->
-
-<!--         右半邊的空白頁 -->
-<!--         <div id="layoutSidenav_content"> -->
-<!-- <!--         	這個先當後台的範例模板 --> -->
-<!-- <!--         	前端Code寫這裡 就好 --> -->
- 
- 
-   
-<!--       <div class="main"> -->
-<!--         <section class="module"> -->
-<!--           <div class="container"> -->
-<!--             <div class="row"> -->
-<!--               <div class="col-sm-6 col-sm-offset-3"> -->
-<!--                 <h1 class="module-title font-alt">Checkout</h1> -->
-<!--               </div> -->
-<!--             </div> -->
-<!--             <hr class="divider-w pt-20"> -->
-<!--             <div class="row"> -->
-<!--               <div class="col-sm-12"> -->
-<!--                 <table class="table table-striped table-border checkout-table"> -->
-<!--                   <tbody> -->
-<!--                     <tr> -->
-<!--                       <th class="hidden-xs">Item</th> -->
-<!--                       <th>Description</th> -->
-<!--                       <th class="hidden-xs">Price</th> -->
-<!--                       <th>Quantity</th> -->
-<!--                       <th>Total</th> -->
-<!--                       <th>Remove</th> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                       <td class="hidden-xs"><a href="#"><img src="assets/images/shop/product-14.jpg" alt="Accessories Pack"/></a></td> -->
-<!--                       <td> -->
-<!--                         <h5 class="product-title font-alt">Accessories Pack</h5> -->
-<!--                       </td> -->
-<!--                       <td class="hidden-xs"> -->
-<!--                         <h5 class="product-title font-alt">£20.00</h5> -->
-<!--                       </td> -->
-<!--                       <td> -->
-<!--                         <input class="form-control" type="number" name="" value="1" max="50" min="1"/> -->
-<!--                       </td> -->
-<!--                       <td> -->
-<!--                         <h5 class="product-title font-alt">£20.00</h5> -->
-<!--                       </td> -->
-<!--                       <td class="pr-remove"><a href="#" title="Remove"><i class="fa fa-times"></i></a></td> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                       <td class="hidden-xs"><a href="#"><img src="assets/images/shop/product-13.jpg" alt="Men’s Casual Pack"/></a></td> -->
-<!--                       <td> -->
-<!--                         <h5 class="product-title font-alt">Men’s Casual Pack</h5> -->
-<!--                       </td> -->
-<!--                       <td class="hidden-xs"> -->
-<!--                         <h5 class="product-title font-alt">£20.00</h5> -->
-<!--                       </td> -->
-<!--                       <td> -->
-<!--                         <input class="form-control" type="number" name="" value="1" max="50" min="1"/> -->
-<!--                       </td> -->
-<!--                       <td> -->
-<!--                         <h5 class="product-title font-alt">£20.00</h5> -->
-<!--                       </td> -->
-<!--                       <td class="pr-remove"><a href="#" title="Remove"><i class="fa fa-times"></i></a></td> -->
-<!--                     </tr> -->
-<!--                   </tbody> -->
-<!--                 </table> -->
-<!--               </div> -->
-<!--             </div> -->
-
-<!--               <div class="col-sm-3 col-sm-offset-3"> -->
-<!--                 <div class="form-group"> -->
-<!--                   <button class="btn btn-block btn-round btn-d pull-right" type="submit">Update Cart</button> -->
-<!--                 </div> -->
-<!--               </div> -->
-<!--             </div> -->
-<!--             <hr class="divider-w"> -->
-<!--             <div class="row mt-70"> -->
-<!--               <div class="col-sm-5 col-sm-offset-7"> -->
-<!--                 <div class="shop-Cart-totalbox"> -->
-<!--                   <h4 class="font-alt">Cart Totals</h4> -->
-<!--                   <table class="table table-striped table-border checkout-table"> -->
-<!--                     <tbody> -->
-<!--                       <tr> -->
-<!--                         <th>Cart Subtotal :</th> -->
-<!--                         <td>£40.00</td> -->
-<!--                       </tr> -->
-<!--                       <tr> -->
-<!--                         <th>Shipping Total :</th> -->
-<!--                         <td>£2.00</td> -->
-<!--                       </tr> -->
-<!--                       <tr class="shop-Cart-totalprice"> -->
-<!--                         <th>Total :</th> -->
-<!--                         <td>£42.00</td> -->
-<!--                       </tr> -->
-<!--                     </tbody> -->
-<!--                   </table> -->
-<!--                   <button class="btn btn-lg btn-block btn-round btn-d" type="submit">Proceed to Checkout</button> -->
-<!--                 </div> -->
-<!--               </div> -->
-<!--             </div> -->
-<!--           </div> -->
-<!--         </section> -->
-       
-        
-        
-        
-        
-        
-        
-<!--         </div> -->
-<!--     </div> -->
+	<!-- Main stylesheet and color file -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+	<style >
+		table, table td, table th{
+			border: 1px solid black;
+			border-collapse: collapse;
+			text-align:center;
+		}
+		
+		.drinkOrder, .drinkOrderDetail{
+			background-color: #ffe4c4;
+		}
+	</style>
+  </head>
 
 
-</body>
+
+
+
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+  	<main>
+
+	    <!-- header -->
+	    <div th:replace="header :: header"></div>
+	    <!-- header -->
+		
+		<div class="main">
+        	<section class="module">
+          		<div class="container">
+            		<div class="row">
+              			<div class="col-sm-6 col-sm-offset-3">
+                			<h1 class="module-title font-alt">查看購物車</h1>
+              			</div>
+            		</div>
+            		<hr class="divider-w pt-20">
+            		<div class="row">
+              			<div class="col-sm-12">
+                			<table class="table table-striped table-border checkout-table">
+                  					<tbody>
+                    					<tr>
+                      						<th class="hidden-xs">圖示</th>
+					                      	<th>商品</th>
+					                      	<th class="hidden-xs">單價</th>
+					                      	<th>數量</th>
+					                      	<th>總價</th>
+					                      	<th>移除</th>
+					                    </tr>
+					                    <th:block th:each="pdOrderDetailVO : ${pdList}">
+						                    <tr>
+						                      	<td class="hidden-xs"><a href="#"><img th:src="@{/product/ProductDBGifReader} + '?productID=' + ${pdOrderDetailVO.productVO.productID}" alt="Product Image" /></a></td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${pdOrderDetailVO.productVO.productName}"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${pdOrderDetailVO.productVO.productPrice}"></div></h5><!-- 商品單價 需要fk productVO.productPrice -->
+						                      	</td>
+						                      	<td class="hidden-xs">
+						                        	<h5 class="product-title font-alt"><div th:text="${pdOrderDetailVO.productOrderDetailAmount}"></div></h5>
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="'$'+ ${pdOrderDetailVO.productVO.productPrice} * ${pdOrderDetailVO.productOrderDetailAmount}"></div></h5> <!--總價 需要fk productVO.productPrice * 數量 -->
+						                      	</td>
+						                      	<td class="pr-remove"><a th:href="'/product/removePdCart?productID=' + ${pdOrderDetailVO.productVO.productID}" title="Remove"><i class="fa fa-times"></i></a></td>
+						                    </tr>
+<!-- 					                    </th:block> -->
+<!-- 					                    <th:block th:each="jibeiOrderDetailVO : ${jpdList}"> -->
+<!-- 						                    <tr> -->
+<!-- 						                      	<td class="hidden-xs"> -->
+<!-- 						                      		<a href="#"><img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiOrderDetailVO.jibeiProductID}" alt="Accessories Pack" /></a>需要 fk jibeiProductVO.drinkVO.drinkID -->
+<!-- 						                      	</td> -->
+<!-- 						                      	<td> -->
+<!-- 						                        	<h5 class="product-title font-alt"><div th:text="${jibeiOrderDetailVO.jibeiProductID}"></div></h5>商品名 需要fk jibeiProductVO.drinkVO.drinkName -->
+<!-- 						                      	</td> -->
+<!-- 						                      	<td> -->
+<!-- 						                        	<h5 class="product-title font-alt"><div th:text="${jibeiOrderDetailVO.jibeiProductID}"></div></h5>商品單價 需要fk jibeiProductVO.jibeiProductPrice -->
+<!-- 						                      	</td> -->
+<!-- 						                      	<td class="hidden-xs"> -->
+<!-- 						                        	<h5 class="product-title font-alt"><div th:text="${jibeiOrderDetailVO.jibeiOrderDetailAmount}"></div></h5> -->
+<!-- 						                      	</td> -->
+<!-- 						                      	<td> -->
+<!-- 						                        	<h5 class="product-title font-alt"><div th:text="'$'+${pdOrderDetailVO.jibeiOrderDetailPrice}"></div></h5>商品總價 需要fk jibeiOrderDetailVO.jibeiProductVO.jibeiProductPrice * jibeiOrderDetailVO.jibeiOrderDetailAmount -->
+<!-- 						                      	</td> -->
+<!-- 						                      	<td class="pr-remove"><a th:href="'/jibeiProduct/removeJibeiPdCart?jibeiProductID=' + ${pdOrderDetailVO.jibeiProductID}" title="Remove"><i class="fa fa-times"></i></a></td> -->
+<!-- 						                    </tr> -->
+<!-- 					                    </th:block> -->
+
+				                  </tbody>
+				                </table>
+				        </div>
+				    </div>
+
+<!--               		<div class="col-sm-3 col-sm-offset-3"> -->
+<!-- 			            <div class="form-group"> -->
+<!-- 			              <button class="btn btn-block btn-round btn-d pull-right" type="submit">Update Cart</button> -->
+<!-- 			           	</div> -->
+<!--               		</div> -->
+            	</div>
+            <hr class="divider-w">
+            <div class="row mt-70">
+              <div class="col-sm-5 col-sm-offset-7">
+                <div class="shop-Cart-totalbox">
+                  <h4 class="font-alt">訂購明細</h4>
+                  <table class="table table-striped table-border checkout-table">
+                    <tbody>
+                      <tr>
+                        <th>商品數量:</th>
+                        <td><div th:text="${session.productNumber}"></div></td>
+                      </tr>
+                      <tr class="shop-Cart-totalprice">
+                        <th>小計 :</th>
+                        <td><div th:text="'$'+ ${session.productTotalPrice}"></div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-lg btn-block btn-round btn-d" onclick="window.location.href='/productOrder/productOrderPage'">前往結帳</button>
+                </div>
+              </div>
+            </div>
+        	</section>
+        </div>
+
+    	
+
+	    <!-- footer -->
+	    <div th:include="footer :: footer"></div>
+	    <!-- footer -->
+    	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+   </main>
+    
+    
+    <!--  ======== JavaScripts =====================================  -->
+    <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/wow/dist/wow.js}"></script>
+    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+    <script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/smoothscroll.js}"></script>
+    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    
+  </body>
 </html>

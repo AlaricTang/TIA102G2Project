@@ -60,9 +60,11 @@ public class JibeiProductBackController {
 	}
 	
 	@PostMapping("add")
-	public String add(@Valid JibeiProductVO jibeiProduct,BindingResult result, 
+	public String add(@RequestParam("drinkID") String drinkID,@Valid JibeiProductVO jibeiProduct,BindingResult result, 
 			ModelMap model, HttpSession session) {
 		//補齊
+		jibeiProduct.setDrinkVO(drinkSvc.getOneDrink(Integer.valueOf(drinkID)));
+		
 		MemberVO member = (MemberVO)session.getAttribute("member");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		jibeiProduct.setJibeiProductUpdateTime(timestamp);
@@ -88,15 +90,18 @@ public class JibeiProductBackController {
 		model.addAttribute("jibeiProduct",jibeiProduct);
 		//給這個 寄杯商品 綁得飲品ID 後續前端去取他的圖片
 		model.addAttribute("member",session.getAttribute("member"));
-		model.addAttribute("drinkVO",drinkSvc.getOneDrink(jibeiProduct.getDrinkID())); //前端  <img th:src="@{/drink/DBGifReader} + '?drinkID=' + ${jibeiDrinkID}">
+		model.addAttribute("drinkVO",jibeiProduct.getDrinkVO()); //前端  <img th:src="@{/drink/DBGifReader} + '?drinkID=' + ${jibeiDrinkID}">
 		model.addAttribute("drinkList",drinkSvc.getAll());
 		return "back-end/jibeiProduct/updatePage" ;
 	}
 	
 	@PostMapping("update")
-	public String update(@Valid JibeiProductVO jibeiProduct,BindingResult result, 
+	public String update(@RequestParam("drinkID") String drinkID,@Valid JibeiProductVO jibeiProduct,BindingResult result, 
 			ModelMap model,HttpSession session) {
 		//補齊
+		jibeiProduct.setDrinkVO(drinkSvc.getOneDrink(Integer.valueOf(drinkID)));
+
+		
 		jibeiProduct.setMemberID(((MemberVO)session.getAttribute("member")).getMemberID());
 		Timestamp updateTime = new Timestamp(new Date().getTime());
 		jibeiProduct.setJibeiProductUpdateTime(updateTime);
@@ -108,7 +113,7 @@ public class JibeiProductBackController {
 //		model.addAttribute("offList",offList);
 //		model.addAttribute("success", "- (更新成功)");
 		model.addAttribute("jibeiProductVO",jibeiProductVO);
-		model.addAttribute("drinkVO",drinkSvc.getOneDrink(jibeiProductVO.getDrinkID()));
+		model.addAttribute("drinkVO",jibeiProductVO.getDrinkVO());
 		return "back-end/jibeiProduct/updateDone";
 	}
 	

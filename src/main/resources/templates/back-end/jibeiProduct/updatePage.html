@@ -224,7 +224,9 @@
           <!-- 主要內容 -->
 <form th:action="@{/jibeiProduct/update}" method="post" th:object="${jibeiProduct}" enctype="multipart/form-data">
 	<h2 class="form-header" ><b>請輸入下列資訊</b></h2>
-	
+	<div th:if="${session.member == null}">
+		<h2 style="color: red">※請先登入會員※</h2>
+    </div>
 	<div class="form-item">
         <label>寄杯商品編號:<th:block th:text="${jibeiProduct.jibeiProductID}"></th:block></label>
         <input type="hidden" th:field="*{jibeiProductID}" readonly />
@@ -233,17 +235,16 @@
 	<div class="form-item">
 		<label>選擇要綁訂之飲品:</label>
 		<select name="drinkID">
-			<option th:value="${drinkVO.drinkID}" th:text="${drinkVO.drinkName}"></option>
+			<option th:value="${jibeiProduct.drinkVO.drinkID}" th:text="${jibeiProduct.drinkVO.drinkName}"></option>
 			<th:block th:each="oneByDrinkList : ${drinkList}">
 				<option th:value="${oneByDrinkList.drinkID}" th:text="${oneByDrinkList.drinkName}"></option>
 			</th:block>	
 		</select><br>
-		<span th:if="${#fields.hasErrors('drinkID')}" th:errors="*{drinkID}" class="error" id="drinkID.errors"></span>
 	</div>
 
-    
-	<input type="hidden" th:field="${member}" />
-    
+    <div th:if="${session.member != null}">
+		<input type="hidden" th:field="${member}" />
+    </div>
      <div class="form-item">
          <label>組合數量:</label>
          <input type="number" th:field="*{jibeiProductAmount}" onclick="hideContent('jibeiProductAmount.errors');" min="1"/>

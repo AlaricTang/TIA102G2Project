@@ -54,7 +54,7 @@ public class ProductOrderFrontController {
 	
 	@GetMapping("productOrderPage")
 	public String productOrderPage(ModelMap model, HttpSession session) throws IOException {
-		int totalPrice = 0;
+//		int totalPrice = 0;
 		List<ProductOrderDetailVO> productCartList = new ArrayList<>();
 		
 	//訂購人
@@ -64,19 +64,19 @@ public class ProductOrderFrontController {
 		Integer userID = user.getUserId();		//使用getUserId()
 			
 		
-	//購物車列表 + 確認訂單金額價錢
-		productCartList = productCartService.getProductCart(userID);
-		//迴圈變數名稱為drinkCartItem，其型別為DrinkOrderDetailVO，遍歷drinkCartList列表
-		for(ProductOrderDetailVO productCartItem : productCartList) {
-			ProductVO product = productService.getOneProduct(productCartItem.getProductID());
-			totalPrice += product.getProductPrice();
-		}
+//	購物車列表 + 確認訂單金額價錢
+//		productCartList = productCartService.getProductCart(userID);
+//		//迴圈變數名稱為drinkCartItem，其型別為DrinkOrderDetailVO，遍歷drinkCartList列表
+//		for(ProductOrderDetailVO productCartItem : productCartList) {
+//			ProductVO product = productService.getOneProduct(productCartItem.getProductVO().getProductID()) ;
+//			totalPrice += product.getProductPrice();
+//		}
 		
 		List<StoreVO> storeList = storeSvc.getAll();
 		
 		//給前端
 		model.addAttribute("userID", userID);
-		model.addAttribute("totalPrice", totalPrice);
+//		model.addAttribute("productTotalPrice", totalPrice);
 		model.addAttribute("storeList", storeList);
 		
 		model.addAttribute("productCartList", productCartList);
@@ -114,8 +114,8 @@ public class ProductOrderFrontController {
 		//庫存判斷
 		String orderFailMessage = null; //給前端的失敗資訊
 		for(ProductOrderDetailVO cartProduct : cartProducts) {
-			if(cartProduct.getProductOrderDetailAmount() > productService.getOneProduct(cartProduct.getProductID()).getProductInv()) {
-				orderFailMessage += productService.getOneProduct(cartProduct.getProductID()).getProductName() + ":庫存不足, ";
+			if(cartProduct.getProductOrderDetailAmount() > cartProduct.getProductVO().getProductInv()) {
+				orderFailMessage += cartProduct.getProductVO().getProductName() + ":庫存不足, ";
 			}
 		}		
 		if(orderFailMessage != null) {
@@ -123,20 +123,20 @@ public class ProductOrderFrontController {
 			return "redirect: /productOrder/productOrderFail";			
 		}
 		
-		//付款方式
-		if(productOrderVO.getProductOrderPayM() == 1) {	
-			//如果為線上付款 去綠界
-			productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));		//執行完 狀態設為 已付款
-		}
+//		//付款方式
+//		if(productOrderVO.getProductOrderPayM() == 1) {	
+//			//如果為線上付款 去綠界
+//			productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));		//執行完 狀態設為 已付款
+//		}
 		
 		
 		
 		
 		ProductOrderVO saveProductOrder = productOrderSvc.addandGetProductOrder(productOrderVO);	//存訂單
 		
-		Integer productOrderID = saveProductOrder.getProductOrderID();
+//		Integer productOrderID = saveProductOrder.getProductOrderID(); 沒fk的
 		for(ProductOrderDetailVO productDetails : cartProducts) {
-			productDetails.setProductOrderID(productOrderID);
+			productDetails.setProductOrderVO(saveProductOrder);
 			productOrderDetailSvc.addProductOrderDetail(productDetails);
 		}
 		

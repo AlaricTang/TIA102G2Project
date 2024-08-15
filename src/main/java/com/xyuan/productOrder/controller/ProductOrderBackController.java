@@ -148,7 +148,7 @@ public class ProductOrderBackController {
 			//for(一個明細VO	: 這筆訂單的所有明細)
 			//1. 一個明細VO >> 寄杯商品ID
 			//2. 寄杯商品Svc(寄杯商品ID) >> 取得寄杯商品VO >> 飲品
-			userJibei.setDrinkID(jibeiProductSvc.getOneJibeiProduct(beUserJibei.getJibeiProductID()).getDrinkID());
+			userJibei.setDrinkID(beUserJibei.getJibeiProductVO().getDrinkVO().getDrinkID());
 			userJibei.setNumber(beUserJibei.getJibeiOrderDetailAmount());
 			
 			//存進User寄杯
