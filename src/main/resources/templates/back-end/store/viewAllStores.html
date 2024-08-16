@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <!--  ======== Document Title =====================================  -->
+    <!-- Document Title -->
     <title>啡常渴以 | 店家列表</title>
     
-    <!--  ======== Favicons =====================================  -->
+    <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
     <link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
     <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
@@ -26,11 +26,11 @@
     <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     
-    <!--  ======== Stylesheets =====================================  -->
-    <!-- Default stylesheets-->
-    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
+    <!-- Stylesheets -->
+    <!-- Default stylesheets -->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
     
-    <!-- Template specific stylesheets-->
+    <!-- Template specific stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
@@ -129,8 +129,7 @@
                     <tbody>
                         <tr th:each="store : ${stores}">
                             <td>
-                            <img th:src="@{/store/StoreDBGifReader} + '?storeID=' + ${storeVO.storeID}" alt="Store Image" />
-                               <!--   <img src="${store.storePic}" alt="店家圖片" />-->
+                                <img th:src="@{/store/StoreDBGifReader(storeID=${store.storeID})}" alt="Store Image" />
                             </td>
                             <td th:text="${store.storeName}">店家名稱</td>
                             <td th:text="${store.storeAddr}">店家地址</td>
@@ -152,7 +151,7 @@
         <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
     
-    <!--  ======== JavaScripts =====================================  -->
+    <!-- JavaScripts -->
     <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
     <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/lib/wow/dist/wow.js}"></script>
