@@ -93,6 +93,8 @@ public class JedisService {
 		}
 	}
 	
+	
+	
     public void removeItemFromList(String key, Object item) {
 		try(Jedis jedis = jedisPool.getResource()){
 			String jsonString = gson.toJson(item);

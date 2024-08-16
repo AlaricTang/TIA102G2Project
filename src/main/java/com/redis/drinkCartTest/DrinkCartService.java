@@ -72,6 +72,34 @@ public class DrinkCartService {
 		return drinkCartItems ;
 	}
 	
+	//======= 取出購物車中的寄杯 object轉成VO =======
+	public List<DrinkOrderDetailVO> getJibeiInDrinkCart (Integer userID) throws IOException  {
+		String cartKey = DRINKCART_PREFIX + userID;
+		List<DrinkOrderDetailVO> drinkCartItems  = new ArrayList<>();
+		List<Object> cartJsonList  = jedisSvc.getItemsFromList(cartKey);
+		for(Object cartJson : cartJsonList ) {
+			DrinkOrderDetailVO jibeiOrderDetail = gson.fromJson(cartJson.toString(), DrinkOrderDetailVO.class);
+			if(jibeiOrderDetail.getDrinkOrderDetailIsJibei()==1)
+				drinkCartItems.add(jibeiOrderDetail);
+		}
+		return drinkCartItems ;
+	}
+	
+	//======= 取出某項購物車 object轉成VO =======
+	public DrinkOrderDetailVO getOneInDrinkCart (Integer userID, String drinkID ) throws IOException  {
+		String cartKey = DRINKCART_PREFIX + userID;
+		DrinkOrderDetailVO drinkCartItem  = new DrinkOrderDetailVO();
+		List<Object> cartJsonList  = jedisSvc.getItemsFromList(cartKey);
+		for(Object cartJson : cartJsonList ) {
+			DrinkOrderDetailVO beDrinkCartItem = gson.fromJson(cartJson.toString(), DrinkOrderDetailVO.class);
+			if(drinkID.equals(beDrinkCartItem.getDrinkID().toString()) && beDrinkCartItem.getDrinkOrderDetailIsJibei()!=0) {
+				drinkCartItem = beDrinkCartItem;
+			}
+		}
+		return drinkCartItem ;
+	}
+	
+	
 	//====== 刪掉某項商品 ======
 	public void removeDrinkCartItem (Integer userID,Integer drinkID) throws IOException{
 		String cartKey = DRINKCART_PREFIX + userID.toString();

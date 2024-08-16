@@ -71,6 +71,20 @@ public class UserJibeiService {
 		return userJibeiList ;
 	}
 	
+	//======= 取出某項記杯 =======
+	public UserJibeiVO getOneUserJibei (Integer userID, String drinkID) throws IOException{
+		String userJibeiKey = UserJibei_PREFIX + userID.toString();
+		UserJibeiVO userJibei = new UserJibeiVO();
+		List<Object> userJibeJsonList  = jedisSvc.getItemsFromList(userJibeiKey);
+		for (Object userJibeJson : userJibeJsonList) {
+			UserJibeiVO beUserJibei = gson.fromJson(userJibeJson.toString(), UserJibeiVO.class);
+			if((drinkID).equals(beUserJibei.getDrinkID().toString())) {
+				userJibei = beUserJibei;
+			}
+		}
+		return userJibei;
+	}
+	
 	//======= 兌換(成功or失敗) 某項商品 =======
 	public void redeemUserJibei(Integer userID,Integer drinkID, Integer number) throws IOException {
 		String userJibeikey = UserJibei_PREFIX + userID;

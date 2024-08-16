@@ -9,7 +9,6 @@
 <!--  ======== Document Title =====================================  -->
 <title>啡常渴以 | fakeLogging</title>
 
-
 <!--  ======== Favicons =====================================  -->
 <link rel="apple-touch-icon" sizes="57x57"
 	th:href="@{/images/favicons/apple-icon-57x57.png}">
@@ -45,7 +44,29 @@
 
 
 <!--  ======== Stylesheets =====================================  -->
+<style type="text/css">
+.drink-details img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
 
+        .drink-info, .drink-form {
+            margin-bottom: 20px;
+        }
+
+        .drink-details {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+</style>
 <!-- Default stylesheets-->
 <link rel="stylesheet"
 	th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
@@ -73,131 +94,76 @@
 
 <!-- Main stylesheet and color file -->
 <link rel="stylesheet" th:href="@{/css/style.css}">
-<link rel="stylesheet" th:href="@{/css/colors/default.css}"
-	id="color-scheme">
-
+<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
 </head>
-
-
-
-
-
-<body data-spy="scroll" data-target=".onpage-navigation"
-	data-offset="60">
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+	
 	<main>
-
+	
 		<!-- header -->
 		<div th:replace="header :: header"></div>
 		<!-- header -->
-
-
+		
 		<div class="main">
+			<!-- singleDrink.html -->
 
-			<!-- 我要的 -->
-			<!-- 種類的btn  -->
-			<section class="module-small" >
-				<div class="container">
-					<div class="col-sm-2">
-						<a th:href="@{/product/listAllProduct}"><button
-								class="btn btn-block btn-round btn-g">所有商品</button></a>
-					</div>
-					<div class="col-sm-2">
-						<a th:href="@{/product/getOneType_For_Display} + '?productTag=1' "><button
-								class="btn btn-block btn-round btn-g">種類一</button></a>
-					</div>
-					<div class="col-sm-2">
-						<a th:href="@{/product/getOneType_For_Display?productTag=2}"><button
-								class="btn btn-block btn-round btn-g">種類二</button></a>
-					</div>
-					<div class="col-sm-2">
-						<a th:href="@{/product/getOneType_For_Display?productTag=3}"><button
-								class="btn btn-block btn-round btn-g">種類三</button></a>
-					</div>
-					<div class="col-sm-2">
-						<a th:href="@{/jibeiProduct/jibeiProductList}"><button
-								class="btn btn-block btn-round btn-g">寄杯商品</button></a>
-					</div>
+		<div class="container">
+            <div class="row">
+                <!-- 左邊區域 -->
+                <div class="col-md-6">
+                    <div class="drink-details">
+                        <h3 th:text="${drinkVO.drinkName}">飲品名稱</h3>
+                        <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" alt="Drink Image">
+                        <p class="drink-info" th:text="${drinkVO.drinkDes}">飲品描述</p>
+                        <h4 class="drink-price" th:text="NT$ 0 ">飲品價格</h4>
+                    </div>
+                </div>
 
-				</div>
-			</section>
-			<!-- 種類btn到這邊 -->
+                <!-- 右邊區域 -->
+                <div class="col-md-6">
+                    <form th:action="@{/user/redeemUserJibei}" method="POST">
+                        <div class="form-group">
+                            <label for="drinkName">飲品名稱:</label>
+                            <input type="text" id="drinkName" class="form-control" th:value="${drinkVO.drinkName}" readonly/>
+                        </div>
 
-			<hr class="divider-w">
+                        <div class="form-group">
+                            <label for="drinkOrderDetailAmount">數量:</label>
+                            <input type="number" id="drinkOrderDetailAmount" name="drinkOrderDetailAmount" class="form-control" value="1" min="1" required/>
+                        </div>
 
-			<!-- 所有商品的區域  -->
-			<section class="module-small">
-				<div class="container">
-					<div class="row multi-columns-row">
-						<!-- 單個商品，所以動態新增要改這裡(頂) -->
-						<!-- thymeleaf改這邊 -->
-						<div th:if="${productList != null}">
-							<div th:each="productVO : ${productList}">
-								<div class="col-sm-6 col-md-3 col-lg-3">
-									<div class="shop-item">
-										<div class="shop-item-image">
-											<a th:href="@{/product/pdDetail} + '?productID=' + ${productVO.productID}">
-												<img th:src="@{/product/ProductDBGifReader} + '?productID=' + ${productVO.productID}" alt="Product Image" />
-										 	</a>
+                        <div class="form-group">
+                            <label for="drinkOrderDetailIsHot">是否熱飲:</label>
+                            <select id="drinkOrderDetailIsHot" name="drinkOrderDetailIsHot" class="form-control">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
 
-											<div class="shop-item-detail">
-												<a th:href="@{/product/productAddToCartOnListAllPdPage}+ '?productID=' + ${productVO.productID} + '&orderAmount=1' " 
-												class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
-											</div>
-										</div>
-										<h4 class="shop-item-title font-alt">
-										<a th:href="@{/product/pdDetail} + '?productID=' + ${productVO.productID}">
-											<div th:text="${productVO.productName}"></div>
-											<div th:text="'$' + ${productVO.productPrice}"></div>
-											</a>
-										</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div th:if="${jibeiProductList != null}">
-							<div th:each="jibeiProductVO : ${jibeiProductList}">
-								<div class="col-sm-6 col-md-3 col-lg-3">
-									<div class="shop-item">
-										<div class="shop-item-image">
-											<img
-												th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkVO.drinkID}"
-												alt="Accessories Pack" />
-											<div class="shop-item-detail">
-												<a th:href="@{/jibeiProduct/addOneToCart}+ '?jibeiProductID=' + ${jibeiProductVO.drinkVO.drinkID} + '&orderAmount=1' " 
-												class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
-											</div>
-										</div>
-										<h4 class="shop-item-title font-alt">
-										<a th:href="@{/jibeiProductFront/jibeiPdDetail} + '?jibeiProductID=' + ${jibeiProductVO.jibeiProductID}">
-											<div th:text="${jibeiProductVO.drinkVO.drinkID}"></div>
-											<div th:text="'$' + ${jibeiProductVO.jibeiProductPrice}"></div>
-											</a>
-										</h4>
-<!-- 										<h4 class="shop-item-title font-alt"> -->
-<!-- 											寄杯商品name -->
-<!-- <!-- 												                  <div th:text="${jibeiProductVO.productName}"></div> --> 
-<!-- 										</h4> -->
-<!-- 										£9.00 -->
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- thy到這邊 -->
-						<!-- 商品(底) -->
-					</div>
-				</div>
-			</section>
-			<!-- 我要的，到這裡 -->
+                        <div class="form-group">
+                            <label for="drinkOrderDetailUseCup">是否用環保杯:</label>
+                            <select id="drinkOrderDetailUseCup" name="drinkOrderDetailUseCup" class="form-control">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
 
 
+                        <!-- 隱藏的欄位，用於傳遞 drinkID -->
+                        <input type="hidden" name="drinkID" th:value="${drinkVO.drinkID}"/>
+
+                        <button type="submit" class="btn btn-primary">加入購物車</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 
-
-
-
+			
+			
+			
 		</div>
-
+		
 		<!-- footer -->
 		<div th:include="footer :: footer"></div>
 		<!-- footer -->
@@ -205,8 +171,7 @@
 			<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
 		</div>
 	</main>
-
-
+	
 	<!--  ======== JavaScripts =====================================  -->
 	<script th:src="@{/lib/jquery/dist/jquery.js}"></script>
 	<script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
