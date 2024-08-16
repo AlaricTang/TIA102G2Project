@@ -1,169 +1,197 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Document Title -->
-    <title>啡常渴以 | 店家列表</title>
-    
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
-    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
-    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
-    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
-    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
-    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
-    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
-    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
-    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
-    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    
-    <!-- Stylesheets -->
-    <!-- Default stylesheets -->
-    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
-    
-    <!-- Template specific stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
-    <link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
-    <link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
-    <link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
-    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
-    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
-    <link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
-    <link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
-    <!-- Main stylesheet and color file -->
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
-    
-    <!-- Custom styles for the table -->
-    <style>
-        .main {
-            padding: 40px 20px;
-            background-color: #f9f9f9;
-        }
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-        }
+<!-- Document Title -->
+<title>啡常渴以 | 店家列表</title>
 
-        .table {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-radius: 5px;
-            overflow: hidden;
-        }
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="57x57"
+	th:href="@{/images/favicons/apple-icon-57x57.png}">
+<link rel="apple-touch-icon" sizes="60x60"
+	th:href="@{/images/favicons/apple-icon-60x60.png}">
+<link rel="apple-touch-icon" sizes="72x72"
+	th:href="@{/images/favicons/apple-icon-72x72.png}">
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/images/favicons/apple-icon-76x76.png}">
+<link rel="apple-touch-icon" sizes="114x114"
+	th:href="@{/images/favicons/apple-icon-114x114.png}">
+<link rel="apple-touch-icon" sizes="120x120"
+	th:href="@{/images/favicons/apple-icon-120x120.png}">
+<link rel="apple-touch-icon" sizes="144x144"
+	th:href="@{/images/favicons/apple-icon-144x144.png}">
+<link rel="apple-touch-icon" sizes="152x152"
+	th:href="@{/images/favicons/apple-icon-152x152.png}">
+<link rel="apple-touch-icon" sizes="180x180"
+	th:href="@{/images/favicons/apple-icon-180x180.png}">
+<link rel="icon" type="image/png" sizes="192x192"
+	th:href="@{/images/favicons/android-icon-192x192.png}">
+<link rel="icon" type="image/png" sizes="32x32"
+	th:href="@{/images/favicons/favicon-32x32.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/images/favicons/favicon-96x96.png}">
+<link rel="icon" type="image/png" sizes="16x16"
+	th:href="@{/images/favicons/favicon-16x16.png}">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage"
+	content="images/favicons/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
 
-        .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
-            padding: 15px;
-        }
+<!-- Stylesheets -->
+<!-- Default stylesheets -->
+<link rel="stylesheet"
+	th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
 
-        .table th {
-            background-color: #f1f1f1;
-            color: #333;
-            font-weight: bold;
-        }
+<!-- Template specific stylesheets -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+<!-- Main stylesheet and color file -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/colors/default.css}"
+	id="color-scheme">
 
-        .table td {
-            color: #555;
-        }
+<!-- Custom styles for the table -->
+<style>
+.main {
+	padding: 40px 20px;
+	background-color: #f9f9f9;
+}
 
-        .table img {
-            max-width: 100px;
-            border-radius: 5px;
-        }
+h1 {
+	text-align: center;
+	margin-bottom: 30px;
+	color: #333;
+}
 
-        .btn-primary {
-            background-color: orange;
-            border-color: #007bff;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.4);
-            transition: all 0.2s ease-in-out;
-        }
+.table {
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	overflow: hidden;
+}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-            box-shadow: 0 6px 8px rgba(0, 86, 179, 0.6);
-            transform: translateY(-2px);
-        }
-    </style>
+.table th, .table td {
+	text-align: center;
+	vertical-align: middle;
+	padding: 15px;
+}
+
+.table th {
+	background-color: #f1f1f1;
+	color: #333;
+	font-weight: bold;
+}
+
+.table td {
+	color: #555;
+}
+
+.table img {
+	max-width: 100px;
+	border-radius: 5px;
+}
+
+.btn-primary {
+	background-color: orange;
+	border-color: #007bff;
+	border-radius: 25px;
+	padding: 10px 20px;
+	font-weight: bold;
+	box-shadow: 0 4px 6px rgba(0, 123, 255, 0.4);
+	transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+	background-color: #0056b3;
+	border-color: #004085;
+	box-shadow: 0 6px 8px rgba(0, 86, 179, 0.6);
+	transform: translateY(-2px);
+}
+</style>
 </head>
 
-<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
-    <main>
-        <!-- header -->
-        <div th:replace="header :: header"></div>
-        <!-- header -->
-        
-        <div class="main">
-            <h1>店家列表</h1>
-            <div class="container">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>店家圖片</th>
-                            <th>店家名稱</th>
-                            <th>店家地址</th>
-                            <th>店家電話</th>
-                            <th>營業時間</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="store : ${stores}">
-                            <td>
-                                <img th:src="@{/store/StoreDBGifReader(storeID=${store.storeID})}" alt="Store Image" />
-                            </td>
-                            <td th:text="${store.storeName}">店家名稱</td>
-                            <td th:text="${store.storeAddr}">店家地址</td>
-                            <td th:text="${store.storePhone}">店家電話</td>
-                            <td th:text="${store.storeOpenTime} + ' - ' + ${store.storeCloseTime}">營業時間</td>
-                            <td>
-                                <a class="btn btn-primary" th:href="@{/store/viewOneStore(storeID=${store.storeID})}">查看詳情</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        <!-- footer -->
-        <div th:include="footer :: footer"></div>
-        <!-- footer -->
-        
-        <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
-    </main>
-    
-    <!-- JavaScripts -->
-    <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
-    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
-    <script th:src="@{/lib/wow/dist/wow.js}"></script>
-    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
-    <script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
-    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
-    <script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
-    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
-    <script th:src="@{/lib/smoothscroll.js}"></script>
-    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
-    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
-    <script th:src="@{/js/plugins.js}"></script>
-    <script th:src="@{/js/main.js}"></script>
+<body data-spy="scroll" data-target=".onpage-navigation"
+	data-offset="60">
+	<main>
+		<!-- header -->
+		<div th:replace="header :: header"></div>
+		<!-- header -->
+
+		<div class="main">
+			<div>
+				<h1>店家列表</h1>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>店家圖片</th>
+							<th>店家名稱</th>
+							<th>店家地址</th>
+							<th>店家電話</th>
+							<th>營業時間</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="store : ${stores}">
+							<td><img
+								th:src="@{/store/StoreDBGifReader(storeID=${store.storeID})}"
+								alt="Store Image" /></td>
+							<td th:text="${store.storeName}">店家名稱</td>
+							<td th:text="${store.storeAddr}">店家地址</td>
+							<td th:text="${store.storePhone}">店家電話</td>
+							<td
+								th:text="${store.storeOpenTime} + ' - ' + ${store.storeCloseTime}">營業時間</td>
+							<td><a class="btn btn-primary"
+								th:href="@{/store/viewOneStore(storeID=${store.storeID})}">查看詳情</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!-- footer -->
+		<div th:include="footer :: footer"></div>
+		<!-- footer -->
+
+		<div class="scroll-up">
+			<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+		</div>
+	</main>
+
+	<!-- JavaScripts -->
+	<script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+	<script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<script th:src="@{/lib/wow/dist/wow.js}"></script>
+	<script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+	<script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+	<script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+	<script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+	<script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+	<script th:src="@{/lib/smoothscroll.js}"></script>
+	<script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+	<script
+		th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

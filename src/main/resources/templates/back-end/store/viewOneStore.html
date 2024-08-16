@@ -1,53 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--  ======== Document Title =====================================  -->
-    <title>啡常渴以 | 店家詳情</title>
+<!--  ======== Document Title =====================================  -->
+<title>啡常渴以 | 店家詳情</title>
 
-    <!--  ======== Favicons =====================================  -->
-    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
-    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
-    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
-    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
-    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
-    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
-    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
-    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
-    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
-    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+<!--  ======== Favicons =====================================  -->
+<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+<!-- Other favicon links omitted for brevity -->
 
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" th:content="@{/images/favicons/ms-icon-144x144.png}">
-    <meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" th:content="@{/images/favicons/ms-icon-144x144.png}">
+<meta name="theme-color" content="#ffffff">
 
-    <!--  ======== Stylesheets =====================================  -->
-    <!-- Default stylesheets-->
-    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
+<!--  ======== Stylesheets =====================================  -->
+<!-- Default stylesheets-->
+<link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
 
-    <!-- Template specific stylesheets-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
-    <link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
-    <link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
-    <link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
-    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
-    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
-    <link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
-    <link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
-    <!-- Main stylesheet and color file -->
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+<!-- Template specific stylesheets-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+<!-- Main stylesheet and color file -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
 
-    
+<!-- Custom Styles -->
+<style>
+    .main {
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+    .store-details {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .store-details img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    .store-details p {
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    .store-details strong {
+        display: inline-block;
+        width: 120px;
+    }
+</style>
+
 </head>
 
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
@@ -57,14 +76,31 @@
         <!-- header -->
 
         <div class="main">
-        
+            <div class="store-details">
+                <h1>店家詳情</h1>
+                <img th:src="@{/store/StoreDBGifReader(storeID=${storeVO.storeID})}" alt="Store Image">
+                <p>
+                    <strong>店家名稱:</strong> <span th:text="${storeVO.storeName}">店家名稱</span>
+                </p>
+                <p>
+                    <strong>店家地址:</strong> <span th:text="${storeVO.storeAddr}">店家地址</span>
+                </p>
+                <p>
+                    <strong>店家電話:</strong> <span th:text="${storeVO.storePhone}">店家電話</span>
+                </p>
+                <p>
+                    <strong>營業時間:</strong> <span th:text="${storeVO.storeOpenTime} + ' - ' + ${storeVO.storeCloseTime}">營業時間</span>
+                </p>
+            </div>
         </div>
-           
+
         <!-- footer -->
         <div th:include="footer :: footer"></div>
         <!-- footer -->
 
-        <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+        <div class="scroll-up">
+            <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+        </div>
     </main>
 
     <!--  ======== JavaScripts =====================================  -->

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ellie.user.model.UserService;
 import com.ellie.user.model.UserVO;
+import com.ellie.user.util.GmailService;
 
 @Controller
 @RequestMapping("/user")
@@ -27,6 +28,9 @@ public class UserFrontController {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    GmailService gmailService;
 
     // 會員基本資料頁面
     @GetMapping("viewProfile")
@@ -128,6 +132,24 @@ public class UserFrontController {
     @GetMapping("forgotPassword")
     public String forgotPassword() {
         return "back-end/user/forgotPassword";
+    }
+    
+    // 處理忘記密碼
+    @PostMapping("forgotPassword")
+    public String forgotPassword(@RequestParam("userEmail") String userEmail, ModelMap model) {
+        UserVO user = userService.findByEmail(userEmail);
+        if (user != null) {
+            // 發送重設密碼的信件，信件中包含重設密碼的指示
+            String subject = "密碼重設請求";
+            String messageText = "請點擊以下連結進行密碼重設: http://tia102g2.ddns.net/user/resetPassword";
+            gmailService.sendMail(userEmail, subject, messageText);
+
+            model.addAttribute("successMessage", "重設密碼的信件已發送，請檢查您的信箱");
+            return "back-end/user/forgotPassword";
+        } else {
+            model.addAttribute("errorMessage", "該信箱未註冊");
+            return "back-end/user/forgotPassword";
+        }
     }
 
     // 重設密碼頁面
