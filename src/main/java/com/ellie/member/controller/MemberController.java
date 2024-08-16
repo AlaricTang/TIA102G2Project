@@ -47,7 +47,7 @@ public class MemberController {
 	        session.setAttribute("member", member);
 	        session.setAttribute("role", role); // 儲存角色資訊
 	        // 統一跳轉到後台首頁
-	        return "redirect:/back-end/backendHomepage";
+	        return "redirect:/backendHomepage";
 	    } else {
 	        model.addAttribute("errorMessage", "帳號或密碼錯誤");
 	        return "back-end/member/login"; // 登入頁面
@@ -58,7 +58,7 @@ public class MemberController {
 	 // 登出功能
     @GetMapping("logout")
     public String logout(HttpSession session) {
-        session.removeAttribute("user");
+        session.removeAttribute("member");
         return "redirect:/";
     }
 

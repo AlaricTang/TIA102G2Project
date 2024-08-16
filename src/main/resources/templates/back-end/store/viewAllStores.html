@@ -123,12 +123,13 @@
                             <th>店家地址</th>
                             <th>店家電話</th>
                             <th>營業時間</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="store : ${stores}">
                             <td>
-                                <img th:src="@{'/images/stores/' + ${store.storePic}}" alt="店家圖片">
+                                <img src="${store.storePic}" alt="店家圖片" />
                             </td>
                             <td th:text="${store.storeName}">店家名稱</td>
                             <td th:text="${store.storeAddr}">店家地址</td>

@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hibernate.util.compositeQuery.CompositeQuery_User;
 
 @Service("userService")
 public class UserService {
@@ -41,10 +40,10 @@ public class UserService {
 		return repository.findAll();
 	}
 	
-	public List<UserVO> getAll(Map<String, String[]> map) {
-		return CompositeQuery_User.getAllC(map,sessionFactory.openSession());
-		
-	}
+//	public List<UserVO> getAll(Map<String, String[]> map) {
+//		return CompositeQuery_User.getAllC(map,sessionFactory.openSession());
+//		
+//	}
 
 	public UserVO findByEmail(String email) {
         return repository.findByUserEmail(email);
