@@ -1,14 +1,10 @@
 package com.xyuan.productOrderDetail.model;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import hibernate.util.compositeQuery.CompositeQuery_DrinkOrderDetail;
-import hibernate.util.compositeQuery.CompositeQuery_ProductOrderDetail;
 
 @Service("productOrderDetailService")
 public class ProductOrderDetailService {
@@ -19,6 +15,8 @@ public class ProductOrderDetailService {
 	public void addProductOrderDetail(ProductOrderDetailVO productOrderDetailVO) {
 		repository.save(productOrderDetailVO);
 	}
+	
+	
 	
 	public void updateProductOrderDetail(ProductOrderDetailVO productOrderDetailVO) {
 		repository.save(productOrderDetailVO);

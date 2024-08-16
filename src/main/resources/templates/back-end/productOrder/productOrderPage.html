@@ -79,41 +79,107 @@
 		
 
 		<div class="main">
-		
-		<form method="post" action="/productOrder/order">
-			收件人姓名:<input name="receiverName" type="text" th:value="${session.user.userName}"><br>
-			電話:<input name="receiverPhone" type="tel" ><br>
-			信箱:<input name="receiverMail" type="email" ><br>
-			<h2>運送方式:</h2>
-			<input name="userID" type="hidden" th:value="${userID}">
-			<input name="productOrderAmount" type="hidden" th:value="${session.productNumber}">
-			
-		  	<input type="radio" id="textInput" name="inputType" value="text">
-			<label for="textInput">宅配到府</label><br>
-			
-			<input type="radio" id="selectInput" name="inputType" value="select">
-			<label for="selectInput">店內自取</label><br>
-			
-			<input type="hidden" name="productOrderPayM" value="0">
-			<!-- 預設顯示的元素 -->
-			<input name="productOrderAddr" type="text" id="textInputField" style="display:none">
-			<!-- 下拉選擇框預設不顯示 -->
-			<select name="productOrderAddr" id="selectInputField" style="display:none;">
-			  <option value="">請選擇一個選項</option>
-			  <th:block th:each="store:${storeList}">
-			  	  <option th:value="${store.storeName}" th:text="store.storeName"></option>
-			  </th:block>
-			</select><br>
-		  	  
-		  	
-		  	<input name="productOrderTTPrice" th:value="${session.productTotalPrice}" th:text="'總金額：$'+${session.productTotalPrice}"><br>
-		  	<input type="text" value="訂單備註">
-		  	
-		  	<input type="submit" value="確認下訂">
-		</form>
-		
+		<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<h1 style="margin: 90 0 0 0px">查看購物明細</h1>
+				</div>
+			</div>
+
+
+			<!-- 收件人  -->
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<h3>收件人資料</h3>
+					<div class="module-subtitle font-serif"></div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<form method="post" action="/productOrder/order"  role="form" >
+						<input type="hidden" name="userID"  th:value="${userID}">
+						<input type="hidden" name="productOrderAmount"  th:value="${session.productNumber}">
+						<input type="hidden" name="productOrderPayM" value="0">
+						
+						<div class="form-group" >
+							<label  class="sr-only">收件人姓名</label> <input class="form-control" name="receiverName"
+								type="text"  placeholder="收件人姓名（必填）"
+								required="required" data-validation-required-message="請輸入姓名" />
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="form-group">
+							<label class="sr-only">收件人電話</label> <input class="form-control" name="receiverPhone"
+								type="text"  placeholder="收件人電話（必填）"
+								required="required" data-validation-required-message="請輸入電話" />
+							<p class="help-block text-danger"></p>
+						</div>
+						<div class="form-group">
+							<label class="sr-only">收件人E-mail</label> <input name="receiverMail"
+								class="form-control" type="email" 
+								placeholder="收件人E-mail（必填）" required="required"
+								data-validation-required-message="請輸入E-mail" />
+							<p class="help-block text-danger"></p>
+						</div>
+					<!-- 收件人 -->
+
+
+					<hr class="divider-w mb-10">
+
+					<div class="container">
+						<div class="form-group">
+							<h3>運送方式</h3>
+							<div class="radio-group">
+								<input type="radio" id="homeDelivery" name="pickType"
+									value="homeDelivery"> <label for="homeDelivery">宅配到家
+								</label> 
+								
+								<input name="productOrderAddr" type="text" id="textInputField" >
+								
+								<input type="radio" id="storePickup" name="pickType"
+									value="storePickup" checked> <label for="storePickup">店內自取</label>
+								<select  name="productOrderAddr">
+									<option>請選擇門市</option>
+										<th:block th:each="store:${storeList}">
+											<option th:value="${store.storeName}" th:text="store.storeName"></option>
+										</th:block>
+								</select>
+							</div>
+						</div>
+
+					</div>
+					<hr class="divider-w mb-10">
+
+
+					<!-- 總金額顯示區塊 -->
+					<h3>$ 總金額：
+						<input  name="productOrderTTPrice" th:value="${session.productTotalPrice}" 
+							style="margin-top: 10px; margin-bottom: 10px; font-size: 16px; font-weight: bold;" readonly="readonly">
+					</h3>
+
+					<hr class="divider-w mb-10">
+
+
+					<!-- 備註 -->
+					<div class="form-group">
+						<input name="productOrderNote" class="form-control"  
+							placeholder="訂單備註">
+						<p class="help-block text-danger"></p>
+					</div>
+
+					<div class="text-center">
+						<input type="submit" style="width: 40%; background-color: orange; margin: 50px auto;" >
+					</div>
+					<!-- 確定下單 -->
+
+					</form>
+
+
+
+
+				</div>
+			</div>
 		</div>
-    	
+		
 
 	    <!-- footer -->
 	    <div th:include="footer :: footer"></div>
@@ -136,22 +202,6 @@
     <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
     <script th:src="@{/js/plugins.js}"></script>
     <script th:src="@{/js/main.js}"></script>
-    <script>
-	  document.querySelectorAll('input[name="inputType"]').forEach((radio) => {
-	    radio.addEventListener('change', function() {
-	      // 隐藏所有输入元素
-	      document.getElementById('textInputField').style.display = 'none';
-	      document.getElementById('selectInputField').style.display = 'none';
-	
-	      // 根据选择显示相应的输入元素
-	      if (this.value === 'text') {
-	        document.getElementById('textInputField').style.display = 'block';
-	      } else if (this.value === 'select') {
-	        document.getElementById('selectInputField').style.display = 'block';
-	      }
-	    });
-	  });
-	</script>
     
   </body>
 </html>

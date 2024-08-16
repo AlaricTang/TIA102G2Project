@@ -16,30 +16,53 @@
 //import com.tang.drinkOrder.model.DrinkOrderVO;
 //import com.tang.drinkOrderDetail.model.DrinkOrderDetailRepository;
 //import com.tang.jibeiProduct.model.JibeiProductRepository;
+//import com.xyuan.product.model.ProductRepository;
+//import com.xyuan.product.model.ProductService;
+//import com.xyuan.product.model.ProductVO;
+//import com.xyuan.productOrder.model.ProductOrderRepository;
+//import com.xyuan.productOrder.model.ProductOrderService;
+//import com.xyuan.productOrder.model.ProductOrderVO;
+//import com.xyuan.productOrderDetail.model.ProductOrderDetailRepository;
+//import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 //
 //@SpringBootApplication
 //public class Test_Application_CommandLineRunner_tang implements CommandLineRunner {
 //    
+////	@Autowired
+////	DrinkOrderRepository drinkOrderrepository ;
+////
+////	@Autowired
+////	DrinkOrderDetailRepository drinkOrderDetailRepository;
+////	
+////	@Autowired
+////	CampaignProductRepository campaignProductRepository;
+////	
+////	@Autowired
+////	CampaignRepository campaignRepository; 
+////	
+////	@Autowired
+////	JibeiProductRepository jibeiProductRepository;
+////	
+////	@Autowired
+////	NotifyRepository notifyRepository;
+////	
+////	@Autowired
+////    private SessionFactory sessionFactory;
+//	
 //	@Autowired
-//	DrinkOrderRepository drinkOrderrepository ;
+//	private ProductOrderDetailRepository productOrderDetailRepository ;
 //
 //	@Autowired
-//	DrinkOrderDetailRepository drinkOrderDetailRepository;
+//	private ProductOrderRepository productOrderRepository ;
+//
+//	@Autowired
+//    private ProductRepository productRepository ;
 //	
 //	@Autowired
-//	CampaignProductRepository campaignProductRepository;
+//	ProductService productSvc;
 //	
 //	@Autowired
-//	CampaignRepository campaignRepository; 
-//	
-//	@Autowired
-//	JibeiProductRepository jibeiProductRepository;
-//	
-//	@Autowired
-//	NotifyRepository notifyRepository;
-//	
-//	@Autowired
-//    private SessionFactory sessionFactory;
+//	ProductOrderService productOrderSvc;
 //	
 //	public static void main(String[] args) {
 //        SpringApplication.run(Test_Application_CommandLineRunner_tang.class);
@@ -106,6 +129,46 @@
 ////    	Timestamp jibeiProductUpdateTime = new Timestamp(new Date().getTime());
 ////    	jibeiProductVO.setJibeiProductUpdateTime(jibeiProductUpdateTime);
 ////    	jibeiProductRepository.save(jibeiProductVO);
+//    	
+//
+////    	ProductOrderVO productOrderVO = new ProductOrderVO();
+////    	productOrderVO.setUserID(10);
+////    	productOrderVO.setProductOrderAmount(11);
+////    	productOrderVO.setProductOrderTTPrice(600);
+////    	productOrderVO.setProductOrderStatus(Byte.valueOf("0"));;
+////    	productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));
+////    	productOrderVO.setProductOrderAddr("三重區");
+////    	productOrderVO.setReceiverMail("effortimp@gmail.com");
+////    	productOrderVO.setReceiverPhone("0912345678");
+////    	productOrderVO.setReceiverName("小小小小小");
+////    	productOrderVO.setProductOrderPayM(Byte.valueOf("0"));
+////    	Timestamp productOrderVOupdateTime = new Timestamp(new Date().getTime());
+////    	productOrderVO.setProductOrderUpdateTime(productOrderVOupdateTime);
+////    	ProductOrderVO newProductOrder = productOrderRepository.save(productOrderVO);
+////    	
+////    	ProductVO product = new ProductVO();
+////    	product.setProductName("品牌一");
+////    	product.setProductPrice(100);;
+////    	product.setProductInv(50);
+////    	product.setProductStatus(Byte.valueOf("1"));
+////    	product.setProductTag(Byte.valueOf("3"));
+////    	product.setProductUpdateTime(productOrderVOupdateTime);
+////    	ProductVO newProductVO = productRepository.save(product);
+////    	
+////    	
+////    	
+////    	
+////    	
+////    	
+////    	
+////    	ProductOrderDetailVO productOrderDetailVO = new ProductOrderDetailVO();
+////    	productOrderDetailVO.setProductOrderDetailPrice(300);
+////    	productOrderDetailVO.setProductOrderDetailAmount(60);
+////    	productOrderDetailVO.setProductVO(newProductVO);
+////    	productOrderDetailVO.setProductOrderVO(newProductOrder);
+////    	productOrderDetailRepository.save(productOrderDetailVO);
+//    	
+//    	
 //    	
 //    	
 //		//● 修改

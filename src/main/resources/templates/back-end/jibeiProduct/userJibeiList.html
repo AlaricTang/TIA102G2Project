@@ -116,7 +116,17 @@
 	    <div th:replace="header :: header"></div>
 	    <!-- header -->
 		<div class="main">
-		<a href="/user/goRedeemUserJibei">前往寄杯購買測試</a>
+				加入我的寄杯 測試<br>
+		<form method="post" action="/user/fakeBuyJibei">
+			飲品ID:<br>
+			<input type="number" name="drinkID"><br>
+			數量:<br>
+			<input type="number" name="number"><br>
+			<input type="submit" value="加入假資料">
+		</form>
+		
+		
+		<hr>
         <section class="module-small" style="padding-top: 30px">
             <div class="container">
             

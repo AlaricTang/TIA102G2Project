@@ -20,7 +20,7 @@ public class JibeiProductCartService {
 	@Autowired
 	private Gson gson;
 	
-	private static final String JIBEIPRODUCTCART_PREFIX = "drinkCart:";
+	private static final String JIBEIPRODUCTCART_PREFIX = "jibeiProductCart:";
 
 	public void addCartItem(Integer userId, JibeiOrderDetailVO cartItem) throws IOException {
 		String cartKey = JIBEIPRODUCTCART_PREFIX + userId;

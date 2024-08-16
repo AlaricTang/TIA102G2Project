@@ -54,7 +54,6 @@ public class DrinkOrderVO implements Serializable{
 	private Integer drinkOrderAmount;
 
 	@NotNull(message = "取貨時間:不可為空")
-	@Future(message = "取貨日期:須為今日(不含)以後")
 	@Column(name="drinkOrderPickTime",updatable = false)
 	private Timestamp drinkOrderPickTime;
 	
@@ -84,7 +83,6 @@ public class DrinkOrderVO implements Serializable{
 //	@JoinColumn(name="memberID")
 //	private MemberVO memberVO;
 
-	@NotNull(message = "最新修改(建立)之員工")
 	@Column(name="memberID", insertable = false)
 	private Integer memberID;
 
