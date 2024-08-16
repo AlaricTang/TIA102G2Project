@@ -95,11 +95,14 @@ public class ProductController {
 	        @RequestParam("productID") String productID,
 	        @RequestParam("orderAmount") String orderAmount,
 	        HttpSession session) throws IOException {
-
+		
+		//detail VO 存
 	    ProductOrderDetailVO productItem = new ProductOrderDetailVO();
 	    productItem.setProductVO(productSvc.getOneProduct(Integer.valueOf(productID))); // 确保这里获取到的是productID
 	    productItem.setProductOrderDetailAmount(Integer.valueOf(orderAmount));
 	    UserVO user = (UserVO)session.getAttribute("user");
+	    
+	    productItem.getProductVO().setProductPic(null);
 	    productCartSvc.addCartItem(user.getUserId().toString(), productItem);
 	    return "redirect:/product/pdDetail?productID=" + productID;
 	}
@@ -113,9 +116,17 @@ public class ProductController {
 		        HttpSession session) throws IOException {
 
 		    ProductOrderDetailVO productItem = new ProductOrderDetailVO();
-		    productItem.setProductVO(productSvc.getOneProduct(Integer.valueOf(productID))); // 确保这里获取到的是productID
+		    ProductVO beAddProduct =  productSvc.getOneProduct(Integer.valueOf(productID));
+		    beAddProduct.setProductCreateTime(null);
+		    beAddProduct.setProductDes(null);
+		    beAddProduct.setProductCreateTime(null);
+		    beAddProduct.setProductUpdateTime(null);
+		    productItem.setProductVO(beAddProduct); // 确保这里获取到的是productID
+		    
 		    productItem.setProductOrderDetailAmount(Integer.valueOf(orderAmount));
 		    UserVO user = (UserVO)session.getAttribute("user");
+		    
+		    productItem.getProductVO().setProductPic(null);
 		    productCartSvc.addCartItem(user.getUserId().toString(), productItem);
 		    return "redirect:/product/listAllProduct";
 		}

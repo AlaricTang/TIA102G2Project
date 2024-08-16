@@ -42,7 +42,7 @@ public class ProductVO implements Serializable{
 	
 	
 	@Column(name="productDes")
-	private String productDes;		//text
+	private  String productDes;		//text
 	
 	
 	@NotNull(message = "商品庫存:不可為空")
@@ -62,10 +62,10 @@ public class ProductVO implements Serializable{
 	private byte[] productPic;	//MEDIUMBLOB
 	
 	@Column(name="productUpdateTime")
-	private Timestamp productUpdateTime;
+	private  Timestamp productUpdateTime;
 
 	@Column(name="productCreateTime",insertable = false, updatable = false)
-	private Timestamp productCreateTime;
+	private  Timestamp productCreateTime;
 	
 //	@ManyToOne
 //	@JoinColumn(name="memberID") 
@@ -76,11 +76,11 @@ public class ProductVO implements Serializable{
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="productVO")
 	@OrderBy("productOrderDetailID asc")
-	private Set<ProductOrderDetailVO> productOrderDetails = new HashSet<ProductOrderDetailVO>();
+	private transient Set<ProductOrderDetailVO> productOrderDetails = new HashSet<ProductOrderDetailVO>();
 
 
 	
-	public Set<ProductOrderDetailVO> getProductOrderDetails() {
+	public  Set<ProductOrderDetailVO> getProductOrderDetails() {
 		return productOrderDetails;
 	}
 

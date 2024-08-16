@@ -11,11 +11,17 @@ import com.google.gson.Gson;
 import com.redis.JedisService;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
 @Service
 public class ProductCartService {
 
 	@Autowired
 	JedisService jedisSvc;
+	
+	@Autowired
+	JedisPool jedisPool;
 	
 	@Autowired
 	private Gson gson;
@@ -56,7 +62,11 @@ public class ProductCartService {
 		jedisSvc.delete(cartKey);
 		//List<VO> 存進購物車
 		for (ProductOrderDetailVO item : cartItems) {
-            jedisSvc.saveItemToList(cartKey, gson.toJson(item));
+//            jedisSvc.saveItemToList(cartKey, gson.toJson(item));
+			try(Jedis jedis = jedisPool.getResource()){
+				 String jsonString = gson.toJson(item);
+				 jedis.rpush(cartKey, jsonString);//jedis.rpush(key, itemJson);同樣的意思
+			 }
         }
 	}
 	

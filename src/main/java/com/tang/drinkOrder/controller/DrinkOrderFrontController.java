@@ -58,8 +58,8 @@ public class DrinkOrderFrontController {
 	@Autowired
 	MemberService memberSvc;
 	
-	//購物車頁面進來 跳轉到 要下單頁面
-		//需要將購物人資訊  購物車物品列出來 
+	// 跳轉到 要下單頁面
+		//需要將 購物人資訊  購物車物品 列出來 
 		//給user確認 放好VO存 session
 	@GetMapping("drinkOrderPage")
 	public String drinkOrderPage(ModelMap model, HttpSession session) throws IOException {
@@ -86,15 +86,14 @@ public class DrinkOrderFrontController {
 		
 		//使用環保杯數
 		String str_cupNumber = drinkCartService.getOneDrinkOrder(userID,"cupNumber"); //=======================================
-		drinkOrderVO.setCupNumber(Integer.valueOf(str_cupNumber));
+		cupNumber = Integer.valueOf(str_cupNumber);
+		drinkOrderVO.setCupNumber(cupNumber);
 		
 		//購物車列表 + 確認訂單金額價錢
 		drinkCartList = drinkCartService.getDrinkCart(userID); 
 		
 		for(DrinkOrderDetailVO drinkCartItem : drinkCartList) {
 			int detail_pirce= 0;
-			if(drinkCartItem.getDrinkOrderDetailUseCup() == 1)  
-				cupNumber++;
 			if(drinkCartItem.getDrinkOrderDetailIsJibei() == 0) {
 				DrinkVO drink = drinkService.getOneDrink(drinkCartItem.getDrinkID());
 //				if(drink.getDrinkDPrice().) {
