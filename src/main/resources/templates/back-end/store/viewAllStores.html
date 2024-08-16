@@ -129,7 +129,8 @@
                     <tbody>
                         <tr th:each="store : ${stores}">
                             <td>
-                                <img src="${store.storePic}" alt="店家圖片" />
+                            <img th:src="@{/store/StoreDBGifReader} + '?storeID=' + ${storeVO.storeID}" alt="Store Image" />
+                               <!--   <img src="${store.storePic}" alt="店家圖片" />-->
                             </td>
                             <td th:text="${store.storeName}">店家名稱</td>
                             <td th:text="${store.storeAddr}">店家地址</td>
