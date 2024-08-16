@@ -27,7 +27,7 @@ public class StoreFrontController {
         return "back-end/store/viewAllStores"; // 返回前台店家列表頁面
     }
 
-    // 顯示單個店家的詳細資訊及地圖
+    // 顯示單個店家的詳細資訊
     @GetMapping("/viewOneStore")
     public String viewOneStore(@RequestParam("storeID") Integer storeID, ModelMap modelMap) {
         StoreVO storeVO = storeService.getOneStore(storeID);

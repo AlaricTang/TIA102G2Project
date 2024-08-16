@@ -10,12 +10,11 @@ import java.util.Date;
 
 	@Entity
 	@Table(name = "User")
-	public class UserVO implements Serializable {
-		private static final long serialVersionUID = 1L;
+	public class UserVO {
 
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		@Column(name = "userID")
+		@Column(name = "userID", nullable = false, updatable = false)
 		private Integer userID;
 
 		@NotEmpty(message = "電子郵件: 請勿空白")
