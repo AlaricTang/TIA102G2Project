@@ -92,10 +92,10 @@
             <div class="container">
                 <h2 class="text-center">修改會員資料</h2>
                 <form action="#" th:action="@{/user/updateUser}" th:object="${user}" method="post">
-                    <div class="form-group mb-3">
+                   <!--   <div class="form-group mb-3">
                         <label for="userID">會員編號:</label>
                         <input type="text" id="userID" th:field="*{userID}" class="form-control" readonly>
-                    </div>
+                    </div> -->
                     <div class="form-group mb-3">
                         <label for="userEmail">電子郵件:</label>
                         <input type="email" id="userEmail" th:field="*{userEmail}" class="form-control" required>
