@@ -91,7 +91,9 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-6 mb-sm-40">
-							<img th:src="@{/product/ProductDBGifReader} + '?productID=' + ${singleProduct.productID}" alt="Single Product Image" />
+							<img
+								th:src="@{/product/ProductDBGifReader} + '?productID=' + ${singleProduct.productID}"
+								alt="Single Product Image" />
 						</div>
 
 						<div class="col-sm-6">
@@ -106,8 +108,12 @@
 								<div class="col-sm-12">
 									<div class="price font-alt">
 										<span class="amount"
-											th:text="'$' + ${#numbers.formatInteger(singleProduct.productPrice, 3, 'COMMA')}"></span>
+											th:text="'$' + ${singleProduct.productPrice.toString()}"></span>
 									</div>
+
+
+
+
 								</div>
 							</div>
 							<div class="row mb-20">
@@ -119,14 +125,17 @@
 							<div class="row mb-20">
 								<form method="post" th:action="@{/product/productAddToCart}">
 									<div class="col-sm-4 mb-sm-20">
-										<input class="form-control input-lg" type="number" name="orderAmount"
-											value="1" max="40" min="1" required="required" />
+										<input class="form-control input-lg" type="number"
+											name="orderAmount" value="1" max="40" min="1"
+											required="required" />
 									</div>
-							<input type="hidden" name="productID" th:value="${singleProduct.productID}">
-	
-	<!-- 還沒有購物車，不確定是否正確 -->
+									<input type="hidden" name="productID"
+										th:value="${singleProduct.productID}">
+
+									<!-- 還沒有購物車，不確定是否正確 -->
 									<div class="col-sm-8">
-										<input type="submit" class="btn btn-lg btn-block btn-round btn-b"  value="加入購物車" />
+										<input type="submit"
+											class="btn btn-lg btn-block btn-round btn-b" value="加入購物車" />
 									</div>
 								</form>
 							</div>

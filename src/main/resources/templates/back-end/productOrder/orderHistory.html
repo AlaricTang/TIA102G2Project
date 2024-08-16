@@ -1,10 +1,289 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="BIG5">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+     <!--  ======== Document Title =====================================  -->
+    <title>商品｜訂單紀錄</title>
+
+
+    <!-- ●●css for jquery datatables 用 -->
+    <link rel="stylesheet" th:href="@{/css/styleBack.css}" type="text/css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    
+
+    <script th:src="@{/js/scriptsBack.js}"></script>
+   	<script th:src="@{/js/datatables-simple-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-area-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-bar-demo.js}"></script>
+ 	<script th:src="@{/demo/chart-pie-demo.js}"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
+    <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" ></script>  
+ 	<style type="text/css">
+ 		.form-item {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .form-item label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-item input,
+        .form-item select {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        .status-done {
+	        background-color: #d4edda;
+	        color: #155724;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #c3e6cb;
+	    }
+        .status-undone {
+	        background-color: #ECEE91;
+	        color: #7D8000;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #E4E821;
+	    }
+        .status-cacel {
+	        background-color: #f6abab;
+	        color: #9f0303;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #ed9595;
+	    }
+	    #example {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        border: 1px solid black;
+	    }
+	
+	    #example thead tr {
+	        background-color: #FF8040;
+	        color: white;
+	    }
+	
+	    #example th, #example td {
+	        padding: 8px 15px;
+	        border-bottom: 1px solid #ddd;
+	        text-align: center;
+	    }
+	
+	    #example tbody tr:nth-child(even) {
+	        background-color: #f2f2f2;
+	    }
+	
+	    #example tbody tr:hover {
+	        background-color: #e6f7ff;
+	    }
+	    
+ 	</style>
+	
 </head>
-<body>
+
+<body class="sb-nav-fixed">
+
+	<!-- header -->
+    <div th:include="headerBack :: headerBack"></div>
+    <!-- header -->
+
+    <div id="layoutSidenav">
+        <!-- footer -->
+      	<div th:include="SliderLeftBack :: SliderLeftBack"></div>
+      	<!-- footer -->
+      	
+      	
+
+        <!--右半邊的空白頁 -->
+        <div id="layoutSidenav_content">
+        	<div class="container-fluid px-4">
+				<h1 class="mt-4">商品｜訂單紀錄</h1>
+				<div class="card mb-4">
+					<div class="card-header">
+						<i class="fas fa-table me-1"></i>所有訂單紀錄
+					</div>
+					<div class="card-body">
+					  	<form method="post" th:action="@{/productOrder/getProductOrder}">
+					  		<div class="form-row">
+					  			<div class="form-item col-md-1">
+					                <label>訂單編號</label>
+					                <input type="number" name="productOrderID" value="" min="0">
+					            </div>
+					  			<div class="form-item col-md-1">
+					                <label>會員編號</label>
+					                <input type="number" name="userID" value="" min="0">
+					            </div>
+					            
+					            
+					            <div class="form-item col-md-2">
+					                <label>搜尋時間範圍</label>
+					                <input type="datetime-local" name="productOrderStartCreateTime" value="">
+					            </div>
+					            <div class="form-item col-md-2">
+					                <input type="datetime-local" name="productOrderEndCreateTime" value="">
+					            </div>
+					            
+					               <div class="form-item col-md-1"> 
+					            	<label>訂單狀態</label>
+					                <select name="productOrderStatus">
+						            		<option value="">請選擇</option>
+						            		<option value=0>未完成</option>
+						            		<option value=1>已完成</option>
+						            		<option value=2>已取消</option>
+					        		</select>
+						            </div>
+						            </div>
+<!-- 					               <div class="form-item col-md-1">  -->
+<!-- 					            	<label>付款狀態:</label> -->
+<!-- 					                <select name="productOrderPayStatus"> -->
+<!-- 						            		<option value="">請選擇</option> -->
+<!-- 						            		<option value=0>未完成</option> -->
+<!-- 						            		<option value=1>已完成</option> -->
+<!-- 						            		<option value=2>已取消</option> -->
+<!-- 					        		</select> -->
+<!-- 						            </div> -->
+<!-- 						            </div> -->
+					  		</div>
+					  	</form>
+	  				</div>
+	  				
+<!-- 所有商品訂單 -->
+	  				<div class="card-body">
+					 	<table id="example" class="display">
+					 		<thead >
+								<tr>
+									<th>訂單編號</th>
+									<th>會員編號</th>
+									<th>訂單狀態</th>
+									<th>付款狀態</th>
+									<th>訂購時間</th>
+									<th>查看明細</th>
+<!-- 									<th>修改訂單</th> -->
+								</tr>
+					  		</thead>
+					  		
+					  		<tbody>
+					  			<th:block th:each="productOrderVO : ${productOrderList}">
+								<tr>
+									<td th:text="${productOrderVO.productOrderID}"></td>
+									<td th:text="${productOrderVO.userID}"></td>
+					<!-- 訂單狀態 -->
+									<td>
+					                <span th:switch="${productOrderVO.productOrderStatus}">
+								        <span th:case="0" class="status-undone">未完成</span>
+								        <span th:case="1" class="status-done">已完成</span>
+								        <span th:case="2" class="status-cacel">已取消</span>
+								        <span th:case="*" class="status-unknown">未知狀態</span>
+								    </span>
+					            	</td>
+					            	
+					<!-- 付款狀態 -->
+									<td>
+					                <span th:switch="${productOrderVO.productOrderPayStatus}">
+								        <span th:case="0" class="status-undone">未付款</span>
+								        <span th:case="1" class="status-done">已付款</span>
+								    </span>
+					            	</td>
+
+					<!-- 訂購時間 -->
+									<td th:text="${#dates.format(productOrderVO.productOrderCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
+									
+					<!-- 查看明細 -->
+									<td>
+									  <form method="post" th:action="@{/productOrderDetail/orderHistory_ProductOrderDetail}" style="margin-bottom: 0px;">
+									     <input type="submit" value="查看明細" class="btn btn-primary">
+									     <input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}"></form>
+									</td>
+<!-- 					修改 -->
+<!-- 									<td> -->
+<!-- 									  <form method="post" th:action="@{/productOrderDetail/orderHistory_ProductOrderDetail}" style="margin-bottom: 0px;"> -->
+<!-- 									     <input type="submit" value="修改" class="btn btn-primary"> -->
+<!-- 									     <input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}"></form> -->
+<!-- 									</td> -->
+								</tr>
+								</th:block>
+					  		</tbody>
+					  	</table>
+					</div>
+					  		
+<!-- 	商品明細：一般	 -->
+
+			<div class="card-body">
+					 	<table id="example" class="display">
+					 		<thead >
+								<tr>
+									<th>訂單編號：一般商品</th>
+									<th>購買品項</th>
+									<th>數量</th>
+									<th>價格</th>
+								</tr>
+					  		</thead>
+					  		<tbody>
+					  			<th:block th:each="productOrderVO : ${productOrderList}">
+								<tr>
+		<!-- 商品訂單ID -->			<td th:text="${productOrderVO. productOrderID}"></td>
+		<!-- 商品ID -->				<td th:text="${productOrderVO. productID}"></td>			
+									<td th:text="${productOrderVO.productOrderAmount}"></td>
+									<td th:text="${productOrderVO.productOrderTTPrice}"></td>
+								</tr>
+								</th:block>
+					  		</tbody>
+					  	</table>
+					</div>
+
+<!-- 	商品明細：寄杯	 -->
+
+			<div class="card-body">
+					 	<table id="example" class="display">
+					 		<thead >
+								<tr>
+									<th>商品：寄杯</th>
+									<th>數量</th>
+									<th>價格</th>
+								</tr>
+					  		</thead>
+					  		<tbody>
+					  			<th:block th:each="jibeiOrderDetailVO : ${jibeiOrderDetailList}">
+								<tr>
+									<td th:text="${jibeiOrderDetailVO.drinkID}"></td>
+									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailAmount}"></td>
+									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailPrice}"></td>
+								</tr>
+								</th:block>
+					  		</tbody>
+					  	</table>
+					</div>
+
+ 				</div>
+			</div>
+        </div>
+   
+
 
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+		
+					  		
