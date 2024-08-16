@@ -136,15 +136,20 @@
 					                <input type="datetime-local" name="productOrderEndCreateTime" value="">
 					            </div>
 					            
-					               <div class="form-item col-md-1"> 
-					            	<label>訂單狀態</label>
-					                <select name="productOrderStatus">
-						            		<option value="">請選擇</option>
-						            		<option value=0>未完成</option>
-						            		<option value=1>已完成</option>
-						            		<option value=2>已取消</option>
-					        		</select>
-						            </div>
+					            	<div class="form-item col-md-1">
+					            	<input type="hidden" name="productOrderStatus" value="">
+					                <input type="submit" class="btn btn-primary" value="送出">
+					            </div>
+					            
+<!-- 					               <div class="form-item col-md-1">  -->
+<!-- 					            	<label>訂單狀態</label> -->
+<!-- 					                <select name="productOrderStatus"> -->
+<!-- 						            		<option value="">請選擇</option> -->
+<!-- 						            		<option value=0>未完成</option> -->
+<!-- 						            		<option value=1>已完成</option> -->
+<!-- 						            		<option value=2>已取消</option> -->
+<!-- 					        		</select> -->
+<!-- 						            </div> -->
 						            </div>
 <!-- 					               <div class="form-item col-md-1">  -->
 <!-- 					            	<label>付款狀態:</label> -->
@@ -171,7 +176,6 @@
 									<th>付款狀態</th>
 									<th>訂購時間</th>
 									<th>查看明細</th>
-<!-- 									<th>修改訂單</th> -->
 								</tr>
 					  		</thead>
 					  		
@@ -207,12 +211,6 @@
 									     <input type="submit" value="查看明細" class="btn btn-primary">
 									     <input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}"></form>
 									</td>
-<!-- 					修改 -->
-<!-- 									<td> -->
-<!-- 									  <form method="post" th:action="@{/productOrderDetail/orderHistory_ProductOrderDetail}" style="margin-bottom: 0px;"> -->
-<!-- 									     <input type="submit" value="修改" class="btn btn-primary"> -->
-<!-- 									     <input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}"></form> -->
-<!-- 									</td> -->
 								</tr>
 								</th:block>
 					  		</tbody>
@@ -232,12 +230,12 @@
 								</tr>
 					  		</thead>
 					  		<tbody>
-					  			<th:block th:each="productOrderVO : ${productOrderList}">
+					  			<th:block th:each="productOrderDetailVO : ${productOrderDetail}">
 								<tr>
-		<!-- 商品訂單ID -->			<td th:text="${productOrderVO. productOrderID}"></td>
-		<!-- 商品ID -->				<td th:text="${productOrderVO. productID}"></td>			
-									<td th:text="${productOrderVO.productOrderAmount}"></td>
-									<td th:text="${productOrderVO.productOrderTTPrice}"></td>
+		<!-- 商品訂單ID -->			<td th:text="${productOrderDetailVO.productOrderVO.productOrderID}"></td>
+		<!-- 商品ID -->				<td th:text="${productOrderDetailVO.productVO.productName}"></td>			
+									<td th:text="${productOrderDetailVO.productOrderDetailAmount}"></td>
+									<td th:text="${productOrderDetailVO.productOrderDetailPrice}"></td>
 								</tr>
 								</th:block>
 					  		</tbody>
@@ -246,26 +244,26 @@
 
 <!-- 	商品明細：寄杯	 -->
 
-			<div class="card-body">
-					 	<table id="example" class="display">
-					 		<thead >
-								<tr>
-									<th>商品：寄杯</th>
-									<th>數量</th>
-									<th>價格</th>
-								</tr>
-					  		</thead>
-					  		<tbody>
-					  			<th:block th:each="jibeiOrderDetailVO : ${jibeiOrderDetailList}">
-								<tr>
-									<td th:text="${jibeiOrderDetailVO.drinkID}"></td>
-									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailAmount}"></td>
-									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailPrice}"></td>
-								</tr>
-								</th:block>
-					  		</tbody>
-					  	</table>
-					</div>
+<!-- 			<div class="card-body"> -->
+<!-- 					 	<table id="example" class="display"> -->
+<!-- 					 		<thead > -->
+<!-- 								<tr> -->
+<!-- 									<th>商品：寄杯</th> -->
+<!-- 									<th>數量</th> -->
+<!-- 									<th>價格</th> -->
+<!-- 								</tr> -->
+<!-- 					  		</thead> -->
+<!-- 					  		<tbody> -->
+<!-- 					  			<th:block th:each="jibeiOrderDetailVO : ${jibeiOrderDetailList}"> -->
+<!-- 								<tr> -->
+<!-- 									<td th:text="${jibeiOrderDetailVO.drinkID}"></td> -->
+<!-- 									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailAmount}"></td> -->
+<!-- 									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailPrice}"></td> -->
+<!-- 								</tr> -->
+<!-- 								</th:block> -->
+<!-- 					  		</tbody> -->
+<!-- 					  	</table> -->
+<!-- 					</div> -->
 
  				</div>
 			</div>
