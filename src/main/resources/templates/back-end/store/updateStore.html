@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css">
 
-    <!-- JavaScript includes -->
+ 
     <script th:src="@{/js/scriptsBack.js}"></script>
     <script th:src="@{/js/datatables-simple-demo.js}"></script>
     <script th:src="@{/demo/chart-area-demo.js}"></script>
@@ -28,6 +28,8 @@
         body {
             background-color: #f4f6f9;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
@@ -41,6 +43,7 @@
             padding: 2rem;
             border-radius: .5rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
         }
 
         .form-container h2 {
@@ -48,12 +51,11 @@
             font-size: 1.75rem;
             color: #333;
             text-align: center;
+            font-weight: 600;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
-            max-width: 100%;
-            margin: 0 auto;
         }
 
         .form-group label {
@@ -71,7 +73,6 @@
             box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
             transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
             max-width: 100%;
-            margin: 0 auto;
         }
 
         .form-control:focus {
@@ -83,13 +84,15 @@
             background-color: #007bff;
             border-color: #007bff;
             border-radius: .375rem;
-            padding: .5rem 1rem; 
-            font-size: 0.875rem; 
+            padding: .75rem 1.5rem; 
+            font-size: 1rem; 
             font-weight: 600;
             color: #fff;
             transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
             text-transform: uppercase;
-            max-width: 100%;
+            display: block;
+            width: 100%;
+            max-width: 200px;
             margin: 0 auto;
         }
 
@@ -102,13 +105,15 @@
             background-color: #6c757d;
             border-color: #6c757d;
             border-radius: .375rem;
-            padding: .5rem 1rem; 
-            font-size: 0.875rem; 
+            padding: .75rem 1.5rem; 
+            font-size: 1rem; 
             font-weight: 600;
             color: #fff;
             transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
             text-transform: uppercase;
-            max-width: 100%;
+            display: block;
+            width: 100%;
+            max-width: 200px;
             margin: 0 auto;
         }
 
@@ -140,38 +145,10 @@
             margin-top: 20px;
         }
 
-        form label {
-            display: block;
-            margin-bottom: .5rem;
-            font-weight: 600;
-        }
-
         form input, form textarea {
             width: 100%;
             max-width: 600px; 
             margin-bottom: 1rem;
-            padding: .75rem;
-            border-radius: .375rem;
-            border: 1px solid #ced4da;
-            font-size: 1rem;
-        }
-
-        form button {
-            width: 100%;
-            max-width: 600px; 
-            padding: .5rem 1rem; 
-            border: none;
-            border-radius: .375rem;
-            background-color: #007bff;
-            color: white;
-            font-size: 0.875rem; 
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color .15s ease-in-out;
-        }
-
-        form button:hover {
-            background-color: #0056b3;
         }
     </style>
 </head>
@@ -211,7 +188,7 @@
                             <input type="time" id="storeCloseTime" name="storeCloseTime" th:value="${storeVO.storeCloseTime}" class="form-control" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="storePhone" class="form-label">店家電話:</label>
+                            <label for="storePhone">店家電話:</label>
                             <input type="text" id="storePhone" name="storePhone" class="form-control">
                         </div>
                         <div class="form-group">
@@ -233,7 +210,7 @@
                             <label for="storeDes">店家描述:</label>
                             <textarea id="storeDes" name="storeDes" class="form-control" th:text="${storeVO.storeDes}"></textarea>
                         </div>
-                        <button type="submit">修改</button>
+                        <button type="submit" class="btn-primary">修改</button>
                     </form>
                     <p th:if="${success}" th:text="${success}" style="color: #28a745; text-align: center; font-weight: bold;"></p>
                 </div>

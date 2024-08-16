@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--  ======== Document Title =====================================  -->
+    <title>啡常渴以 | 會員專區</title>
+
+    <!--  ======== Favicons =====================================  -->
+    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--  ======== Stylesheets =====================================  -->
+    <!-- Default stylesheets-->
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
+
+    <!-- Template specific stylesheets-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+    <link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+    <link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+    <link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+
+    <!-- Main stylesheet and color file -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
+
+    <style>
+        /* 美化表單區域 */
+        .profile-section {
+            background-color: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 28px;
+            color: #343a40;
+        }
+
+        .profile-section form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-section form div {
+            margin-bottom: 20px;
+        }
+
+        .profile-section form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .profile-section form input,
+        .profile-section form select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section form button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-section form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+        <!-- header -->
+        <div th:replace="header :: header"></div>
+        <!-- header -->
+
+        <div class="main">
+            <!-- 會員資料修改表單 -->
+            <section class="profile-section mt-5">
+                <div class="container">
+                    <h2>修改會員資料</h2>
+                    <form th:action="@{/user/updateProfile}" method="post">
+                        <div>
+                            <label for="userName">姓名:</label>
+                            <input type="text" id="userName" name="userName" th:value="${userVO.userName}" required>
+                        </div>
+
+                        <div>
+                            <label for="userGender">性別:</label>
+                            <select id="userGender" name="userGender" required>
+                                <option th:value="1" th:text="'男'" th:selected="${userVO.userGender == 1}"></option>
+                                <option th:value="2" th:text="'女'" th:selected="${userVO.userGender == 2}"></option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="userBirth">生日:</label>
+                            <input type="date" id="userBirth" name="userBirth" th:value="${#dates.format(userVO.userBirth, 'yyyy-MM-dd')}" required>
+                        </div>
+
+                        <div>
+                            <label for="userPhone">手機:</label>
+                            <input type="tel" id="userPhone" name="userPhone" th:value="${userVO.userPhone}" required>
+                        </div>
+
+                        <div>
+                            <label for="userEmail">電子郵件:</label>
+                            <input type="email" id="userEmail" name="userEmail" th:value="${userVO.userEmail}" required>
+                        </div>
+
+                        <div>
+                            <label for="userAddr">地址:</label>
+                            <input type="text" id="userAddr" name="userAddr" th:value="${userVO.userAddr}" required>
+                        </div>
+
+                        <button type="submit">儲存變更</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- footer -->
+        <div th:replace="footer :: footer"></div>
+        <!-- footer -->
+    </main>
+</body>
+<!-- JavaScripts -->
+<script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+<script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/wow/dist/wow.js}"></script>
+<script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+<script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+<script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+<script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+<script th:src="@{/lib/owl.carousel/dist/owl.carousel.js}"></script>
+<script th:src="@{/lib/smoothscroll.js}"></script>
+<script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+<script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+<script th:src="@{/js/plugins.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</html>

@@ -71,6 +71,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .profile-section h2 {
@@ -79,6 +80,29 @@
             text-align: center;
             margin-bottom: 20px;
             color: #343a40;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* 修改按鈕樣式 */
+        .profile-section .edit-button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0;
+        }
+
+        .profile-section .edit-button:hover {
+            background-color: #218838;
+            text-decoration: none;
         }
 
         .profile-section div {
@@ -101,7 +125,7 @@
             margin-bottom: 10px;
         }
 
-        .profile-section a {
+        .profile-section a.return-home {
             display: block;
             margin-top: 20px;
             padding: 10px 20px;
@@ -112,7 +136,7 @@
             text-decoration: none;
         }
 
-        .profile-section a:hover {
+        .profile-section a.return-home:hover {
             background-color: #0056b3;
             text-decoration: none;
         }
@@ -130,7 +154,11 @@
         <div class="main">
             <section class="profile-section">
                 <div class="container">
-                    <h2>會員基本資料</h2>
+                    <h2>會員基本資料
+                        <!-- 修改按鈕 -->
+                        <a th:href="@{user/updateProfile}" class="edit-button">修改</a>
+                    </h2>
+
                     <div>
                         <label>姓名:</label>
                         <span th:text="${userVO.userName}"></span>
@@ -161,7 +189,7 @@
                         <span th:text="${userVO.userAddr}"></span>
                     </div>
 
-                    <a href="/" >返回首頁</a>
+                    <a href="/" class="return-home">返回首頁</a>
                 </div>
             </section>
         </div>
