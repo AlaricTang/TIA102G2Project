@@ -190,29 +190,34 @@
                     	<div class="shop-item">
                         	<div class="shop-item-image">
                             	<img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${userJibeiVO.drinkID}" alt="Drink Image"/>
-         	                    <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add One</span></a></div>
+         	                    <div class="shop-item-detail">
+         	                    	<a th:href="@{/user/goDetailUserJibei} + '?drinkID=' + ${userJibeiVO.drinkID}" class="btn btn-round btn-b" >
+         	                    		<span class="icon-basket">客制選項</span>
+         	                    	</a>
+         	                    </div>
                             </div>    
                             <h4 class="shop-item-title font-alt" th:text="${userJibeiVO.drinkName}"></h4>
-                            <p th:text="'尚餘: ' + ${userJibeiVO.number} +'杯' "></p>
-<!--                             <th:block th:if="${cartDrinkOrderList} != null"> -->
-	                            <th:block th:each=" carDrinkList : ${cartDrinkOrderList}">
-	                            	<div th:if="${userJibeiVO.drinkID} == ${carDrinkList.drinkID}">
-		                            	<p th:text="'已使用: ' + ${carDrinkList.drinkOrderDetailAmount} +'杯' "></p>
-	                            	</div>
-	                            </th:block>
-<!-- 	                        </th:block> -->
-                            <form method="post" action="/user/redeemUserJibei">
-                            	<input type="hidden" name="drinkID"  th:value="${userJibeiVO.drinkID}"><br>
- 	                           	<label >使用</label>
-                            	<input type="number" name="drinkOrderDetailAmount" min="0" th:max="${userJibeiVO.number}"><br>
-                            	<input type="radio" name="drinkOrderDetailUseCup" value="0"><label for="drinkOrderDetailUseCup">是否使用環保杯</label>
-                            	  <input type="radio" id="option1" name="drinkOrderDetailIsHot" value="0" checked="checked">
-								  <label for="option1">冷</label>
+                            <th:block th:each=" cartDrinkOrder : ${cartDrinkOrderList}">
+                            	<th:block th:if="${userJibeiVO.drinkID} == ${cartDrinkOrder.drinkID}">
+		                            <p th:text="'尚餘: ' + ${userJibeiVO.number}-${carDrinkList.drinkOrderDetailAmount} +'杯' "></p>
+									<p th:text="'已選擇: ' + ${carDrinkList.drinkOrderDetailAmount} +'杯' "></p>
+			                    <th:block>
+	                        </th:block>
+	                        
+	                        
+	                        
+<!--                             <form method="post" action="/user/redeemUserJibei"> -->
+<!--                             	<input type="hidden" name="drinkID"  th:value="${userJibeiVO.drinkID}"><br> -->
+<!--  	                           	<label >使用</label> -->
+<!--                             	<input type="number" name="drinkOrderDetailAmount" min="0" th:max="${userJibeiVO.number}"><br> -->
+<!--                             	<input type="radio" name="drinkOrderDetailUseCup" value="0"><label for="drinkOrderDetailUseCup">是否使用環保杯</label> -->
+<!--                             	  <input type="radio" id="option1" name="drinkOrderDetailIsHot" value="0" checked="checked"> -->
+<!-- 								  <label for="option1">冷</label> -->
 								  
-								  <input type="radio" id="option2" name="drinkOrderDetailIsHot" value="1">
-								  <label for="option2">熱</label><br>
-                            	<input type="submit" value="加入購物車">
-                            </form>
+<!-- 								  <input type="radio" id="option2" name="drinkOrderDetailIsHot" value="1"> -->
+<!-- 								  <label for="option2">熱</label><br> -->
+<!--                             	<input type="submit" value="加入購物車"> -->
+<!--                             </form> -->
                         </div>
                     </div>
                 </div>

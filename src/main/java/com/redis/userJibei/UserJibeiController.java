@@ -46,18 +46,34 @@ public class UserJibeiController {
 	@GetMapping("goRedeemUserJibei")
 	public String goRedeemUserJibei(ModelMap model, HttpSession session) throws IOException {
 		UserVO user = (UserVO)session.getAttribute("user");
+		//會員的寄杯
 		List<UserJibeiVO> userJibeiList = userJibeiSvc.getUserJibei(user.getUserId());
 		model.addAttribute("userJibeiList",userJibeiList);
-		
-		List<DrinkOrderDetailVO> cartDrinkOrderList = drinkCartSvc.getDrinkCart(user.getUserId());
-		for(DrinkOrderDetailVO test:cartDrinkOrderList) {
-			System.out.println(test.getDrinkID());
-			System.out.println(test.getDrinkOrderDetailAmount());
-			System.out.println();
-		}
+		//購物車中的寄杯
+		List<DrinkOrderDetailVO> cartDrinkOrderList = drinkCartSvc.getJibeiInDrinkCart(user.getUserId());
 		model.addAttribute("cartDrinkOrderList",cartDrinkOrderList);
 		return "back-end/jibeiProduct/goRedeemUserJibei";
 	}
+	
+	//前往 兌換寄杯詳細頁面
+	@GetMapping("goDetailUserJibei")
+	public String goDetailUserJibei(
+			@RequestParam("drinkID") String drinkID ,HttpSession session, ModelMap model) throws IOException {
+		UserVO user = (UserVO)session.getAttribute("user");
+		//會員的某寄杯
+		UserJibeiVO userJibei = userJibeiSvc.getOneUserJibei(user.getUserId(), drinkID);
+		model.addAttribute("userJibei",userJibei);
+		//取得某飲品資訊
+		DrinkVO drinkVO = drinkSvc.getOneDrink(Integer.valueOf(drinkID));
+		model.addAttribute("drinkVO",drinkVO);
+		//購物車中的某寄杯
+		DrinkOrderDetailVO cartOneDrinkOrder = drinkCartSvc.getOneInDrinkCart(user.getUserId(), drinkID);
+		model.addAttribute("cartOneDrinkOrder",cartOneDrinkOrder);
+		
+		return "back-end/jibeiProduct/userJibeiDetail";
+	}
+	
+	
 	
 	//進行兌換
 	@PostMapping("redeemUserJibei")
@@ -68,6 +84,7 @@ public class UserJibeiController {
 			@RequestParam("drinkOrderDetailAmount") String drinkOrderDetailAmount,
 			ModelMap model,HttpSession session) throws IOException{
 		
+		//要放到購物車detailVO
 		DrinkOrderDetailVO drinkItem = new DrinkOrderDetailVO();
 	    drinkItem.setDrinkID(Integer.valueOf(drinkID));
 	    drinkItem.setDrinkOrderDetailIsHot(Byte.valueOf(drinkOrderDetailIsHot));
@@ -75,12 +92,18 @@ public class UserJibeiController {
 	    drinkItem.setDrinkOrderDetailAmount(Integer.valueOf(drinkOrderDetailAmount));
 	    drinkItem.setDrinkOrderDetailIsJibei(Byte.valueOf("1"));
 		
+	    //放入該user購物車
 	    UserVO user = (UserVO)session.getAttribute("user");
-	    userJibeiSvc.redeemUserJibei(user.getUserId(), Integer.valueOf(drinkID), Integer.valueOf(drinkOrderDetailAmount));
-
 	    drinkCartSvc.addDrinkCartItem(user.getUserId(), drinkItem);
+
+//	    userJibeiSvc.redeemUserJibei(user.getUserId(), Integer.valueOf(drinkID), Integer.valueOf(drinkOrderDetailAmount));
 	    
-		
+	    //寄杯 數量確認
+	    if(Byte.valueOf(drinkOrderDetailUseCup) == 1) {
+	    	String str_cupNumber = drinkCartSvc.getOneDrinkOrder(user.getUserId(), "cupNumber");
+	    	Integer cupNumber = Integer.valueOf(str_cupNumber)+1;
+	    	drinkCartSvc.setOneDrinkOrder(user.getUserId(), "cupNumber", cupNumber.toString()  );                      
+	    }
 		return "redirect:/user/goRedeemUserJibei";
 	}
 	
@@ -95,7 +118,7 @@ public class UserJibeiController {
 		DrinkVO drink = drinkSvc.getOneDrink(Integer.valueOf(drinkID));
 		userJibeiVO.setDrinkName(drink.getDrinkName());
 		userJibeiVO.setDrinkDes(drink.getDrinkDes());
-		userJibeiVO.setDrinkPic(drink.getDrinkPic());
+//		userJibeiVO.setDrinkPic(drink.getDrinkPic());
 		userJibeiSvc.addUserJibei(user.getUserId(),userJibeiVO);
 		return "redirect:/user/userJibeiList";
 	}
