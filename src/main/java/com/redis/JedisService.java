@@ -18,7 +18,7 @@ import redis.clients.jedis.JedisPool;
 public class JedisService {
 
 	@Autowired
-	private final JedisPool jedisPool;
+	JedisPool jedisPool;
 	
 	@Autowired
 	private Gson gson;

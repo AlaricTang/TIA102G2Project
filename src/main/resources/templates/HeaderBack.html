@@ -26,12 +26,12 @@
 					<div th:if="${session.member != null}">                    
 	                    <li><a class="dropdown-item" href="#!">Settings</a></li>
 	                    <li><hr class="dropdown-divider" /></li>
-    	                <li><a class="dropdown-item" href="#!">Logout</a></li>
-    	                <li><a class="dropdown-item" th:href="@{/drinkOrder/fakeLogout}">假Logout</a></li>
+    	                <li><a class="dropdown-item" href="/drinkOrder/fakeLogout">Logout</a></li>
+<!--     	                <li><a class="dropdown-item" href="/drinkOrder/fakeLogout">假Logout</a></li> -->
     	            </div>
     	            <div th:unless="${session.member != null }">
     	                <li><a class="dropdown-item" href="/member/login">Log in</a></li>    	            
-    	                <li><a class="dropdown-item" th:href="@{/drinkOrder/fakeLoginPage}">假Log in</a></li>    	            
+<!--     	                <li><a class="dropdown-item" th:href="@{/drinkOrder/fakeLoginPage}">假Log in</a></li>    	             -->
     	            </div>
                 </ul>
             </li>
