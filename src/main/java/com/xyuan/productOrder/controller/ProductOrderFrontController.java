@@ -1,8 +1,11 @@
 package com.xyuan.productOrder.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,12 +28,16 @@ import com.xyuan.product.model.ProductService;
 import com.xyuan.product.model.ProductVO;
 import com.xyuan.productOrder.model.ProductOrderService;
 import com.xyuan.productOrder.model.ProductOrderVO;
+import com.xyuan.productOrderDetail.model.ProductOrderDetailRepository;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailService;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
 @Controller
 @RequestMapping("/productOrder")
 public class ProductOrderFrontController {
+	
+	@Autowired
+	private ProductOrderDetailRepository productOrderDetailRepository ;
 
 	@Autowired
 	ProductOrderService productOrderSvc;
@@ -55,7 +62,10 @@ public class ProductOrderFrontController {
 	@GetMapping("productOrderPage")
 	public String productOrderPage(ModelMap model, HttpSession session) throws IOException {
 //		int totalPrice = 0;
-		List<ProductOrderDetailVO> productCartList = new ArrayList<>();
+		
+		
+//		List<ProductOrderDetailVO> productCartList = new ArrayList<>();/
+		List<StoreVO> storeList = storeSvc.getAll();
 		
 	//訂購人
 		//session中獲取名為"user"的資料(從前端form表單上設定的名字)
@@ -72,14 +82,13 @@ public class ProductOrderFrontController {
 //			totalPrice += product.getProductPrice();
 //		}
 		
-		List<StoreVO> storeList = storeSvc.getAll();
 		
 		//給前端
 		model.addAttribute("userID", userID);
 //		model.addAttribute("productTotalPrice", totalPrice);
 		model.addAttribute("storeList", storeList);
 		
-		model.addAttribute("productCartList", productCartList);
+//		model.addAttribute("productCartList", productCartList);
 		return "back-end/productOrder/productOrderPage";	
 		
 	}
@@ -129,16 +138,22 @@ public class ProductOrderFrontController {
 //			productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));		//執行完 狀態設為 已付款
 //		}
 		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		productOrderVO.setProductOrderCreateTime(timestamp);
 		
-		
-		
-		ProductOrderVO saveProductOrder = productOrderSvc.addandGetProductOrder(productOrderVO);	//存訂單
-		
+		ProductOrderVO saveProductOrder = productOrderSvc.addProductOrder(productOrderVO);	//存訂單
 //		Integer productOrderID = saveProductOrder.getProductOrderID(); 沒fk的
+//		Set<ProductOrderDetailVO> details = new HashSet<>();
 		for(ProductOrderDetailVO productDetails : cartProducts) {
+//			details.add(productDetails);
 			productDetails.setProductOrderVO(saveProductOrder);
-			productOrderDetailSvc.addProductOrderDetail(productDetails);
+			Integer nowProductPrice = (productService.getOneProduct(productDetails.getProductVO().getProductID())).getProductPrice();
+			productDetails.setProductOrderDetailPrice(nowProductPrice*(productDetails.getProductOrderDetailAmount()));
+			productOrderDetailRepository.save(productDetails);
 		}
+		
+//		productOrderVO.setProductOrderDetails(details);
+//		ProductOrderVO saveProductOrder = productOrderSvc.addProductOrder(productOrderVO);
 		
 		productCartService.deleteProductOrder(userID);	//下訂完 刪購物人資訊 hash
 																																									

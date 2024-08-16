@@ -7,7 +7,7 @@
     
     
     <!--  ======== Document Title =====================================  -->
-    <title>啡常渴以 | Home</title>
+    <title>啡常渴以 | fakeLogging</title>
     
     
     <!--  ======== Favicons =====================================  -->
@@ -24,7 +24,6 @@
 	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
 	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
-
     
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
@@ -52,7 +51,17 @@
 	<!-- Main stylesheet and color file -->
 	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
-
+	<style >
+		table, table td, table th{
+			border: 1px solid black;
+			border-collapse: collapse;
+			text-align:center;
+		}
+		
+		.drinkOrder, .drinkOrderDetail{
+			background-color: #ffe4c4;
+		}
+	</style>
   </head>
 
 
@@ -60,289 +69,127 @@
 
 
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
-    <main>
-      <div class="page-loader">
-        <div class="loader">Loading...</div>
-      </div>
+  	<main>
+
+	    <!-- header -->
+	    <div th:replace="header :: header"></div>
+	    <!-- header -->
+		
+		<div class="main">
+        	<section class="module">
+          		<div class="container">
+            		<div class="row">
+              			<div class="col-sm-6 col-sm-offset-3">
+                			<h1 class="module-title font-alt">查看明細</h1>
+              			</div>
+            		</div>
+            		<hr class="divider-w pt-20">
+            		<div class="row">
+              			<div class="col-sm-12">
+                			<table class="table table-striped table-border checkout-table">
+                  					<tbody>
+                    					<tr>
+                      						<th class="hidden-xs">圖示</th>
+					                      	<th>商品(fk)</th>
+					                      	<th>冷/熱</th>
+					                      	<th>使用環保杯</th>
+					                      	<th>是否為寄杯</th>
+					                      	<th class="hidden-xs">單價(fk)</th>
+					                      	<th>數量</th>
+					                      	<th>總價(fk)</th>
+					                    </tr>
+					                    <th:block th:each="drinkOrderDetailVO : ${drinkCartList}">
+						                    <tr>
+						                      	<td class="hidden-xs"><img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkOrderDetailVO.drinkID}" alt="Drink Image"/></td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkID}"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailIsHot == 1? '熱':'冷' }"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'否' }"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':'否'}"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkID}"></div></h5><!-- 商品單價 需要fk productVO.productPrice -->
+						                      	</td>
+						                      	<td class="hidden-xs">
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailAmount}"></div></h5>
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="'$'+ ${drinkOrderDetailVO.drinkID} * ${drinkOrderDetailVO.drinkOrderDetailAmount}"></div></h5> <!--總價 需要fk productVO.productPrice * 數量 -->
+						                      	</td>
+						                    </tr>
+
+				                  </tbody>
+				                </table>
+				        </div>
+				    </div>
 
 
-      <!-- header -->
-      <div th:include="header :: header"></div>
-      <!-- header -->
-
-
-	  <!--banner-->
-      <section class="home-section home-full-height" id="home">
-        <div class="hero-slider">
-          <ul class="slides">
-            <!--之後banner圖片來自資料庫-->
-            <li class="bg-dark-30 restaurant-page-header bg-dark" style="background-image:url(&quot;images/restaurant/slider1.jpg&quot;);">
-              <div class="titan-caption">
-                <div class="caption-content">
-                  <div class="font-alt mb-30 titan-title-size-1"> Hello & welcome</div>
-                  <div class="font-alt mb-40 titan-title-size-4">We are 啡常渴以</div>
-                  <a class="section-scroll btn btn-border-w btn-round" href="#">Check Our Menu | 飲品菜單</a>
+            	</div>
+            <hr class="divider-w">
+            <div class="row mt-70">
+              <div class="col-sm-5 col-sm-offset-7">
+                <div class="shop-Cart-totalbox">
+                  <h4 class="font-alt">訂購明細(現場取貨付款)</h4>
+                  <table class="table table-striped table-border checkout-table">
+                    <tbody>
+                      <tr>
+                        <th>訂購人:</th>
+                        <td><div th:text="${userName}"></div></td>
+                      </tr>
+                      <tr>
+                        <th>訂購門市:</th>
+                        <td><div th:text="${drinkOrderStore}"></div></td>
+                      </tr>
+                      <tr>
+                        <th>取貨時間:</th>
+                        <td><div th:text="${drinkOrderPickTime}"></div></td>
+                      </tr>
+                      <tr>
+                        <th>使用環保杯數:</th>
+                        <td><div th:text="${cupNumber}"></div></td>
+                      </tr>
+                      <tr class="shop-Cart-totalprice">
+                        <th>總計 :</th>
+                        <td><div th:text="'$'+ ${drinkOrderAmount}"></div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-lg btn-block btn-round btn-d" onclick="window.location.href='/drinkOrder/order'">確認結帳</button>
                 </div>
               </div>
-            </li>
-
-            <li class="bg-dark-30 restaurant-page-header bg-dark" style="background-image:url(&quot;images/restaurant/slider2.jpg&quot;);">
-              <div class="titan-caption">
-                <div class="caption-content">
-                  <div class="font-alt mb-30 titan-title-size-2">有一天，丁丁跟小易一起去海邊散步</div>
-                  <div class="font-alt mb-30 titan-title-size-2">小易: 丁丁，你看，你就像這片海一樣</div>
-                  <div class="font-alt mb-30 titan-title-size-2">丁丁: 為什麼? 你說我跟大海一樣，心胸很寬闊嗎?</div>
-                  <div class="font-alt mb-30 titan-title-size-2">小易: 不是，我是說你跟這片大海一樣，很多魚</div>
-                  <a class="btn btn-border-w btn-round" href="#">Discover our store | 門市資訊</a>
-                </div>
-              </div>
-            </li>
-
-            <li class="bg-dark-30 restaurant-page-header bg-dark" style="background-image:url(&quot;images/restaurant/slider3.jpg&quot;);">
-              <div class="titan-caption">
-                <div class="caption-content">
-                  <div class="font-alt mb-30 titan-title-size-1"> Take a look at</div>
-                  <div class="font-alt mb-40 titan-title-size-3">our product</div>
-                  <a class="section-scroll btn btn-border-w btn-round" href="#">Check Our Product | 周邊商品</a>
-                </div>
-              </div>
-            </li>
-
-
-          </ul>
+            </div>
+        	</section>
         </div>
-      </section>
-	  <!--banner-->
 
+    	
 
-      <div class="main">
-        
-        <section class="module" id="specialities">
-          <div class="container">
-
-            <div class="row multi-columns-row">
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="content-box">
-                  <a href="#">
-                    <div class="features-icon"><span class="icon-pencil"></span></div>
-                    <h3 class="content-box-title font-serif">預定自取</h3>
-                  </a>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="content-box">
-                  <a th:href="@{/drink/select_page}">
-                    <div class="features-icon"><span class="icon-book-open"></span></div>
-                    <h3 class="content-box-title font-serif">飲品菜單</h3>
-                  </a>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="content-box">
-                  <a href="">
-                    <div class="features-icon"><span class="icon-map"></span></div>
-                    <h3 class="content-box-title font-serif">門市資訊</h3>
-                  </a>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="content-box">
-                  <a href="">
-                    <div class="features-icon"><span class=" icon-wine"></span></div>
-                    <h3 class="content-box-title font-serif">我的寄杯</h3>
-                  </a>
-                </div>
-              </div>
-              
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="content-box">
-                  <a th:href="@{/cup/select_page}">
-                    <div class="features-icon"><span class=" icon-wine"></span></div>
-                    <h3 class="content-box-title font-serif">環保杯(借用)</h3>
-                  </a>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        <section class="module pt-0 pb-0" id="about">
-          <div class="row position-relative m-0">
-            <div class="col-xs-12 col-md-6 side-image" data-background="images/section-14.jpg"></div>
-            
-            <div class="col-xs-12 col-md-6 col-md-offset-6 side-image-text">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h2 class="module-title font-alt align-left">About Reusable Cup</h2>
-                  <div class="module-subtitle font-serif align-left">"In every walk with nature one receives far more than he seeks." <br>– John Muir</div>
-                  <p>在現代社會的快節奏生活中，環保杯的出現無疑是對環境的禮讚。<br>它不僅是人們手中的一杯清茶，更是一種生活方式的轉變，象徵對自然的尊重和對未來的希冀。<br><br>每一個環保杯，宛如在陽光下閃耀的綠色希望，它告訴我們，地球的未來掌握在我們手中。當你用環保杯盛滿一杯清水，你同時也在為地球的清新呼吸注入一股清流。<br>讓我們摒棄一次性用品，擁抱這份綠色心意，共同編織一個更為純淨的未來。環保杯，不僅是一個物品，更是一段美麗的環保詩篇。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="module" id="menu">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-2 col-sm-offset-5">
-                <div class="alt-module-subtitle"><span class="holder-w"></span>
-                  <h5 class="font-serif">Most popular Drinks</h5><span class="holder-w"></span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-8 col-sm-offset-2">
-                <h2 class="module-title font-alt">熱門飲品</h2>
-              </div>
-            </div>
-            <div class="row multi-columns-row">
-              <div class="col-sm-6">
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">焦糖瑪奇朵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">抹茶拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$100</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">紅茶拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$100</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">冠軍黑咖啡</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$65</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">燕麥冠軍拿鐵咖啡</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">燕麥抹茶拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">莊園星空拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">可可拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$100</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">芝麻拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$110</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">抹茶奶霜冰沙</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$145</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-center"><a class="btn btn-border-d mt-50" href="#">Check our full menu | 查看完整菜單</a></div>
-          </div>
-        </section>
-
-
-        <section class="module module-video bg-dark-30" data-background="images/restaurant/coffee_bg.png">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt mb-0">Within this humble shop, the whispers of the earth find voice in every sip.</h2>
-              </div>
-            </div>
-          </div>
-          <div class="video-player" data-property="{videoURL:'https://www.youtube.com/watch?v=i_XV7YCRzKo', containment:'.module-video', startAt:3, mute:true, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
-        </section>
-
-      </div>
-      
-      
-      <!-- footer -->
-      <div th:include="footer :: footer"></div>
-      <!-- footer -->
-      <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
-    </main>
+	    <!-- footer -->
+	    <div th:include="footer :: footer"></div>
+	    <!-- footer -->
+    	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+   </main>
     
     
     <!--  ======== JavaScripts =====================================  -->
-    <script th:src="@{lib/jquery/dist/jquery.js}"></script>
-    <script th:src="@{lib/bootstrap/dist/js/bootstrap.min.js}"></script>
-    <script th:src="@{lib/wow/dist/wow.js}"></script>
-    <script th:src="@{lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
-    <script th:src="@{lib/isotope/dist/isotope.pkgd.js}"></script>
-    <script th:src="@{lib/imagesloaded/imagesloaded.pkgd.js}"></script>
-    <script th:src="@{lib/flexslider/jquery.flexslider.js}"></script>
-    <script th:src="@{lib/owl.carousel/dist/owl.carousel.min.js}"></script>
-    <script th:src="@{lib/smoothscroll.js}"></script>
-    <script th:src="@{lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
-    <script th:src="@{lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
-    <script th:src="@{js/plugins.js}"></script>
-    <script th:src="@{js/main.js}"></script>
+    <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/wow/dist/wow.js}"></script>
+    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+    <script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/smoothscroll.js}"></script>
+    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    
   </body>
 </html>

@@ -1,16 +1,14 @@
 package com.xyuan.productOrderDetail.model;
-
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import com.xyuan.product.model.ProductVO;
 import com.xyuan.productOrder.model.ProductOrderVO;
@@ -19,36 +17,24 @@ import com.xyuan.productOrder.model.ProductOrderVO;
 @Table(name="productOrderDetail")
 public class ProductOrderDetailVO implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
-	@Id		//PK
-	@GeneratedValue
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="productOrderDetailID", updatable = false, insertable = false)
 	private Integer productOrderDetailID;
 	
-	//FK
 	@ManyToOne
-	@JoinColumn(name="productOrderID") 
+	@JoinColumn(name="productOrderID")
 	private ProductOrderVO productOrderVO;
 	
-//	@NotNull(message = "請選擇商品訂單")
-//	@Column(name="productOrderID", updatable = false)
-//	private Integer productOrderID;
-	
-	//FK
 	@ManyToOne
-	@JoinColumn(name="productID") 
+	@JoinColumn(name="productID")
 	private ProductVO productVO;
 	
-//	@NotNull(message = "請選擇商品")
-//	@Column(name="productID", updatable = false)
-//	private Integer productID;
-	
-	@NotNull(message = "訂單總數:不可為空")
-	@Column(name="productOrderDetailAmount",updatable = false)
+	@Column(name="productOrderDetailAmount")
 	private Integer productOrderDetailAmount;
 	
-	@NotNull(message = "訂單總價:不可為空")
-	@Column(name="productOrderDetailPrice",updatable = false)
+	@Column(name="productOrderDetailPrice")
 	private Integer productOrderDetailPrice;
 
 	public Integer getProductOrderDetailID() {
@@ -57,28 +43,6 @@ public class ProductOrderDetailVO implements Serializable{
 
 	public void setProductOrderDetailID(Integer productOrderDetailID) {
 		this.productOrderDetailID = productOrderDetailID;
-	}
-
-//	public Integer getProductOrderID() {
-//		return productOrderID;
-//	}
-//
-//	public void setProductOrderID(Integer productOrderID) {
-//		this.productOrderID = productOrderID;
-//	}
-//
-//	public Integer getProductID() {
-//		return productID;
-//	}
-//
-//	public void setProductID(Integer productID) {
-//		this.productID = productID;
-//	}
-	
-	
-
-	public Integer getProductOrderDetailAmount() {
-		return productOrderDetailAmount;
 	}
 
 	public ProductOrderVO getProductOrderVO() {
@@ -97,6 +61,10 @@ public class ProductOrderDetailVO implements Serializable{
 		this.productVO = productVO;
 	}
 
+	public Integer getProductOrderDetailAmount() {
+		return productOrderDetailAmount;
+	}
+
 	public void setProductOrderDetailAmount(Integer productOrderDetailAmount) {
 		this.productOrderDetailAmount = productOrderDetailAmount;
 	}
@@ -109,20 +77,7 @@ public class ProductOrderDetailVO implements Serializable{
 		this.productOrderDetailPrice = productOrderDetailPrice;
 	}
 
-//	public ProductOrderDetailVO(Integer productOrderDetailID, @NotEmpty(message = "請選擇商品訂單") Integer productOrderID,
-//			@NotEmpty(message = "請選擇商品") Integer productID,
-//			@NotEmpty(message = "訂單總數:不可為空") Integer productOrderDetailAmount,
-//			@NotEmpty(message = "訂單總價:不可為空") Integer productOrderDetailPrice) {
-//		super();
-//		this.productOrderDetailID = productOrderDetailID;
-//		this.productOrderID = productOrderID;
-//		this.productID = productID;
-//		this.productOrderDetailAmount = productOrderDetailAmount;
-//		this.productOrderDetailPrice = productOrderDetailPrice;
-//	}
-
 	public ProductOrderDetailVO() {
-		super();
 	}
 	
 	

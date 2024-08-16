@@ -17,8 +17,8 @@ public class ProductOrderService {
 	
 
 	
-	public void addProductOrder(ProductOrderVO productOrderVO) {
-		repository.save(productOrderVO);
+	public ProductOrderVO addProductOrder(ProductOrderVO productOrderVO) {
+		return repository.save(productOrderVO);
 	}
 	
 	public void updateProductOrder(ProductOrderVO productOrderVO) {
@@ -51,9 +51,9 @@ public class ProductOrderService {
 		return repository.getAllUndoneProductOrder();
 	}
 
-	public ProductOrderVO addandGetProductOrder(ProductOrderVO productOrderVO) {
-		ProductOrderVO saveDrinkOrderVO = repository.save(productOrderVO);
-		return saveDrinkOrderVO;
-	}
+//	public ProductOrderVO addandGetProductOrder(ProductOrderVO productOrderVO) {
+//		ProductOrderVO saveDrinkOrderVO = repository.save(productOrderVO);
+//		return saveDrinkOrderVO;
+//	}
 	
 }

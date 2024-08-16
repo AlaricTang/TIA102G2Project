@@ -64,6 +64,7 @@ public class DrinkOrderFrontController {
 	@GetMapping("drinkOrderPage")
 	public String drinkOrderPage(ModelMap model, HttpSession session) throws IOException {
 		int totalPrice = 0;
+		int cupNumber=0;
 		DrinkOrderVO drinkOrderVO = new DrinkOrderVO();
 		List<DrinkOrderDetailVO> drinkCartList = new ArrayList<>();
 
@@ -75,7 +76,7 @@ public class DrinkOrderFrontController {
 		//訂購門市
 		String str_drinkOrderStore = drinkCartService.getOneDrinkOrder(userID,"drinkOrderStore");	//從Jedis拿 先假定都從Jedis拿 =======================================
 		StoreVO drinkOrderStore =  storeService.getOneStore(Integer.valueOf(str_drinkOrderStore));
-		drinkOrderVO.setStoreID(drinkOrderStore.getStoreID());
+		drinkOrderVO.setStoreID(Integer.valueOf(str_drinkOrderStore));
 		
 		//取貨時間
 		String str_drinkOrderPickTime = drinkCartService.getOneDrinkOrder(userID,"drinkOrderPickTime");  //=======================================
@@ -91,30 +92,34 @@ public class DrinkOrderFrontController {
 		drinkCartList = drinkCartService.getDrinkCart(userID); 
 		
 		for(DrinkOrderDetailVO drinkCartItem : drinkCartList) {
-			DrinkVO drink = drinkService.getOneDrink(drinkCartItem.getDrinkID());
-			int current_pirce= 0;
-			
-			if(drink.getDrinkDPrice()>0) {
-				current_pirce= drink.getDrinkDPrice() * drinkCartItem.getDrinkOrderDetailAmount();
-			}else {
-				current_pirce= drink.getDrinkPrice()* drinkCartItem.getDrinkOrderDetailAmount();
+			int detail_pirce= 0;
+			if(drinkCartItem.getDrinkOrderDetailUseCup() == 1)  
+				cupNumber++;
+			if(drinkCartItem.getDrinkOrderDetailIsJibei() == 0) {
+				DrinkVO drink = drinkService.getOneDrink(drinkCartItem.getDrinkID());
+//				if(drink.getDrinkDPrice().) {
+//					current_pirce= drink.getDrinkDPrice() * drinkCartItem.getDrinkOrderDetailAmount();
+//				}else {
+				detail_pirce= drink.getDrinkPrice()* drinkCartItem.getDrinkOrderDetailAmount();
+//				}
 			}
 			
-			totalPrice += current_pirce;
-			drinkCartItem.setDrinkOrderDetailPrice(current_pirce);
+			totalPrice += detail_pirce;
+			drinkCartItem.setDrinkOrderDetailPrice(detail_pirce);
 		}
-		drinkOrderVO.setDrinkOrderAmount(totalPrice);
-		
+		drinkOrderVO.setDrinkOrderTTPrice(totalPrice);
+		drinkOrderVO.setDrinkOrderAmount(drinkCartList.size());
+		drinkOrderVO.setCupNumber(cupNumber);
 		//把訂單資訊存session
 		session.setAttribute("drinkOrderVO",drinkOrderVO);
-		
+		session.setAttribute("drinkCartList", drinkCartList);
 		
 		//給前端看
 		model.addAttribute("userName",user.getUserName());
 		model.addAttribute("drinkOrderStore",drinkOrderStore.getStoreName());
 		model.addAttribute("drinkOrderPickTime",str_drinkOrderPickTime);
 		model.addAttribute("drinkOrderAmount",totalPrice);
-
+		model.addAttribute("cupNumber",cupNumber);
 		model.addAttribute("drinkCartList",drinkCartList);
 		return "back-end/drinkOrder/drinkOrderPage";
 	}
@@ -122,30 +127,36 @@ public class DrinkOrderFrontController {
 	
 //	下單,跳轉到成功頁面
 //  這裡含 存訂單明細的動作
-	@PostMapping("order")
+	@GetMapping("order")
 	synchronized public String order(ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
 
-		//判斷訂單正確與否 & 存訂單
-		DrinkOrderVO drinkOrderVO = (DrinkOrderVO)session.getAttribute("drinkOrder"); //取得訂單 =======================================
+		//取得訂單 =======================================
+		DrinkOrderVO drinkOrderVO = (DrinkOrderVO)session.getAttribute("drinkOrderVO"); 
+		Integer userID = drinkOrderVO.getUserID(); //獲取訂購人 ID
+		
 		
 		//判斷目前 店家環保杯數 是否滿足
-		StoreVO store = storeService.getOneStore(drinkOrderVO.getStoreID()); 
-		if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
-			return "redirect:/drinkOrder/orderFail";
-		}
+//		StoreVO store = storeService.getOneStore(drinkOrderVO.getStoreID()); 
+//		if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
+//			return "redirect:/drinkOrder/orderFail";
+//		}
 		
+		
+		//補齊 店家 付款狀態 訂單狀態 付款方式
+		drinkOrderVO.setStoreID(Integer.valueOf(drinkCartService.getOneDrinkOrder(userID, "drinkOrderStore")));
 		drinkOrderVO.setDrinkOrderStatus(Byte.valueOf("0")); //訂單 狀態預設為 未完成
-		drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("0"));//訂單 狀態預設為 未付款
-		if(drinkOrderVO.getDrinkOrderPayM() == 1) { //如果為線上付款 去綠界
-			//綠界實行
-			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
-		}
+		drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("0"));//付款訂單 狀態預設為 未付款
+		drinkOrderVO.setDrinkOrderPayM(Byte.valueOf("0")); //付款方式 先統一取貨付款
+		
+//		if(drinkOrderVO.getDrinkOrderPayM() == 1) { //如果為線上付款 去綠界
+//			//綠界實行
+//			drinkOrderVO.setDrinkOrderPayStatus(Byte.valueOf("1")); //執行完 狀態設為 已付款
+//		}
 		
 		DrinkOrderVO saveDrinkOrder = drinkOrderSvc.addAndGetDrinkOrder(drinkOrderVO); //存訂單
-//		Integer drinkOrderID = saveDrinkOrder.getDrinkOrderID(); //取訂單ID 給綁明細用
 
-		Integer userID = drinkOrderVO.getUserID(); //獲取訂購人 ID
-		List<DrinkOrderDetailVO> cartDrinks =  drinkCartService.getDrinkCart(userID); //取出他的購物車明細
+		@SuppressWarnings("unchecked")
+		List<DrinkOrderDetailVO> cartDrinks = (List<DrinkOrderDetailVO>)session.getAttribute("drinkCartList"); //取出他的購物車明細
 		
 		for(DrinkOrderDetailVO drinkDetails : cartDrinks ) { //根據購物車 取訂單明細
 			drinkDetails.setDrinkOrderVO(saveDrinkOrder); //訂單明細 綁 訂單ID 

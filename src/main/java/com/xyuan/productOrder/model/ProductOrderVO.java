@@ -19,12 +19,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.google.gson.annotations.Expose;
 import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
 
 @Entity
-@Table(name = "productOrder")
+@Table(name = "productorder")
 public class ProductOrderVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -57,7 +56,7 @@ public class ProductOrderVO implements Serializable {
 	@Column(name="productOrderAddr", updatable = false)
 	private String productOrderAddr;
 
-	@Column(name="productOrderUpdateTime", insertable = false)
+	@Column(name="productOrderUpdateTime")
 	private Timestamp productOrderUpdateTime;
 	
 	@Column(name="productOrderCreateTime", updatable = false)
@@ -92,9 +91,8 @@ public class ProductOrderVO implements Serializable {
 	@Column(name="productOrderPayStatus")
 	private Byte productOrderPayStatus;
 
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="productOrderVO")
-	@OrderBy("productOrderDetailID asc")
-	private Set<ProductOrderDetailVO> productOrderDetails = new HashSet<ProductOrderDetailVO>();
+	@OneToMany(mappedBy="productOrderVO", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<ProductOrderDetailVO> productOrderDetailVO = new HashSet<ProductOrderDetailVO>();
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="productOrderVO")
 	@OrderBy("jibeiOrderDetailID asc")
@@ -216,11 +214,11 @@ public class ProductOrderVO implements Serializable {
 	
 
 	public Set<ProductOrderDetailVO> getProductOrderDetails() {
-		return productOrderDetails;
+		return productOrderDetailVO;
 	}
 
 	public void setProductOrderDetails(Set<ProductOrderDetailVO> productOrderDetails) {
-		this.productOrderDetails = productOrderDetails;
+		this.productOrderDetailVO = productOrderDetails;
 	}
 
 	public ProductOrderVO(Integer productOrderID, @NotNull(message = "請登入") Integer userID,

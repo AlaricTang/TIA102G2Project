@@ -71,6 +71,7 @@ public class JibeiProductFrontController {
 			@RequestParam("orderAmount") String orderAmount,
 			HttpSession session) throws IOException {
 		
+		System.out.println(jibeiProductID);
 		JibeiOrderDetailVO jibeiProductItem = new JibeiOrderDetailVO();
 		jibeiProductItem.setJibeiProductVO(jibeiProductSvc.getOneJibeiProduct(Integer.valueOf(jibeiProductID)));
 		jibeiProductItem.setJibeiOrderDetailAmount(Integer.valueOf(orderAmount));
