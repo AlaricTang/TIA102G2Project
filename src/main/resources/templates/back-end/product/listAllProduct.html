@@ -147,8 +147,8 @@
 										<h4 class="shop-item-title font-alt">
 										<a th:href="@{/product/pdDetail} + '?productID=' + ${productVO.productID}">
 											<div th:text="${productVO.productName}"></div>
-											<div th:text="'$' + ${#numbers.formatInteger(productVO.productPrice, 3, 'COMMA')}"></div>
-										</a>
+											<div th:text="'$' + ${productVO.productPrice}"></div>
+											</a>
 										</h4>
 									</div>
 								</div>
@@ -160,20 +160,25 @@
 								<div class="col-sm-6 col-md-3 col-lg-3">
 									<div class="shop-item">
 										<div class="shop-item-image">
-											
-											<img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkVO.drinkID}" alt="Accessories Pack" />
-
+											<img
+												th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiProductVO.drinkID}"
+												alt="Accessories Pack" />
 											<div class="shop-item-detail">
-												<a th:href="@{/jibeiProduct/addOneToCart}+ '?jibeiProductID=' + ${jibeiProductVO.jibeiProductID} + '&orderAmount=1' " 
+												<a th:href="@{/jibeiProduct/addOneToCart}+ '?jibeiProductID=' + ${jibeiProductVO.drinkID} + '&orderAmount=1' " 
 												class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
 											</div>
 										</div>
 										<h4 class="shop-item-title font-alt">
-										<a th:href="@{/jibeiProduct/jibeiPdDetail} + '?jibeiProductID=' + ${jibeiProductVO.jibeiProductID}">
-											<div th:text="${jibeiProductVO.drinkVO.drinkName}"></div>
-											<div th:text="'$' + ${#numbers.formatInteger(jibeiProductVO.jibeiProductPrice, 3, 'COMMA')}"></div>
-										</a>
+										<a th:href="@{/jibeiProductFront/jibeiPdDetail} + '?jibeiProductID=' + ${jibeiProductVO.jibeiProductID}">
+											<div th:text="${jibeiProductVO.drinkID}"></div>
+											<div th:text="'$' + ${jibeiProductVO.jibeiProductPrice}"></div>
+											</a>
 										</h4>
+<!-- 										<h4 class="shop-item-title font-alt"> -->
+<!-- 											寄杯商品name -->
+<!-- <!-- 												                  <div th:text="${jibeiProductVO.productName}"></div> --> 
+<!-- 										</h4> -->
+<!-- 										£9.00 -->
 									</div>
 								</div>
 							</div>
