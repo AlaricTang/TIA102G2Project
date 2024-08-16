@@ -207,6 +207,7 @@ public class DrinkController {
 	    List<DrinkVO> milkTeaDrinks = drinkSvc.getDrinksByTagAndStatus("奶茶", availableStatus);
 	    List<DrinkVO> coffeeDrinks = drinkSvc.getDrinksByTagAndStatus("咖啡", availableStatus);
 	    List<DrinkVO> machaDrinks = drinkSvc.getDrinksByTagAndStatus("抹茶", availableStatus);
+	    List<DrinkVO> fruitDrinks = drinkSvc.getDrinksByTagAndStatus("果茶", availableStatus);
 	    List<DrinkVO> otherDrinks = drinkSvc.getDrinksByTagAndStatus("其他", availableStatus);
 	    
 	    model.addAttribute("greenTeaDrinks", greenTeaDrinks);
@@ -214,9 +215,34 @@ public class DrinkController {
 	    model.addAttribute("milkTeaDrinks", milkTeaDrinks);
 	    model.addAttribute("coffeeDrinks", coffeeDrinks);
 	    model.addAttribute("machaDrinks", machaDrinks);
+	    model.addAttribute("fruitDrinks", fruitDrinks);
 	    model.addAttribute("otherDrinks", otherDrinks);
 
 	    return "back-end/drink/listAllDrinkFront";
+	}
+	
+	@GetMapping("drinksByTagViewOnly")
+	public String getDrinksByTag1(Model model) {
+		
+		Byte availableStatus = 1; // 假設 1 表示上架
+		
+	    List<DrinkVO> greenTeaDrinks = drinkSvc.getDrinksByTagAndStatus("綠茶", availableStatus);
+	    List<DrinkVO> blackTeaDrinks = drinkSvc.getDrinksByTagAndStatus("紅茶", availableStatus);
+	    List<DrinkVO> milkTeaDrinks = drinkSvc.getDrinksByTagAndStatus("奶茶", availableStatus);
+	    List<DrinkVO> coffeeDrinks = drinkSvc.getDrinksByTagAndStatus("咖啡", availableStatus);
+	    List<DrinkVO> machaDrinks = drinkSvc.getDrinksByTagAndStatus("抹茶", availableStatus);
+	    List<DrinkVO> fruitDrinks = drinkSvc.getDrinksByTagAndStatus("果茶", availableStatus);
+	    List<DrinkVO> otherDrinks = drinkSvc.getDrinksByTagAndStatus("其他", availableStatus);
+	    
+	    model.addAttribute("greenTeaDrinks", greenTeaDrinks);
+	    model.addAttribute("blackTeaDrinks", blackTeaDrinks);
+	    model.addAttribute("milkTeaDrinks", milkTeaDrinks);
+	    model.addAttribute("coffeeDrinks", coffeeDrinks);
+	    model.addAttribute("machaDrinks", machaDrinks);
+	    model.addAttribute("fruitDrinks", fruitDrinks);
+	    model.addAttribute("otherDrinks", otherDrinks);
+
+	    return "back-end/drink/listAllDrinkView";
 	}
 	
 	// =================== 方法 2 購物車功能 =============================
