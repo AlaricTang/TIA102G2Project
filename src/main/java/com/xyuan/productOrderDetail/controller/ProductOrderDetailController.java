@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -53,7 +54,7 @@ public class ProductOrderDetailController {
 	// 存訂單的動作 跟 存存訂單明細同步 所以寫在ProductOrderController
 
 	// ======= 後臺 訂單紀錄 查詢明細 =======
-	@GetMapping("orderHistory_ProductOrderDetail")
+	@PostMapping("orderHistory_ProductOrderDetail")
 	public String orderHistory_ProductOrderDetail(
 	    @RequestParam("productOrderID") String productOrderID, ModelMap model) {
 
@@ -69,7 +70,7 @@ public class ProductOrderDetailController {
 	}
 
 	// ======= 後臺 訂單管理 查詢明細 =======
-	@GetMapping("orderManage_ProductOrderDetail")
+	@PostMapping("orderManage_ProductOrderDetail")
 	public String orderManage_ProductOrderDetail(
 	    @RequestParam("productOrderID") String productOrderID, ModelMap model) {
 

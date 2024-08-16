@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tang.drinkOrder.model.DrinkOrderVO;
+
+import hibernate.util.compositeQuery.CompositeQuery_DrinkOrder;
 import hibernate.util.compositeQuery.CompositeQuery_ProductOrder;
 
 @Service("productOrderService")
@@ -15,7 +19,8 @@ public class ProductOrderService {
 	@Autowired
 	ProductOrderRepository repository;
 	
-
+	@Autowired
+    private SessionFactory sessionFactory;
 	
 	public ProductOrderVO addProductOrder(ProductOrderVO productOrderVO) {
 		return repository.save(productOrderVO);
@@ -40,7 +45,8 @@ public class ProductOrderService {
 	}
 	
 	public List<ProductOrderVO> getAll(Map<String, String> map){
-		return CompositeQuery_ProductOrder.getAllC(map);
+		Optional<List<ProductOrderVO>> optional = Optional.ofNullable(CompositeQuery_ProductOrder.getAllC(map,sessionFactory.openSession()));
+		return optional.orElse(null);
 	}
 
 	public List<ProductOrderVO> getAllUserProductOrder(Integer userID) {

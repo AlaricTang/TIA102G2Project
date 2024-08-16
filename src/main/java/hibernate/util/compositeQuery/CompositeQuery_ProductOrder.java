@@ -14,23 +14,13 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import com.xyuan.productOrder.model.ProductOrderVO;
 
-import hibernate.util.HibernateUtil;
-
 public class CompositeQuery_ProductOrder {
 
-	private static SessionFactory factory;
-	
-	private CompositeQuery_ProductOrder() {
-		factory = HibernateUtil.getSessionFactory();
-	}
-	
-	private static Session getSession() {
-		return factory.getCurrentSession();
-	}
+
 	
 	
 	//做複合查詢的判斷
@@ -38,7 +28,7 @@ public class CompositeQuery_ProductOrder {
 		
 		Predicate predicate = null;
 		
-		if("productQrderID".equals(columnName) || 
+		if("productOrderID".equals(columnName) || 
 			"userID".equals(columnName))
 			predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
 		else if("productOrderStatus".equals(columnName))
@@ -51,48 +41,61 @@ public class CompositeQuery_ProductOrder {
 	
 	
 	//複合查詢的內容
-	public static List<ProductOrderVO> getAllC(Map<String, String> map) {
-		
-		Map<String, String> map2 = new HashMap<>();
-		Set<Map.Entry<String, String>> entry = map.entrySet();
-		
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<ProductOrderVO> criteriaQuery = builder.createQuery(ProductOrderVO.class);
-		Root<ProductOrderVO> root = criteriaQuery.from(ProductOrderVO.class);
-		List<Predicate> predicateList = new ArrayList<>();
-		
-		for(Map.Entry<String, String> row : entry) {
-			String key = row.getKey();
-			if("action".equals(key)) {
-				continue;
+	public static List<ProductOrderVO> getAllC(Map<String, String> map, Session session) {
+		Transaction tx = session.beginTransaction();
+		List<ProductOrderVO> list = null;
+		try {
+			Map<String, String> map2 = new HashMap<>();
+			Set<Map.Entry<String, String>> entry = map.entrySet();
+			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<ProductOrderVO> criteriaQuery = builder.createQuery(ProductOrderVO.class);
+			Root<ProductOrderVO> root = criteriaQuery.from(ProductOrderVO.class);
+			List<Predicate> predicateList = new ArrayList<>();
+			
+			for(Map.Entry<String, String> row : entry) {
+				String key = row.getKey();
+				if("action".equals(key)) {
+					continue;
+				}
+				String value = row.getValue();
+				if(value==null || value.isEmpty()) {
+					continue;
+				}
+				map2.put(key, value);
 			}
-			String value = row.getValue();
-			if(value==null || value.isEmpty()) {
-				continue;
+			
+			Set<String> keys = map2.keySet();
+			for(String key : keys) {
+				String value = map2.get(key);
+				predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
 			}
-			map2.put(key, value);
+			
+			if(keys.contains("productOrderStartCreateTime") && keys.contains("productOrderEndCreateTime")) {
+				predicateList.add(builder.between(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderStartCreateTime")), Timestamp.valueOf(map2.get("productOrderEndCreateTime"))));
+			}else if (keys.contains("productOrderStartCreateTime") && !(keys.contains("productOrderEndCreateTime"))) {
+				predicateList.add(builder.greaterThan(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderStartCreateTime"))));
+			}else if ( !(keys.contains("productOrderStartCreateTime")) && keys.contains("productOrderEndCreateTime")) {
+				predicateList.add(builder.lessThan(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderEndCreateTime"))));
+			}
+					
+			
+			criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
+			criteriaQuery.orderBy(builder.asc(root.get("productOrderCreateTime")));
+			
+			TypedQuery<ProductOrderVO> query = session.createQuery(criteriaQuery);
+			list =  query.getResultList();
+			tx.commit();
+		}catch (RuntimeException ex) {
+			if (tx != null)
+				tx.rollback();
+			throw ex; // System.out.println(ex.getMessage());
+		} finally {
+			session.close();
+			// HibernateUtil.getSessionFactory().close();
 		}
 		
-		Set<String> keys = map2.keySet();
-		for(String key : keys) {
-			String value = map2.get(key);
-			predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
-		}
-		
-		if(keys.contains("productOrderStartCreateTime") && keys.contains("productOrderEndCreateTime")) {
-			predicateList.add(builder.between(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderStartCreateTime")), Timestamp.valueOf(map2.get("productOrderEndCreateTime"))));
-		}else if (keys.contains("productOrderStartCreateTime") && !(keys.contains("productOrderEndCreateTime"))) {
-			predicateList.add(builder.greaterThan(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderStartCreateTime"))));
-		}else if ( !(keys.contains("productOrderStartCreateTime")) && keys.contains("productOrderEndCreateTime")) {
-			predicateList.add(builder.lessThan(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderEndCreateTime"))));
-		}
-				
-		
-		criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
-		criteriaQuery.orderBy(builder.asc(root.get("productOrderCreateTime")));
-		
-		TypedQuery<ProductOrderVO> query = getSession().createQuery(criteriaQuery);
-		return query.getResultList();
+		return list;
 	}
 
 
