@@ -161,15 +161,19 @@
                     </div>
                     <table id="membersTable" class="table table-striped">
                         <thead>
-                            <tr>
-                                <th>員工ID</th>
-                                <th>帳號</th>
-                                <th>名稱</th>
-                                <th>操作</th>
-                            </tr>
+                           <tr>
+                            <th>照片</th>
+                            <th>員工ID</th>
+                            <th>帳號</th>
+                            <th>名稱</th>
+                            <th>操作</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="member : ${members}">
+                        <tr th:each="member : ${members}">
+                            <td>
+                                <img th:src="@{/member/MemberDBGifReader(memberID=${member.memberID})}" alt="Member Image" style="max-width: 100px; border-radius: 5px;" />
+                            </td>         
                                 <td th:text="${member.memberID}"></td>
                                 <td th:text="${member.memberAcc}"></td>
                                 <td th:text="${member.memberName}"></td>
