@@ -7,7 +7,7 @@
     
     
     <!--  ======== Document Title =====================================  -->
-    <title>啡常渴以 | fakeLogging</title>
+    <title>會員｜商品訂單紀錄</title>
     
     
     <!--  ======== Favicons =====================================  -->
@@ -51,17 +51,70 @@
 	<!-- Main stylesheet and color file -->
 	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
-	<style >
-		table, table td, table th{
-			border: 1px solid black;
-			border-collapse: collapse;
-			text-align:center;
-		}
-		
-		.drinkOrder, .drinkOrderDetail{
-			background-color: #ffe4c4;
-		}
-	</style>
+	<style type="text/css">
+ 		.form-item {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .form-item label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-item input,
+        .form-item select {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        .status-done {
+	        background-color: #d4edda;
+	        color: #155724;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #c3e6cb;
+	    }
+        .status-undone {
+	        background-color: #ECEE91;
+	        color: #7D8000;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #E4E821;
+	    }
+        .status-cacel {
+	        background-color: #f6abab;
+	        color: #9f0303;
+	        padding: 5px;
+	        border-radius: 5px;
+	        border: 1px solid #ed9595;
+	    }
+	    #example {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        border: 1px solid black;
+	    }
+	
+	    #example thead tr {
+	        background-color: #f7b977;
+	        color: #2b2b2b;
+	    }
+	
+	    #example th, #example td {
+	        padding: 8px 15px;
+	        border-bottom: 1px solid #ddd;
+	        text-align: center;
+	    }
+	
+	    #example tbody tr:nth-child(even) {
+	        background-color: #f2f2f2;
+	    }
+	
+	    #example tbody tr:hover {
+	        background-color: #e6f7ff;
+	    }
+	    
+ 	</style>
   </head>
   
   
@@ -78,129 +131,104 @@
 		<div class="main">
 <!-- 			<span th:text="${user.userName}"></span> <br> -->
 			<br><br>
-			<table style="width: 100%; ">
-			  <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </thead>
-				
-				<tbody>
-                                        <tr>
-                                            <td>安安</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>丁丁</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                    </tbody>
-				
-				
-				
-				
-				
-				
-				
-				
-<!-- 			  <tbody> -->
-<!-- 					<th:block th:each="drinkOrderVO : ${userDrinkOrderList}"> -->
-<!-- 						<tr> -->
-<!-- 							<td th:text="${drinkOrderVO.drinkOrderID}"></td> -->
-<!-- 							<td th:text="${drinkOrderVO.storeID}"></td> -->
-<!-- 							<td th:text="${drinkOrderVO.drinkOrderPickTime}"></td> -->
-<!-- 							<td th:text="${drinkOrderVO.drinkOrderCreateTime}"></td> -->
-<!-- 							<td th:text="${drinkOrderVO.drinkOrderTTPrice}"></td> -->
-<!-- 							<td> -->
-<!-- 				                <span th:switch="${drinkOrderVO.drinkOrderPayStatus}"> -->
-<!-- 				                    <span th:case="0">未付款</span> -->
-<!-- 				                    <span th:case="1">已付款</span> -->
-<!-- 				                    <span th:case="*">未知狀態</span> 若出現非預期狀態 -->
-<!-- 				                </span> -->
-<!-- 			            	</td> -->
-<!-- 			            	<td> -->
-<!-- 			            		<div th:if="${drinkOrderVO.drinkOrderPayStatus != 1 && drinkOrderVO.drinkOrderStatus == 0 }"> -->
-<!-- 								  	<form method="post" th:action="@{/drinkOrder/sussesPaidDrinkOrder}" style="margin-bottom: 0px;"> -->
-<!-- 								     	<input type="submit" value="完成付款"> -->
-<!-- 								     	<input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
-<!-- 								  	</form> -->
-<!-- 								</div> -->
-<!-- 							</td> -->
-<!-- 							<td> -->
-<!-- 				                <span th:switch="${drinkOrderVO.drinkOrderStatus}"> -->
-<!-- 				                    <span th:case="0">未完成</span> -->
-<!-- 				                    <span th:case="1">已完成</span> -->
-<!-- 				                    <span th:case="2">已取消</span> -->
-<!-- 				                    <span th:case="*">未知狀態</span> 若出現非預期狀態 -->
-<!-- 				                </span> -->
-<!-- 			            	</td> -->
-<!-- 							<td> -->
-<!-- 								<div th:if="${drinkOrderVO.drinkOrderStatus == 0 }"> -->
-<!-- 								    <form method="post" th:action="@{/drinkOrder/cancelDrinkOrder}" style="margin-bottom: 0px;"> -->
+		
+		<table class="productOrder" style="width: 100%; ">
+			  <thead >
+				<tr style="background-color:#f7b977;  color: #2b2b2b; " >
+					<th>訂單編號</th>
+					<th>訂購日期</th>
+					<th>總金額</th>
+					<th>付款狀態</th>
+					<th>完成付款</th>
+					<th>訂單狀態</th>
+<!-- 					<th>取消訂單</th> -->
+					<th>查看明細</th>
+				</tr>
+			  </thead>
+		  <tbody>
+					<th:block th:each="productOrderVO : ${productOrderList}">
+						<tr>
+							<td th:text="${productOrderVO.productOrderID}"></td>
+							<td th:text="${productOrderVO.productOrderCreateTime}"></td>
+							<td th:text="${productOrderVO.productOrderTTPrice}"></td>
+						
+	<!-- 付款狀態 -->		<td>
+				                <span th:switch="${productOrderVO.productOrderPayStatus}">
+				                    <span th:case="0">未付款</span>
+				                    <span th:case="1">已付款</span>
+				                    <span th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
+				                </span>
+			            	</td>
+	<!-- 完成付款 -->	  	<td>
+			            		<div th:if="${productOrderVO.productOrderPayStatus != 1 && productOrderVO.productOrderPayStatus == 0 }">
+								  	<form method="post" th:action="@{/productOrder/sussesPaidProductOrder}" style="margin-bottom: 0px;">
+								     	<input type="submit" value="完成付款">
+								     	<input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}">
+								  	</form>
+								</div>
+							</td>
+							
+	<!-- 訂單狀態 -->		<td>
+				                <span th:switch="${productOrderVO.productOrderStatus}">
+				                    <span th:case="0">未完成</span>
+				                    <span th:case="1">已完成</span>
+				                    <span th:case="2">已取消</span>
+				                    <span th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
+				                </span>
+			            	</td>
+<!-- 	<!-- 取消訂單 -->		<td> -->
+<!-- 								<div th:if="${productOrderVO.productOrderStatus == 0 }"> -->
+<!-- 								    <form method="post" th:action="@{/productOrder/cancelProductOrder}" style="margin-bottom: 0px;"> -->
 <!-- 								       <input type="submit" value="取消訂單"> -->
 <!-- 								       <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
 <!-- 								    </form> -->
 <!-- 								</div> -->
 <!-- 							</td> -->
-<!-- 							<td> -->
-<!-- 							  <form method="post" th:action="@{/drinkOrderDetail/userDrinkOrderDetail}" style="margin-bottom: 0px;"> -->
-<!-- 							     <input type="submit" value="查看明細"> -->
-<!-- 							     <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
-<!-- 							  </form> -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
-<!-- 					</th:block> -->
-<!-- 			  </tbody> -->
+							
+							<td>
+							  <form method="post" th:action="@{/productOrderDetail/userProductOrderDetail}" style="margin-bottom: 0px;">
+							     <input type="submit" value="查看明細">
+							     <input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}">
+							  </form>
+							</td>
+							
+						</tr>
+					</th:block>
+			  </tbody>
 			</table>
-    	</div>
-    	
-    	
-    	<br>
-<!--     	<div th:if="${#lists.size(drinkOrderDetailList) >1 }"> -->
-<!--     		<table class="drinkOrderDetail" style="width: 100%; "> -->
-<!-- 			  <thead > -->
-<!-- 				<tr style="background-color:#CCCCFF; " > -->
-<!-- 					<th>飲品</th> -->
-<!-- 					<th>冷/熱</th> -->
-<!-- 					<th>使用環保杯</th> -->
-<!-- 					<th>是否為寄杯</th> -->
-<!-- 					<th>數量</th> -->
-<!-- 					<th>價格</th> -->
-<!-- 				</tr> -->
-<!-- 			  </thead> -->
-				
-<!-- 			  <tbody> -->
-<!-- 					<th:block th:each="drinkOrderDetailVO : ${drinkOrderDetailList}"> -->
-<!-- 						<tr> -->
-<!-- 							<td th:text="${drinkOrderDetailVO.drinkID}"></td> -->
-<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsHot == 1? '熱':'冷' }"></td> -->
-<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'' }"></td> -->
-<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':''}"></td> -->
-<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailAmount}"></td> -->
-<!-- 							<td th:text="${drinkOrderDetailVO.drinkOrderDetailPrice}"></td> -->
-<!-- 						</tr> -->
-<!-- 					</th:block> -->
-<!-- 			  </tbody> -->
-<!-- 			</table> -->
-<!--     	</div> -->
-    	
-  
-  
-  
-  
+		</div>
+					  
+	  
+					<div class="card-body">
+					 	<table id="example" class="display">
+					 		<thead >
+								<tr>
+									<th>訂單編號</th>
+									<th>訂購日期</th>
+									<th>付款方式</th>
+									<th>配送地址</th>
+									<th>收件人姓名</th>
+									<th>收件人電話</th>
+									<th>收件人信箱</th>
+									<th>訂單備註</th>
+								</tr>
+					  		</thead>
+					  		<tbody>
+							<th:block th:each="productOrderDetailVO : ${userListAllPdOrder}">
+								<tr>
+									<td th:text="${productOrderDetailVO.productOrderID}"></td>
+							<td th:text="${productOrderDetailVO.productOrderCreateTime}"></td>
+									<td th:text="${productOrderDetailVO.productOrderPayM == 1? '信用卡':'現金' }"></td>
+									<td th:text="${productOrderDetailVO.productOrderAddr}"></td>
+									<td th:text="${productOrderDetailVO.receiverName}"></td>
+									<td th:text="${productOrderDetailVO.receiverPhone}"></td>
+									<td th:text="${productOrderDetailVO.receiverMail}"></td>
+									<td th:text="${productOrderDetailVO.productOrderNote}"></td>
+								</tr>
+								</th:block>
+					  		</tbody>
+					  	</table>
+					</div>
   
 
   	    <!-- footer -->
@@ -208,7 +236,6 @@
 	    <!-- footer -->
     	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
    </main>
-    
     
     <!--  ======== JavaScripts =====================================  -->
     <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
