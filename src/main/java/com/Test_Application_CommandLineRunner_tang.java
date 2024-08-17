@@ -9,6 +9,8 @@
 //import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //
+//import com.ken.drink.model.DrinkRepository;
+//import com.ken.drink.model.DrinkVO;
 //import com.ken.notify.model.NotifyRepository;
 //import com.tang.campaign.model.CampaignRepository;
 //import com.tang.campaignProduct.model.CampaignProductRepository;
@@ -16,6 +18,9 @@
 //import com.tang.drinkOrder.model.DrinkOrderVO;
 //import com.tang.drinkOrderDetail.model.DrinkOrderDetailRepository;
 //import com.tang.jibeiProduct.model.JibeiProductRepository;
+//import com.tang.jibeiProduct.model.JibeiProductVO;
+//import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailRepository;
+//import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
 //import com.xyuan.product.model.ProductRepository;
 //import com.xyuan.product.model.ProductService;
 //import com.xyuan.product.model.ProductVO;
@@ -50,14 +55,23 @@
 ////    private SessionFactory sessionFactory;
 //	
 //	@Autowired
-//	private ProductOrderDetailRepository productOrderDetailRepository ;
+//	private ProductOrderRepository productOrderRepository ;
 //
 //	@Autowired
-//	private ProductOrderRepository productOrderRepository ;
+//	private ProductOrderDetailRepository productOrderDetailRepository ;
 //
 //	@Autowired
 //    private ProductRepository productRepository ;
 //	
+//	@Autowired
+//	private JibeiOrderDetailRepository jibeiOrderDetailRepository ;
+//	
+//	@Autowired
+//	private JibeiProductRepository jibeiProductRepository;
+//	
+//	@Autowired
+//	private DrinkRepository drinkRepository;
+//
 //	@Autowired
 //	ProductService productSvc;
 //	
@@ -131,21 +145,21 @@
 ////    	jibeiProductRepository.save(jibeiProductVO);
 //    	
 //
-////    	ProductOrderVO productOrderVO = new ProductOrderVO();
-////    	productOrderVO.setUserID(10);
-////    	productOrderVO.setProductOrderAmount(11);
-////    	productOrderVO.setProductOrderTTPrice(600);
-////    	productOrderVO.setProductOrderStatus(Byte.valueOf("0"));;
-////    	productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));
-////    	productOrderVO.setProductOrderAddr("三重區");
-////    	productOrderVO.setReceiverMail("effortimp@gmail.com");
-////    	productOrderVO.setReceiverPhone("0912345678");
-////    	productOrderVO.setReceiverName("小小小小小");
-////    	productOrderVO.setProductOrderPayM(Byte.valueOf("0"));
-////    	Timestamp productOrderVOupdateTime = new Timestamp(new Date().getTime());
-////    	productOrderVO.setProductOrderUpdateTime(productOrderVOupdateTime);
-////    	ProductOrderVO newProductOrder = productOrderRepository.save(productOrderVO);
-////    	
+//    	ProductOrderVO productOrderVO = new ProductOrderVO();
+//    	productOrderVO.setUserID(10);
+//    	productOrderVO.setProductOrderAmount(11);
+//    	productOrderVO.setProductOrderTTPrice(600);
+//    	productOrderVO.setProductOrderStatus(Byte.valueOf("0"));;
+//    	productOrderVO.setProductOrderPayStatus(Byte.valueOf("1"));
+//    	productOrderVO.setProductOrderAddr("大安區");
+//    	productOrderVO.setReceiverMail("effortimp@gmail.com");
+//    	productOrderVO.setReceiverPhone("0912345678");
+//    	productOrderVO.setReceiverName("大大大大大大大大");
+//    	productOrderVO.setProductOrderPayM(Byte.valueOf("0"));
+//    	Timestamp productOrderVOupdateTime = new Timestamp(new Date().getTime());
+//    	productOrderVO.setProductOrderUpdateTime(productOrderVOupdateTime);
+//    	ProductOrderVO newProductOrder = productOrderRepository.save(productOrderVO);
+//    	
 ////    	ProductVO product = new ProductVO();
 ////    	product.setProductName("品牌一");
 ////    	product.setProductPrice(100);;
@@ -155,20 +169,40 @@
 ////    	product.setProductUpdateTime(productOrderVOupdateTime);
 ////    	ProductVO newProductVO = productRepository.save(product);
 ////    	
-////    	
-////    	
-////    	
-////    	
-////    	
-////    	
+//    	
 ////    	ProductOrderDetailVO productOrderDetailVO = new ProductOrderDetailVO();
 ////    	productOrderDetailVO.setProductOrderDetailPrice(300);
 ////    	productOrderDetailVO.setProductOrderDetailAmount(60);
 ////    	productOrderDetailVO.setProductVO(newProductVO);
 ////    	productOrderDetailVO.setProductOrderVO(newProductOrder);
 ////    	productOrderDetailRepository.save(productOrderDetailVO);
+////    	
+//    	DrinkVO drink = new DrinkVO();
+//    	drink.setDrinkName("app test");
+//    	drink.setDrinkPrice(10);
+//    	drink.setDrinkDes("123");
+//    	drink.setDrinkTag("2");
+//    	drink.setDrinkStatus(Byte.valueOf("1"));
+//    	drink.setCreatedByMemberID(1);
+//    	DrinkVO newDrinkVO = drinkRepository.save(drink);
 //    	
+//    	JibeiProductVO jibeipd = new JibeiProductVO();
+//    	jibeipd.setJibeiProductPrice(30);
+//    	jibeipd.setJibeiProductStatus(Byte.valueOf("1"));
+//    	jibeipd.setMemberID(1);
+//    	jibeipd.setDrinkVO(newDrinkVO);
+//    	jibeipd.setJibeiProductAmount(100);
+//    	JibeiProductVO newJibeipd = jibeiProductRepository.save(jibeipd);
+//
+//    	jibeiOrderDetailRepository.insertJibeiOrderDetail(newProductOrder.getProductOrderID(), newJibeipd.getJibeiProductID(), 30, 3000);
 //    	
+////    	JibeiOrderDetailVO jbOrderDetail = new JibeiOrderDetailVO();
+////    	jbOrderDetail.setJibeiOrderDetailPrice(3000);
+////    	jbOrderDetail.setJibeiOrderDetailAmount(6);
+////    	jbOrderDetail.setJibeiProductVO(newJibeipd);
+////    	jbOrderDetail.setProductOrderVO(newProductOrder);
+////    	jibeiOrderDetailRepository.save(jbOrderDetail);
+////    	
 //    	
 //    	
 //		//● 修改

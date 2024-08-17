@@ -140,7 +140,7 @@
 								<select  name="productOrderAddr">
 									<option>請選擇門市</option>
 										<th:block th:each="store:${storeList}">
-											<option th:value="${store.storeName}" th:text="store.storeName"></option>
+											<option th:value="${store.storeName}" th:text="${store.storeName}"></option>
 										</th:block>
 								</select>
 							</div>

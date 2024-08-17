@@ -17,4 +17,11 @@ public interface JibeiOrderDetailRepository extends JpaRepository<JibeiOrderDeta
 	@Query(value="select * from jibeiOrderDetail where productOrderID =?1", nativeQuery = true)
 	List<JibeiOrderDetailVO> getByProductOrderID(Integer productOrderID);
 	
+	@Transactional //定義此方法為transaction 若發生錯誤 幫你rollBack
+	@Modifying //告知此方法為修改操作，沒寫JPA不會給你修改
+	@Query(value = "INSERT INTO jibeiOrderDetail (productOrderID, jibeiProductID, jibeiOrderDetailAmount, jibeiOrderDetailPrice) " +
+            "VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)//就是給SQL，nativeQuery預設為false 表示使用JQL
+	void insertJibeiOrderDetail(Integer productOrderID, Integer jibeiProductID, 
+			Integer jibeiOrderDetailAmount, Integer jibeiOrderDetailPrice);
+	
 }

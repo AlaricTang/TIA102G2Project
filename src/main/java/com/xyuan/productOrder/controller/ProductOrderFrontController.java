@@ -2,10 +2,7 @@ package com.xyuan.productOrder.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -14,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
 import com.ellie.user.model.UserVO;
+import com.redis.jibeiProductCart.JibeiProductCartService;
 import com.redis.productCart.ProductCartService;
+import com.tang.jibeiProduct.model.JibeiProductService;
+import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailRepository;
+import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
 import com.xyuan.product.model.ProductService;
-import com.xyuan.product.model.ProductVO;
 import com.xyuan.productOrder.model.ProductOrderService;
 import com.xyuan.productOrder.model.ProductOrderVO;
 import com.xyuan.productOrderDetail.model.ProductOrderDetailRepository;
@@ -53,6 +52,15 @@ public class ProductOrderFrontController {
 	
 	@Autowired
 	StoreService storeSvc;
+	
+	@Autowired
+	JibeiProductCartService jibeiProductCartSvc;
+
+	@Autowired
+	JibeiProductService jibeiProductSvc;
+
+	@Autowired
+	JibeiOrderDetailRepository jibeiOrderDetailRepository;
 
 	
 /* ------------------------------------------------------------------------------ */	
@@ -108,19 +116,22 @@ public class ProductOrderFrontController {
 	//  這裡含 存訂單明細的動作
 	@PostMapping("order")
 	synchronized public String order(@Valid ProductOrderVO productOrderVO, ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
+		Integer userID = productOrderVO.getUserID();
 		
 		//判斷訂單正確與否 & 存訂單
 //		ProductOrderVO productOrderVO = (ProductOrderVO)session.getAttribute("productOrder");
 		
+		//補齊 店家 付款狀態 訂單狀態 付款方式
 		productOrderVO.setProductOrderStatus(Byte.valueOf("0")); //訂單狀態 預設 未完成
 		productOrderVO.setProductOrderPayStatus(Byte.valueOf("0")); //付款狀態 預設 未付款
+//		productOrderVO.setProductOrderPayM(Byte.valueOf("0")); //付款方式 先統一店內付款 //前端已寫
 		
-		Integer userID = productOrderVO.getUserID();
 
 		//productCartService使用getProductCart()透過userID獲得user的購物車裡面的商品
 		List<ProductOrderDetailVO> cartProducts = productCartService.getProductCart(userID);
-			
-		//庫存判斷
+		List<JibeiOrderDetailVO> cartJibeiProducts = jibeiProductCartSvc.getJibeiProductCart(userID);
+
+		//一般商品 庫存判斷
 		String orderFailMessage = null; //給前端的失敗資訊
 		for(ProductOrderDetailVO cartProduct : cartProducts) {
 			if(cartProduct.getProductOrderDetailAmount() > cartProduct.getProductVO().getProductInv()) {
@@ -142,7 +153,6 @@ public class ProductOrderFrontController {
 		productOrderVO.setProductOrderCreateTime(timestamp);
 		
 		ProductOrderVO saveProductOrder = productOrderSvc.addProductOrder(productOrderVO);	//存訂單
-//		Integer productOrderID = saveProductOrder.getProductOrderID(); 沒fk的
 //		Set<ProductOrderDetailVO> details = new HashSet<>();
 		for(ProductOrderDetailVO productDetails : cartProducts) {
 //			details.add(productDetails);
@@ -151,21 +161,31 @@ public class ProductOrderFrontController {
 			productDetails.setProductOrderDetailPrice(nowProductPrice*(productDetails.getProductOrderDetailAmount()));
 			productOrderDetailRepository.save(productDetails);
 		}
+		for(JibeiOrderDetailVO jbpdDetails: cartJibeiProducts) {
+			jbpdDetails.setProductOrderVO(saveProductOrder);
+			Integer nowProductPrice = (jibeiProductSvc.getOneJibeiProduct(jbpdDetails.getJibeiProductVO().getJibeiProductID())).getJibeiProductPrice();
+			jbpdDetails.setJibeiOrderDetailPrice(nowProductPrice);
+			
+			
+			jibeiOrderDetailRepository.insertJibeiOrderDetail(
+					saveProductOrder.getProductOrderID(),
+					jbpdDetails.getJibeiProductVO().getJibeiProductID(),
+					jbpdDetails.getJibeiOrderDetailAmount(),
+					jbpdDetails.getJibeiOrderDetailPrice());
+		}
 		
 //		productOrderVO.setProductOrderDetails(details);
 //		ProductOrderVO saveProductOrder = productOrderSvc.addProductOrder(productOrderVO);
 		
-		productCartService.deleteProductOrder(userID);	//下訂完 刪購物人資訊 hash
-																																									
+//		productCartService.deleteProductOrder(userID);	//下訂完 刪購物人資訊 hash
 		productCartService.deleteProductCart(userID);		//下訂完 刪購物車明細 List 
-																																								
-		redirectAttributes.addAttribute("saveProductOrder", saveProductOrder);
-			return "redirect:/productOrder/orderSuccess";
+		jibeiProductCartSvc.deleteJibeiProductCart(userID);			
+		
+		return "redirect:/productOrder/orderSuccess";
 	}
 	
 		@GetMapping("orderSuccess")
-		public String orderSuccess(@ModelAttribute ("saveProductOrder") ProductOrderVO saveProductOrder, ModelMap model) {
-			model.addAttribute("saveProductOrder", saveProductOrder);
+		public String orderSuccess( ModelMap model) {
 			return "back-end/productOrder/orderSuccess";
 		}
 		
