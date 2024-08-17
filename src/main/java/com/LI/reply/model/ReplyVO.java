@@ -40,7 +40,7 @@ public class ReplyVO implements java.io.Serializable {
 	@Column(name = "replyMessage")
 	private String replyMessage;
 	
-	@NotNull
+//	@NotNull
 	@Column(name = "replyTime")
 	private Timestamp replyTime;
 	
