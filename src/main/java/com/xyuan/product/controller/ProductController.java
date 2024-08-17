@@ -156,7 +156,9 @@ public class ProductController {
 		}
 		for(JibeiOrderDetailVO jpd : jpdList ) {
 			productNumber += jpd.getJibeiOrderDetailAmount();
-			totalPrice += (jibeiProductSvc.getOneJibeiProduct(jpd.getJibeiProductVO().getJibeiProductID())).getJibeiProductPrice() * jpd.getJibeiOrderDetailAmount();
+			Integer drinkPrice = (jibeiProductSvc.getOneJibeiProduct(jpd.getJibeiProductVO().getJibeiProductID())).getJibeiProductPrice() * jpd.getJibeiOrderDetailAmount();
+			jpd.setJibeiOrderDetailPrice(drinkPrice);
+			totalPrice +=  drinkPrice;
 		}
 		session.setAttribute("productTotalPrice", totalPrice);
 		session.setAttribute("productNumber",productNumber);

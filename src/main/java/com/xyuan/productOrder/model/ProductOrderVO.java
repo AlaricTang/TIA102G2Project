@@ -92,11 +92,11 @@ public class ProductOrderVO implements Serializable {
 	private Byte productOrderPayStatus;
 
 	@OneToMany(mappedBy="productOrderVO", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<ProductOrderDetailVO> productOrderDetailVO = new HashSet<ProductOrderDetailVO>();
+	private transient Set<ProductOrderDetailVO> productOrderDetailVO = new HashSet<ProductOrderDetailVO>();
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="productOrderVO")
 	@OrderBy("jibeiOrderDetailID asc")
-	private Set<JibeiOrderDetailVO> jibeiOrderDetailVO = new HashSet<JibeiOrderDetailVO>();
+	private transient Set<JibeiOrderDetailVO> jibeiOrderDetailVO = new HashSet<JibeiOrderDetailVO>();
 	
 	public Integer getProductOrderID() {
 		return productOrderID;
@@ -221,32 +221,32 @@ public class ProductOrderVO implements Serializable {
 		this.productOrderDetailVO = productOrderDetails;
 	}
 
-	public ProductOrderVO(Integer productOrderID, @NotNull(message = "請登入") Integer userID,
-			@NotNull(message = "總金額：不可為空") Integer productOrderTTPrice,
-			@NotNull(message = "商品總數：不可為空") Integer productOrderAmount,
-			@NotNull(message = "訂單狀態:不可為空") Byte productOrderStatus,
-			@NotEmpty(message = "訂單地址:不可為空") String productOrderAddr, Timestamp productOrderUpdateTime,
-			@NotNull(message = "訂單建立時間，請勿留空") Timestamp productOrderCreateTime,
-			@NotNull(message = "付款方式:不可為空") Byte productOrderPayM, @NotNull(message = "最新修改(建立)之員工") Integer memberID,
-			@NotEmpty(message = "訂單Email：請填寫") String receiverMail,
-			@NotEmpty(message = "收件人電話:不可為空") String receiverPhone,
-			@NotEmpty(message = "收件人姓名:不可為空") String receiverName, String productOrderNote) {
-		super();
-		this.productOrderID = productOrderID;
-		this.userID = userID;
-		this.productOrderTTPrice = productOrderTTPrice;
-		this.productOrderAmount = productOrderAmount;
-		this.productOrderStatus = productOrderStatus;
-		this.productOrderAddr = productOrderAddr;
-		this.productOrderUpdateTime = productOrderUpdateTime;
-		this.productOrderCreateTime = productOrderCreateTime;
-		this.productOrderPayM = productOrderPayM;
-		this.memberID = memberID;
-		this.receiverMail = receiverMail;
-		this.receiverPhone = receiverPhone;
-		this.receiverName = receiverName;
-		this.productOrderNote = productOrderNote;
-	}
+//	public ProductOrderVO(Integer productOrderID, @NotNull(message = "請登入") Integer userID,
+//			@NotNull(message = "總金額：不可為空") Integer productOrderTTPrice,
+//			@NotNull(message = "商品總數：不可為空") Integer productOrderAmount,
+//			@NotNull(message = "訂單狀態:不可為空") Byte productOrderStatus,
+//			@NotEmpty(message = "訂單地址:不可為空") String productOrderAddr, Timestamp productOrderUpdateTime,
+//			@NotNull(message = "訂單建立時間，請勿留空") Timestamp productOrderCreateTime,
+//			@NotNull(message = "付款方式:不可為空") Byte productOrderPayM, @NotNull(message = "最新修改(建立)之員工") Integer memberID,
+//			@NotEmpty(message = "訂單Email：請填寫") String receiverMail,
+//			@NotEmpty(message = "收件人電話:不可為空") String receiverPhone,
+//			@NotEmpty(message = "收件人姓名:不可為空") String receiverName, String productOrderNote) {
+//		super();
+//		this.productOrderID = productOrderID;
+//		this.userID = userID;
+//		this.productOrderTTPrice = productOrderTTPrice;
+//		this.productOrderAmount = productOrderAmount;
+//		this.productOrderStatus = productOrderStatus;
+//		this.productOrderAddr = productOrderAddr;
+//		this.productOrderUpdateTime = productOrderUpdateTime;
+//		this.productOrderCreateTime = productOrderCreateTime;
+//		this.productOrderPayM = productOrderPayM;
+//		this.memberID = memberID;
+//		this.receiverMail = receiverMail;
+//		this.receiverPhone = receiverPhone;
+//		this.receiverName = receiverName;
+//		this.productOrderNote = productOrderNote;
+//	}
 
 	public ProductOrderVO() {
 		super();
