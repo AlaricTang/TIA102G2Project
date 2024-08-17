@@ -111,17 +111,18 @@
 						<i class="fas fa-table me-1"></i>所有訂單紀錄
 					</div>
 					<div class="card-body">
-					  	<form method="post" th:action="@{/productOrder/getProductOrder}">
+					  	<form method="post" th:action="@{/productOrder/getUndoneProductOrder}">
+					  		
 					  		<div class="form-row">
 					  			<div class="form-item col-md-1">
-					                <label>訂單編號</label>
+					                <label for="productOrderID">訂單編號</label>
 					                <input type="number" name="productOrderID" value="" min="0">
 					            </div>
+					            
 					  			<div class="form-item col-md-1">
-					                <label>會員編號</label>
+					                <label for="userID">會員編號</label>
 					                <input type="number" name="userID" value="" min="0">
 					            </div>
-					            
 					            
 					            <div class="form-item col-md-2">
 					                <label>搜尋時間範圍</label>
@@ -131,10 +132,6 @@
 					                <input type="datetime-local" name="productOrderEndCreateTime" value="">
 					            </div>
 					            
-					            	<div class="form-item col-md-1">
-					            	<input type="hidden" name="productOrderStatus" value="">
-					                <input type="submit" class="btn btn-primary" value="送出">
-					            </div>
 					            
 <!-- 					               <div class="form-item col-md-1">  -->
 <!-- 					            	<label>訂單狀態</label> -->
@@ -145,6 +142,11 @@
 <!-- 						            		<option value=2>已取消</option> -->
 <!-- 					        		</select> -->
 <!-- 						            </div> -->
+						            
+					            	<div class="form-item col-md-1">
+					                <input type="submit" class="btn btn-primary" value="送出">
+					          		</div>
+					          		
 						            </div>
 					  		</div>
 					  	</form>
