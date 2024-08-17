@@ -197,12 +197,31 @@
          	                    </div>
                             </div>    
                             <h4 class="shop-item-title font-alt" th:text="${userJibeiVO.drinkName}"></h4>
-                            <th:block th:each=" cartDrinkOrder : ${cartDrinkOrderList}">
-                            	<th:block th:if="${userJibeiVO.drinkID} == ${cartDrinkOrder.drinkID}">
-		                            <p th:text="'尚餘: ' + ${userJibeiVO.number}-${carDrinkList.drinkOrderDetailAmount} +'杯' "></p>
-									<p th:text="'已選擇: ' + ${carDrinkList.drinkOrderDetailAmount} +'杯' "></p>
-			                    <th:block>
-	                        </th:block>
+                            
+                            
+                            <th:block th:if="${(cartDrinkOrderList != null) && (!cartDrinkOrderList.isEmpty())}">
+                            	<th:block th:with="matching=false">
+		                            <th:block th:each=" cartDrinkOrder : ${cartDrinkOrderList}">
+		                            	<th:block th:if="${userJibeiVO.drinkID == cartDrinkOrder.drinkID}">
+		                            		<th:block th:with="matching=true">
+					                            <p th:text="'尚餘: ' + ${userJibeiVO.number - cartDrinkOrder.drinkOrderDetailAmount} +'杯' "></p>
+												<p th:text="'已選擇: ' + ${cartDrinkOrder.drinkOrderDetailAmount} +'杯' "></p>
+					                    	</th:block>
+			                        	</th:block>
+			                    	</th:block>
+			                    	
+			                    	<th:block th:if="${matching == flase}">
+				                        <p th:text="'尚餘: ' + ${userJibeiVO.number} +'杯' "></p>
+					                </th:block>
+					            </th:block>
+					        </th:block>
+		                    
+		                    
+		                    
+		                    
+		                    <th:block  th:if="${(cartDrinkOrderList == null) || (cartDrinkOrderList.isEmpty()) }">
+				                    <p th:text="'尚餘: ' + ${userJibeiVO.number} +'杯' "></p>
+		                    </th:block>
 	                        
 	                        
 	                        

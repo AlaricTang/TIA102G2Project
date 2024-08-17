@@ -90,39 +90,46 @@
                   					<tbody>
                     					<tr>
                       						<th class="hidden-xs">圖示</th>
-					                      	<th>商品(fk)</th>
+					                      	<th>商品</th>
 					                      	<th>冷/熱</th>
 					                      	<th>使用環保杯</th>
 					                      	<th>是否為寄杯</th>
-					                      	<th class="hidden-xs">單價(fk)</th>
+					                      	<th class="hidden-xs">單價</th>
 					                      	<th>數量</th>
-					                      	<th>總價(fk)</th>
+					                      	<th>總價</th>
 					                    </tr>
 					                    <th:block th:each="drinkOrderDetailVO : ${drinkCartList}">
+					                    <th:block th:each="drinkVO : ${drinkList}">
+					                    <th:block th:if="${drinkOrderDetailVO.drinkID == drinkVO.drinkID}">
 						                    <tr>
 						                      	<td class="hidden-xs"><img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkOrderDetailVO.drinkID}" alt="Drink Image"/></td>
 						                      	<td>
-						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkID}"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkVO.drinkName}"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                      	</td>
+						                      	
+						                      	
+						                      	
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailIsHot == 1? '熱':'冷' }"></div></h5>
 						                      	</td>
 						                      	<td>
-						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailIsHot == 1? '熱':'冷' }"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'否' }"></div></h5>
 						                      	</td>
 						                      	<td>
-						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'否' }"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':'否'}"></div></h5>
 						                      	</td>
 						                      	<td>
-						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':'否'}"></div></h5><!-- 商品名 需要fk productVO.productName -->
-						                      	</td>
-						                      	<td>
-						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkID}"></div></h5><!-- 商品單價 需要fk productVO.productPrice -->
+						                        	<h5 class="product-title font-alt"><div th:text="${drinkVO.drinkPrice}"></div></h5><!-- 商品單價 需要fk productVO.productPrice -->
 						                      	</td>
 						                      	<td class="hidden-xs">
 						                        	<h5 class="product-title font-alt"><div th:text="${drinkOrderDetailVO.drinkOrderDetailAmount}"></div></h5>
 						                      	</td>
 						                      	<td>
-						                        	<h5 class="product-title font-alt"><div th:text="'$'+ ${drinkOrderDetailVO.drinkID} * ${drinkOrderDetailVO.drinkOrderDetailAmount}"></div></h5> <!--總價 需要fk productVO.productPrice * 數量 -->
+						                        	<h5 class="product-title font-alt"><div th:text="'$'+ ${drinkOrderDetailVO.drinkOrderDetailPrice}"></div></h5> <!--總價 需要fk productVO.productPrice * 數量 -->
 						                      	</td>
 						                    </tr>
+						                </th:block>
+						                </th:block>
 
 				                  </tbody>
 				                </table>

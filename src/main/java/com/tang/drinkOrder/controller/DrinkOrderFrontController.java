@@ -106,9 +106,15 @@ public class DrinkOrderFrontController {
 			totalPrice += detail_pirce;
 			drinkCartItem.setDrinkOrderDetailPrice(detail_pirce);
 		}
+		
+		//若使用者確認完 傳此drinkOrderVO
 		drinkOrderVO.setDrinkOrderTTPrice(totalPrice);
 		drinkOrderVO.setDrinkOrderAmount(drinkCartList.size());
 		drinkOrderVO.setCupNumber(cupNumber);
+		
+		//給前端用
+		List<DrinkVO> drinkList = drinkService.getAll();
+		
 		//把訂單資訊存session
 		session.setAttribute("drinkOrderVO",drinkOrderVO);
 		session.setAttribute("drinkCartList", drinkCartList);
@@ -120,6 +126,7 @@ public class DrinkOrderFrontController {
 		model.addAttribute("drinkOrderAmount",totalPrice);
 		model.addAttribute("cupNumber",cupNumber);
 		model.addAttribute("drinkCartList",drinkCartList);
+		model.addAttribute("drinkList",drinkList);
 		return "back-end/drinkOrder/drinkOrderPage";
 	}
 	

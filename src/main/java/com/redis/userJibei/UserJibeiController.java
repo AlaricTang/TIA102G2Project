@@ -101,7 +101,7 @@ public class UserJibeiController {
 	    //寄杯 數量確認
 	    if(Byte.valueOf(drinkOrderDetailUseCup) == 1) {
 	    	String str_cupNumber = drinkCartSvc.getOneDrinkOrder(user.getUserId(), "cupNumber");
-	    	Integer cupNumber = Integer.valueOf(str_cupNumber)+1;
+	    	Integer cupNumber = Integer.valueOf(str_cupNumber) + Integer.valueOf(drinkOrderDetailAmount);
 	    	drinkCartSvc.setOneDrinkOrder(user.getUserId(), "cupNumber", cupNumber.toString()  );                      
 	    }
 		return "redirect:/user/goRedeemUserJibei";
