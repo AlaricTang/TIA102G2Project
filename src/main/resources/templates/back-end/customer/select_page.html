@@ -79,6 +79,16 @@
 	id="color-scheme">
 
 <style>
+
+.module-reduced-padding {
+    padding-top: 5px; /* 調整header跟中間空白處的間距 */
+}
+.error-message {
+	color: red;
+	font-size: 0.9em;
+	margin-top: 5px;
+}
+
 .contact-title {
 	font-size: 2.5em;
 	font-weight: bold;
@@ -165,17 +175,17 @@
 }
 
 .btn-dark.custom-submit {
-    background-color: #000;
-    color: #fff;
-    width: 100%;
-    padding: 8px 15px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
+	background-color: #000;
+	color: #fff;
+	width: 100%;
+	padding: 8px 15px;
+	font-size: 14px;
+	border: none;
+	cursor: pointer;
 }
 
 .btn-dark.custom-submit:hover {
-    background-color: #333;
+	background-color: #333;
 }
 </style>
 
@@ -250,98 +260,102 @@
 		</section>
 		<!--banner-->
 		<div class="main">
-			<section class="module" id="contact">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="contact-info">
-								<h2 class="font-alt contact-title">聯絡我們</h2>
-								<p class="contact-description">若您有任何寶貴意見或商品諮詢，歡迎與我們聯繫</p>
-								<p>我們的專業團隊將於以下時間：</p>
-								<p>週一至週五 09:00 - 17:00 （六日與國定假日除外）竭誠為您服務</p>
+			<section class="module module-reduced-padding" id="contact">
+				<div class="main">
+					<section class="module" id="contact">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="contact-info">
+										<h2 class="font-alt contact-title">聯絡我們</h2>
+										<p class="contact-description">若您有任何寶貴意見或商品諮詢，歡迎與我們聯繫</p>
+										<p>我們的專業團隊將於以下時間：</p>
+										<p>週一至週五 09:00 - 17:00 （六日與國定假日除外）竭誠為您服務</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div th:if="${success}" class="alert alert-success"
+										role="alert">
+										<p th:text="${success}"></p>
+									</div>
+
+									<div th:if="${errorMessage}" class="alert alert-danger"
+										role="alert">
+										<p th:text="${errorMessage}"></p>
+									</div>
+
+									<form id="contactForm" th:action="@{/customer/insert}"
+										method="post" th:object="${customerVO}">
+										<div class="form-group">
+											<label for="customerName">姓名<span class="required">*</span></label>
+											<input class="form-control case-sensitive" type="text"
+												id="customerName" name="customerName"
+												th:field="*{customerName}" required> <span
+												class="error-message"
+												th:if="${#fields.hasErrors('customerName')}"
+												th:errors="*{customerName}"></span>
+										</div>
+										<div class="form-group">
+											<label for="customerEmail">電子信箱 <span
+												class="required">*</span></label> <input
+												class="form-control case-sensitive" type="email"
+												id="customerEmail" name="customerEmail"
+												th:field="*{customerEmail}" required> <span
+												class="error-message"
+												th:if="${#fields.hasErrors('customerEmail')}"
+												th:errors="*{customerEmail}"></span>
+										</div>
+										<div class="form-group">
+											<label for="customerPhone">行動電話 <span
+												class="required">*</span></label> <input class="form-control"
+												type="tel" id="customerPhone" name="customerPhone"
+												th:field="*{customerPhone}" required> <span
+												class="error-message"
+												th:if="${#fields.hasErrors('customerPhone')}"
+												th:errors="*{customerPhone}"></span>
+										</div>
+										<div class="form-group">
+											<label for="customerSubject">主旨 <span
+												class="required">*</span></label> <input
+												class="form-control case-sensitive" type="text"
+												id="customerSubject" name="customerSubject"
+												th:field="*{customerSubject}" required> <span
+												class="error-message"
+												th:if="${#fields.hasErrors('customerSubject')}"
+												th:errors="*{customerSubject}"></span>
+										</div>
+										<div class="form-group">
+											<label for="customerMessage">內容 <span
+												class="required">*</span></label>
+											<textarea class="form-control case-sensitive" rows="4"
+												id="customerMessage" name="customerMessage"
+												th:field="*{customerMessage}" required></textarea>
+											<span class="error-message"
+												th:if="${#fields.hasErrors('customerMessage')}"
+												th:errors="*{customerMessage}"></span>
+										</div>
+										<button class="btn btn-block btn-dark custom-submit"
+											type="submit">送出</button>
+									</form>
+								</div>
 							</div>
 						</div>
-						<div class="col-sm-6">
-							<!-- 顯示成功消息 -->
-							<div th:if="${success}" class="alert alert-success" role="alert">
-								<p th:text="${success}"></p>
-							</div>
+					</section>
 
-							<!-- 顯示錯誤消息 -->
-							<div th:if="${errorMessage}" class="alert alert-danger"
-								role="alert">
-								<p th:text="${errorMessage}"></p>
-							</div>
 
-							<form th:action="@{/customer/insert}" method="post"
-								id="contactForm">
-								<div class="form-group">
-									<label for="customerName">姓名<span class="required">*</span></label>
-									<input class="form-control case-sensitive" type="text"
-										id="customerName" name="customerName" required>
-								</div>
-								<div class="form-group">
-									<label for="customerEmail">電子信箱 <span class="required">*</span></label>
-									<input class="form-control" type="email" id="customerEmail"
-										name="customerEmail" required>
-								</div>
-								<div class="form-group">
-									<label for="customerPhone">行動電話 <span class="required">*</span></label>
-									<input class="form-control" type="tel" id="customerPhone"
-										name="customerPhone" required>
-								</div>
-								<div class="form-group">
-									<label for="customerSubject">主旨 <span class="required">*</span></label>
-									<input class="form-control case-sensitive" type="text"
-										id="customerSubject" name="customerSubject" required>
-								</div>
-								<div class="form-group">
-									<label for="customerMessage">內容 <span class="required">*</span></label>
-									<textarea class="form-control case-sensitive" rows="4"
-										id="customerMessage" name="customerMessage" required></textarea>
-								</div>
-								<button class="btn btn-block btn-dark custom-submit"
-									type="submit">送出</button>
-							</form>
-							
-						</div>
-					</div>
+
 				</div>
-			</section>
-
-			<script>
-				document
-						.addEventListener(
-								'DOMContentLoaded',
-								function() {
-									var inputs = document
-											.getElementsByClassName('case-sensitive');
-									for (var i = 0; i < inputs.length; i++) {
-										inputs[i]
-												.addEventListener(
-														'keydown',
-														function(e) {
-															if (e.key === 'CapsLock') {
-																// 當 CapsLock 鍵被按下時，切換輸入框的樣式
-																this.style.textTransform = (this.style.textTransform === 'uppercase') ? 'none'
-																		: 'uppercase';
-															}
-														});
-									}
-								});
-			</script>
+				<!--banner-->
 
 
-		</div>
-		<!--banner-->
-
-
-		<!-- footer -->
-		<div th:include="footer :: footer"></div>
-		<!-- footer -->
-		<div class="scroll-up">
-			<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
-		</div>
+				<!-- footer -->
+				<div th:include="footer :: footer"></div>
+				<!-- footer -->
+				<div class="scroll-up">
+					<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+				</div>
+				</section>
+				</div>
 	</main>
 
 
@@ -362,12 +376,70 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
 	<script th:src="@{js/plugins.js}"></script>
 	<script th:src="@{js/main.js}"></script>
-</body>
-</html>
 
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var inputs = document.getElementsByClassName('case-sensitive');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('keydown', function(e) {
+                    if (e.key === 'CapsLock') {
+                        this.style.textTransform = (this.style.textTransform === 'uppercase') ? 'none' : 'uppercase';
+                    }
+                });
+            }
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script th:inline="javascript">
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                var form = this;
+                var formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        return response.text();
+                    }
+                })
+                .then(html => {
+                    if (html) {
+                        var parser = new DOMParser();
+                        var doc = parser.parseFromString(html, 'text/html');
+                        var newForm = doc.getElementById('contactForm');
+                        if (newForm) {
+                            form.innerHTML = newForm.innerHTML;
+                        }
+                        var successMessage = doc.querySelector('.alert-success');
+                        if (successMessage) {
+                            Swal.fire({
+                                title: '訊息已送出成功!',
+                                html: successMessage.textContent,
+                                icon: 'success',
+                                confirmButtonText: '確定',
+                                confirmButtonColor: '#FFA500'
+                            });
+                        }
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: '發生錯誤',
+                        text: '很抱歉，提交過程中出現問題，請稍後再試。',
+                        icon: 'error',
+                        confirmButtonText: '確定',
+                        confirmButtonColor: '#FFA500'
+                    });
+                });
+            });
+        });
+    </script>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script th:inline="javascript">
 	document.getElementById('contactForm').addEventListener('submit',
 			function(e) {
 				// 這裡可以添加表單提交的 AJAX 代碼
@@ -382,35 +454,5 @@
 </script>
 
 
-</div>
-<!--banner-->
-
-
-<!-- footer -->
-<div th:include="footer :: footer"></div>
-<!-- footer -->
-<div class="scroll-up">
-	<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
-</div>
-</main>
-
-
-<!--  ======== JavaScripts =====================================  -->
-<script th:src="@{lib/jquery/dist/jquery.js}"></script>
-<script th:src="@{lib/bootstrap/dist/js/bootstrap.min.js}"></script>
-<script th:src="@{lib/wow/dist/wow.js}"></script>
-<script th:src="@{lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
-<script th:src="@{lib/isotope/dist/isotope.pkgd.js}"></script>
-<script th:src="@{lib/imagesloaded/imagesloaded.pkgd.js}"></script>
-<script th:src="@{lib/flexslider/jquery.flexslider.js}"></script>
-<script th:src="@{lib/owl.carousel/dist/owl.carousel.min.js}"></script>
-<script th:src="@{lib/smoothscroll.js}"></script>
-<script th:src="@{lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
-<script
-	th:src="@{lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
-<script
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
-<script th:src="@{js/plugins.js}"></script>
-<script th:src="@{js/main.js}"></script>
 </body>
 </html>

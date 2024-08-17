@@ -77,7 +77,7 @@ public class ReplynoController {
 		return "back-end/reply/listOneCustomer";
 	}
 
-	@GetMapping("addreply") // 測試用，開啟listOneCustomer用
+	@GetMapping("addreply") // 測試用，開啟addreply用
 	public String getAddreply() {
 		return "back-end/reply/addreply";
 	}
@@ -86,6 +86,11 @@ public class ReplynoController {
 	// 顯示新增回覆的頁面
 	@GetMapping("/addReply/{customerID}")
 	public String showAddReplyPage(@PathVariable("customerID") Integer customerID, Model model) {
+		
+		// 查詢單筆客戶留言
+		CustomerVO customerVO = customerSvc.getOneCustomer(Integer.valueOf(customerID));
+		model.addAttribute("customerVO", customerVO);
+
 		model.addAttribute("customerID", customerID);
 		return "back-end/reply/addReply";
 	}

@@ -39,104 +39,153 @@
 
 
 <style>
-body {
-	font-family: 'Inter', sans-serif;
-	background-color: #f0f2f5;
-	color: #1a1a1a;
+.content-container {
+	margin-top: 12px;
+	padding: 0 15px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-.container-fluid {
-	max-width: 1400px;
-	padding: 30px;
-}
-
-.section {
+.card {
 	background-color: #ffffff;
-	border-radius: 12px;
-	padding: 25px;
-	margin-bottom: 20px;
+	border: none;
+	border-radius: 4px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	margin-bottom: 20px;
+	width: 100%;
 }
 
-.section-title {
-	color: #4a4a4a;
-	font-weight: 600;
-	margin-bottom: 20px;
-	font-size: 1.2rem;
-	padding-bottom: 10px;
-	border-bottom: 2px solid #e0e0e0;
+.card-header {
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #e0e0e0;
+	font-weight: bold;
+	padding: 12px 20px;
+}
+
+.card-body {
+	padding: 20px;
 }
 
 .info-row {
-	margin-bottom: 12px;
+	margin-bottom: 15px;
 	display: flex;
 	align-items: flex-start;
 }
 
 .info-label {
-	font-weight: 500;
+	flex: 0 0 100px;
+	font-weight: normal;
 	color: #6c757d;
-	margin-right: 10px;
-	min-width: 100px;
-	display: inline-block;
 }
 
 .info-content {
-	color: #1a1a1a;
 	flex: 1;
 }
 
-.reply-item {
-	background-color: #f8f9fa;
-	border-radius: 8px;
-	padding: 15px;
-	margin-bottom: 15px;
+.form-control {
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	padding: 6px 12px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-.btn-add-reply {
-	background-color: #90EE90;
-	/* 淺綠色 */
-	border: none;
+.customer-message {
+	resize: none;
+	overflow-y: auto;
+}
+
+.btn {
 	padding: 10px 20px;
-	font-weight: 500;
-	border-radius: 6px;
-	transition: all 0.3s ease;
-	color: #ffffff;
+	font-size: 16px;
+	border-radius: 5px;
+	transition: background-color 0.3s;
 }
 
-.btn-add-reply:hover {
-	background-color: #7CCD7C;
-	/* 深一點的綠色用於 hover 效果 */
-	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(143, 188, 143, 0.3);
+.btn-success {
+	background-color: #28a745;
+	border-color: #28a745;
+	color: white;
 }
 
-.customer-content, .reply-content, .subject-content {
-	background-color: #ffffff;
-	border-radius: 6px;
-	padding: 12px;
-	border: 1px solid #e0e0e0;
-	flex: 1;
+.btn-success:hover {
+	background-color: #218838;
+	border-color: #1e7e34;
 }
 
-.btn-send-email {
-	background-color: #90EE90;
-	/* 與 btn-add-reply 相同的淺綠色 */
-	border: none;
-	padding: 10px 20px;
-	font-weight: 500;
-	border-radius: 6px;
-	transition: all 0.3s ease;
-	color: #ffffff;
-	display: inline-block;
-	text-decoration: none;
+.btn-secondary {
+	background-color: #6c757d;
+	border-color: #6c757d;
+	color: white;
+	border-color: #6c757d;
 }
 
-.btn-send-email:hover {
-	background-color: #7CCD7C;
-	/* 與 btn-add-reply 相同的深綠色 */
-	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(143, 188, 143, 0.3);
+.btn-secondary:hover {
+	background-color: #5a6268;
+	border-color: #545b62;
+}
+
+.reply-input {
+	background-color: #f0f0f0;
+}
+
+.button-group {
+	display: flex;
+	justify-content: center;
+	align-items: center; /* 新增：垂直對齊 */
+	gap: 20px; /* 增加按鈕之間的間距 */
+}
+
+.fixed-width-btn {
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	display: flex; /* 改為 flex 佈局 */
+	align-items: center; /* 垂直居中文字 */
+	justify-content: center; /* 水平居中文字 */
+	padding: 0; /* 移除內邊距 */
+	line-height: 1; /* 重置行高 */
+}
+
+.text-center {
+	text-align: center;
+}
+
+.mt-4 {
+	margin-top: 1.5rem;
+}
+
+.me-1 {
+	margin-right: 0.25rem;
+}
+
+.fas {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+}
+
+/* 修改樣式，完全移除客戶留言的textarea滑桿 */
+.customer-message textarea.form-control {
+	resize: none;
+	overflow: visible;
+	height: auto;
+	box-sizing: border-box;
+	padding-right: 10px; /* 防止文字貼近右邊 */
+}
+
+/* 隱藏Webkit瀏覽器（如Chrome、Safari）的滾動條 */
+.customer-message textarea.form-control::-webkit-scrollbar {
+	display: none;
+}
+
+/* 隱藏Firefox的滾動條 */
+.customer-message textarea.form-control {
+	scrollbar-width: none;
+}
+
+/* 隱藏IE和Edge的滾動條 */
+.customer-message textarea.form-control {
+	-ms-overflow-style: none;
 }
 </style>
 
@@ -156,95 +205,134 @@ body {
 
 		<!--右半邊的空白頁 -->
 		<div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid">
-                    <div class="section">
-                        <h2 class="section-title">
-                            <i class="fas fa-user me-2"></i>客戶留言
-                        </h2>
-                        <div class="info-row">
-                            <span class="info-label">客戶姓名：</span>
-                            <span class="info-content" th:text="${customerVO.customerName}"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">電子郵件：</span>
-                            <span class="info-content" th:text="${customerVO.customerEmail}"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">手機：</span>
-                            <span class="info-content" th:text="${customerVO.customerPhone}"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">留言時間：</span>
-                            <span class="info-content"
-                                th:text="${#dates.format(customerVO.customerTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">主旨：</span>
-                            <span class="subject-content" th:text="${customerVO.customerSubject}"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">內容：</span>
-                            <div class="customer-content" th:text="${customerVO.customerContent}"></div>
-                        </div>
-                    </div>
+			<main>
+				<div class="content-container">
+					<!-- 客戶留言部分 -->
+					<div class="card mb-4">
+						<div class="card-header">
+							<i class="fas fa-user me-1"></i> 客戶留言
+						</div>
+						<div class="card-body">
+							<div class="info-row">
+								<span class="info-label">客戶姓名：</span> <span class="info-content"
+									th:text="${customerVO.customerName}"></span>
+							</div>
+							<div class="info-row">
+								<span class="info-label">電子郵件：</span> <span class="info-content"
+									th:text="${customerVO.customerEmail}"></span>
+							</div>
+							<div class="info-row">
+								<span class="info-label">手機：</span> <span class="info-content"
+									th:text="${customerVO.customerPhone}"></span>
+							</div>
+							<div class="info-row">
+								<span class="info-label">留言時間：</span> <span class="info-content"
+									th:text="${#dates.format(customerVO.customerTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+							</div>
+							<div class="info-row">
+								<span class="info-label">主旨：</span> <input type="text"
+									class="form-control" th:value="${customerVO.customerSubject}"
+									readonly>
+							</div>
+							<div class="info-row customer-message">
+								<span class="info-label">內容：</span>
+								<textarea class="form-control"
+									th:text="${customerVO.customerMessage}" readonly></textarea>
+							</div>
+						</div>
+					</div>
 
-                    <div class="section">
-                        <h2 class="section-title">
-                            <i class="fas fa-reply me-2"></i>回覆
-                        </h2>
-                        <form th:action="@{/reply/sendEmail}" method="post">
-                            <input type="hidden" name="customerID" th:value="${customerVO.customerID}">
-                            <div class="info-row">
-                                <span class="info-label">回覆主旨：</span>
-                                <input type="text" name="replySubject" class="form-control" required>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">回覆內容：</span>
-                                <textarea name="replyContent" class="form-control" rows="5" required></textarea>
-                            </div>
-                            <div class="text-center mt-4">
-                                <a th:href="@{/reply/addReply/{customerID}(customerID=${customerVO.customerID})}" class="btn-send-email">
-                                    <i class="fas fa-envelope me-2"></i>寄出信件回覆
-                                </a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
+
+					<!-- 客服回覆部分 -->
+					<form th:action="@{/reply/addReply}" method="post">
+						<input type="hidden" name="customerID"
+							th:value="${customerVO.customerID}"> <input type="hidden"
+							name="memberID" value="1">
+						<!-- 假設 memberID 為 1，您可以根據需要調整 -->
+						<div class="info-row">
+							<span class="info-label">客服人員：</span>
+							<div class="info-content">
+								<span>小明</span>
+							</div>
+						</div>
+						<div class="info-row">
+							<span class="info-label">回覆主旨：</span>
+							<div class="info-content">
+								<input type="text" class="form-control reply-input"
+									id="replySubject" name="replySubject" required>
+							</div>
+						</div>
+						<div class="info-row">
+							<span class="info-label">回覆內容：</span>
+							<div class="info-content">
+								<textarea class="form-control reply-input" id="replyMessage"
+									name="replyMessage" rows="5" required></textarea>
+							</div>
+						</div>
+						<div class="text-center mt-4">
+							<button type="submit" class="btn btn-success">
+								<i class="fas fa-envelope me-1"></i>寄出信件回覆
+							</button>
+							<a
+								th:href="@{/reply/getOne_For_Display(customerID=${customerVO.customerID})}"
+								class="btn btn-secondary">返回</a>
+						</div>
+					</form>
+					<!-- 客服回覆部分 -->
+				</div>
+			</main>
+		</div>
+
+		<div th:if="${mailSent}" class="alert alert-success" role="alert">
+			郵件已成功發送給客戶！</div>
+		<div th:if="${mailError}" class="alert alert-danger" role="alert">
+			郵件發送失敗，請聯繫技術支持。</div>
+
 		<!--右半邊的空白頁 -->
 
 
-	<script>
-		$(document).ready(function() {
-			var table = $('#customerTable').DataTable({
-				"pageLength" : 5,
-				"lengthMenu" : [ 3, 5, 10, 15 ],
-				"language" : {
-					"lengthMenu" : "顯示 _MENU_ 筆資料",
-					"zeroRecords" : "沒有找到相符的資料",
-					"info" : "顯示第 _START_ 至 _END_ 筆資料，共 _TOTAL_ 筆",
-					"infoEmpty" : "顯示第 0 至 0 筆資料，共 0 筆",
-					"infoFiltered" : "(從 _MAX_ 筆資料中過濾)",
-					"search" : "搜尋:",
-					"paginate" : {
-						"first" : "首頁",
-						"last" : "尾頁",
-						"next" : "下一頁",
-						"previous" : "上一頁"
-					}
+		<script>
+			function autoResizeCustomerMessage() {
+				var textarea = document
+						.querySelector('.customer-message textarea');
+				if (textarea) {
+					textarea.style.height = 'auto';
+					textarea.style.height = textarea.scrollHeight + 'px';
 				}
+			}
+
+			// 頁面加載完成後執行
+			document.addEventListener('DOMContentLoaded', function() {
+				autoResizeCustomerMessage();
 			});
 
-			$('#showEntries').on('change', function() {
-				table.page.len(this.value).draw();
+			$(document).ready(function() {
+				var table = $('#customerTable').DataTable({
+					"pageLength" : 5,
+					"lengthMenu" : [ 3, 5, 10, 15 ],
+					"language" : {
+						"lengthMenu" : "顯示 _MENU_ 筆資料",
+						"zeroRecords" : "沒有找到相符的資料",
+						"info" : "顯示第 _START_ 至 _END_ 筆資料，共 _TOTAL_ 筆",
+						"infoEmpty" : "顯示第 0 至 0 筆資料，共 0 筆",
+						"infoFiltered" : "(從 _MAX_ 筆資料中過濾)",
+						"search" : "搜尋:",
+						"paginate" : {
+							"first" : "首頁",
+							"last" : "尾頁",
+							"next" : "下一頁",
+							"previous" : "上一頁"
+						}
+					}
+				});
+
+				$('#showEntries').on('change', function() {
+					table.page.len(this.value).draw();
+				});
 			});
-		});
-	</script>
+		</script>
 
-
+	</div>
 </body>
 
 </html>
