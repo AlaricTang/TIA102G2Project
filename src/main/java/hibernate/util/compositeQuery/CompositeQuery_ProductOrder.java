@@ -43,6 +43,7 @@ public class CompositeQuery_ProductOrder {
 	//複合查詢的內容
 	public static List<ProductOrderVO> getAllC(Map<String, String> map, Session session) {
 		Transaction tx = session.beginTransaction();
+		String startCreateTime = null ,endCreateTime = null;
 		List<ProductOrderVO> list = null;
 		try {
 			Map<String, String> map2 = new HashMap<>();
@@ -71,12 +72,19 @@ public class CompositeQuery_ProductOrder {
 				predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
 			}
 			
+			if(keys.contains("productOrderStartCreateTime")) {
+				 startCreateTime = map2.get("productOrderStartCreateTime").replace("T", " ") + ":00";
+			}
+			if(keys.contains("productOrderEndCreateTime")) {
+				 endCreateTime = map2.get("productOrderEndCreateTime").replace("T", " ") + ":00";
+			}
+			
 			if(keys.contains("productOrderStartCreateTime") && keys.contains("productOrderEndCreateTime")) {
-				predicateList.add(builder.between(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderStartCreateTime")), Timestamp.valueOf(map2.get("productOrderEndCreateTime"))));
+				predicateList.add(builder.between(root.get("productOrderCreateTime"), Timestamp.valueOf(startCreateTime), Timestamp.valueOf(endCreateTime)));
 			}else if (keys.contains("productOrderStartCreateTime") && !(keys.contains("productOrderEndCreateTime"))) {
-				predicateList.add(builder.greaterThan(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderStartCreateTime"))));
+				predicateList.add(builder.greaterThan(root.get("productOrderCreateTime"), Timestamp.valueOf(startCreateTime)));
 			}else if ( !(keys.contains("productOrderStartCreateTime")) && keys.contains("productOrderEndCreateTime")) {
-				predicateList.add(builder.lessThan(root.get("productOrderCreateTime"), Timestamp.valueOf(map2.get("productOrderEndCreateTime"))));
+				predicateList.add(builder.lessThan(root.get("productOrderCreateTime"), Timestamp.valueOf(endCreateTime)));
 			}
 					
 			
