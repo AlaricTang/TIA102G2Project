@@ -400,19 +400,15 @@
         <div class="row">
             <div class="col-md-3">
                 <h3 class="module-title font-alt">取餐門市:</h3>
-                <select class="form-control input-sm">
-                    <option value="store1">門市1</option>
-                    <option value="store2">門市2</option>
-                    <option value="store3">門市3</option>
-                </select>
+                <div class="module-title font-alt" th:text="${storeName}"></div>
             </div>
             <div class="col-md-3">
                 <h3 class="module-title font-alt">訂購數量:</h3>
-                <input type="number" class="form-control input-sm" min="0" value=""/>
+                <div class="module-title font-alt" th:text="${selectedNumber}"></div>
             </div>
             <div class="col-md-3">
-                <h3 class="module-title font-alt">金額:</h3>
-                <input type="number" class="form-control input-sm" min="0" value=""/>
+                <h3 class="module-title font-alt">取餐時間:</h3>
+                <div class="module-title font-alt" th:text="${drinkOrderPickTime}"></div>
             </div>
             <div class="col-md-3 text-center">
                 <h3 class="module-title font-alt">&nbsp;</h3> <!-- 用來給按鈕和標題對齊 -->

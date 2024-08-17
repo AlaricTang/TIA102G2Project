@@ -216,10 +216,11 @@
 						                <label>選擇要綁訂之飲品:</label>
 						                <select name="drinkID">
 							            		<option value="">請選擇</option>
-							                	<th:block th:each="drinkVO : ${drinkList}">
+							                	<th:block th:each="drinkVO : ${session.drinkList}">
 								            		<option th:value="${drinkVO.drinkID}" th:text="${drinkVO.drinkName}"></option>
-								            	</th:block>	
-						        		</select><br>
+								            	</th:block >
+						        		</select>
+						        		<span class="error" th:utext="${errorMessage}" >${errorMessage}</span>
 							        </div>
 							        
 							        <div class="form-item">
@@ -228,7 +229,9 @@
 							            <option value="1">上架</option>
 							            <option value="0">下架</option>
 							            </select>
-							            <br/>
+							            <th:block th:if="${errorMessage != null}">
+							            	<br/><br/>
+							            </th:block>
 							            <span th:if="${#fields.hasErrors('jibeiProductStatus')}" th:errors="*{jibeiProductStatus}" class="error" id="jibeiProductStatus.errors"></span>
 							        </div>
 							        

@@ -7,7 +7,7 @@
     
     
     <!--  ======== Document Title =====================================  -->
-    <title>啡常渴以 | fakeLogging</title>
+    <title>啡常渴以 | 商品購物車</title>
     
     
     <!--  ======== Favicons =====================================  -->
@@ -76,13 +76,24 @@
 	    <!-- header -->
 		
 		<div class="main">
-        	<section class="module">
+        	<section class="module-small">
           		<div class="container">
-            		<div class="row">
-              			<div class="col-sm-6 col-sm-offset-3">
-                			<h1 class="module-title font-alt">查看購物車</h1>
-              			</div>
-            		</div>
+          				            <!-- 上方功能欄 -->
+        <div class="row" style="margin-bottom: 20px;">
+		    <div class="col-sm-12">
+		        <div class="functional-bar" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: flex; align-items: center;">
+		            <div style="flex: 1;">
+		                <button class="btn btn-primary" onclick="window.history.back()">返回</button> 
+		            </div>
+		            <div style="flex: 2; text-align: center;">
+		                <h1 style="margin: 0; font-size: 24px; font-weight: bold;">查看購物車</h1>
+		            </div>
+		            <div style="flex: 1; text-align: right;">
+		                <button class="btn btn-secondary" style="display: none;" onclick="window.location.href='/product/switchToCartPage'">查看購物車</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
             		<hr class="divider-w pt-20">
             		<div class="row">
               			<div class="col-sm-12">
@@ -100,7 +111,7 @@
 						                    <tr>
 						                      	<td class="hidden-xs"><a href="#"><img th:src="@{/product/ProductDBGifReader} + '?productID=' + ${pdOrderDetailVO.productVO.productID}" alt="Product Image" /></a></td>
 						                      	<td>
-						                        	<h5 class="product-title font-alt"><div th:text="${pdOrderDetailVO.productVO.productName}"></div></h5><!-- 商品名 需要fk productVO.productName -->
+						                        	<h5  class="product-title font-alt"><div th:text="${pdOrderDetailVO.productVO.productName}"></div></h5><!-- 商品名 需要fk productVO.productName -->
 						                      	</td>
 						                      	<td>
 						                        	<h5 class="product-title font-alt"><div th:text="${pdOrderDetailVO.productVO.productPrice}"></div></h5><!-- 商品單價 需要fk productVO.productPrice -->

@@ -216,6 +216,9 @@
 			<main>
 				<div class="container-fluid px-4">
 					<h1 class="mt-4">寄杯商品管理</h1>
+						<th:block th:if="${session.member == null} ">
+							<h1  style="color:red;font-size: 30px;">※請先登入會員帳號</h1>
+						</th:block>
 					<div>
 						<a href='/jibeiProduct/addPage' class="custom-btn">新增寄杯商品</a>
 					</div>
@@ -261,7 +264,8 @@
 							        <tr>
 							            <th>商品編號</th>
 							            <th>商品名稱</th>
-							            <th>商品單價</th>
+							            <th>商品價格</th>
+							            <th>幾入/組</th>
 							            <th>商品描述</th>
 							            <th>上架中商品</th>
 							            <th>商品圖片</th>
@@ -277,6 +281,7 @@
 							                <td th:text="${jibeiProductVO.jibeiProductID}"></td>
 							                <td th:text="${jibeiProductVO.drinkVO.drinkName}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductPrice}"></td>
+							                <td th:text="${jibeiProductVO.jibeiProductAmount}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductDes}"></td>
 							                <td class="status-available"><span th:text="上架"></span></td>
 							                <td>
@@ -311,7 +316,8 @@
 							        <tr>
 							            <th>商品編號</th>
 							            <th>商品名稱</th>
-							            <th>商品單價</th>
+							            <th>商品價格</th>
+							            <th>幾入/組</th>
 							            <th>商品描述</th>
 							            <th>下架中商品</th>
 							            <th>商品圖片</th>
@@ -326,6 +332,7 @@
 							            <tr>
 							                <td th:text="${jibeiProductVO.jibeiProductID}"></td>
 							                <td th:text="${jibeiProductVO.drinkVO.drinkName}"></td>
+							                <td th:text="${jibeiProductVO.jibeiProductAmount}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductPrice}"></td>
 							                <td th:text="${jibeiProductVO.jibeiProductDes}"></td>
 							                <td class="status-unavailable"><span th:text="下架"></span></td>
