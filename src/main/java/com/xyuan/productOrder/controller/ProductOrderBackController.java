@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ken.drink.model.DrinkService;
+import com.ken.drink.model.DrinkVO;
 import com.redis.userJibei.UserJibeiService;
 import com.redis.userJibei.UserJibeiVO;
-import com.tang.drinkOrder.model.DrinkOrderVO;
 import com.tang.jibeiProduct.model.JibeiProductService;
+import com.tang.jibeiProduct.model.JibeiProductVO;
 import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailService;
 import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
 import com.xyuan.productOrder.model.ProductOrderService;
@@ -47,6 +46,9 @@ public class ProductOrderBackController {
 	
 	@Autowired
 	UserJibeiService userJibeiSvc;
+
+	@Autowired
+	DrinkService drinkSvc;
 
 /* --------------------總公司-------------------- */
 	//======= 跳轉 訂單紀錄 =======
@@ -148,8 +150,14 @@ public class ProductOrderBackController {
 			//for(一個明細VO	: 這筆訂單的所有明細)
 			//1. 一個明細VO >> 寄杯商品ID
 			//2. 寄杯商品Svc(寄杯商品ID) >> 取得寄杯商品VO >> 飲品
-			userJibei.setDrinkID(beUserJibei.getJibeiProductVO().getDrinkVO().getDrinkID());
-			userJibei.setNumber(beUserJibei.getJibeiOrderDetailAmount());
+			Integer drinkID = beUserJibei.getJibeiProductVO().getDrinkVO().getDrinkID();
+			DrinkVO drink = drinkSvc.getOneDrink(drinkID);
+			JibeiProductVO jbpd = jibeiProductSvc.getOneJibeiProduct(beUserJibei.getJibeiProductVO().getJibeiProductID());
+			 
+			userJibei.setDrinkID(drinkID);
+			userJibei.setDrinkDes(drink.getDrinkDes());
+			userJibei.setDrinkName(drink.getDrinkName());
+			userJibei.setNumber(jbpd.getJibeiProductAmount()*beUserJibei.getJibeiOrderDetailAmount());
 			
 			//存進User寄杯
 			userJibeiSvc.addUserJibei(userID, userJibei);

@@ -220,8 +220,8 @@
 								<tr>
 									<td th:text="${drinkOrderDetailVO.drinkID}"></td>
 									<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsHot == 1? '熱':'冷' }"></td>
-									<td th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'' }"></td>
-									<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':''}"></td>
+									<td th:text="${drinkOrderDetailVO.drinkOrderDetailUseCup == 1? '是':'X' }"></td>
+									<td th:text="${drinkOrderDetailVO.drinkOrderDetailIsJibei == 1? '是':'X'}"></td>
 									<td th:text="${drinkOrderDetailVO.drinkOrderDetailAmount}"></td>
 									<td th:text="${drinkOrderDetailVO.drinkOrderDetailPrice}"></td>
 								</tr>
