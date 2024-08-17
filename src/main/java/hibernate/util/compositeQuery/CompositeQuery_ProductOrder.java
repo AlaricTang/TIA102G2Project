@@ -97,7 +97,7 @@ public class CompositeQuery_ProductOrder {
 		}catch (RuntimeException ex) {
 			if (tx != null)
 				tx.rollback();
-			throw ex; // System.out.println(ex.getMessage());
+			throw ex; // System.out.println(ex.getMessage()); 
 		} finally {
 			session.close();
 			// HibernateUtil.getSessionFactory().close();
