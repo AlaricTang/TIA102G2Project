@@ -116,17 +116,18 @@
 						<i class="fas fa-table me-1"></i>所有訂單紀錄
 					</div>
 					<div class="card-body">
-					  	<form method="post" th:action="@{/productOrder/getProductOrder}">
+						<form method="post" th:action="@{/productOrder/getProductOrder}">
+					  		
 					  		<div class="form-row">
 					  			<div class="form-item col-md-1">
-					                <label>訂單編號</label>
+					                <label for="productOrderID">訂單編號</label>
 					                <input type="number" name="productOrderID" value="" min="0">
 					            </div>
+					            
 					  			<div class="form-item col-md-1">
-					                <label>會員編號</label>
+					                <label for="userID">會員編號</label>
 					                <input type="number" name="userID" value="" min="0">
 					            </div>
-					            
 					            
 					            <div class="form-item col-md-2">
 					                <label>搜尋時間範圍</label>
@@ -136,31 +137,22 @@
 					                <input type="datetime-local" name="productOrderEndCreateTime" value="">
 					            </div>
 					            
-					            	<div class="form-item col-md-1">
-					            	<input type="hidden" name="productOrderStatus" value="">
-					                <input type="submit" class="btn btn-primary" value="送出">
-					            </div>
 					            
-<!-- 					               <div class="form-item col-md-1">  -->
-<!-- 					            	<label>訂單狀態</label> -->
-<!-- 					                <select name="productOrderStatus"> -->
-<!-- 						            		<option value="">請選擇</option> -->
-<!-- 						            		<option value=0>未完成</option> -->
-<!-- 						            		<option value=1>已完成</option> -->
-<!-- 						            		<option value=2>已取消</option> -->
-<!-- 					        		</select> -->
-<!-- 						            </div> -->
+					               <div class="form-item col-md-1"> 
+					            	<label>訂單狀態</label>
+					                <select name="productOrderStatus">
+						            		<option value="">請選擇</option>
+						            		<option value=0>未完成</option>
+						            		<option value=1>已完成</option>
+						            		<option value=2>已取消</option>
+					        		</select>
 						            </div>
-<!-- 					               <div class="form-item col-md-1">  -->
-<!-- 					            	<label>付款狀態:</label> -->
-<!-- 					                <select name="productOrderPayStatus"> -->
-<!-- 						            		<option value="">請選擇</option> -->
-<!-- 						            		<option value=0>未完成</option> -->
-<!-- 						            		<option value=1>已完成</option> -->
-<!-- 						            		<option value=2>已取消</option> -->
-<!-- 					        		</select> -->
-<!-- 						            </div> -->
-<!-- 						            </div> -->
+						            
+					            	<div class="form-item col-md-1">
+					                <input type="submit" class="btn btn-primary" value="送出">
+					          		</div>
+					          		
+						            </div>
 					  		</div>
 					  	</form>
 	  				</div>
@@ -248,7 +240,8 @@
 					 	<table id="example" class="display">
 					 		<thead >
 								<tr>
-									<th>商品：寄杯</th>
+									<th>訂單編號：寄杯商品</th>
+									<th>購買品項</th>
 									<th>數量</th>
 									<th>價格</th>
 								</tr>
@@ -256,9 +249,10 @@
 					  		<tbody>
 					  			<th:block th:each="jibeiOrderDetailVO : ${jibeiOrderDetailList}">
 								<tr>
-									<td th:text="${jibeiOrderDetailVO.drinkID}"></td>
-									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailAmount}"></td>
-									<td th:text="${jibeiOrderDetailVO.drinkOrderDetailPrice}"></td>
+			<!-- 商品ID -->			<td th:text="${jibeiOrderDetailVO.jibeiProductVO.jibeiProductID}"></td>
+									<td th:text="${jibeiOrderDetailVO.jibeiProductVO.drinkVO.drinkName}"></td>			
+									<td th:text="${jibeiOrderDetailVO.jibeiOrderDetailAmount}"></td>
+									<td th:text="${jibeiOrderDetailVO.jibeiOrderDetailPrice}"></td>
 								</tr>
 								</th:block>
 					  		</tbody>
@@ -274,14 +268,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-		
-					  		
