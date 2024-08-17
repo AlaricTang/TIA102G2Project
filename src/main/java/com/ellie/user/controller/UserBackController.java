@@ -43,8 +43,8 @@ public class UserBackController {
 
     // 顯示單一會員
     @GetMapping("listOneUser")
-    public String listOneUser(@RequestParam("userEmail") String userEmail, ModelMap model) {
-        UserVO user = userService.findByEmail(userEmail); // 根據Email查詢單一會員
+    public String listOneUser(@RequestParam("userId") Integer userId, ModelMap model) {
+        UserVO user = userService.getOneUser(userId); // 根據Email查詢單一會員
         if (user != null) {
             model.addAttribute("user", user);
             return "back-end/user/listOneUser"; // 顯示單一會員的頁面
@@ -56,8 +56,8 @@ public class UserBackController {
 
     // 更新會員資訊頁面
     @GetMapping("updateUser")
-    public String updateUser(@RequestParam("userEmail") String userEmail, ModelMap model) {
-        UserVO user = userService.findByEmail(userEmail); // 根據Email查詢單一會員
+    public String updateUser(@RequestParam("userId") Integer userId, ModelMap model) {
+        UserVO user = userService.getOneUser(userId); // 根據Email查詢單一會員
         if (user != null) {
             model.addAttribute("user", user);
             return "back-end/user/updateUser"; // 更新會員資訊頁面
@@ -70,7 +70,6 @@ public class UserBackController {
     // 處理更新會員資訊
     @PostMapping("updateUser")
     public String processUpdateUser(@ModelAttribute("user") UserVO user, BindingResult result,
-    								@RequestParam("userEmail") String userEmail, 
     								@RequestParam("userBirth") String userBirth, ModelMap model) throws ParseException {
     	result = removeFieldError(user, result, "userBirth");
     	
@@ -82,8 +81,7 @@ public class UserBackController {
             java.util.Date date = simpleDateFormat.parse(userBirth);
             user.setUserBirth(date);
             }
-    	UserVO userVo = userService.findByEmail(userEmail);
-    	user.setUserId(userVo.getUserId());
+    	
         userService.updateUser(user); // 更新會員資料
         model.addAttribute("successMessage", "會員資料更新成功");
         model.addAttribute("user", user);

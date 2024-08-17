@@ -123,7 +123,7 @@ import java.util.Date;
 
 		@Override
 		public String toString() {
-			return "UserVO [userId=" + userID + ", userEmail=" + userEmail + ", userPwd=" + userPwd + ", userName="
+			return "UserVO [userID=" + userID + ", userEmail=" + userEmail + ", userPwd=" + userPwd + ", userName="
 					+ userName + ", userBirth=" + userBirth + ", userPhone=" + userPhone + ", userGender=" + userGender
 					+ ", userAddr=" + userAddr + ", userCreateTime=" + userCreateTime + "]";
 		}
