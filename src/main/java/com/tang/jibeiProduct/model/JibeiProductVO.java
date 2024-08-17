@@ -69,7 +69,6 @@ public class JibeiProductVO implements Serializable {
 //	@JoinColumn(name="memberID")
 //	private MemberVO memberVO;
 
-	@NotNull(message = "最新修改(建立)之員工")
 	@Column(name="memberID")
 	private Integer memberID;
 

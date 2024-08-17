@@ -2,6 +2,8 @@ package com;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +43,12 @@ public class IndexController_inSpringBoot {
     }
     
     @GetMapping("/backendHomepage")
-    public String backendHomepage(Model model) {
-    	return "backendHomepage";
+    public String backendHomepage(Model model,HttpSession session) {
+    	if(session.getAttribute("member") != null) {
+    		return "backendHomepage";
+    	}else {
+    		return "back-end/member/login";
+    	}
     }
     
     // =================== 飲品 ======================= //

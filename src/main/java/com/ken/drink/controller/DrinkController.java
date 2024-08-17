@@ -198,7 +198,7 @@ public class DrinkController {
 	// =================== 方法 1 前台飲品菜單依照Tag分類 =============================
 	
 	@GetMapping("drinksByTag")
-	public String getDrinksByTag(Model model) {
+	public String getDrinksByTag(Model model,HttpSession session) throws IOException {
 		
 		Byte availableStatus = 1; // 假設 1 表示上架
 		
@@ -217,7 +217,22 @@ public class DrinkController {
 	    model.addAttribute("machaDrinks", machaDrinks);
 	    model.addAttribute("fruitDrinks", fruitDrinks);
 	    model.addAttribute("otherDrinks", otherDrinks);
-
+	    
+	    UserVO user = (UserVO)session.getAttribute("user");
+	    String store = drinkCartSvc.getOneDrinkOrder(user.getUserId(),"drinkOrderStore" );
+	    String storeName = storeSvc.getOneStore(Integer.valueOf(store)).getStoreName();
+	    model.addAttribute("storeName",storeName);
+	    
+	    List<DrinkOrderDetailVO> drinkCartList = drinkCartSvc.getDrinkCart(user.getUserId());
+	    int drinkNumber=0;
+	    for(DrinkOrderDetailVO drinkCartItem:drinkCartList) {
+	    	drinkNumber += drinkCartItem.getDrinkOrderDetailAmount();
+	    }
+	    model.addAttribute("selectedNumber",drinkNumber);
+	    
+	    String drinkOrderPickTime = drinkCartSvc.getOneDrinkOrder(user.getUserId(),"drinkOrderPickTime" );
+	    model.addAttribute("drinkOrderPickTime",drinkOrderPickTime.replace("T", " "));
+	    
 	    return "back-end/drink/listAllDrinkFront";
 	}
 	
@@ -279,7 +294,7 @@ public class DrinkController {
 	    	drinkCartSvc.setOneDrinkOrder(userID, "cupNumber", "0");
 	    }
 	    // 顯示飲品列表
-	    return getDrinksByTag(model);
+	    return getDrinksByTag(model,session);
 	}
 
 	// 顯示單一飲品頁面
@@ -322,7 +337,7 @@ public class DrinkController {
 	    	Integer cupNumber = Integer.valueOf(str_cupNumber)+Integer.valueOf(drinkOrderDetailAmount);
 	    	drinkCartSvc.setOneDrinkOrder(user.getUserId(), "cupNumber", cupNumber.toString()  );                      
 	    }
-	    return getDrinksByTag(model);
+	    return getDrinksByTag(model,session);
 	}
 	
 //	public String displayDrinkCart(Model model, HttpSession session) {

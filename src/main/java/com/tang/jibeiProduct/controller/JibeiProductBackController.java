@@ -50,18 +50,27 @@ public class JibeiProductBackController {
 	}
 	
 	@GetMapping("addPage")
-	public String addPage(ModelMap model) {
+	public String addPage(ModelMap model,HttpSession session) {
 		JibeiProductVO jibeiProduct = new JibeiProductVO();
 		model.addAttribute("jibeiProductVO",jibeiProduct);
 		
 		List<DrinkVO> drinkList = drinkSvc.getAll();
-		model.addAttribute("drinkList",drinkList);
+		session.setAttribute("drinkList",drinkList);
 		return "back-end/jibeiProduct/addPage";
 	}
 	
 	@PostMapping("add")
 	public String add(@RequestParam("drinkID") String drinkID,@Valid JibeiProductVO jibeiProduct,BindingResult result, 
 			ModelMap model, HttpSession session) {
+		System.out.println(drinkID);
+		System.out.println(result.hasErrors());
+		if ( drinkID == "") {
+			model.addAttribute("errorMessage", "請選擇要使用之飲品");
+		}
+		if (result.hasErrors() || drinkID == "") {
+			return "back-end/jibeiProduct/addPage";
+		}
+		session.removeAttribute("drinkList");
 		//補齊
 		jibeiProduct.setDrinkVO(drinkSvc.getOneDrink(Integer.valueOf(drinkID)));
 		
