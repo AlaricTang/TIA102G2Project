@@ -107,20 +107,61 @@
 		<div class="main">
 			<!-- singleDrink.html -->
 
-		<div class="container">
+		<div class="container"><br>
+		
+            <!-- 上方功能欄 -->
+        <div class="row" style="margin-bottom: 20px;">
+		    <div class="col-sm-12">
+		        <div class="functional-bar" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: flex; align-items: center;">
+		            <div style="flex: 1;">
+<button class="btn btn-primary" onclick="window.history.back()">返回寄杯兌換</button> 
+		            </div>
+		            <div style="flex: 2; text-align: center;">
+		                <h1 style="margin: 0; font-size: 24px; font-weight: bold;">寄杯兌換</h1>
+		            </div>
+		        </div>
+		    </div>
+		</div>		
+		
+		
+		
+		
+		
+		
             <div class="row">
                 <!-- 左邊區域 -->
                 <div class="col-md-6">
-                    <div class="drink-details">
+                    <div class="drink-details"><br>
                         <h3 th:text="${drinkVO.drinkName}">飲品名稱</h3>
                         <img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${drinkVO.drinkID}" alt="Drink Image">
                         <p class="drink-info" th:text="${drinkVO.drinkDes}">飲品描述</p>
-                        <h4 class="drink-price" th:text="NT$ 0 ">飲品價格</h4>
+                        <h4 class="drink-price" th:text="'NT$'+ '0' ">飲品價格</h4>
+                        
+                        
+<!--                         <th:block class="drink-info" th:if="${cartOneDrinkOrder != null}"> -->
+<!-- 	                            	123 -->
+<!-- 				             <p th:text="'尚餘: ' + ${userJibei.number - cartOneDrinkOrder.drinkOrderDetailAmount} +'杯' "></p> -->
+<!-- 							 <p th:text="'已選擇: ' + ${cartOneDrinkOrder.drinkOrderDetailAmount} +'杯' "></p> -->
+<!-- 					            </th:block> -->
+<!-- 			               		<th:block th:if="${userJibei.drinkID != cartOneDrinkOrder.drinkID}"> -->
+<!-- 					                        <p th:text="'尚餘: ' + ${userJibei.number} +'杯' "></p> -->
+<!-- 						 		</th:block> -->
+<!-- 			           </th:block> -->
+			                    
+			                    
+<!-- 			           <th:block class="drink-info"  th:if="${cartOneDrinkOrder == null}"> -->
+<!-- 			                    456 -->
+<!-- 					        <p th:text="'尚餘: ' + ${userJibei.number} +'杯' "></p> -->
+			           
+			           
+<!-- 			           </th:block> -->
+                        
+                        
                     </div>
                 </div>
 
                 <!-- 右邊區域 -->
-                <div class="col-md-6">
+                <div class="col-md-6"><br><br>
                     <form th:action="@{/user/redeemUserJibei}" method="POST">
                         <div class="form-group">
                             <label for="drinkName">飲品名稱:</label>

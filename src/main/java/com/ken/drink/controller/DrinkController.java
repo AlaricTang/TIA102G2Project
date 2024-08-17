@@ -272,8 +272,12 @@ public class DrinkController {
 	    // 將選擇的店家和取餐時間存入 Redis
 	    drinkCartSvc.setOneDrinkOrder(userID, "drinkOrderStore", storeID);
 	    drinkCartSvc.setOneDrinkOrder(userID, "drinkOrderPickTime", pickupTime);
-	    drinkCartSvc.setOneDrinkOrder(userID, "cupNumber", "0");
-
+	    String cupNumber = drinkCartSvc.getOneDrinkOrder(userID, "cupNumber");
+	    if(cupNumber != null) {
+	    	drinkCartSvc.setOneDrinkOrder(userID, "cupNumber", cupNumber.toString());
+	    }else {
+	    	drinkCartSvc.setOneDrinkOrder(userID, "cupNumber", "0");
+	    }
 	    // 顯示飲品列表
 	    return getDrinksByTag(model);
 	}
@@ -315,7 +319,7 @@ public class DrinkController {
 	    // 當使用者有使用環保杯的時候 數量會+1
 	    if(Byte.valueOf(drinkOrderDetailUseCup) == 1) {
 	    	String str_cupNumber = drinkCartSvc.getOneDrinkOrder(user.getUserId(), "cupNumber");
-	    	Integer cupNumber = Integer.valueOf(str_cupNumber)+1;
+	    	Integer cupNumber = Integer.valueOf(str_cupNumber)+Integer.valueOf(drinkOrderDetailAmount);
 	    	drinkCartSvc.setOneDrinkOrder(user.getUserId(), "cupNumber", cupNumber.toString()  );                      
 	    }
 	    return getDrinksByTag(model);

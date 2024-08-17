@@ -39,7 +39,7 @@ public class DrinkCartService {
 			//針對每個VO的drinkID 比對要加入的VO的drinkID
 				//有找到: 原VO更新	加到List<VO>
 				//沒找到: 原VO不更新	加到List<VO>
-			if (existingCartItem.getDrinkID().equals(cartItem.getDrinkID())) {
+			if (existingCartItem.getDrinkID().equals(cartItem.getDrinkID()) && (existingCartItem.getDrinkOrderDetailIsJibei().equals(cartItem.getDrinkOrderDetailIsJibei())) ) {
 				
 				existingCartItem.setDrinkOrderDetailAmount(
 						existingCartItem.getDrinkOrderDetailAmount() + cartItem.getDrinkOrderDetailAmount());// 更新数量
@@ -88,7 +88,7 @@ public class DrinkCartService {
 	//======= 取出某項購物車 object轉成VO =======
 	public DrinkOrderDetailVO getOneInDrinkCart (Integer userID, String drinkID ) throws IOException  {
 		String cartKey = DRINKCART_PREFIX + userID;
-		DrinkOrderDetailVO drinkCartItem  = new DrinkOrderDetailVO();
+		DrinkOrderDetailVO drinkCartItem  = null;
 		List<Object> cartJsonList  = jedisSvc.getItemsFromList(cartKey);
 		for(Object cartJson : cartJsonList ) {
 			DrinkOrderDetailVO beDrinkCartItem = gson.fromJson(cartJson.toString(), DrinkOrderDetailVO.class);
