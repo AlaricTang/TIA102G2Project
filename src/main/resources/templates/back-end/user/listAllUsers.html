@@ -128,6 +128,7 @@ tr:nth-child(even) {
 					<table id="usersTable" class="table table-striped">
 						<thead>
 							<tr>
+								<th>編號</th>
 								<th>姓名</th>
 								<th>性別</th>
 								<th>生日</th>
@@ -139,22 +140,23 @@ tr:nth-child(even) {
 						</thead>
 						<tbody>
 							<tr th:each="user : ${users}">
-								<!-- <td th:text="${user.userID}"></td> -->
+								<td th:text="${user.userId}"></td>
 								<td th:text="${user.userName}"></td>
 								<td th:text="${user.userGender == 0 ? '男' : '女'}"></td>
-                    <td th:text="${#dates.format(user.userBirth, 'yyyy-MM-dd')}"></td>
-                    <td th:text="${user.userEmail}"></td>
-                    <td th:text="${user.userPhone}"></td>
-                    <td th:text="${user.userAddr}"></td>
-                    <td>
-                          <a th:href="@{/user/updateUser(userEmail=${user.userEmail})}" class="btn btn-primary btn-sm">編輯</a> 
-                        <form th:action="@{/user/deleteUser}" method="post" style="display:inline;">
-                            <input type="hidden" name="userEmail" th:value="${user.userEmail}"> 
-                            <input type="submit" value="刪除" class="btn btn-danger btn-sm" onclick="return confirm('確定刪除?');">
-                        </form>
-                        <a th:href="@{/user/listOneUser(userEmail=${user.userEmail})}" class="btn btn-primary btn-sm">查看詳情</a>
-                    </td>
-                    
+								<td th:text="${#dates.format(user.userBirth, 'yyyy-MM-dd')}"></td>
+								<td th:text="${user.userEmail}"></td>
+								<td th:text="${user.userPhone}"></td>
+								<td th:text="${user.userAddr}"></td>
+								<td><a th:href="@{/user/updateUser(userId=${user.userId})}"
+									class="btn btn-primary btn-sm">編輯</a>
+									<form th:action="@{/user/deleteUser}" method="post"
+										style="display: inline;">
+										<input type="hidden" name="userId" th:value="${user.userId}">
+										<input type="submit" value="刪除" class="btn btn-danger btn-sm"
+											onclick="return confirm('確定刪除?');">
+									</form> <a th:href="@{/user/listOneUser(userId=${user.userId})}"
+									class="btn btn-primary btn-sm">查看詳情</a></td>
+
 							</tr>
 						</tbody>
 					</table>
