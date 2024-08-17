@@ -170,7 +170,7 @@
 										</div>
 										<h4 class="shop-item-title font-alt">
 										<a th:href="@{/jibeiProductFront/jibeiPdDetail} + '?jibeiProductID=' + ${jibeiProductVO.jibeiProductID}">
-											<div th:text="${jibeiProductVO.drinkVO.drinkID}"></div>
+											<div th:text="  ${jibeiProductVO.drinkVO.drinkName} + ' 一組(' + ${jibeiProductVO.jibeiProductAmount}+ '入)'"></div>
 											<div th:text="'$' + ${jibeiProductVO.jibeiProductPrice}"></div>
 											</a>
 										</h4>

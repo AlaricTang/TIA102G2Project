@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ellie.user.model.UserVO;
+import com.ken.drink.model.DrinkVO;
 import com.redis.jibeiProductCart.JibeiProductCartService;
 import com.tang.jibeiProduct.model.JibeiProductService;
 import com.tang.jibeiProduct.model.JibeiProductVO;
@@ -71,18 +72,32 @@ public class JibeiProductFrontController {
 			@RequestParam("orderAmount") String orderAmount,
 			HttpSession session) throws IOException {
 		
-		System.out.println(jibeiProductID);
 		JibeiOrderDetailVO jibeiProductItem = new JibeiOrderDetailVO();
-		jibeiProductItem.setJibeiProductVO(jibeiProductSvc.getOneJibeiProduct(Integer.valueOf(jibeiProductID)));
-		jibeiProductItem.setJibeiOrderDetailAmount(Integer.valueOf(orderAmount));
+		JibeiProductVO jibeiProduct = jibeiProductSvc.getOneJibeiProduct(Integer.valueOf(jibeiProductID));
+		DrinkVO drink = jibeiProduct.getDrinkVO();
 		
+		drink.setDrinkDes(null);
+		drink.setDrinkPic(null);
+		drink.setDrinkCreateDate(null);
+		drink.setDrinkUpdateDate(null);
+		drink.setCreatedByMemberID(null);
+		drink.setEditedByMemberID(null);
+		
+		jibeiProduct.setDrinkVO(drink);
+		jibeiProduct.setJibeiProductDes(null);
+		jibeiProduct.setJibeiProductCreateTime(null);
+		jibeiProduct.setJibeiProductUpdateTime(null);
+		jibeiProductItem.setJibeiProductVO(jibeiProduct);
+
+		jibeiProductItem.setJibeiOrderDetailAmount(Integer.valueOf(orderAmount));
 		UserVO user = (UserVO)session.getAttribute("user");
 		
 		jibeiProductCartSvc.addCartItem(user.getUserId(),jibeiProductItem);
 		
-		
 		return "redirect:/product/listAllProduct";
 	}
+		
+		
 	
 	//刪除購物車 (一般商品)
 	@GetMapping("removeJibeiPdCart")

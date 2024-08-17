@@ -85,7 +85,7 @@ public class DrinkVO  implements java.io.Serializable{
 //    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="drinkOrderVO")
 //    private Set<DrinkOrderVO> drinkOrders = new HashSet<DrinkOrderVO>();
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="drinkVO")
-    private Set<JibeiProductVO> jibeiProductVO = new HashSet<JibeiProductVO>();
+    private transient Set<JibeiProductVO> jibeiProductVO = new HashSet<JibeiProductVO>();
     
     
     

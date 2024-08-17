@@ -113,27 +113,28 @@
 						                      	</td>
 						                      	<td class="pr-remove"><a th:href="'/product/removePdCart?productID=' + ${pdOrderDetailVO.productVO.productID}" title="Remove"><i class="fa fa-times"></i></a></td>
 						                    </tr>
-<!-- 					                    </th:block> -->
-<!-- 					                    <th:block th:each="jibeiOrderDetailVO : ${jpdList}"> -->
-<!-- 						                    <tr> -->
-<!-- 						                      	<td class="hidden-xs"> -->
-<!-- 						                      		<a href="#"><img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jibeiOrderDetailVO.jibeiProductID}" alt="Accessories Pack" /></a>需要 fk jibeiProductVO.drinkVO.drinkID -->
-<!-- 						                      	</td> -->
-<!-- 						                      	<td> -->
-<!-- 						                        	<h5 class="product-title font-alt"><div th:text="${jibeiOrderDetailVO.jibeiProductID}"></div></h5>商品名 需要fk jibeiProductVO.drinkVO.drinkName -->
-<!-- 						                      	</td> -->
-<!-- 						                      	<td> -->
-<!-- 						                        	<h5 class="product-title font-alt"><div th:text="${jibeiOrderDetailVO.jibeiProductID}"></div></h5>商品單價 需要fk jibeiProductVO.jibeiProductPrice -->
-<!-- 						                      	</td> -->
-<!-- 						                      	<td class="hidden-xs"> -->
-<!-- 						                        	<h5 class="product-title font-alt"><div th:text="${jibeiOrderDetailVO.jibeiOrderDetailAmount}"></div></h5> -->
-<!-- 						                      	</td> -->
-<!-- 						                      	<td> -->
-<!-- 						                        	<h5 class="product-title font-alt"><div th:text="'$'+${pdOrderDetailVO.jibeiOrderDetailPrice}"></div></h5>商品總價 需要fk jibeiOrderDetailVO.jibeiProductVO.jibeiProductPrice * jibeiOrderDetailVO.jibeiOrderDetailAmount -->
-<!-- 						                      	</td> -->
-<!-- 						                      	<td class="pr-remove"><a th:href="'/jibeiProduct/removeJibeiPdCart?jibeiProductID=' + ${pdOrderDetailVO.jibeiProductID}" title="Remove"><i class="fa fa-times"></i></a></td> -->
-<!-- 						                    </tr> -->
-<!-- 					                    </th:block> -->
+					                    </th:block>
+					                    
+					                    <th:block th:each="jpdDetailVO : ${jpdList}">
+						                    <tr>
+						                      	<td class="hidden-xs">
+						                      		<a href="#"><img th:src="@{/drink/DrinkDBGifReader} + '?drinkID=' + ${jpdDetailVO.jibeiProductVO.drinkVO.drinkID}" alt="Accessories Pack" /></a>
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${jpdDetailVO.jibeiProductVO.drinkVO.drinkName} + ' 一組(' + ${jpdDetailVO.jibeiProductVO.jibeiProductAmount}+ '入)'"></div></h5>
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="${jpdDetailVO.jibeiProductVO.jibeiProductPrice}"></div></h5>
+						                      	</td>
+						                      	<td class="hidden-xs">
+						                        	<h5 class="product-title font-alt"><div th:text="${jpdDetailVO.jibeiOrderDetailAmount}"></div></h5>
+						                      	</td>
+						                      	<td>
+						                        	<h5 class="product-title font-alt"><div th:text="'$'+${session.productTotalPrice}"></div></h5>
+						                      	</td>
+						                      	<td class="pr-remove"><a th:href="'/jibeiProduct/removeJibeiPdCart?jibeiProductID=' + ${jpdDetailVO.jibeiProductID}" title="Remove"><i class="fa fa-times"></i></a></td>
+						                    </tr>
+					                    </th:block>
 
 				                  </tbody>
 				                </table>
