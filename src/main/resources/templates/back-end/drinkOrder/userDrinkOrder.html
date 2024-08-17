@@ -100,8 +100,10 @@
 						<tr>
 							<td th:text="${drinkOrderVO.drinkOrderID}"></td>
 							<td th:text="${drinkOrderVO.storeID}"></td>
-							<td th:text="${drinkOrderVO.drinkOrderPickTime}"></td>
-							<td th:text="${drinkOrderVO.drinkOrderCreateTime}"></td>
+							<td th:text="${#dates.format(drinkOrderVO.drinkOrderPickTime, 'yyyy-MM-dd HH:mm')}"></td>
+<!-- 							<td th:text="${drinkOrderVO.drinkOrderPickTime}"></td> -->
+							<td th:text="${#dates.format(drinkOrderVO.drinkOrderCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
+<!-- 							<td th:text="${drinkOrderVO.drinkOrderCreateTime}"></td> -->
 							<td th:text="${drinkOrderVO.drinkOrderTTPrice}"></td>
 							<td>
 				                <span th:switch="${drinkOrderVO.drinkOrderPayStatus}">
