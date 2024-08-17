@@ -75,7 +75,7 @@ public class JibeiProductVO implements Serializable {
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="jibeiProductVO")
 	@OrderBy("jibeiOrderDetailID asc")
-	private Set<JibeiOrderDetailVO> jibeiOrderDetailVO = new HashSet<JibeiOrderDetailVO>();
+	private transient Set<JibeiOrderDetailVO> jibeiOrderDetailVO = new HashSet<JibeiOrderDetailVO>();
 	
 	
 	public JibeiProductVO() {

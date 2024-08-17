@@ -146,7 +146,7 @@ public class ProductController {
 		UserVO user = (UserVO)session.getAttribute("user");
 		
 		List<ProductOrderDetailVO> pdList = productCartSvc.getProductCart(user.getUserId());
-//		List<JibeiOrderDetailVO> jpdList = jibeiProductCartSvc.getJibeiProductCart(user.getUserId());
+		List<JibeiOrderDetailVO> jpdList = jibeiProductCartSvc.getJibeiProductCart(user.getUserId());
 		
 		Integer productNumber = 0;
 		Integer totalPrice = 0;
@@ -154,10 +154,14 @@ public class ProductController {
 			productNumber += pd.getProductOrderDetailAmount();
 			totalPrice += (productSvc.getOneProduct(pd.getProductVO().getProductID())).getProductPrice()*pd.getProductOrderDetailAmount();
 		}
+		for(JibeiOrderDetailVO jpd : jpdList ) {
+			productNumber += jpd.getJibeiOrderDetailAmount();
+			totalPrice += (jibeiProductSvc.getOneJibeiProduct(jpd.getJibeiProductVO().getJibeiProductID())).getJibeiProductPrice() * jpd.getJibeiOrderDetailAmount();
+		}
 		session.setAttribute("productTotalPrice", totalPrice);
 		session.setAttribute("productNumber",productNumber);
 		model.addAttribute("pdList",pdList);
-//		model.addAttribute("jpdList",jpdList);
+		model.addAttribute("jpdList",jpdList);
 	
 		
 		
