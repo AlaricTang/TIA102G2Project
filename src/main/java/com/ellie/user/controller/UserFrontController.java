@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ellie.member.model.MemberVO;
 import com.ellie.user.model.UserService;
 import com.ellie.user.model.UserVO;
 import com.ellie.user.util.GmailService;
@@ -26,175 +27,179 @@ import com.ellie.user.util.GmailService;
 @RequestMapping("/user")
 public class UserFrontController {
 
-    @Autowired
-    UserService userService;
-    
-    @Autowired
-    GmailService gmailService;
+	@Autowired
+	UserService userService;
 
-    // 會員基本資料頁面
-    @GetMapping("viewProfile")
-    public String viewProfile(HttpSession session, ModelMap model) {
-        UserVO user = (UserVO) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/user/login";
-        }
-        model.addAttribute("userVO", user);
-        return "back-end/user/viewProfile";
-    }
+	@Autowired
+	GmailService gmailService;
 
-    // 更新會員資料頁面
-    @GetMapping("updateProfile")
-    public String updateProfile(HttpSession session, ModelMap model) {
-        UserVO user = (UserVO) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/user/login";
-        }
-        model.addAttribute("userVO", user);
-        return "back-end/user/updateProfile";
-    }
+	// 會員基本資料頁面
+	@GetMapping("viewProfile")
+	public String viewProfile(HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		if (user == null) {
+			return "redirect:/user/login";
+		}
+		System.out.println("Viewing profile for user: " + user.getUserEmail());
+		model.addAttribute("userVO", user);
+		return "back-end/user/viewProfile";
+	}
 
-    // 處理會員資料更新
-    @PostMapping("updateProfile")
-    public String updateProfile(@ModelAttribute("userVO") UserVO userVO, BindingResult result,
-                                @RequestParam("userBirth") String userBirth, HttpSession session,
-                                ModelMap model) throws ParseException {
-        result = removeFieldError(userVO, result, "userBirth");
+	@GetMapping("/updateProfile")
+	public String updateProfileForm(@RequestParam("userEmail") String userEmail, ModelMap model) {
+		UserVO user = userService.findByEmail(userEmail);
+		if (user != null) {
+			model.addAttribute("userVO", user);
+			return "back-end/user/updateProfile";
+		} else {
+			return "redirect:/user/viewProfile";
+		}
+	}
 
-        if (result.hasErrors()) {
-            return "back-end/user/updateProfile"; // 如果有錯誤，返回更新頁面
-        }
+	// 處理會員資料更新
+	@PostMapping("/updateProfile")
+	public String updateProfile(@ModelAttribute("userVO") UserVO userVO, BindingResult result,
+			@RequestParam("userBirth") String userBirth, 
+			@RequestParam("userPwd") Integer userPwd, ModelMap model)
+			throws ParseException {
+		result = removeFieldError(userVO, result, "userBirth");
 
-        if (userBirth != null && userBirth.length() > 0) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date date = simpleDateFormat.parse(userBirth);
-            userVO.setUserBirth(date);
-        }
+		if (result.hasErrors()) {
+			return "back-end/user/updateProfile";
+		}
 
-        // 更新會員資料
-        userService.updateUser(userVO);
+		if (userBirth != null && userBirth.length() > 0) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = simpleDateFormat.parse(userBirth);
+			userVO.setUserBirth(date);
+		}
 
-        // 更新 session 中的用戶信息
-        session.setAttribute("user", userVO);
+		userVO.setUserEmail("x@gmail.com");
 
-        // 回會員資料頁面
-        return "redirect:/user/viewProfile";
-    }
+		// 更新會員資料
+		userService.updateUser(userVO);// 回會員資料頁面
+		model.addAttribute("success", " (修改成功)");
+		System.out.println("Updated user: " + userVO);
 
-    // 登入頁面
-    @GetMapping("login")
-    public String login() {
-        return "back-end/user/login";
-    }
+		// 更新後重新顯示修改頁面
+		UserVO updatedUser = userService.findByEmail(userVO.getUserEmail());
+		model.addAttribute("userVO", updatedUser);
+		return "redirect:/user/viewProfile";
+	}
 
-    // 處理登入
-    @PostMapping("login")
-    public String login(@RequestParam("userEmail") String userEmail, @RequestParam("userPwd") String userPwd,
-                        HttpSession session, ModelMap model) {
-        UserVO user = userService.findByEmail(userEmail);
-        if (user != null && user.getUserPwd().equals(userPwd)) {
-            session.setAttribute("user", user);
-            return "redirect:/";
-        } else {
-            model.addAttribute("errorMessage", "帳號或密碼錯誤");
-            return "back-end/user/login";
-        }
-    }
+	// 登入頁面
+	@GetMapping("login")
+	public String login() {
+		return "back-end/user/login";
+	}
 
-    // 註冊頁面
-    @GetMapping("register")
-    public String register() {
-        return "back-end/user/register";
-    }
+	// 處理登入
+	@PostMapping("login")
+	public String login(@RequestParam("userEmail") String userEmail, @RequestParam("userPwd") String userPwd,
+			HttpSession session, ModelMap model) {
+		UserVO user = userService.findByEmail(userEmail);
+		if (user != null && user.getUserPwd().equals(userPwd)) {
+			session.setAttribute("user", user);
+			return "redirect:/";
+		} else {
+			model.addAttribute("errorMessage", "帳號或密碼錯誤");
+			return "back-end/user/login";
+		}
+	}
 
-    // 處理註冊
-    @PostMapping("register")
-    public String register(@ModelAttribute("userVO") UserVO userVO, BindingResult result,
-                           @RequestParam("userBirth") String userBirth, ModelMap model) throws ParseException {
-        result = removeFieldError(userVO, result, "userBirth");
+	// 註冊頁面
+	@GetMapping("register")
+	public String register() {
+		return "back-end/user/register";
+	}
 
-        if (result.hasErrors()) {
-            return "back-end/user/register"; // 如果有錯誤，返回註冊頁面
-        }
+	// 處理註冊
+	@PostMapping("register")
+	public String register(@ModelAttribute("userVO") UserVO userVO, BindingResult result,
+			@RequestParam("userBirth") String userBirth, ModelMap model) throws ParseException {
+		result = removeFieldError(userVO, result, "userBirth");
 
-        if (userBirth != null && userBirth.length() > 0) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date date = simpleDateFormat.parse(userBirth);
-            userVO.setUserBirth(date);
-        }
+		if (result.hasErrors()) {
+			return "back-end/user/register"; // 如果有錯誤，返回註冊頁面
+		}
 
-        userService.addUser(userVO);
-        model.addAttribute("successMessage", "註冊成功，請登入");
-        return "back-end/user/login";
-    }
+		if (userBirth != null && userBirth.length() > 0) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = simpleDateFormat.parse(userBirth);
+			userVO.setUserBirth(date);
+		}
 
-    // 忘記密碼頁面
-    @GetMapping("forgotPassword")
-    public String forgotPassword() {
-        return "back-end/user/forgotPassword";
-    }
-    
-    // 處理忘記密碼
-    @PostMapping("forgotPassword")
-    public String forgotPassword(@RequestParam("userEmail") String userEmail, ModelMap model) {
-        UserVO user = userService.findByEmail(userEmail);
-        if (user != null) {
-            // 發送重設密碼的信件，信件中包含重設密碼的指示
-            String subject = "密碼重設請求";
-            String messageText = "請點擊以下連結進行密碼重設: http://tia102g2.ddns.net/user/resetPassword";
-            gmailService.sendMail(userEmail, subject, messageText);
+		userService.addUser(userVO);
+		model.addAttribute("successMessage", "註冊成功，請登入");
+		return "back-end/user/login";
+	}
 
-            model.addAttribute("successMessage", "重設密碼的信件已發送，請檢查您的信箱");
-            return "back-end/user/forgotPassword";
-        } else {
-            model.addAttribute("errorMessage", "該信箱未註冊");
-            return "back-end/user/forgotPassword";
-        }
-    }
+	// 忘記密碼頁面
+	@GetMapping("forgotPassword")
+	public String forgotPassword() {
+		return "back-end/user/forgotPassword";
+	}
 
-    // 重設密碼頁面
-    @GetMapping("resetPassword")
-    public String resetPassword() {
-        return "back-end/user/resetPassword";
-    }
+	// 處理忘記密碼
+	@PostMapping("forgotPassword")
+	public String forgotPassword(@RequestParam("userEmail") String userEmail, ModelMap model) {
+		UserVO user = userService.findByEmail(userEmail);
+		if (user != null) {
+			// 發送重設密碼的信件，信件中包含重設密碼的指示
+			String subject = "密碼重設請求";
+			String messageText = "請點擊以下連結進行密碼重設: http://tia102g2.ddns.net/user/resetPassword";
+			gmailService.sendMail(userEmail, subject, messageText);
 
-    // 處理重設密碼
-    @PostMapping("resetPassword")
-    public String resetPassword(@RequestParam("userEmail") String userEmail,
-                                @RequestParam("newPassword") String newPassword,
-                                @RequestParam("confirmPassword") String confirmPassword, ModelMap model) {
-        if (!newPassword.equals(confirmPassword)) {
-            model.addAttribute("errorMessage", "新密碼與確認密碼不相符");
-            return "back-end/user/resetPassword";
-        }
+			model.addAttribute("successMessage", "重設密碼的信件已發送，請檢查您的信箱");
+			return "back-end/user/forgotPassword";
+		} else {
+			model.addAttribute("errorMessage", "該信箱未註冊");
+			return "back-end/user/forgotPassword";
+		}
+	}
 
-        UserVO user = userService.findByEmail(userEmail);
-        if (user != null) {
-            user.setUserPwd(newPassword);
-            userService.updateUser(user);
-            model.addAttribute("successMessage", "密碼重設成功，請登入");
-            return "back-end/user/login";
-        } else {
-            model.addAttribute("errorMessage", "該信箱未註冊");
-            return "back-end/user/resetPassword";
-        }
-    }
+	// 重設密碼頁面
+	@GetMapping("resetPassword")
+	public String resetPassword() {
+		return "back-end/user/resetPassword";
+	}
 
-    // 處理會員登出
-    @GetMapping("logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("user");
-        return "redirect:/";
-    }
+	// 處理重設密碼
+	@PostMapping("resetPassword")
+	public String resetPassword(@RequestParam("userEmail") String userEmail,
+			@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword,
+			ModelMap model) {
+		if (!newPassword.equals(confirmPassword)) {
+			model.addAttribute("errorMessage", "新密碼與確認密碼不相符");
+			return "back-end/user/resetPassword";
+		}
 
-    public BindingResult removeFieldError(UserVO userVO, BindingResult result, String removedFieldname) {
-        List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
-                .filter(fieldname -> !fieldname.getField().equals(removedFieldname))
-                .collect(Collectors.toList());
-        result = new BeanPropertyBindingResult(userVO, "userVO");
-        for (FieldError fieldError : errorsListToKeep) {
-            result.addError(fieldError);
-        }
-        return result;
-    }
+		UserVO user = userService.findByEmail(userEmail);
+		if (user != null) {
+			user.setUserPwd(newPassword);
+			userService.updateUser(user);
+			model.addAttribute("successMessage", "密碼重設成功，請登入");
+			return "back-end/user/login";
+		} else {
+			model.addAttribute("errorMessage", "該信箱未註冊");
+			return "back-end/user/resetPassword";
+		}
+	}
+
+	// 處理會員登出
+	@GetMapping("logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		return "redirect:/";
+	}
+
+	public BindingResult removeFieldError(UserVO userVO, BindingResult result, String removedFieldname) {
+		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
+		result = new BeanPropertyBindingResult(userVO, "userVO");
+		for (FieldError fieldError : errorsListToKeep) {
+			result.addError(fieldError);
+		}
+		return result;
+	}
 }
