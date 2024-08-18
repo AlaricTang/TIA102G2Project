@@ -120,7 +120,10 @@ public class DrinkOrderBackController {
 			model.addAttribute("errorMessage", "查無此訂單");
 		}
 		
+		List<StoreVO> storeList = storeSvc.getAll();
+		
 		//東西給前端
+		model.addAttribute("storeList",storeList);
 		model.addAttribute("drinkOrderList", drinkOrderList);
 		return "back-end/drinkOrder/orderManage";
 	}

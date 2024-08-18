@@ -39,6 +39,8 @@ public class IndexController_inSpringBoot {
 	
     @GetMapping("/")
     public String index(Model model) {
+    	List<DrinkVO> drinkList = drinkSvc.getAll();
+    	model.addAttribute("drinkList",drinkList);
         return "index"; //view
     }
     

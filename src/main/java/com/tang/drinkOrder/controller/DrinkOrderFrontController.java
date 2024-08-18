@@ -58,7 +58,7 @@ public class DrinkOrderFrontController {
 	@Autowired
 	MemberService memberSvc;
 	
-	// 跳轉到 要下單頁面
+	// ============================ 跳轉到 要下單頁面 ============================
 		//需要將 購物人資訊  購物車物品 列出來 
 		//給user確認 放好VO存 session
 	@GetMapping("drinkOrderPage")
@@ -131,7 +131,7 @@ public class DrinkOrderFrontController {
 	}
 	
 	
-//	下單,跳轉到成功頁面
+//	============================ 下單,跳轉到成功頁面 ============================
 //  這裡含 存訂單明細的動作
 	@GetMapping("order")
 	synchronized public String order(ModelMap model,HttpSession session, RedirectAttributes redirectAttributes)throws IOException{
@@ -142,10 +142,10 @@ public class DrinkOrderFrontController {
 		
 		
 		//判斷目前 店家環保杯數 是否滿足
-//		StoreVO store = storeService.getOneStore(drinkOrderVO.getStoreID()); 
-//		if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
-//			return "redirect:/drinkOrder/orderFail";
-//		}
+		StoreVO store = storeService.getOneStore(drinkOrderVO.getStoreID()); 
+		if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
+			return "redirect:/drinkOrder/orderFail";
+		}
 		
 		
 		//補齊 店家 付款狀態 訂單狀態 付款方式
@@ -187,7 +187,7 @@ public class DrinkOrderFrontController {
 		return "back-end/drinkOrder/orderFail";
 	}
 	
-	//錯誤驗證 會原沒登入的跳轉
+	//============================ 錯誤驗證 會原沒登入的跳轉 ============================
 	@GetMapping("userDrinkOrder")
 	public String userDrinkOrder(
 			@ModelAttribute("drinkOrderDetailList") ArrayList<DrinkOrderDetailVO> drinkOrderDetailList,
