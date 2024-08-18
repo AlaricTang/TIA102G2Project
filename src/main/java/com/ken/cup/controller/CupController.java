@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -454,4 +455,25 @@ public class CupController {
 
 	
 	// ===================   方法 6    =============================
+	
+	@GetMapping("userRentedCups")
+	public String getUserRentedCups(Model model, HttpSession session) {
+	    // 假設在模擬登入時將 userID 存入 session
+		UserVO userVO = (UserVO) session.getAttribute("user");
+
+//	    if (userID == null) {
+//	        userID = 1; // 預設 userID 為 1 測試
+//	    }
+		if (userVO == null) {
+	        System.out.println("User not found in session");
+	        return "redirect:/index";
+	    } else {
+	        Integer userID = userVO.getUserId(); // 從 UserVO 中提取 userID
+	        System.out.println("UserID found: " + userID);
+
+	        List<CupVO> rentedCups = cupSvc.getRentedCupsByUser(userID);
+	        model.addAttribute("rentedCups", rentedCups);
+	        return "back-end/cup/userRentedCups";
+	    }
+	}
 }

@@ -54,4 +54,9 @@ public class CupService {
 	
 	// 自訂查詢 2 查詢該店家有多少杯子已經被出租
 	
+	
+	// 使用者可以看到自己租的杯子
+	 public List<CupVO> getRentedCupsByUser(Integer userID) {
+	        return repository.findByUserIDAndCupStatus(userID, 1); // 1 表示租借中
+	    }
 }
