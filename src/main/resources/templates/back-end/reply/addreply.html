@@ -277,19 +277,13 @@
 
 
 					<!-- 客服回覆部分 -->
-					<form th:action="@{/reply/addReply}" method="post">
+					<form id="replyForm" th:action="@{/reply/addReply}" method="post">
 						<input type="hidden" name="customerID"
 							th:value="${customerVO.customerID}"> <input type="hidden"
 							name="memberID" value="1">
-						<!-- 假設 memberID 為 1，您可以根據需要調整 -->
 						<div class="reply-card">
 							<div class="card-body">
-								<div class="info-row">
-									<span class="info-label">客服人員：</span>
-									<div class="info-content">
-										<span>小明</span>
-									</div>
-								</div>
+								
 								<div class="info-row">
 									<span class="info-label">回覆主旨：</span>
 									<div class="info-content">
@@ -307,7 +301,7 @@
 							</div>
 						</div>
 						<div class="text-center mt-4">
-							<button type="submit" class="btn btn-success">
+							<button type="submit" class="btn btn-success" id="submitReply">
 								<i class="fas fa-envelope me-1"></i>寄出信件回覆
 							</button>
 							<a
@@ -315,6 +309,7 @@
 								class="btn btn-secondary">返回</a>
 						</div>
 					</form>
+
 					<!-- 客服回覆部分 -->
 				</div>
 			</main>
@@ -324,6 +319,24 @@
 			郵件已成功發送給客戶！</div>
 		<div th:if="${mailError}" class="alert alert-danger" role="alert">
 			郵件發送失敗，請聯繫技術支持。</div>
+
+		<!-- 成功訊息的模態框 -->
+		<div class="modal fade" id="successModal" tabindex="-1"
+			aria-labelledby="successModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="successModalLabel">成功</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p>信件已成功寄出！</p>
+						<p>3秒後將自動返回回覆列表。</p>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!--右半邊的空白頁 -->
 
@@ -370,6 +383,51 @@
 		</script>
 
 	</div>
+	<!-- Thymeleaf 內聯 JavaScript -->
+	<script th:inline="javascript">
+/*<![CDATA[*/
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('replyForm');
+    var submitButton = document.getElementById('submitReply');
+    var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // 禁用提交按鈕，防止重複提交
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>處理中...';
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // 顯示成功訊息的模態框
+                successModal.show();
+                setTimeout(function() {
+                    window.location.href = /*[[@{/reply/getOne_For_Display(customerID=${customerVO.customerID})}]]*/ '';
+                }, 3000);
+            } else {
+                throw new Error('回覆發送失敗');
+            }
+        })
+        .catch(error => {
+            alert('發生錯誤：' + error.message);
+        })
+        .finally(() => {
+            // 重新啟用提交按鈕
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-envelope me-1"></i>寄出信件回覆';
+        });
+    });
+});
+/*]]>*/
+</script>
 </body>
 
 </html>
