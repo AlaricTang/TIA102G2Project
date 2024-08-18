@@ -48,7 +48,7 @@
 						<li><a href="/productOrder/userProductOrder">商品訂單紀錄</a></li>
 						<li><a href="/user/userJibeiList">我的寄杯</a></li>
 						<li><a href="/cup/userRentedCups">環保杯租借紀錄</a></li>
-						<li><a href="/user/resetPassword">修改密碼</a></li>
+						<li><a th:href="@{'/user/resetPassword/' + ${session.user.userEmail}}">修改密碼</a></li>
 						<li><a th:href="@{/drinkOrder/fakeLeave}">登出</a></li>
 					</ul>
 					<li class="dropdown"><a onclick="checkUserAndProceed(event,'/product/switchToCartPage')" th:href="@{/product/switchToCartPage}">查看購物車</a></li>
