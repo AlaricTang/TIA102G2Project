@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ellie.store.model.StoreVO;
+import com.ellie.member.model.MemberVO;
 import com.ellie.store.model.StoreService;
 
 @Controller
@@ -182,6 +183,7 @@ public class StoreBackController {
         model.addAttribute("storeVO", updatedStore);
         return "back-end/store/updateStore"; // 返回顯示修改後的店家資料頁面
     }
+    
     
     public BindingResult removeFieldError(StoreVO storeVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()

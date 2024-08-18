@@ -180,11 +180,11 @@
                                 <td>
                                     <a th:href="@{/member/updateMember(memberID=${member.memberID})}"
                                         class="btn btn-primary">編輯</a>
-                                    <form th:action="@{/member/deleteMember}" method="post" style="display:inline;">
+                               <!--      <form th:action="@{/member/deleteMember}" method="post" style="display:inline;">
                                         <input type="hidden" name="memberID" th:value="${member.memberID}">
                                         <input type="submit" value="刪除" class="btn btn-danger"
                                             onclick="return confirm('確定刪除?');">
-                                    </form>
+                                    </form>  -->
                                                                        </td>
                             </tr>
                         </tbody>
