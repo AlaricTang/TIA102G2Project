@@ -172,10 +172,10 @@
                                 <td th:text="${store.storePhone}"></td>
                                 <td>
                                     <a th:href="@{/store/updateStore(storeID=${store.storeID})}" class="btn btn-primary">編輯</a>
-                                    <form th:action="@{/store/deleteStore}" method="post" style="display:inline;">
-                                        <input type="hidden" name="storeID" th:value="${store.storeID}">
-                                        <input type="submit" value="刪除" class="btn btn-danger" onclick="return confirm('確定刪除?');">
-                                    </form>
+                                   <!--   <form th:action="@{/store/deleteStore}" method="post" style="display:inline;"> -->
+                                     <!--   <input type="hidden" name="storeID" th:value="${store.storeID}">
+                                        <!--  <input type="submit" value="刪除" class="btn btn-danger" onclick="return confirm('確定刪除?');"> -->
+                                    <!--  </form> -->
                                 </td>
                             </tr>
                         </tbody>
