@@ -1,5 +1,7 @@
 package com.ken.cup.model;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +17,6 @@ public interface CupRepository extends JpaRepository<CupVO, Integer>{
 
 	@Query(value = "SELECT COUNT(*) FROM cup WHERE storeID = :storeID AND cupStatus = 0", nativeQuery = true)
 	Long countByStoreIDAndCupStatus(@Param("storeID") Integer storeID);
+	
+	List<CupVO> findByUserIDAndCupStatus(Integer userID, Integer cupStatus);
 }
