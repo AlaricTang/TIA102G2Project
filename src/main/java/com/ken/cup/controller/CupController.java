@@ -75,6 +75,7 @@ public class CupController {
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
 		cupSvc.addCup(cupVO);
+		
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
 		List<CupVO> list = cupSvc.getAll();
 		model.addAttribute("cupListData", list);
@@ -318,6 +319,10 @@ public class CupController {
 		    cupRecordSvc.addCupRecord(cupRecordVO);
 	    }
 	    
+	    StoreVO store = storeSvc.getOneStore(Integer.valueOf(storeID));
+	    store.setStoreCups(store.getStoreCups()+1);
+	    storeSvc.updateStore(store); 
+	    
 	    return "redirect:/cup/listAllCup";
 	}
 	
@@ -429,7 +434,20 @@ public class CupController {
 	    	cupVO.setCupStatus(0);
 	        cupSvc.addCup(cupVO);
 	    }
-
+	    
+	    
+	    //更新店家杯數
+	    StoreVO store = storeSvc.getOneStore(Integer.valueOf(storeID));
+	    Integer storeCup = 0;
+	    if(store.getStoreCups() == null) {
+	    	storeCup = 0;
+	    }else {
+	    	storeCup = store.getStoreCups();
+	    }
+	    
+	    store.setStoreCups(storeCup += number);
+	    storeSvc.updateStore(store);
+	    
 	    model.addAttribute("successMessage", "成功新增 " + number + " 個杯子");
 	    return "redirect:/cup/listAllCup";
 	}
