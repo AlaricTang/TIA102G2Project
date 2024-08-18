@@ -80,7 +80,7 @@
                 <div class="caption-content">
                   <div class="font-alt mb-30 titan-title-size-1"> Hello & welcome</div>
                   <div class="font-alt mb-40 titan-title-size-4">We are 啡常渴以</div>
-                  <a class="section-scroll btn btn-border-w btn-round" href="#">Check Our Menu | 飲品菜單</a>
+                  <a class="section-scroll btn btn-border-w btn-round" href="/drink/drinksByTagViewOnly">Check Our Menu | 飲品菜單</a>
                 </div>
               </div>
             </li>
@@ -92,7 +92,7 @@
                   <div class="font-alt mb-30 titan-title-size-2">小易: 丁丁，你看，你就像這片海一樣</div>
                   <div class="font-alt mb-30 titan-title-size-2">丁丁: 為什麼? 你說我跟大海一樣，心胸很寬闊嗎?</div>
                   <div class="font-alt mb-30 titan-title-size-2">小易: 不是，我是說你跟這片大海一樣，很多魚</div>
-                  <a class="btn btn-border-w btn-round" href="#">Discover our store | 門市資訊</a>
+                  <a class="btn btn-border-w btn-round" href="/store/viewAllStores">Discover our store | 門市資訊</a>
                 </div>
               </div>
             </li>
@@ -122,15 +122,15 @@
             <div class="row multi-columns-row">
               <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="content-box">
-                  <a href="#">
+                  <a href="/drink/orderOnline">
                     <div class="features-icon"><span class="icon-pencil"></span></div>
-                    <h3 class="content-box-title font-serif">預定自取</h3>
+                    <h3 class="content-box-title font-serif">線上預訂</h3>
                   </a>
                 </div>
               </div>
               <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="content-box">
-                  <a th:href="@{/drink/select_page}">
+                  <a th:href="@{/drink/drinksByTagViewOnly}">
                     <div class="features-icon"><span class="icon-book-open"></span></div>
                     <h3 class="content-box-title font-serif">飲品菜單</h3>
                   </a>
@@ -138,7 +138,7 @@
               </div>
               <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="content-box">
-                  <a href="">
+                  <a href="/store/viewAllStores">
                     <div class="features-icon"><span class="icon-map"></span></div>
                     <h3 class="content-box-title font-serif">門市資訊</h3>
                   </a>
@@ -146,30 +146,13 @@
               </div>
               <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="content-box">
-                  <a href="">
+                  <a onclick="checkUserAndProceed(event,'/user/userJibeiList')" href="/user/userJibeiList">
                     <div class="features-icon"><span class=" icon-wine"></span></div>
-                    <h3 class="content-box-title font-serif">我的寄杯</h3>
+                    <h3  class="content-box-title font-serif">我的寄杯</h3>
                   </a>
                 </div>
               </div>
               
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="content-box">
-                  <a th:href="@{/cup/select_page}">
-                    <div class="features-icon"><span class=" icon-wine"></span></div>
-                    <h3 class="content-box-title font-serif">環保杯(借用)</h3>
-                  </a>
-                </div>
-              </div>
-              
-              <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="content-box">
-                  <a th:href="@{/cupRecord/select_page}">
-                    <div class="features-icon"><span class=" icon-wine"></span></div>
-                    <h3 class="content-box-title font-serif">環保杯紀錄(借用)</h3>
-                  </a>
-                </div>
-              </div>
 
             </div>
           </div>
@@ -207,111 +190,32 @@
             </div>
             <div class="row multi-columns-row">
               <div class="col-sm-6">
+              <th:block th:if="${drinkList != null}">
+              <th:block th:each="drinkVO:${drinkList}">
                 <div class="menu">
                   <div class="row">
                     <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">焦糖瑪奇朵</h4>
+                      <h4 class="menu-title font-alt" th:text="${drinkVO.drinkName}"></h4>
                     </div>
                     <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
+                      <h4 class="menu-price font-alt" th:text="'$'+${drinkVO.drinkPrice}"></h4>
                     </div>
                   </div>
                 </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">抹茶拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$100</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">紅茶拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$100</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">冠軍黑咖啡</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$65</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">燕麥冠軍拿鐵咖啡</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">燕麥抹茶拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">莊園星空拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$120</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">可可拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$100</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">芝麻拿鐵</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$110</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <h4 class="menu-title font-alt">抹茶奶霜冰沙</h4>
-                    </div>
-                    <div class="col-sm-4 menu-price-detail">
-                      <h4 class="menu-price font-alt">$145</h4>
-                    </div>
-                  </div>
-                </div>
+<!--                 <div class="menu"> -->
+<!--                   <div class="row"> -->
+<!--                     <div class="col-sm-8"> -->
+<!--                       <h4 class="menu-title font-alt">抹茶拿鐵</h4> -->
+<!--                     </div> -->
+<!--                     <div class="col-sm-4 menu-price-detail"> -->
+<!--                       <h4 class="menu-price font-alt">$100</h4> -->
+<!--                     </div> -->
+<!--                   </div> -->
+<!--                 </div> -->
+				</th:block>
               </div>
             </div>
-            <div class="text-center"><a class="btn btn-border-d mt-50" href="#">Check our full menu | 查看完整菜單</a></div>
+            <div class="text-center"><a class="btn btn-border-d mt-50" href="/drink/drinksByTagViewOnly">Check our full menu | 查看完整菜單</a></div>
           </div>
         </section>
 

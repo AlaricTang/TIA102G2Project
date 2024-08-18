@@ -62,7 +62,9 @@ public class CompositeQuery_DrinkOrder {
 			Set<String> keys = map2.keySet();
 			for (String key : keys) {
 				String value = map2.get(key);
-				predicateList.add(get_aPredicate_For_AnyDB(builder, root, key, value.trim()));
+				Predicate predicate =get_aPredicate_For_AnyDB(builder, root, key, value.trim()); 
+				if(predicate != null )
+					predicateList.add(predicate);
 			}
 			
 			

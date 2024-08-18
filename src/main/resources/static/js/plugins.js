@@ -151,7 +151,22 @@
 
 
 
+    function checkUserAndProceed(event,oriURL) {
+        event.preventDefault(); // 阻止原本跳轉
 
+        fetch('/checkApi/checkUserSession')
+            .then(response => response.json())
+            .then(data => {
+                if (data === false) {
+                    window.location.href = '/user/login';
+                } else {
+                    window.location.href = oriURL; // 如果用戶已經登入，則執行原來的動作
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
 
 

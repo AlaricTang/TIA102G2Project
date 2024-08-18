@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ellie.store.model.StoreService;
+import com.ellie.store.model.StoreVO;
 import com.ellie.user.model.UserVO;
 import com.tang.drinkOrder.model.DrinkOrderService;
 import com.tang.drinkOrder.model.DrinkOrderVO;
@@ -38,6 +40,9 @@ public class DrinkOrderDetailController {
 	
 	@Autowired
 	DrinkOrderService drinkOrderSvc;
+
+	@Autowired
+	StoreService storeSvc;
 
 //	會員查訂單明細
 	@PostMapping("userDrinkOrderDetail")
@@ -66,6 +71,9 @@ public class DrinkOrderDetailController {
 		
 		List<DrinkOrderVO> drinkOrderList = drinkOrderSvc.getAll();
 		model.addAttribute("drinkOrderList",drinkOrderList);
+		
+		List<StoreVO> storeList = storeSvc.getAll();
+		model.addAttribute("storeList",storeList);
 		return "back-end/drinkOrder/orderHistory";
 	}
 	
@@ -76,8 +84,12 @@ public class DrinkOrderDetailController {
 		
 		List<DrinkOrderDetailVO> drinkOrderDetailList = drinkOrderDetailSvc.getByDrinkOrderID(Integer.valueOf(drinkOrderID));
 		model.addAttribute("drinkOrderDetailList",drinkOrderDetailList);
+		
 		List<DrinkOrderVO> drinkOrderList = drinkOrderSvc.getAllUndone();
 		model.addAttribute("drinkOrderList",drinkOrderList);
+		
+		List<StoreVO> storeList = storeSvc.getAll();
+		model.addAttribute("storeList",storeList);
 		return "back-end/drinkOrder/orderManage";
 	}
 
