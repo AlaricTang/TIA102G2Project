@@ -235,17 +235,20 @@
 
 					<!-- 新增回覆按鈕 -->
 					<div class="text-center mt-4 button-container">
-                    <a th:href="@{/reply/addReply/{customerID}(customerID=${customerVO.customerID})}" class="btn btn-add-reply">
-                        <i class="fas fa-envelope me-1"></i>新增回覆
-                    </a> 
-                    <a th:href="@{#}" onclick="window.history.back(); return false;" class="btn btn-secondary">返回</a>
-                </div>
-            </div>
-        </main>
-    </div>
-    
-    <div th:if="${successMessage}" class="alert alert-success" role="alert" th:text="${successMessage}"></div>
-<div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+						<a
+							th:href="@{/reply/addReply/{customerID}(customerID=${customerVO.customerID})}"
+							class="btn btn-add-reply"> <i class="fas fa-envelope me-1"></i>新增回覆
+						</a> <a th:href="@{/customer/listAllCustomer}"
+							class="btn btn-secondary">返回</a>
+					</div>
+				</div>
+			</main>
+		</div>
+
+		<div th:if="${successMessage}" class="alert alert-success"
+			role="alert" th:text="${successMessage}"></div>
+		<div th:if="${errorMessage}" class="alert alert-danger" role="alert"
+			th:text="${errorMessage}"></div>
 
 		<!--右半邊的空白頁 -->
 
