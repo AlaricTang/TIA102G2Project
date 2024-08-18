@@ -1,5 +1,6 @@
 package com.tang.drinkOrder.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ellie.store.model.StoreService;
 import com.ellie.store.model.StoreVO;
+import com.redis.userJibei.UserJibeiService;
 import com.tang.drinkOrder.model.DrinkOrderService;
 import com.tang.drinkOrder.model.DrinkOrderVO;
 import com.tang.drinkOrderDetail.model.DrinkOrderDetailService;
+import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
 
 @Controller
 @Validated
@@ -37,6 +40,9 @@ public class DrinkOrderBackController {
 	
 	@Autowired
 	DrinkOrderService drinkOrderSvc;
+
+	@Autowired
+	UserJibeiService userJibeiSvc;
 	
 	//===============總公司端==================
 	@GetMapping("orderHistory")
@@ -130,18 +136,30 @@ public class DrinkOrderBackController {
 	
 	//======= 完成 訂單狀態 =======
 	@PostMapping("successDrinkOrder")
-	public String successDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+	public String successDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) throws IOException{
 		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
 		drinkOrder.setDrinkOrderStatus(Byte.valueOf("1"));
+		drinkOrder.setDrinkOrderPayStatus(Byte.valueOf("1"));
 		drinkOrderService.updateDrinkOrder(drinkOrder);
-		return "redirect:/drinkOrder/orderHistory";
+		
+		List<DrinkOrderDetailVO> orderDetailList = drinkOrderDetailService.getByDrinkOrderID(Integer.valueOf(drinkOrderID));
+		for(DrinkOrderDetailVO orderDetail : orderDetailList) {
+			if(orderDetail.getDrinkOrderDetailIsJibei() == 1) {
+				userJibeiSvc.redeemUserJibei(drinkOrder.getUserID(), orderDetail.getDrinkID(), orderDetail.getDrinkOrderDetailAmount());
+//				UserJibeiVO jibei = userJibeiSvc.getOneUserJibei(drinkOrder.getUserID(), orderDetail.getDrinkID().toString());
+//				int jibeiNumber = jibei.getNumber() - orderDetail.getDrinkOrderDetailAmount();
+				
+			}
+		}
+		return "redirect:/drinkOrder/orderManage";
 	}
 	//======= 完成 付款狀態 =======
 	@PostMapping("sussesPaidDrinkOrder")
-	public String sussesPaidDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model) {
+	public String sussesPaidDrinkOrder(@RequestParam("drinkOrderID") String drinkOrderID, ModelMap model)  {
 		DrinkOrderVO drinkOrder = drinkOrderService.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
 		drinkOrder.setDrinkOrderPayStatus(Byte.valueOf("1"));
 		drinkOrderService.updateDrinkOrder(drinkOrder);
+		
 		return "redirect:/drinkOrder/orderManage";
 	}
 	

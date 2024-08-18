@@ -75,6 +75,7 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/css/colors/default.css}"
 	id="color-scheme">
+	
 <style type="text/css">
 .form-item {
 	display: inline-block;
@@ -236,7 +237,7 @@
 			<table class="productOrderDetail" style="width: 100%;">
 				<thead>
 					<tr style="background-color: #f7b977; color: #2b2b2b;">
-						<th>飲品訂單細項ID???</th>
+<!-- 						<th>飲品訂單細項ID???</th> -->
 						<th>訂單編號</th>
 						<th>訂購品項</th>
 						<th>數量</th>
@@ -246,7 +247,7 @@
 				<tbody>
 					<th:block th:each="productOrderDetailVO : ${productOrderDetail}">
 						<tr>
-							<td th:text="${productOrderDetailVO.productOrderDetailID}"></td>
+<!-- 							<td th:text="${productOrderDetailVO.productOrderDetailID}"></td> -->
 							<td th:text="${productOrderDetailVO.productOrderVO.productOrderID}"></td>
 							<td th:text="${productOrderDetailVO.productVO.productID}"></td>
 							<td th:text="${productOrderDetailVO.productOrderDetailAmount}"></td>

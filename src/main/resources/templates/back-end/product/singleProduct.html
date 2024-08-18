@@ -142,7 +142,13 @@
 							<div class="row mb-20">
 								<div class="col-sm-12">
 									<div class="product_meta">
-										商品分類：<a th:text="${singleProduct.productTag}"></a>
+										商品分類：
+										<th:block th:switch="${singleProduct.productTag}" >
+										    <span th:case="1">咖啡杯</span>
+										    <span th:case="2">手沖壺</span>
+										    <span th:case="3">濾掛包</span> 
+										    <span th:case="*">其他</span> 
+										</th:block>
 									</div>
 								</div>
 							</div>
