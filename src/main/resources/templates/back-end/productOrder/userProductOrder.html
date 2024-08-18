@@ -1,258 +1,328 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
-    <!--  ======== Document Title =====================================  -->
-    <title>會員｜商品訂單紀錄</title>
-    
-    
-    <!--  ======== Favicons =====================================  -->
-   	<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
-	<link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
-	<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
-	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
-	<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
-	<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
-	<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
-	<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
-	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
-	<link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
-	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
-	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
-    
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    
-    
-    <!--  ======== Stylesheets =====================================  -->
-    
-    <!-- Default stylesheets-->
-    <link rel="stylesheet" th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" >
-    
-    <!-- Template specific stylesheets-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov:400i">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
-	<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
-	<link rel="stylesheet" th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
-	<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
-	<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
-	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
-	<link rel="stylesheet" th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
-	<link rel="stylesheet" th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
-	<link rel="stylesheet" th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
-	
-	<!-- Main stylesheet and color file -->
-	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<link rel="stylesheet" th:href="@{/css/colors/default.css}" id="color-scheme">
-	<style type="text/css">
- 		.form-item {
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        .form-item label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-item input,
-        .form-item select {
-            width: 100%;
-            padding: 5px;
-            box-sizing: border-box;
-        }
-        .status-done {
-	        background-color: #d4edda;
-	        color: #155724;
-	        padding: 5px;
-	        border-radius: 5px;
-	        border: 1px solid #c3e6cb;
-	    }
-        .status-undone {
-	        background-color: #ECEE91;
-	        color: #7D8000;
-	        padding: 5px;
-	        border-radius: 5px;
-	        border: 1px solid #E4E821;
-	    }
-        .status-cacel {
-	        background-color: #f6abab;
-	        color: #9f0303;
-	        padding: 5px;
-	        border-radius: 5px;
-	        border: 1px solid #ed9595;
-	    }
-	    #example {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        border: 1px solid black;
-	    }
-	
-	    #example thead tr {
-	        background-color: #f7b977;
-	        color: #2b2b2b;
-	    }
-	
-	    #example th, #example td {
-	        padding: 8px 15px;
-	        border-bottom: 1px solid #ddd;
-	        text-align: center;
-	    }
-	
-	    #example tbody tr:nth-child(even) {
-	        background-color: #f2f2f2;
-	    }
-	
-	    #example tbody tr:hover {
-	        background-color: #e6f7ff;
-	    }
-	    
- 	</style>
-  </head>
-  
-  
-  
-  
-  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
-  	<main>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	    <!-- header -->
-	    <div th:replace="header :: header"></div>
-	    <!-- header -->
-		
+
+<!--  ======== Document Title =====================================  -->
+<title>會員｜商品訂單紀錄</title>
+
+
+<!--  ======== Favicons =====================================  -->
+<link rel="apple-touch-icon" sizes="57x57"
+	th:href="@{/images/favicons/apple-icon-57x57.png}">
+<link rel="apple-touch-icon" sizes="60x60"
+	th:href="@{/images/favicons/apple-icon-60x60.png}">
+<link rel="apple-touch-icon" sizes="72x72"
+	th:href="@{/images/favicons/apple-icon-72x72.png}">
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/images/favicons/apple-icon-76x76.png}">
+<link rel="apple-touch-icon" sizes="114x114"
+	th:href="@{/images/favicons/apple-icon-114x114.png}">
+<link rel="apple-touch-icon" sizes="120x120"
+	th:href="@{/images/favicons/apple-icon-120x120.png}">
+<link rel="apple-touch-icon" sizes="144x144"
+	th:href="@{/images/favicons/apple-icon-144x144.png}">
+<link rel="apple-touch-icon" sizes="152x152"
+	th:href="@{/images/favicons/apple-icon-152x152.png}">
+<link rel="apple-touch-icon" sizes="180x180"
+	th:href="@{/images/favicons/apple-icon-180x180.png}">
+<link rel="icon" type="image/png" sizes="192x192"
+	th:href="@{/images/favicons/android-icon-192x192.png}">
+<link rel="icon" type="image/png" sizes="32x32"
+	th:href="@{/images/favicons/favicon-32x32.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/images/favicons/favicon-96x96.png}">
+<link rel="icon" type="image/png" sizes="16x16"
+	th:href="@{/images/favicons/favicon-16x16.png}">
+
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage"
+	content="images/favicons/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+
+<!--  ======== Stylesheets =====================================  -->
+
+<!-- Default stylesheets-->
+<link rel="stylesheet"
+	th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}">
+
+<!-- Template specific stylesheets-->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Volkhov:400i">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+<link rel="stylesheet" th:href="@{/lib/animate.css/animate.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/lib/et-line-font/et-line-font.css}">
+<link rel="stylesheet" th:href="@{/lib/flexslider/flexslider.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/magnific-popup/dist/magnific-popup.css}">
+<link rel="stylesheet"
+	th:href="@{/lib/simple-text-rotator/simpletextrotator.css}">
+
+<!-- Main stylesheet and color file -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/colors/default.css}"
+	id="color-scheme">
+<style type="text/css">
+.form-item {
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.form-item label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.form-item input, .form-item select {
+	width: 100%;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+.status-done {
+	background-color: #d4edda;
+	color: #155724;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #c3e6cb;
+}
+
+.status-undone {
+	background-color: #ECEE91;
+	color: #7D8000;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #E4E821;
+}
+
+.status-cacel {
+	background-color: #f6abab;
+	color: #9f0303;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #ed9595;
+}
+
+#example {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	border: 1px solid black;
+}
+
+#example thead tr {
+	background-color: #f7b977;
+	color: #2b2b2b;
+}
+
+#example th, #example td {
+	padding: 8px 15px;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+#example tbody tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#example tbody tr:hover {
+	background-color: #e6f7ff;
+}
+		table, table td, table th{
+			border: 1px solid black;
+			border-collapse: collapse;
+			text-align:center;
+		}
+</style>
+</head>
+
+
+
+
+<body data-spy="scroll" data-target=".onpage-navigation"
+	data-offset="60">
+	<main>
+
+		<!-- header -->
+		<div th:replace="header :: header"></div>
+		<!-- header -->
+
 
 		<div class="main">
-<!-- 			<span th:text="${user.userName}"></span> <br> -->
-			<br><br>
-		
-		<table class="productOrder" style="width: 100%; ">
-			  <thead >
-				<tr style="background-color:#f7b977;  color: #2b2b2b; " >
-					<th>訂單編號</th>
-					<th>訂購日期</th>
-					<th>總金額</th>
-					<th>付款狀態</th>
-					<th>完成付款</th>
-					<th>訂單狀態</th>
-<!-- 					<th>取消訂單</th> -->
-					<th>查看明細</th>
-				</tr>
-			  </thead>
-		  <tbody>
-					<th:block th:each="productOrderVO : ${productOrderList}">
+			<br> <br>
+
+			<table class="productOrder" style="width: 100%;">
+				<thead>
+					<tr style="background-color: #f7b977; color: #2b2b2b;">
+						<th>訂單編號</th>
+						<th>訂購日期</th>
+						<th>總金額</th>
+						<th>配送地址</th>
+						<th>收件人姓名</th>
+						<th>收件人電話</th>
+						<th>收件人信箱</th>
+						<th>訂單備註</th>
+						<th>付款方式</th>
+						<th>付款狀態</th>
+						<th>完成付款</th>
+						<th>訂單狀態</th>
+						<th>查看明細</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="productOrderVO : ${userProductList}">
 						<tr>
 							<td th:text="${productOrderVO.productOrderID}"></td>
-							<td th:text="${productOrderVO.productOrderCreateTime}"></td>
+<!-- 							<td th:text="${productOrderVO.productOrderCreateTime}"></td> -->
+							<td th:text="${#dates.format(productOrderVO.productOrderCreateTime, 'yyyy-MM-dd HH:mm')}"></td>
 							<td th:text="${productOrderVO.productOrderTTPrice}"></td>
-						
-	<!-- 付款狀態 -->		<td>
-				                <span th:switch="${productOrderVO.productOrderPayStatus}">
-				                    <span th:case="0">未付款</span>
-				                    <span th:case="1">已付款</span>
-				                    <span th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
-				                </span>
-			            	</td>
-	<!-- 完成付款 -->	  	<td>
-			            		<div th:if="${productOrderVO.productOrderPayStatus != 1 && productOrderVO.productOrderPayStatus == 0 }">
-								  	<form method="post" th:action="@{/productOrder/sussesPaidProductOrder}" style="margin-bottom: 0px;">
-								     	<input type="submit" value="完成付款">
-								     	<input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}">
-								  	</form>
+							<td th:text="${productOrderVO.productOrderAddr}"></td>
+							<td th:text="${productOrderVO.receiverName}"></td>
+							<td th:text="${productOrderVO.receiverPhone}"></td>
+							<td th:text="${productOrderVO.receiverMail}"></td>
+							<td th:text="${productOrderVO.productOrderNote}"></td>
+							<td
+								th:text="${productOrderVO.productOrderPayM == 1? '信用卡':'現金' }"></td>
+
+
+							<!-- 付款狀態 -->
+							<td><span
+								th:switch="${productOrderVO.productOrderPayStatus}"> <span
+									th:case="0">未付款</span> <span th:case="1">已付款</span> <span
+									th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
+							</span></td>
+							<!-- 完成付款 -->
+							<td>
+								<div
+									th:if="${productOrderVO.productOrderPayStatus != 1 && productOrderVO.productOrderStatus == 0 }">
+									<form method="post" th:action="@{/productOrder/orderSuccess}"
+										style="margin-bottom: 0px;">
+										<input type="submit" value="完成付款"> <input
+											type="hidden" name="productOrderID"
+											th:value="${productOrderVO.productOrderID}">
+									</form>
 								</div>
 							</td>
-							
-	<!-- 訂單狀態 -->		<td>
-				                <span th:switch="${productOrderVO.productOrderStatus}">
-				                    <span th:case="0">未完成</span>
-				                    <span th:case="1">已完成</span>
-				                    <span th:case="2">已取消</span>
-				                    <span th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
-				                </span>
-			            	</td>
-<!-- 	<!-- 取消訂單 -->		<td> -->
-<!-- 								<div th:if="${productOrderVO.productOrderStatus == 0 }"> -->
-<!-- 								    <form method="post" th:action="@{/productOrder/cancelProductOrder}" style="margin-bottom: 0px;"> -->
-<!-- 								       <input type="submit" value="取消訂單"> -->
-<!-- 								       <input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
-<!-- 								    </form> -->
-<!-- 								</div> -->
-<!-- 							</td> -->
-							
+
+							<!-- 訂單狀態 -->
+							<td><span th:switch="${productOrderVO.productOrderStatus}">
+									<span th:case="0">未完成</span> <span th:case="1">已完成</span> <span
+									th:case="2">已取消</span> <span th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
+							</span></td>
 							<td>
-							  <form method="post" th:action="@{/productOrderDetail/userProductOrderDetail}" style="margin-bottom: 0px;">
-							     <input type="submit" value="查看明細">
-							     <input type="hidden" name="productOrderID" th:value="${productOrderVO.productOrderID}">
-							  </form>
+								<form method="post"
+									th:action="@{/productOrderDetail/userProductOrderDetail}"
+									style="margin-bottom: 0px;">
+									<input type="submit" value="查看明細"> <input type="hidden"
+										name="productOrderID"
+										th:value="${productOrderVO.productOrderID}">
+								</form>
 							</td>
-							
+
 						</tr>
 					</th:block>
-			  </tbody>
+				</tbody>
 			</table>
 		</div>
-					  
-	  
-					<div class="card-body">
-					 	<table id="example" class="display">
-					 		<thead >
-								<tr>
-									<th>訂單編號</th>
-									<th>訂購日期</th>
-									<th>付款方式</th>
-									<th>配送地址</th>
-									<th>收件人姓名</th>
-									<th>收件人電話</th>
-									<th>收件人信箱</th>
-									<th>訂單備註</th>
-								</tr>
-					  		</thead>
-					  		<tbody>
-							<th:block th:each="productOrderDetailVO : ${userListAllPdOrder}">
-								<tr>
-									<td th:text="${productOrderDetailVO.productOrderID}"></td>
-							<td th:text="${productOrderDetailVO.productOrderCreateTime}"></td>
-									<td th:text="${productOrderDetailVO.productOrderPayM == 1? '信用卡':'現金' }"></td>
-									<td th:text="${productOrderDetailVO.productOrderAddr}"></td>
-									<td th:text="${productOrderDetailVO.receiverName}"></td>
-									<td th:text="${productOrderDetailVO.receiverPhone}"></td>
-									<td th:text="${productOrderDetailVO.receiverMail}"></td>
-									<td th:text="${productOrderDetailVO.productOrderNote}"></td>
-								</tr>
-								</th:block>
-					  		</tbody>
-					  	</table>
-					</div>
-  
 
-  	    <!-- footer -->
-	    <div th:include="footer :: footer"></div>
-	    <!-- footer -->
-    	<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
-   </main>
-    
-    <!--  ======== JavaScripts =====================================  -->
-    <script th:src="@{/lib/jquery/dist/jquery.js}"></script>
-    <script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
-    <script th:src="@{/lib/wow/dist/wow.js}"></script>
-    <script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
-    <script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
-    <script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
-    <script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
-    <script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
-    <script th:src="@{/lib/smoothscroll.js}"></script>
-    <script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
-    <script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
-    <script th:src="@{/js/plugins.js}"></script>
-    <script th:src="@{/js/main.js}"></script>
-    
-  </body>
+
+		<!-- 一般商品 -->
+		<br>
+		<th:block th:if="${productOrderDetail != null}">
+		<div th:if="${#lists.size(productOrderDetail) >1 }">
+			<table class="productOrderDetail" style="width: 100%;">
+				<thead>
+					<tr style="background-color: #f7b977; color: #2b2b2b;">
+						<th>飲品訂單細項ID???</th>
+						<th>訂單編號</th>
+						<th>訂購品項</th>
+						<th>數量</th>
+						<th>小計</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="productOrderDetailVO : ${productOrderDetail}">
+						<tr>
+							<td th:text="${productOrderDetailVO.drinkOrderDetailID}"></td>
+							<td th:text="${productOrderDetailVO.productOrderID}"></td>
+							<td th:text="${productOrderDetailVO.productID}"></td>
+							<td th:text="${productOrderDetailVO.productOrderDetailAmount}"></td>
+							<td th:text="${productOrderDetailVO.productOrderDetailPrice}"></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+		</th:block>
+		<!-- 			寄杯商品		  	 -->
+		<br>
+		<th:block th:if="${jibeiOrderDetailList != null}">
+		<div th:if="${#lists.size(jibeiOrderDetailList) >1 }">
+			<table class="jibeiOrderDetail" style="width: 100%;">
+				<thead>
+					<tr style="background-color: #f7b977; color: #2b2b2b;">
+						<th>訂單編號</th>
+						<th>寄杯商品</th>
+						<th>數量</th>
+						<th>小計</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="jibeiOrderDetailVO : ${jibeiOrderDetailList}">
+						<tr>
+							<td th:text="${jibeiOrderDetailVO.productOrderVO.productOrderID}"></td>
+							<td th:text="${jibeiOrderDetailVO.jibeiProductVO.drinkVO.drinkName}"></td>
+							<td th:text="${jibeiOrderDetailVO.jibeiOrderDetailAmount}"></td>
+							<td th:text="${jibeiOrderDetailVO.jibeiOrderDetailPrice}"></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+		</th:block>
+
+		<!-- footer -->
+		<div th:include="footer :: footer"></div>
+		<!-- footer -->
+		<div class="scroll-up">
+			<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+		</div>
+	</main>
+
+
+
+
+	<!--  ======== JavaScripts =====================================  -->
+	<script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+	<script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<script th:src="@{/lib/wow/dist/wow.js}"></script>
+	<script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+	<script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+	<script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+	<script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+	<script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+	<script th:src="@{/lib/smoothscroll.js}"></script>
+	<script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+	<script
+		th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+
+</body>
 </html>
-  
-  
+
+

@@ -34,7 +34,7 @@ public class ProductOrderDetailController {
 	JibeiOrderDetailService jibeiOrderDetailSvc;
 	
 	// ======= 會員查訂單明細 =======
-	@GetMapping("userProductOrderDetail")
+	@PostMapping("userProductOrderDetail")
 	public String userProductOrderDetail(
 	    @RequestParam("ProductOrderID") String productOrderID, ModelMap model, HttpSession session) {
 

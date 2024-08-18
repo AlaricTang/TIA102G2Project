@@ -198,6 +198,7 @@ public class ProductOrderFrontController {
 		public String userProductOrder(ModelMap model, HttpSession session) {
 			UserVO user = (UserVO) session.getAttribute("user");
 			List<ProductOrderVO> userProductList = productOrderSvc.getAllUserProductOrder(user.getUserId());
+			
 			model.addAttribute("userProductList", userProductList);
 			return "back-end/productOrder/userProductOrder";
 		}
