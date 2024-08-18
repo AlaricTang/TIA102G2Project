@@ -178,7 +178,6 @@
 						<th>訂單備註</th>
 						<th>付款方式</th>
 						<th>付款狀態</th>
-						<th>完成付款</th>
 						<th>訂單狀態</th>
 						<th>查看明細</th>
 					</tr>
@@ -205,18 +204,6 @@
 									th:case="0">未付款</span> <span th:case="1">已付款</span> <span
 									th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
 							</span></td>
-							<!-- 完成付款 -->
-							<td>
-								<div
-									th:if="${productOrderVO.productOrderPayStatus != 1 && productOrderVO.productOrderStatus == 0 }">
-									<form method="post" th:action="@{/productOrder/orderSuccess}"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="完成付款"> <input
-											type="hidden" name="productOrderID"
-											th:value="${productOrderVO.productOrderID}">
-									</form>
-								</div>
-							</td>
 
 							<!-- 訂單狀態 -->
 							<td><span th:switch="${productOrderVO.productOrderStatus}">
@@ -227,9 +214,10 @@
 								<form method="post"
 									th:action="@{/productOrderDetail/userProductOrderDetail}"
 									style="margin-bottom: 0px;">
-									<input type="submit" value="查看明細"> <input type="hidden"
+									 <input type="hidden"
 										name="productOrderID"
 										th:value="${productOrderVO.productOrderID}">
+									<input type="submit" value="查看明細">
 								</form>
 							</td>
 
@@ -243,7 +231,8 @@
 		<!-- 一般商品 -->
 		<br>
 		<th:block th:if="${productOrderDetail != null}">
-		<div th:if="${#lists.size(productOrderDetail) >1 }">
+<!-- 		<div th:text="${#lists.size(productOrderDetail)}"></div> -->
+		<div th:if="${#lists.size(productOrderDetail) >= 1 }">
 			<table class="productOrderDetail" style="width: 100%;">
 				<thead>
 					<tr style="background-color: #f7b977; color: #2b2b2b;">
@@ -257,9 +246,9 @@
 				<tbody>
 					<th:block th:each="productOrderDetailVO : ${productOrderDetail}">
 						<tr>
-							<td th:text="${productOrderDetailVO.drinkOrderDetailID}"></td>
-							<td th:text="${productOrderDetailVO.productOrderID}"></td>
-							<td th:text="${productOrderDetailVO.productID}"></td>
+							<td th:text="${productOrderDetailVO.productOrderDetailID}"></td>
+							<td th:text="${productOrderDetailVO.productOrderVO.productOrderID}"></td>
+							<td th:text="${productOrderDetailVO.productVO.productID}"></td>
 							<td th:text="${productOrderDetailVO.productOrderDetailAmount}"></td>
 							<td th:text="${productOrderDetailVO.productOrderDetailPrice}"></td>
 						</tr>
@@ -271,7 +260,7 @@
 		<!-- 			寄杯商品		  	 -->
 		<br>
 		<th:block th:if="${jibeiOrderDetailList != null}">
-		<div th:if="${#lists.size(jibeiOrderDetailList) >1 }">
+		<div th:if="${#lists.size(jibeiOrderDetailList) >=1 }">
 			<table class="jibeiOrderDetail" style="width: 100%;">
 				<thead>
 					<tr style="background-color: #f7b977; color: #2b2b2b;">

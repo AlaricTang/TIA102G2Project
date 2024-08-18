@@ -77,7 +77,7 @@
 		
 
 		<div class="main">
-			<span th:text="${user.userName}"></span> <br>
+<!-- 			<span th:text="${user.userName}"></span> <br> -->
 			<br><br>
 			<table class="drinkOrder" style="width: 100%; ">
 			  <thead >
@@ -88,8 +88,8 @@
 					<th>訂購日期</th>
 					<th>總價</th>
 					<th>付款狀態</th>
-					<th>完成付款</th>
-					<th>狀態</th>
+<!-- 					<th>完成付款</th> -->
+					<th>訂單狀態</th>
 					<th>取消訂單</th>
 					<th>查看明細</th>
 				</tr>
@@ -112,14 +112,14 @@
 				                    <span th:case="*">未知狀態</span> <!-- 若出現非預期狀態 -->
 				                </span>
 			            	</td>
-			            	<td>
-			            		<div th:if="${drinkOrderVO.drinkOrderPayStatus != 1 && drinkOrderVO.drinkOrderStatus == 0 }">
-								  	<form method="post" th:action="@{/drinkOrder/sussesPaidDrinkOrder}" style="margin-bottom: 0px;">
-								     	<input type="submit" value="完成付款">
-								     	<input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}">
-								  	</form>
-								</div>
-							</td>
+<!-- 			            	<td> -->
+<!-- 			            		<div th:if="${drinkOrderVO.drinkOrderPayStatus != 1 && drinkOrderVO.drinkOrderStatus == 0 }"> -->
+<!-- 								  	<form method="post" th:action="@{/drinkOrder/sussesPaidDrinkOrder}" style="margin-bottom: 0px;"> -->
+<!-- 								     	<input type="submit" value="完成付款"> -->
+<!-- 								     	<input type="hidden" name="drinkOrderID" th:value="${drinkOrderVO.drinkOrderID}"> -->
+<!-- 								  	</form> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
 							<td>
 				                <span th:switch="${drinkOrderVO.drinkOrderStatus}">
 				                    <span th:case="0">未完成</span>
@@ -148,7 +148,7 @@
 			</table>
     	</div>
     	<br>
-    	<div th:if="${#lists.size(drinkOrderDetailList) >1 }">
+    	<div th:if="${#lists.size(drinkOrderDetailList) >= 1 }">
     		<table class="drinkOrderDetail" style="width: 100%; ">
 			  <thead >
 				<tr style="background-color:#badcad; color: #2b2b2b;">

@@ -36,9 +36,10 @@ public class ProductOrderDetailController {
 	// ======= 會員查訂單明細 =======
 	@PostMapping("userProductOrderDetail")
 	public String userProductOrderDetail(
-	    @RequestParam("ProductOrderID") String productOrderID, ModelMap model, HttpSession session) {
+	    @RequestParam("productOrderID") String productOrderID, ModelMap model, HttpSession session) {
 
 	    List<ProductOrderDetailVO> productOrderDetail = productOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
+	    System.out.println(productOrderDetail==null);
 	    model.addAttribute("productOrderDetail", productOrderDetail);
 
 	    List<JibeiOrderDetailVO> jibeiOrderDetailList = jibeiOrderDetailSvc.getByProductOrderID(Integer.valueOf(productOrderID));
@@ -46,7 +47,7 @@ public class ProductOrderDetailController {
 	    
 	    UserVO user = (UserVO)session.getAttribute("user");
 	    List<ProductOrderVO> productOrderList = productOrderSvc.getAllUserProductOrder(user.getUserId());
-	    model.addAttribute("productOrderList", productOrderList);
+	    model.addAttribute("userProductList", productOrderList);
 	    
 	    return "back-end/productOrder/userProductOrder";
 	}

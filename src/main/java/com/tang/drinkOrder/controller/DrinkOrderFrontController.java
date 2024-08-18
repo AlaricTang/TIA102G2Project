@@ -143,10 +143,13 @@ public class DrinkOrderFrontController {
 		
 		//判斷目前 店家環保杯數 是否滿足
 		StoreVO store = storeService.getOneStore(drinkOrderVO.getStoreID()); 
-		if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
+		if(store.getStoreCups() != null) {
+			if(store.getStoreCups() < drinkOrderVO.getCupNumber()) {
+				return "redirect:/drinkOrder/orderFail";
+			}
+		}else {
 			return "redirect:/drinkOrder/orderFail";
 		}
-		
 		
 		//補齊 店家 付款狀態 訂單狀態 付款方式
 		drinkOrderVO.setStoreID(Integer.valueOf(drinkCartService.getOneDrinkOrder(userID, "drinkOrderStore")));
@@ -168,6 +171,10 @@ public class DrinkOrderFrontController {
 			drinkDetails.setDrinkOrderVO(saveDrinkOrder); //訂單明細 綁 訂單ID 
 			drinkOrderDetailSvc.addDrinkOrderDetail(drinkDetails);//存訂單明細
 		}
+		
+		Integer storeCup = store.getStoreCups();
+		store.setStoreCups(storeCup - drinkOrderVO.getCupNumber());
+		storeService.updateStore(store);
 
 		drinkCartService.deleteDrinkOrder(userID);//下訂完 刪購物人資訊
 		drinkCartService.deleteDrinkCart(userID); //下訂完 刪購物車明細
@@ -204,6 +211,10 @@ public class DrinkOrderFrontController {
 		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
 		drinkOrder.setDrinkOrderStatus(Byte.valueOf("2"));
 		drinkOrderSvc.updateDrinkOrder(drinkOrder);
+		
+		StoreVO store = storeService.getOneStore(drinkOrder.getStoreID());
+		store.setStoreCups(store.getStoreCups() + drinkOrder.getCupNumber());
+		storeService.updateStore(store);
 		return "redirect:/drinkOrder/userDrinkOrder";
 	}
 	

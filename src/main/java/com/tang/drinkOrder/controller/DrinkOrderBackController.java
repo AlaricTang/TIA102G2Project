@@ -151,6 +151,10 @@ public class DrinkOrderBackController {
 		DrinkOrderVO drinkOrder = drinkOrderSvc.getOneDrinkOrder(Integer.valueOf(drinkOrderID));
 		drinkOrder.setDrinkOrderStatus(Byte.valueOf("2"));
 		drinkOrderSvc.updateDrinkOrder(drinkOrder);
+		
+		StoreVO store = storeSvc.getOneStore(drinkOrder.getStoreID());
+		store.setStoreCups(store.getStoreCups() + drinkOrder.getCupNumber());
+		storeSvc.updateStore(store);
 		return "redirect:/drinkOrder/orderHistory";
 	}
 	
