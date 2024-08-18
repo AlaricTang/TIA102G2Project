@@ -192,7 +192,13 @@
 												<span
 												th:text="${productVO.productStatus == 1 ? '上架' : '下架'}"></span>
 											</td>
-											<td th:text="${productVO.productTag}"></td>
+											<td th:switch="${productVO.productTag}">
+											    <span th:case="1">咖啡杯</span>
+											    <span th:case="2">手沖壺</span>
+											    <span th:case="3">濾掛包</span> 
+											    <span th:case="*">其他</span> 
+											</td>
+<!-- 											<td th:text="${productVO.productTag}"></td> -->
 											<td><img
 												th:src="@{/product/ProductDBGifReader} + '?productID=' + ${productVO.productID}"
 												width="100px"></td>

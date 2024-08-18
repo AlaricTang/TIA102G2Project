@@ -223,11 +223,9 @@
             <label>商品標籤</label>
             <select th:field="*{productTag}">
             <option value="" disabled selected>選擇標籤</option>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
+            <option value="1">咖啡杯</option>
+            <option value="2">手沖壺</option>
+            <option value="3">濾掛包</option>
                 <!-- 其他標籤選項可以在這裡添加 -->
             </select>
                <span th:if="${#fields.hasErrors('productTag')}" th:errors="*{productTag}" class="error" id="productTag.errors"></span>
