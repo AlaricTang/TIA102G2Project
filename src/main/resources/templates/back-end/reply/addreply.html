@@ -132,19 +132,19 @@
 .button-group {
 	display: flex;
 	justify-content: center;
-	align-items: center; /* 新增：垂直對齊 */
-	gap: 20px; /* 增加按鈕之間的間距 */
+	align-items: center;
+	gap: 20px;
 }
 
 .fixed-width-btn {
 	width: 150px;
 	height: 50px;
 	text-align: center;
-	display: flex; /* 改為 flex 佈局 */
-	align-items: center; /* 垂直居中文字 */
-	justify-content: center; /* 水平居中文字 */
-	padding: 0; /* 移除內邊距 */
-	line-height: 1; /* 重置行高 */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	line-height: 1;
 }
 
 .text-center {
@@ -170,7 +170,7 @@
 	overflow: visible;
 	height: auto;
 	box-sizing: border-box;
-	padding-right: 10px; /* 防止文字貼近右邊 */
+	padding-right: 10px;
 }
 
 /* 隱藏Webkit瀏覽器（如Chrome、Safari）的滾動條 */
@@ -186,6 +186,39 @@
 /* 隱藏IE和Edge的滾動條 */
 .customer-message textarea.form-control {
 	-ms-overflow-style: none;
+}
+
+/* 修改後的卡片式設計樣式 */
+.reply-card {
+	background-color: #ffffff;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+.reply-card .card-body {
+	padding: 20px;
+}
+
+.reply-card .info-row {
+	margin-bottom: 15px;
+}
+
+.reply-card .info-label {
+	flex: 0 0 100px;
+	font-weight: normal;
+	color: #6c757d;
+}
+
+.reply-card .form-control {
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	padding: 6px 12px;
+	width: 100%;
+	box-sizing: border-box;
+	background-color: #f0f0f0;
 }
 </style>
 
@@ -249,24 +282,28 @@
 							th:value="${customerVO.customerID}"> <input type="hidden"
 							name="memberID" value="1">
 						<!-- 假設 memberID 為 1，您可以根據需要調整 -->
-						<div class="info-row">
-							<span class="info-label">客服人員：</span>
-							<div class="info-content">
-								<span>小明</span>
-							</div>
-						</div>
-						<div class="info-row">
-							<span class="info-label">回覆主旨：</span>
-							<div class="info-content">
-								<input type="text" class="form-control reply-input"
-									id="replySubject" name="replySubject" required>
-							</div>
-						</div>
-						<div class="info-row">
-							<span class="info-label">回覆內容：</span>
-							<div class="info-content">
-								<textarea class="form-control reply-input" id="replyMessage"
-									name="replyMessage" rows="5" required></textarea>
+						<div class="reply-card">
+							<div class="card-body">
+								<div class="info-row">
+									<span class="info-label">客服人員：</span>
+									<div class="info-content">
+										<span>小明</span>
+									</div>
+								</div>
+								<div class="info-row">
+									<span class="info-label">回覆主旨：</span>
+									<div class="info-content">
+										<input type="text" class="form-control reply-input"
+											id="replySubject" name="replySubject" required>
+									</div>
+								</div>
+								<div class="info-row">
+									<span class="info-label">回覆內容：</span>
+									<div class="info-content">
+										<textarea class="form-control reply-input" id="replyMessage"
+											name="replyMessage" rows="5" required></textarea>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="text-center mt-4">

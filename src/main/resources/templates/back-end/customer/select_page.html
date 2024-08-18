@@ -77,12 +77,13 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/css/colors/default.css}"
 	id="color-scheme">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
-
 .module-reduced-padding {
-    padding-top: 5px; /* 調整header跟中間空白處的間距 */
+	padding-top: 5px; /* 調整header跟中間空白處的間距 */
 }
+
 .error-message {
 	color: red;
 	font-size: 0.9em;
@@ -129,33 +130,6 @@
 	padding-top: 0;
 }
 
-/* 自定義 SweetAlert 樣式 */
-.swal2-popup {
-	font-size: 1.4rem !important;
-	width: 30em !important;
-	padding: 1.25em !important;
-}
-
-.swal2-title {
-	font-size: 1.5em !important;
-	margin-bottom: 0.5em !important;
-}
-
-.swal2-html-container {
-	font-size: 1.1em !important;
-	margin-top: 0.5em !important;
-	line-height: 1.5 !important;
-}
-
-.swal2-actions {
-	justify-content: center !important;
-	margin-top: 1.25em !important;
-}
-
-.swal2-confirm {
-	padding: 0.5em 2em !important;
-}
-
 .case-sensitive {
 	text-transform: none;
 }
@@ -186,6 +160,10 @@
 
 .btn-dark.custom-submit:hover {
 	background-color: #333;
+}
+
+.allow-case-sensitive {
+	text-transform: none !important;
 }
 </style>
 
@@ -288,51 +266,42 @@
 										method="post" th:object="${customerVO}">
 										<div class="form-group">
 											<label for="customerName">姓名<span class="required">*</span></label>
-											<input class="form-control case-sensitive" type="text"
+											<input class="form-control allow-case-sensitive" type="text"
 												id="customerName" name="customerName"
-												th:field="*{customerName}" required> <span
-												class="error-message"
-												th:if="${#fields.hasErrors('customerName')}"
-												th:errors="*{customerName}"></span>
+												th:field="*{customerName}"> <span
+												class="error-message" data-error="customerNameError"></span>
 										</div>
 										<div class="form-group">
 											<label for="customerEmail">電子信箱 <span
 												class="required">*</span></label> <input
-												class="form-control case-sensitive" type="email"
+												class="form-control allow-case-sensitive" type="text"
 												id="customerEmail" name="customerEmail"
-												th:field="*{customerEmail}" required> <span
-												class="error-message"
-												th:if="${#fields.hasErrors('customerEmail')}"
-												th:errors="*{customerEmail}"></span>
+												th:field="*{customerEmail}"> <span
+												class="error-message" data-error="customerEmailError"></span>
 										</div>
 										<div class="form-group">
 											<label for="customerPhone">行動電話 <span
-												class="required">*</span></label> <input class="form-control"
-												type="tel" id="customerPhone" name="customerPhone"
-												th:field="*{customerPhone}" required> <span
-												class="error-message"
-												th:if="${#fields.hasErrors('customerPhone')}"
-												th:errors="*{customerPhone}"></span>
+												class="required">*</span></label> <input
+												class="form-control allow-case-sensitive" type="tel"
+												id="customerPhone" name="customerPhone"
+												th:field="*{customerPhone}"> <span
+												class="error-message" data-error="customerPhoneError"></span>
 										</div>
 										<div class="form-group">
 											<label for="customerSubject">主旨 <span
 												class="required">*</span></label> <input
-												class="form-control case-sensitive" type="text"
+												class="form-control allow-case-sensitive" type="text"
 												id="customerSubject" name="customerSubject"
-												th:field="*{customerSubject}" required> <span
-												class="error-message"
-												th:if="${#fields.hasErrors('customerSubject')}"
-												th:errors="*{customerSubject}"></span>
+												th:field="*{customerSubject}"> <span
+												class="error-message" data-error="customerSubjectError"></span>
 										</div>
 										<div class="form-group">
 											<label for="customerMessage">內容 <span
 												class="required">*</span></label>
-											<textarea class="form-control case-sensitive" rows="4"
+											<textarea class="form-control allow-case-sensitive" rows="4"
 												id="customerMessage" name="customerMessage"
-												th:field="*{customerMessage}" required></textarea>
-											<span class="error-message"
-												th:if="${#fields.hasErrors('customerMessage')}"
-												th:errors="*{customerMessage}"></span>
+												th:field="*{customerMessage}"></textarea>
+											<span class="error-message" data-error="customerMessageError"></span>
 										</div>
 										<button class="btn btn-block btn-dark custom-submit"
 											type="submit">送出</button>
@@ -354,8 +323,8 @@
 				<div class="scroll-up">
 					<a href="#totop"><i class="fa fa-angle-double-up"></i></a>
 				</div>
-				</section>
-				</div>
+			</section>
+		</div>
 	</main>
 
 
@@ -377,81 +346,62 @@
 	<script th:src="@{js/plugins.js}"></script>
 	<script th:src="@{js/main.js}"></script>
 
-	<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var inputs = document.getElementsByClassName('case-sensitive');
-            for (var i = 0; i < inputs.length; i++) {
-                inputs[i].addEventListener('keydown', function(e) {
-                    if (e.key === 'CapsLock') {
-                        this.style.textTransform = (this.style.textTransform === 'uppercase') ? 'none' : 'uppercase';
-                    }
-                });
-            }
+	<script th:inline="javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+	    var form = document.getElementById('contactForm');
+	    form.addEventListener('submit', function(e) {
+	        e.preventDefault();
+	        var formData = new FormData(form);
 
-            document.getElementById('contactForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                var form = this;
-                var formData = new FormData(form);
-
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.redirected) {
-                        window.location.href = response.url;
-                    } else {
-                        return response.text();
-                    }
-                })
-                .then(html => {
-                    if (html) {
-                        var parser = new DOMParser();
-                        var doc = parser.parseFromString(html, 'text/html');
-                        var newForm = doc.getElementById('contactForm');
-                        if (newForm) {
-                            form.innerHTML = newForm.innerHTML;
-                        }
-                        var successMessage = doc.querySelector('.alert-success');
-                        if (successMessage) {
-                            Swal.fire({
-                                title: '訊息已送出成功!',
-                                html: successMessage.textContent,
-                                icon: 'success',
-                                confirmButtonText: '確定',
-                                confirmButtonColor: '#FFA500'
-                            });
-                        }
-                    }
-                })
-                .catch(error => {
-                    Swal.fire({
-                        title: '發生錯誤',
-                        text: '很抱歉，提交過程中出現問題，請稍後再試。',
-                        icon: 'error',
-                        confirmButtonText: '確定',
-                        confirmButtonColor: '#FFA500'
-                    });
-                });
-            });
-        });
+	        fetch(form.action, {
+	            method: 'POST',
+	            body: formData,
+	            headers: {
+	                'X-Requested-With': 'XMLHttpRequest'
+	            }
+	        })
+	        .then(response => response.json())
+	        .then(data => {
+	            if (data.success) {
+	                // 清除所有錯誤提示
+	                document.querySelectorAll('.error-message').forEach(span => span.textContent = '');
+	                
+	                Swal.fire({
+	                    title: '訊息已送出成功!',
+	                    html: data.message,
+	                    icon: 'success',
+	                    confirmButtonText: '確定',
+	                    confirmButtonColor: '#FFA500'
+	                });
+	                form.reset();
+	            } else {
+	                // 清除之前的錯誤訊息
+	                document.querySelectorAll('.error-message').forEach(span => span.textContent = '');
+	                
+	                // 顯示新的錯誤訊息
+	                Object.keys(data.errors).forEach(key => {
+	                    var errorSpan = document.querySelector(`[data-error="${key}"]`);
+	                    if (errorSpan) {
+	                        errorSpan.textContent = data.errors[key];
+	                    }
+	                });
+	            }
+	        })
+	        .catch(error => {
+	            console.error('Error:', error);
+	            Swal.fire({
+	                title: '發生錯誤',
+	                text: '很抱歉，提交過程中出現問題，請稍後再試。',
+	                icon: 'error',
+	                confirmButtonText: '確定',
+	                confirmButtonColor: '#FFA500'
+	            });
+	        });
+	    });
+	});
     </script>
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script th:inline="javascript">
-	document.getElementById('contactForm').addEventListener('submit',
-			function(e) {
-				// 這裡可以添加表單提交的 AJAX 代碼
-				Swal.fire({
-					title : '訊息已送出成功!',
-					html : '感謝您的提問，我們將於<br>週一至週五 09:00 - 17:00 回覆您的訊息',
-					icon : 'success',
-					confirmButtonText : '確定',
-					confirmButtonColor : '#FFA500'
-				});
-			});
-</script>
+
 
 
 </body>
