@@ -206,10 +206,7 @@
 						<div class="card-body">
 							<div th:if="${not #lists.isEmpty(replyListData)}">
 								<div th:each="reply : ${replyListData}" class="mb-3">
-									<div class="info-row">
-										<span class="info-label">客服人員：</span> <span
-											class="info-content" th:text="${reply.memberID}"></span>
-									</div>
+									
 									<div class="info-row">
 										<span class="info-label">回覆時間：</span> <span
 											class="info-content"
