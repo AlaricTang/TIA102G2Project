@@ -1,6 +1,8 @@
 package com.ken.drink.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -126,6 +128,14 @@ public class DrinkController {
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(drinkVO, result, "drinkPic");
 		
+		if (drinkVO.getDrinkUpdateDate() == null) {
+			model.addAttribute("errorMessage1", "請輸入日期");
+	    }
+		
+		if (drinkVO.getEditedByMemberID() == null) {
+			model.addAttribute("errorMessage2", "請輸入更新者");
+	    }
+		
 		if (parts[0].isEmpty()) {
 			// EmpService empSvc = new EmpService();
 			byte[] upFiles = drinkSvc.getOneDrink(drinkVO.getDrinkID()).getDrinkPic();
@@ -138,7 +148,7 @@ public class DrinkController {
 			}
 			System.out.println("2");
 		}
-		if (result.hasErrors()) {
+		if (result.hasErrors() || model.containsAttribute("errorMessage1") || model.containsAttribute("errorMessage2")) {
 			result.getFieldErrors().forEach(error -> {
 		        System.out.println("Field: " + error.getField() + " - " + error.getDefaultMessage());
 		    });
