@@ -258,9 +258,8 @@
      
      <div class="form-item">
 		<label>更新日期:</label>
-	 	<input type="date" th:field="*{drinkUpdateDate}" /><br/>
-	 	<span th:if="${#fields.hasErrors('drinkUpdateDate')}" th:errors="*{drinkUpdateDate}" class="error" id="drinkUpdateDate.errors"></span>
-	 </div>
+	 	<input type="date" th:field="*{drinkUpdateDate}" value="${#dates.format(new java.util.Date(), 'yyyy-MM-dd')}"/><br/>
+		<span class="error" th:text="${errorMessage1}" ></span>	 </div>
 	 
 	 <div class="form-item" hidden>
 		<label>創建日期:</label>
@@ -270,9 +269,7 @@
 	 <div class="form-item">
         <label>更新者:</label>
         <input type="text" th:field="*{editedByMemberID}"  /><br/>
-        <span th:if="${#fields.hasErrors('editedByMemberID')}" th:errors="*{editedByMemberID}" class="error" id="editedByMemberID.errors"></span>
-    </div>
-     
+		<span class="error" th:text="${errorMessage2}" ></span>	 </div>    </div>
      <div class="form-item">
 	    <label>照片:</label>
 	    <input type="file" th:field="*{drinkPic}" multiple="multiple" onchange="previewImages(event);" />
