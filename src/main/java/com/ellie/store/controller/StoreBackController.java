@@ -113,6 +113,7 @@ public class StoreBackController {
         
         storeVO.setStoreMap("map");
 		storeVO.setCreatedByMemberID(1);
+		storeVO.setStoreCups(0);
         storeVO.setStoreCreateDate(new Timestamp(System.currentTimeMillis()));
         storeService.addStore(storeVO);
 

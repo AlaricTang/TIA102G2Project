@@ -146,7 +146,7 @@ public class UserFrontController {
 		if (user != null) {
 			// 發送重設密碼的信件，信件中包含重設密碼的指示
 			String subject = "密碼重設請求";
-			String messageText = "請點擊以下連結進行密碼重設: http://localhost:8080/user/resetPassword/"+userEmail;
+			String messageText = "請點擊以下連結進行密碼重設: http://tia102g2.ddns.net/user/resetPassword/"+userEmail;
 			gmailService.sendMail(userEmail, subject, messageText);
 
 			model.addAttribute("successMessage", "重設密碼的信件已發送，請檢查您的信箱");
