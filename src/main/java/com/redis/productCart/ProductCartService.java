@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.redis.JedisService;
-import com.xyuan.productOrderDetail.model.ProductOrderDetailVO;
+import com.entity.ProductOrderDetailVO;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

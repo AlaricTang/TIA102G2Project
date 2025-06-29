@@ -14,8 +14,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.ken.cup.model.CupVO;
-import com.ken.cupRecord.model.CupRecordVO;
+import com.entity.CupRecordVO;
 
 public class CompositeQuery_CupRecord {
 

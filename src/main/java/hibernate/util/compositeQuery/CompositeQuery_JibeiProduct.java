@@ -17,7 +17,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.tang.jibeiProduct.model.JibeiProductVO;
+import com.entity.JibeiProductVO;
 
 public class CompositeQuery_JibeiProduct {
 	

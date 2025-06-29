@@ -1,0 +1,45 @@
+package com.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.entity.CampaignVO;
+import com.repository.CampaignRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service("campaignService")
+public class CampaignService {
+	
+	@Autowired
+	CampaignRepository repository;
+	
+	
+	public CampaignVO addCampaign(CampaignVO campaignVO) {
+		return repository.save(campaignVO);
+	}
+	
+	public CampaignVO updateCampaign (CampaignVO campaignVO) {
+		return repository.save(campaignVO);
+	}
+	
+	public void deleteCampaign(Integer campaignID) {
+		if(repository.existsById(campaignID))
+			repository.deleteByCampaignID(campaignID);
+	}
+	
+	public CampaignVO getOneCampaign (Integer campaignID) {
+		Optional<CampaignVO> optional = repository.findById(campaignID);
+		return optional.orElse(null);
+	}
+	
+	public List<CampaignVO> gatAll(){
+		return repository.findAll();
+	}
+	
+	//用不到複合查詢
+//	public List<CampaignVO> getAll(Map<String, String[]> map){
+//		return null;
+//		return CompositeQuery_Campaign.getAllC(map);
+//	}
+}

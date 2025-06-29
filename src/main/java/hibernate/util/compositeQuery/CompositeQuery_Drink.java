@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.ken.drink.model.DrinkVO;
+import com.entity.DrinkVO;
 
 public class CompositeQuery_Drink {
 	

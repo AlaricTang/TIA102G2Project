@@ -10,12 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.ken.cup.model.CupService;
-import com.ken.cup.model.CupVO;
-import com.ken.cupRecord.model.CupRecordService;
-import com.ken.cupRecord.model.CupRecordVO;
-import com.ken.drink.model.DrinkService;
-import com.ken.drink.model.DrinkVO;
+import com.service.CupService;
+import com.entity.CupVO;
+import com.service.CupRecordService;
+import com.entity.CupRecordVO;
+import com.service.DrinkService;
+import com.entity.DrinkVO;
 
 
 

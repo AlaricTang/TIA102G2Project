@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.xyuan.productOrder.model.ProductOrderVO;
+import com.entity.ProductOrderVO;
 
 public class CompositeQuery_ProductOrder {
 
