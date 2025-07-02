@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.service.UserService;
 import com.entity.UserVO;
-import com.service.GmailService;
+import com.utils.email.service.EmailService;
 
 @Controller
 @RequestMapping("/user")
@@ -31,7 +31,7 @@ public class UserFrontController {
 	UserService userService;
 
 	@Autowired
-	GmailService gmailService;
+	EmailService emailService;
 
 	// 會員基本資料頁面
 	@GetMapping("viewProfile")
@@ -145,7 +145,8 @@ public class UserFrontController {
 			// 發送重設密碼的信件，信件中包含重設密碼的指示
 			String subject = "密碼重設請求";
 			String messageText = "請點擊以下連結進行密碼重設: http://tia102g2.ddns.net/user/resetPassword/"+userEmail;
-			gmailService.sendMail(userEmail, subject, messageText);
+			// 統一改用 emailService，支援 HTML
+			emailService.sendMail(userEmail, subject, messageText, null);
 
 			model.addAttribute("successMessage", "重設密碼的信件已發送，請檢查您的信箱");
 			return "back-end/user/forgotPassword";
