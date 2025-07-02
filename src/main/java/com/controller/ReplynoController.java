@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.service.CustomerService;
 import com.entity.CustomerVO;
-import com.service.EmailService;
+import com.utils.email.service.EmailService;
 //import com.reply.model.MailService;
 import com.service.ReplyService;
 import com.entity.ReplyVO;
@@ -99,7 +99,7 @@ public class ReplynoController {
 		String messageText = replyMessage;
 
 		// 發送回覆郵件
-		emailService.sendMail(to, subject, messageText);
+		emailService.sendMail(to, subject, messageText, null);
 
 		// 將新增回覆訊息顯示在回覆列表
 		return "redirect:/reply/getOne_For_Display?customerID=" + customerID;

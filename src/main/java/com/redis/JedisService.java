@@ -1,158 +1,155 @@
 package com.redis;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-
 @Service("jedisService")
 public class JedisService {
 
-	@Autowired
-	JedisPool jedisPool;
-	
-	@Autowired
-	private Gson gson;
-	
-	public JedisService(JedisPool jedisPool) {
-		this.jedisPool = jedisPool;
-	}
-	
-	public void delete(String key)throws IOException{
-		try(Jedis jedis = jedisPool.getResource()){
-			jedis.del(key);
-		}
-	}
-	
-	// ===============  key Value ===============
-	public void saveOneOne(String key,String value)throws IOException{
-		try(Jedis jedis = jedisPool.getResource()){
-			 jedis.set(key, value);
-		 }
-	}
-	public String getOneOne(String key)throws IOException{
-		try(Jedis jedis = jedisPool.getResource()){
-			return jedis.get(key);
-		}
-	}
-	
-	// ===============  key filed Value ===============
-	public void saveOneOneOne(String key, String filed, String value )throws IOException{
-		try(Jedis jedis = jedisPool.getResource()){
-			jedis.hset(key, filed, value);
-		}
-	}
-	
-	public String getOneOneOne(String key, String filed )throws IOException{
-		try(Jedis jedis = jedisPool.getResource()){
-			return jedis.hget(key, filed);
-		}
-	}
-	
-	public void deleteOneOneOne(String key, String filed)throws IOException{
-		try (Jedis jedis = jedisPool.getResource()){
-			jedis.hdel(key, filed);
-		}
-	}
-	
+    @Autowired
+    private JedisPool jedisPool;
 
-	
-	// =============== key List for allType  ===============
-	public void saveItemToList(String key, Object item) {
-		 try(Jedis jedis = jedisPool.getResource()){
-			 String jsonString = gson.toJson(item);
-			 jedis.rpush(key, jsonString);//jedis.rpush(key, itemJson);同樣的意思
-		 }
-	}
-	
-	public void saveList(String key,  List<Object> List)throws IOException {
-		try(Jedis jedis = jedisPool.getResource()){
-			jedis.del(key);
-			
-            for (Object item : List) {
-            	String itemJson = gson.toJson(item); 
-                jedis.rpush(key, itemJson); 
-            }
-		}
-	}
-	
-	public List<Object> getItemsFromList(String key)throws IOException {
-		try(Jedis jedis = jedisPool.getResource()){
-			List<String> jsonList = jedis.lrange(key, 0, -1);
-			Type type = new TypeToken<List<Object>>() {}.getType();
-			return gson.fromJson(jsonList.toString(), type);
-		}
-	}
-	
-	
-	
-    public void removeItemFromList(String key, Object item) {
-		try(Jedis jedis = jedisPool.getResource()){
-			String jsonString = gson.toJson(item);
-			jedis.lrem(key, 0, jsonString);
-		}
+    @Autowired
+    private Gson gson;
+
+    // =============== 基本 Key-Value 操作 ===============
+
+    /**
+     * 刪除指定 key
+     */
+    public void delete(String key) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.del(key);
+        }
     }
-	
-	// =============== key field List for allType  ===============
-	@SuppressWarnings("unchecked")
-	public void saveItemToHash(String key, String field, Object value) {	
-		try(Jedis jedis = jedisPool.getResource()){
-			
-			String json = jedis.hget(key, value.toString());
-			List<Object> items= new ArrayList<>();
-			
-			if(json != null) {
-				items = gson.fromJson(json, List.class);
-			}
-			
-			items.add(value);
-			jedis.hset(key, field, gson.toJson(items));
-		}
-	}
-	
-//cart:userID, drink, 
-	public void saveListToHash(String key, String field, List<Object> List)throws IOException {
-		try(Jedis jedis = jedisPool.getResource()){
-			jedis.hdel(key,field);
-			
-	        for (Object item : List) {
-	            String itemJson = gson.toJson(item); // 将每个对象序列化为JSON字符串
-	            jedis.rpush(key, itemJson); // 使用rpush命令将JSON字符串添加到列表末尾
-	        }
-		}
-	}
-	
 
+    /**
+     * 儲存單一 key-value
+     */
+    public void saveOneOne(String key, String value) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.set(key, value);
+        }
+    }
+
+    /**
+     * 取得單一 key 對應的 value
+     */
+    public String getOneOne(String key) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.get(key);
+        }
+    }
+
+    // =============== Hash 操作 (key-field-value) ===============
+
+    /**
+     * 儲存 hash 欄位
+     */
+    public void saveOneOneOne(String key, String field, String value) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.hset(key, field, value);
+        }
+    }
+
+    /**
+     * 取得 hash 欄位值
+     */
+    public String getOneOneOne(String key, String field) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.hget(key, field);
+        }
+    }
+
+    /**
+     * 刪除 hash 欄位
+     */
+    public void deleteOneOneOne(String key, String field) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.hdel(key, field);
+        }
+    }
+
+    // =============== List 操作 (key-list) ===============
+
+    /**
+     * 將物件序列化後加入 list
+     */
+    public void saveItemToList(String key, Object item) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String jsonString = gson.toJson(item);
+            jedis.rpush(key, jsonString);
+        }
+    }
+
+    /**
+     * 儲存整個 list（會先刪除原本的 key）
+     */
+    public void saveList(String key, List<Object> list) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.del(key);
+            for (Object item : list) {
+                String itemJson = gson.toJson(item);
+                jedis.rpush(key, itemJson);
+            }
+        }
+    }
+
+    /**
+     * 取得 list 內容並反序列化
+     */
+    public List<Object> getItemsFromList(String key) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            List<String> jsonList = jedis.lrange(key, 0, -1);
+            Type type = new TypeToken<List<Object>>() {}.getType();
+            return gson.fromJson(jsonList.toString(), type);
+        }
+    }
+
+    /**
+     * 從 list 移除指定物件
+     */
+    public void removeItemFromList(String key, Object item) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String jsonString = gson.toJson(item);
+            jedis.lrem(key, 0, jsonString);
+        }
+    }
+
+    // =============== Hash-List 操作 (key-field-list) ===============
+
+    /**
+     * 將 value 加入 hash 的某個 field 對應的 list
+     */
+    @SuppressWarnings("unchecked")
+    public void saveItemToHash(String key, String field, Object value) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            // 取得該 field 原本的 list
+            String json = jedis.hget(key, field);
+            List<Object> items = new ArrayList<>();
+            if (json != null) {
+                items = gson.fromJson(json, List.class);
+            }
+            items.add(value);
+            jedis.hset(key, field, gson.toJson(items));
+        }
+    }
+
+    /**
+     * 儲存整個 list 到 hash 的某個 field（會覆蓋原本的 field）
+     */
+    public void saveListToHash(String key, String field, List<Object> list) throws IOException {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.hset(key, field, gson.toJson(list));
+        }
+    }
 }
-
-
-//.
-//.					   _ooOoo
-//.					  o8888888o
-//.					  88" . "88 
-//.					  (| -_- |)
-//.					  O\  =  /O
-//.					___/`---'\____
-//.				 .'  \\|     |//  `.
-//.			    /  \\|||  :  |||//  \
-//.			   /  _||||| -:- |||||_  \
-//.			   |   | \\\  -  /// |   |
-//.			   | \_|  ''\---/''  |   |
-//.			   \  .-\__       __/-.  /
-//.			 ___`. .'  /--.--\ `. . __
-//.		  ."" '<  `.___\_<|>_/__.'  >'"".
-//.      | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//.      \  \ `-.   \_ __\ /__ _/   .-` /  /
-//. ======`-.____`-.___\_____/___.-`____.-'======
-//.                    `=---='
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-//.               佛祖保佑       永無BUG
