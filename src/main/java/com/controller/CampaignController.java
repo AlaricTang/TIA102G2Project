@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,26 +40,27 @@ public class CampaignController {
 	public String campaignList(ModelMap model,HttpSession session) {
 		List<CampaignVO> campaignList = campaignSvc.gatAll();
 		model.addAttribute("campaignList",campaignList);
-		
-//		session.removeAttribute("campaignProductList");
 		return "back-end/campaign/campaignList";
 	}
 	
 	//=============== 跳新增頁 ===============
 	@GetMapping("addCampaignPage")
 	public String addCampaignPage(ModelMap model,HttpSession session) {
-		
 		CampaignVO campaignVO = new CampaignVO();
 		model.addAttribute("campaignVO",campaignVO);
-		
-		//session 看有無已選擇商品
-		@SuppressWarnings("unchecked")
-		List<CampaignProductVO> campaignProductList =(List<CampaignProductVO>) session.getAttribute("campaignProductList");
+
+		List<CampaignProductVO> campaignProductList = null;
+		Object obj = session.getAttribute("campaignProductList");
+		if (obj instanceof List<?>) {
+			campaignProductList = ((List<?>) obj).stream()
+				.filter(CampaignProductVO.class::isInstance)
+				.map(CampaignProductVO.class::cast)
+				.collect(Collectors.toList());
+		}
 		model.addAttribute("campaignProductList",campaignProductList);
 		return "back-end/campaign/addCampaign";
 	}
 
-	
 	//=============== 新增 ===============
 	@PostMapping("insert")
 	public String insert(
@@ -68,7 +69,6 @@ public class CampaignController {
 			ModelMap model,
 			HttpSession session
 			)throws IOException{
-		
 
 		//=========== 圖片 ===========
 		result = removeFieldError(campaignVO, result, "campaignPic");
@@ -86,12 +86,16 @@ public class CampaignController {
 		}
 		//=========== 圖片 ===========
 
-		
-		//session 取出要加入的飲品
-		@SuppressWarnings("unchecked")
-		List<CampaignProductVO> campaignProductList = (List<CampaignProductVO>)session.getAttribute("campaignProductList"); 
-		
-		if(!campaignProductList.isEmpty()) {
+		List<CampaignProductVO> campaignProductList = null;
+		Object obj = session.getAttribute("campaignProductList");
+		if (obj instanceof List<?>) {
+			campaignProductList = ((List<?>) obj).stream()
+				.filter(CampaignProductVO.class::isInstance)
+				.map(CampaignProductVO.class::cast)
+				.collect(Collectors.toList());
+		}
+
+		if(campaignProductList != null && !campaignProductList.isEmpty()) {
 			//存活動
 			CampaignVO campaign = campaignSvc.addCampaign(campaignVO);
 			
@@ -112,17 +116,15 @@ public class CampaignController {
 		return "redirect:/campaign/campaignList";
 	}
 		
-	
 	//=============== 跳更新頁 判斷有無session===============
 	@PostMapping("updateCampaignPage")
 	public String updateCampaignPage(
 			@RequestParam("campaignID") String campaignID,ModelMap model,
 			HttpSession session,HttpServletRequest request) {
 		
-		
 		String refererUrl = request.getHeader("Referer");
 		System.out.println(refererUrl);
-		if (refererUrl.endsWith("/campaign/campaignList")) {
+		if (refererUrl != null && refererUrl.endsWith("/campaign/campaignList")) {
 			session.removeAttribute("campaignProductList");
 		}
 		
@@ -147,8 +149,7 @@ public class CampaignController {
 			ModelMap model,
 			HttpSession session
 			) throws IOException {
-		
-		
+
 		//=========== 圖片 ===========
 		result = removeFieldError(campaignVO, result, "campaignPic");
 		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時，返回原圖
@@ -166,13 +167,16 @@ public class CampaignController {
 		}
 		//=========== 圖片 ===========
 
+		List<CampaignProductVO> campaignProductList = null;
+		Object obj = session.getAttribute("campaignProductList");
+		if (obj instanceof List<?>) {
+			campaignProductList = ((List<?>) obj).stream()
+				.filter(CampaignProductVO.class::isInstance)
+				.map(CampaignProductVO.class::cast)
+				.collect(Collectors.toList());
+		}
 
-		
-		//取出要更新的 新的活動商品列
-	    @SuppressWarnings("unchecked")
-		List<CampaignProductVO> campaignProductList = (List<CampaignProductVO>) session.getAttribute("campaignProductList");
-
-	    if(!campaignProductList.isEmpty()) {
+	    if(campaignProductList != null && !campaignProductList.isEmpty()) {
 			//更新活動
 			CampaignVO campaign = campaignSvc.updateCampaign(campaignVO);
 			//活動商品 資料更新
@@ -187,15 +191,11 @@ public class CampaignController {
 		return "redirect:/campaign/campaignList";
 	}
 	
-	
-	
-	
-	
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(CampaignVO campaignVO, BindingResult result, String removedFieldname) {
-		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()	//從 result 中取得所有的 FieldError 物件(代表驗證失敗的欄位)，將錯誤列表轉換成一個串流 
-				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)) //使用 filter 過濾不等於 removedFieldname 的欄位錯誤
-				.collect(Collectors.toList());//collect 方法將過濾後的錯誤收集到一個新的列表 errorsListToKeep 中
+		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname))
+				.collect(Collectors.toList());
 		result = new BeanPropertyBindingResult(campaignVO, "campaignVO");
 		for (FieldError fieldError : errorsListToKeep) {
 			result.addError(fieldError);

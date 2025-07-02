@@ -1,7 +1,8 @@
 package com.controller;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+// 將 javax.servlet.http.HttpSession 和 javax.validation.Valid 改為 jakarta.*
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;

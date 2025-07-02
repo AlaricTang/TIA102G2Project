@@ -1,8 +1,8 @@
 package com.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 import java.sql.Timestamp;
 import java.util.Date;

@@ -3,7 +3,7 @@ package com.redis.userJibei;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import com.entity.UserJibeiVO;
 import org.springframework.beans.factory.annotation.Autowired;

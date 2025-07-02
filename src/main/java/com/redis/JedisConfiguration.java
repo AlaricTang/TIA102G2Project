@@ -9,8 +9,7 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 public class JedisConfiguration {
 
-
-	@Bean
+	@Bean(destroyMethod = "") // 禁用 Spring 自動調用 destroy，避免 JMX 註冊問題
 	public JedisPool getJedisPool() {
 		
 		JedisPoolConfig config = new JedisPoolConfig();
@@ -18,9 +17,9 @@ public class JedisConfiguration {
 		config.setMaxTotal(8);// 設定最大連線數
 		config.setMaxIdle(8);// 設定最大空閒數
 		config.setMaxWaitMillis(10000);// 設定超時時間
+		config.setJmxEnabled(false); // 禁用 JMX 註冊，避免 JMX 註冊問題
 		
 		JedisPool jedisPool =  new JedisPool(config, "localhost", 6379);// 初始化連線池
 		return jedisPool;
-	
 	}
 }
