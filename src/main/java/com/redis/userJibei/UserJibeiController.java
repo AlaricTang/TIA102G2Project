@@ -3,8 +3,9 @@ package com.redis.userJibei;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
+import com.entity.UserJibeiVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ellie.user.model.UserVO;
-import com.ken.drink.model.DrinkService;
-import com.ken.drink.model.DrinkVO;
+import com.entity.UserVO;
+import com.service.DrinkService;
+import com.entity.DrinkVO;
 import com.redis.drinkCartTest.DrinkCartService;
-import com.tang.drinkOrderDetail.model.DrinkOrderDetailVO;
+import com.entity.DrinkOrderDetailVO;
 
 @Controller
 @RequestMapping("/user")

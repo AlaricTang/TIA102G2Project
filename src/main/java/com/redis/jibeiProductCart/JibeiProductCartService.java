@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.redis.JedisService;
-import com.xyuan.jibeiOrderDetail.model.JibeiOrderDetailVO;
+import com.entity.JibeiOrderDetailVO;
 
 @Service
 public class JibeiProductCartService {
